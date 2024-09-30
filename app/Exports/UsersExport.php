@@ -14,7 +14,7 @@ class UsersExport implements FromCollection, WithHeadings
 {
     protected $startDate;
     protected $endDate;
-
+//com
     public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
