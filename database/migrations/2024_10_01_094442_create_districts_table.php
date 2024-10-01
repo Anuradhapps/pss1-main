@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->integer('code')->nullable();
             $table->string('name');
-            $table->integer('p_id')->nullable();
+            $table->foreignId('province_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
         <div>
             <button @click="isOpen = !isOpen" class="text-gray-900 pt-3 focus:outline-none">
                 @if (storage_exists(user()->image))
-                    <img src="{{ storage_url(user()->image) }}" width="30" class="h-6 w-6 rounded-full">
+                <img src="{{ storage_url(user()->image) }}" width="30" class="h-6 w-6 rounded-full">
                 @else
                     {{ user()->name }}
                 @endif

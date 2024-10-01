@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\CommonDataCollect;
 use App\Models\district;
@@ -23,6 +24,7 @@ class UsersExport implements FromCollection, WithHeadings
 
     public function collection()
     {
+       
         // Convert input dates to Carbon instances for comparison
         $startDate = Carbon::createFromFormat('Y-m-d', $this->startDate);
         $endDate = Carbon::createFromFormat('Y-m-d', $this->endDate)->endOfDay();
@@ -35,6 +37,7 @@ class UsersExport implements FromCollection, WithHeadings
             $hasPestData = false;
 
             foreach ($cdata->pestDataCollect as $pdata) {
+                
                 $result[] = [
                     'Data Collected Date'      => $cdata->c_date,
                     'Name'                    => $cdata->user->name,
@@ -42,7 +45,7 @@ class UsersExport implements FromCollection, WithHeadings
                     'Phone Number'            => $cdata->user->collector ? $cdata->user->collector->phone_no : 'N/A',
                     'Collector District'      => $cdata->user->collector ? district::where('id', $cdata->user->collector->district)->first()->name : 'N/A',
                     'Collector ASC'           => $cdata->user->collector ? As_center::where('id', $cdata->user->collector->asc)->first()->name : 'N/A',
-                    'Collector Ai Range'      => $cdata->user->collector ? $cdata->user->collector->ai_range : 'N/A',
+                    'Collector Ai Range'      => $cdata->user->collector ? AiRange::where('id', $cdata->user->collector->ai_range)->first()->name : 'N/A',
                     'Collector Village'        => $cdata->user->collector ? $cdata->user->collector->village : 'N/A',
                     'Collector GPS Latitude'   => $cdata->user->collector ? $cdata->user->collector->gps_lati : 'N/A',
                     'Collector GPS Longitude'   => $cdata->user->collector ? $cdata->user->collector->gps_long : 'N/A',
@@ -51,7 +54,7 @@ class UsersExport implements FromCollection, WithHeadings
 
                     'Growth Stage'             => $cdata->growth_s_c,
                     'Temperature'              => $cdata->temperature,
-                    'Number of Rice Days'      => $cdata->numbrer_r_day,
+                    'Number of Rainny Days'      => $cdata->numbrer_r_day,
                     'Pest Name'                => $pdata->pest_name,
                     'Location 01'              => $pdata->location_one,
                     'Location 02'              => $pdata->location_two,
@@ -88,7 +91,7 @@ class UsersExport implements FromCollection, WithHeadings
 
                     'Growth Stage' => '',
                     'Temperature' => '',
-                    'Number of Rice Days' => '',
+                    'Number of Rainny Days' => '',
                     'Pest Name' => '',
                     'Location 01' => '',
                     'Location 02' => '',
@@ -128,7 +131,7 @@ class UsersExport implements FromCollection, WithHeadings
             
             'Growth Stage',
             'Temperature',
-            'Number of Rice Days',
+            'Number of Rainny Days',
 
             'Pest Name',
             'Location 01',

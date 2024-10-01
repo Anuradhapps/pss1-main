@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\AiRange;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Collector;
 use App\Models\District;
 use App\Models\As_center;
-
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -37,20 +38,17 @@ class CollectorController extends Controller
         $id = Auth::user()->id;
 
         $collector  = Collector::where('user_id', $id)->first();
-        // dd($collector);
+
         if (empty($collector)) {
-            $districts = District::all();
-            $ascs = As_center::all();
-            return view('collectors.create', compact('districts', 'ascs'));
+            $provinces = Province::all();
+            return view('collectors.create', compact('districts', 'ascs', 'provinces'));
         } else {
 
-            $districts = District::all();
-            $selected_asc = $collector->asc;
-            $ascs = As_center::where('district_id', $collector->district)->get();
-
-            // return view('admin.collector.edit', compact('collector', 'districts', 'selected_asc', 'ascs'));
-
-            return view('collectors.edit', compact('collector', 'districts', 'selected_asc', 'ascs'));
+            $provinces = Province::all();
+            $districts = district::all();
+            $as_centers = As_center::all();
+            $ai_ranges= AiRange::all();
+            return view('collectors.edit', compact('collector',  'provinces','districts', 'as_centers','ai_ranges')); // Include provinces here
         }
     }
     /**
@@ -63,21 +61,24 @@ class CollectorController extends Controller
     {
         $request->validate([
             'phone_no' => 'required|unique:collectors',
+            'province' => 'required',
             'district' => 'required',
-            'asc' => 'required',
+            'as_center' => 'required',
             'ai_range' => 'required',
             'village' => 'required',
             //  'gps_lati' => 'required',
             //  'gps_long' => 'required',
-              'rice_variety' => 'required',
+            'rice_variety' => 'required',
             'date_establish' => 'required',
+            
         ]);
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
         $collector = new Collector([
             'user_id' => Auth::user()->id,
             'phone_no' => $request->get('phone_no'),
+            'province' => $request->get('province'),
             'district' => $request->get('district'),
-            'asc' => $request->get('asc'),
+            'asc' => $request->get('as_center'),
             'ai_range' => $request->get('ai_range'),
             'village' => $request->get('village'),
             'gps_lati' => $request->get('gps_lati'),
@@ -105,7 +106,7 @@ class CollectorController extends Controller
         $collector = Collector::join('users', 'collectors.user_id', '=', 'users.id')
             ->join('districts', 'collectors.district', '=', 'districts.id')
             ->join('as_centers', 'collectors.asc', '=', 'as_centers.id')
-            ->select('collectors.user_id','collectors.phone_no', 'collectors.ai_range', 'collectors.village', 'collectors.gps_lati', 'collectors.gps_long', 'collectors.rice_variety', 'collectors.date_establish', 'users.name', 'users.email', 'districts.name as dname', 'as_centers.name as asname')->get();
+            ->select('collectors.user_id', 'collectors.phone_no', 'collectors.ai_range', 'collectors.village', 'collectors.gps_lati', 'collectors.gps_long', 'collectors.rice_variety', 'collectors.date_establish', 'users.name', 'users.email', 'districts.name as dname', 'as_centers.name as asname')->get();
         return view('collectors.show-collectors')->with('collectors', $collector);
     }
     /**
@@ -131,27 +132,46 @@ class CollectorController extends Controller
      */
     public function update(Request $request, Collector $collector)
     {
+          
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
 
-           $collector->phone_no = $request->phone_no;
-           $collector->district = $request->district;
-           $collector->asc =$request->asc;
-           $collector->ai_range = $request->ai_range;
-           $collector->village= $request->village;
-           $collector->gps_lati = $request->gps_lati;
-           $collector->gps_long = $request->gps_long;
-           $collector->rice_variety = $request->rice_variety;
-           $collector->date_establish = $dateEstablish;
-           $collector->save();
+        $collector->phone_no = $request->phone_no;
+        $collector->province = $request->province;
+        $collector->district = $request->district;
+        $collector->asc = $request->as_center;
+        $collector->ai_range = $request->ai_range;
+        $collector->village = $request->village;
+        $collector->gps_lati = $request->gps_lati;
+        $collector->gps_long = $request->gps_long;
+        $collector->rice_variety = $request->rice_variety;
+        $collector->date_establish = $dateEstablish;
+        $collector->save();
         return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
     }
-   public function getAsCenters($Id)
+
+    // In your controller
+
+
+
+    public function getDistricts($provinceId)
     {
-        $as_centers = As_center::where('district_id', $Id)->get();
-        return response()->json($as_centers);
+        $districts = District::where('province_id', $provinceId)->get();
+        return response()->json($districts);
     }
-  
-  
+
+    public function getAsCenters($districtId)
+    {
+        $ascs = As_center::where('district_id', $districtId)->get();
+        return response()->json($ascs);
+    }
+
+    public function getAiRanges($ascId)
+    {
+        $airRanges = AiRange::where('as_center_id', $ascId)->get(); // Assuming you have a relationship set up for this
+        return response()->json($airRanges);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      *

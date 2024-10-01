@@ -23,6 +23,8 @@ class UserController extends Controller
 {
     public function exportUsers(Request $request)
     {
+        
+       
         // Validate the date inputs
         $validated = $request->validate([
             'start_date' => 'required|date',

@@ -6,17 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class As_center extends Model
+class AiRange extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function district()
+    public function as_center()
     {
-        return $this->belongsTo(district::class);
-    }
-    public function AiRange(){
-        return $this->hasMany(AiRange::class);
+        return $this->belongsTo(As_center::class);
     }
 }

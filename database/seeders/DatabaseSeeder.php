@@ -10,8 +10,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            districtSeeder::class,
-            AsCenterSeeder::class,
+            // districtSeeder::class,
+            // AsCenterSeeder::class,
+            // AiRangeSeeder::class,
+            ProvinceDistrictAscAiRangeSeeder::class,
             PestSeeder::class,
             AppDatabaseSeeder::class,
             AuditTrailsDatabaseSeeder::class,

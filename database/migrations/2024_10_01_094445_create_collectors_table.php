@@ -12,21 +12,21 @@ return new class extends Migration
     {
         Schema::create('collectors', function (Blueprint $table) {
             $table->id();
-            $table->char('user_id');
             $table->string('phone_no')->unique();
-            $table->unsignedBigInteger('district')->nullable(true);
-            $table->unsignedBigInteger('asc')->nullable(true);
-            $table->string('ai_range')->nullable(true);
+            $table->uuid('user_id'); // Change to UUID
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('province')->constrained('provinces')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('district')->constrained('districts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('asc')->constrained('as_centers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('ai_range')->constrained('ai_ranges')->onDelete('cascade')->onUpdate('cascade');
             $table->string('village')->nullable(true);
             $table->string('gps_lati')->nullable(true);
             $table->string('gps_long')->nullable(true);
             $table->string('rice_variety')->nullable(true);
             $table->date('date_establish')->nullable(true);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('district')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('asc')->references('id')->on('as_centers')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
+        
     }
 
     public function down()

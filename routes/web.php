@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Welcome::class);
 Route::get('/app', Dashboard::class)->name('admin');
-Route::post('/export-users', [UserController::class, 'exportUsers'])->name('export.users');
+
 //Route::get('/a',maindashboard::class)->name('main.dashboard');
 //unauthenticated
 Route::middleware(['web', 'guest'])->group(function () {
@@ -72,7 +72,10 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->prefix('a
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('admin')->group(function () {
     Route::get('/', Dashboard::class)->name('admin');
 
+    Route::get('/get-districts/{id}', [CollectorController::class, 'getDistricts'])->name('admin.get.districts');
     Route::get('/get-as-centers/{id}', [CollectorController::class, 'getAsCenters'])->name('admin.get.as.centers');
+    Route::get('/get-aiRanges/{id}', [CollectorController::class, 'getAiRanges'])->name('admin.get.ai.ranges');
+    
     Route::get('/specific-page-for-collector', [CollectorController::class, 'index'])->name('admin.collector.index');
     Route::get('/specific-page-for-collector/create', [CollectorController::class, 'create'])->name('admin.collector.create');
     Route::post('/specific-page-for-collector', [CollectorController::class, 'store'])->name('admin.collector.store');
@@ -92,6 +95,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 });
 //Admin only routes
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
+    
+    Route::post('/export-users', [UserController::class, 'exportUsers'])->name('export.users');
+    
     Route::get('/', Dashboard::class)->name('admin');
     Route::get('settings/system-settings', Settings::class)->name('admin.settings');
     Route::get('settings/roles', Roles::class)->name('admin.settings.roles.index');

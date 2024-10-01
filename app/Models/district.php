@@ -15,6 +15,10 @@ class district extends Model
         'name',
         'p_id'
     ];
+
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
     public function As_center()
     {
         return $this->hasMany(As_center::class);
