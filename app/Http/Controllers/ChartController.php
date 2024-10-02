@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Models\AiRange;
 use App\Models\As_center;
+use App\Models\Collector;
 use App\Models\district;
+use App\Models\PestDataCollect;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
@@ -32,9 +34,10 @@ class ChartController extends Controller
         //
     }
 
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+           $datas = Collector::where('ai_range', '=', $request->ai_range)->get();
+           return view('chart.show', ['datas' => $datas]);
     }
 
     public function edit($id)

@@ -13,7 +13,7 @@ class PestDataCollect extends Model
 
     protected $fillable = [
 
-        'common_data_collectors_id', 'pest_name', 'location_one', 'location_two', 'location_three', 'location_four', 'location_five', 'location_six', 'location_seven', 'location_eight', 'location_nine', 'location_ten','total'
+        'common_data_collectors_id', 'pest_name', 'location_one', 'location_two', 'location_three', 'location_four', 'location_five', 'location_six', 'location_seven', 'location_eight', 'location_nine', 'location_ten','total','mean','code',
     ];
     public function commonDataCollect()
     {

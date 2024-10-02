@@ -41,7 +41,7 @@ class CollectorController extends Controller
 
         if (empty($collector)) {
             $provinces = Province::all();
-            return view('collectors.create', compact('districts', 'ascs', 'provinces'));
+            return view('collectors.create');
         } else {
 
             $provinces = Province::all();

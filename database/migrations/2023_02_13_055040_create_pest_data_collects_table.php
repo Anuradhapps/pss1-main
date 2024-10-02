@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('location_nine');
             $table->integer('location_ten');
             $table->integer('total')->nullable();
+            $table->integer('mean');
+            $table->integer('code');
             $table->foreign('common_data_collectors_id')->references('id')->on('common_data_collects')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

@@ -5,23 +5,8 @@
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf
             <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>
-            <x-form.select name="province" label="Province:" id="province">
-                <option value="">-- Select Province --</option>
-                @foreach ($provinces as $province)
-                    <option value="{{ $province->id }}">{{ $province->name }}</option>
-                @endforeach
-            </x-form.select>
 
-            <x-form.select name="district" label="District:" id="district">
-                <option value="">-- Select District --</option>
-            </x-form.select>
-
-            <x-form.select name="as_center" label="ASC/Unit:" id="as_center">
-                <option value="">-- Select ASC --</option>
-            </x-form.select>
-            <x-form.select name="ai_range" label="AI Range:" id="ai_range">
-                <option value="">-- Select AI Range --</option>
-            </x-form.select>
+            <livewire:location-select />
 
             <x-form.input name="village" label="Village:">{{ old('village') }}</x-form.input>
             <x-form.input name="gps_lati" label="GPS Latitude:">{{ old('gps_lati') }}</x-form.input>
@@ -120,5 +105,5 @@
             }
         });
     </script>
-    
+
 </x-app-layout>
