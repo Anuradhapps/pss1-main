@@ -1,11 +1,10 @@
 <x-app-layout>
     <div class="flex justify-between">
-        <h1 class="text-2xl font-bold mb-4 text-red-900">Pests</h1>
-        <a href="{{ route('pest.create') }}" class="btn btn-primary ">Add</a>
+        <h1 class="text-2xl font-bold mb-4 text-red-900">Chart</h1>
     </div>
 
     <div class="m-5">
-        <x-form action="{{ route('admin.collector.store') }}">
+        <x-form action="">
             @csrf
             <x-form.select name="province" label="Province:" id="province">
                 <option value="">-- Select Province --</option>
@@ -34,7 +33,9 @@
             const districtDropdown = document.getElementById('district');
             const as_centerDropdown = document.getElementById('as_center');
             const aiRangeDropdown = document.getElementById('ai_range');
+            console.log(provinceDropdown);
             if (provinceDropdown) {
+            console.log(''provinceDropdown found'')
                 provinceDropdown.addEventListener('change', function() {
                     const provinceId = this.value;
                     const xhr = new XMLHttpRequest();

@@ -46,6 +46,8 @@
     <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
     <x-nav.link route="pest.index" icon="fas fa-bug">Pest</x-nav.link>
     <x-nav.link route="report.index" icon="fas fa-file-alt">Report</x-nav.link>
+    <x-nav.link route="chart.index" icon="fas fa-chart-bar">Charts</x-nav.link>
+
 @endif
 @if (can('view_audit_trails') || can('view_sent_emails'))
     <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
