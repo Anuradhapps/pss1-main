@@ -23,4 +23,9 @@ class RoleUser extends Model
     {
         return RoleUserFactory::new();
     }
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+   
 }

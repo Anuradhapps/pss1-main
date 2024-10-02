@@ -1,10 +1,12 @@
-@section('title', 'Add My info')
 <x-app-layout>
+    <div class="flex justify-between">
+        <h1 class="text-2xl font-bold mb-4 text-red-900">Pests</h1>
+        <a href="{{ route('pest.create') }}" class="btn btn-primary ">Add</a>
+    </div>
 
     <div class="m-5">
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf
-            <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>
             <x-form.select name="province" label="Province:" id="province">
                 <option value="">-- Select Province --</option>
                 @foreach ($provinces as $province)
@@ -22,12 +24,6 @@
             <x-form.select name="ai_range" label="AI Range:" id="ai_range">
                 <option value="">-- Select AI Range --</option>
             </x-form.select>
-
-            <x-form.input name="village" label="Village:">{{ old('village') }}</x-form.input>
-            <x-form.input name="gps_lati" label="GPS Latitude:">{{ old('gps_lati') }}</x-form.input>
-            <x-form.input name="gps_long" label="GPS Longitude:">{{ old('gps_long') }}</x-form.input>
-            <x-form.input name="rice_variety" label="Rice Variety:">{{ old('rice_variety') }}</x-form.input>
-            <x-form.date name="date_establish" label="Date Established:">{{ old('date_establish') }}</x-form.date>
             <x-form.submit>Save</x-form.submit>
         </x-form>
     </div>
@@ -38,15 +34,12 @@
             const districtDropdown = document.getElementById('district');
             const as_centerDropdown = document.getElementById('as_center');
             const aiRangeDropdown = document.getElementById('ai_range');
-
-    
-         
-            
             if (provinceDropdown) {
                 provinceDropdown.addEventListener('change', function() {
                     const provinceId = this.value;
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', '{{ route('admin.get.districts', ':provinceId') }}'.replace(':provinceId', provinceId));
+                    xhr.open('GET', '{{ route('admin.get.districts', ':provinceId') }}'.replace(
+                        ':provinceId', provinceId));
                     xhr.onload = function() {
                         if (xhr.status === 200) {
                             const districts = JSON.parse(xhr.responseText);
@@ -63,19 +56,21 @@
                     xhr.send();
                 });
             }
-    
+
             if (districtDropdown) {
                 districtDropdown.addEventListener('change', function() {
                     const districtId = this.value;
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', '{{ route('admin.get.as.centers', ':districtId') }}'.replace(':districtId', districtId));
+                    xhr.open('GET', '{{ route('admin.get.as.centers', ':districtId') }}'.replace(
+                        ':districtId', districtId));
                     xhr.onload = function() {
                         if (xhr.status === 200) {
                             const asCenters = JSON.parse(xhr.responseText);
-                            
+
                             if (as_centerDropdown) {
-                               
-                                as_centerDropdown.innerHTML = '<option value="">-- Select ASC --</option>'; // Reset ASC options
+
+                                as_centerDropdown.innerHTML =
+                                    '<option value="">-- Select ASC --</option>'; // Reset ASC options
                                 asCenters.forEach(function(asCenter) {
                                     const option = document.createElement('option');
                                     option.value = asCenter.id;
@@ -92,13 +87,14 @@
                     xhr.send();
                 });
             }
-    
+
             if (as_centerDropdown) {
                 console.log('aiRangeDropdown found')
                 as_centerDropdown.addEventListener('change', function() {
                     const ascId = this.value;
                     const xhr = new XMLHttpRequest();
-                    xhr.open('GET', '{{ route('admin.get.ai.ranges', ':ascId') }}'.replace(':ascId', ascId));
+                    xhr.open('GET', '{{ route('admin.get.ai.ranges', ':ascId') }}'.replace(':ascId',
+                        ascId));
                     xhr.onload = function() {
                         if (xhr.status === 200) {
                             const airRanges = JSON.parse(xhr.responseText);
@@ -120,5 +116,4 @@
             }
         });
     </script>
-    
 </x-app-layout>

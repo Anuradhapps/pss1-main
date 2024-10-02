@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFaController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\CommonDataCollectController;
 use App\Http\Controllers\PestDataCollectController;
@@ -122,4 +123,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/report/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');
     Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');
     Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
+
+
+    Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
 });

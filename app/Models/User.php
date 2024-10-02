@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Roles\HasRoles;
+use App\Models\Roles\RoleUser;
 use App\Models\Traits\HasUuid;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,5 +55,9 @@ class User extends Authenticatable
     public function commonDataCollect(){
 
         return $this->hasMany(CommonDataCollect::class, 'user_id', 'id');
+    }
+    public function roleUsers()
+    {
+        return $this->hasOne(RoleUser::class, 'user_id', 'id');
     }
 }

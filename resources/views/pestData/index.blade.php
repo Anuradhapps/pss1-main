@@ -28,6 +28,8 @@
                             <td class="py-4 px-6">
                                 <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 text-sm"
                                     href="{{ route('pestdata.show', $row->id) }}">view</a>
+                                <a class="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 text-sm"
+                                    href="{{ route('pestdata.edit', $row->id) }}">Edit</a>
                                 <form action="{{ route('pestdata.destroy', $row->id) }}" method="POST"
                                     style="display:inline;" onsubmit="return confirmDelete()">
                                     @csrf

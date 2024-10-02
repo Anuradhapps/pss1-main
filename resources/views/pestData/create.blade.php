@@ -9,25 +9,25 @@
         @csrf
         <div class="grid grid-cols-2 gap-2 mb-3">
             <div class="col-span-2 sm:col-span-1">
-                <x-form.date name="date_collected" label="Date of Collected Data:" />
+                <x-form.date name="date_collected" label="Date of Collected Data:">{{ old('date_collected') }}</x-form.date>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.input type="number" name="temperature" label="Temperature:">0</x-form.input>
+                <x-form.input type="number" name="temperature" label="Temperature:" min=-50 max=50>{{ old('temperature') }}</x-form.input>
             </div>
             <div class="col-span-2 sm:col-span-1">
                 <x-form.select id="growth_s_c" label="Growth Stage Code" class="block mt-1 w-full" name="growth_s_c">
                     <option value="">-- Select code --</option>
-                    @for ($i = 1; $i <= 10; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                    @for ($i = 1; $i <= 9; $i++)
+                        <option value="{{ $i }}" {{ old('growth_s_c') == $i ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor
                 </x-form.select>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.select id="growth_s_c" label="Number of Rainy Days:" class="block mt-1 w-full"
+                <x-form.select id="numbrer_r_day" label="Number of Rainy Days:" class="block mt-1 w-full"
                     name="numbrer_r_day">
-                    <option value="">-- Select Number of Rainy Days --</option>
+                    <option value="" >-- Select Number of Rainy Days --</option>
                     @for ($i = 1; $i <= 7; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        <option value="{{ $i }}" {{ old('numbrer_r_day') == $i ? 'selected' : '' }}>{{ $i }}</option>
                     @endfor
                 </x-form.select>
             </div>
@@ -45,7 +45,7 @@
                         <div class="grid  grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                             @for ($i = 1; $i <= 10; $i++)
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="Number_Of_Tillers_location_{{ $i }}" label="Location {{ $i }}:">0</x-form.input>
+                                        <x-form.input type="number" name="Number_Of_Tillers_location_{{ $i }}" label="Location {{ $i }}:" min=0 required>{{ old('Number_Of_Tillers_location_' . $i) }}</x-form.input>
                                     </div>
                             @endfor
                         </div>
@@ -59,7 +59,7 @@
                                 <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
                                 <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="{{ $pest->id }}all_location" label="All Location:">0</x-form.input>
+                                        <x-form.input type="number" name="{{ $pest->id }}all_location" label="All Location:" min=0>{{ old($pest->id . 'all_location') }}</x-form.input>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                                 @for ($i = 1; $i <= 10; $i++)
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="{{ $pest->id }}_location_{{ $i }}" label="Location {{ $i }}:">0</x-form.input>
+                                        <x-form.input type="number" name="{{ $pest->id }}_location_{{ $i }}" label="Location {{ $i }}:" min=0>{{ old($pest->id . '_location_' . $i) }}</x-form.input>
                                     </div>
                                 @endfor
                             </div>
@@ -82,7 +82,7 @@
                 @endforeach
 
             <div class="col-span-2 sm:col-span-1">
-                <x-form.textarea name="otherinfo" label="Other info:"></x-form.input>
+                <x-form.textarea name="otherinfo" label="Other info:">{{ old('otherinfo') }}</x-form.input>
             </div>
 
         </div>

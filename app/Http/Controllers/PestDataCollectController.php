@@ -29,17 +29,18 @@ class PestDataCollectController extends Controller
 
     public function store(Request $request)
     {
+
+
         $validatedRequest = $request->validate([
             'date_collected' => 'required',
             'growth_s_c' => 'required',
-            'temperature' => 'required',
             'numbrer_r_day' => 'required',
         ]);
 
         $CommonDataCollect = CommonDataCollect::create([
             'user_id' => Auth::user()->id,
             'c_date' =>Carbon::createFromFormat('d-m-Y', $validatedRequest['date_collected']) ,
-            'temperature' => $validatedRequest['temperature'],
+            'temperature' => $request->input('temperature')?:0,
             'growth_s_c' => $validatedRequest['growth_s_c'],
             'numbrer_r_day' => $validatedRequest['numbrer_r_day'],
             'otherinfo' => $request->input('otherinfo'),
@@ -48,16 +49,16 @@ class PestDataCollectController extends Controller
         PestDataCollect::create([
             'common_data_collectors_id' => $CommonDataCollect->id,
             'pest_name' => 'Number_Of_Tillers', // This should just get the name from the Pest model
-            'location_one' => $request->input('Number_Of_Tillers_location_1'),
-            'location_two' => $request->input('Number_Of_Tillers_location_2'),
-            'location_three' => $request->input('Number_Of_Tillers_location_3'),
-            'location_four' => $request->input('Number_Of_Tillers_location_4'),
-            'location_five' => $request->input('Number_Of_Tillers_location_5'),
-            'location_six' => $request->input('Number_Of_Tillers_location_6'),
-            'location_seven' => $request->input('Number_Of_Tillers_location_7'),
-            'location_eight' => $request->input('Number_Of_Tillers_location_8'),
-            'location_nine' => $request->input('Number_Of_Tillers_location_9'),
-            'location_ten' => $request->input('Number_Of_Tillers_location_10'),
+            'location_one' => $request->input('Number_Of_Tillers_location_1')?:0,
+            'location_two' => $request->input('Number_Of_Tillers_location_2')?:0,
+            'location_three' => $request->input('Number_Of_Tillers_location_3')?:0,
+            'location_four' => $request->input('Number_Of_Tillers_location_4')?:0,
+            'location_five' => $request->input('Number_Of_Tillers_location_5')?:0,
+            'location_six' => $request->input('Number_Of_Tillers_location_6')?:0,
+            'location_seven' => $request->input('Number_Of_Tillers_location_7')?:0,
+            'location_eight' => $request->input('Number_Of_Tillers_location_8')?:0,
+            'location_nine' => $request->input('Number_Of_Tillers_location_9')?:0,
+            'location_ten' => $request->input('Number_Of_Tillers_location_10')?:0,
             'total' =>
             $request->input('Number_Of_Tillers_location_1', 0) +
                 $request->input('Number_Of_Tillers_location_2', 0) +
@@ -92,16 +93,16 @@ class PestDataCollectController extends Controller
                 PestDataCollect::create([
                     'common_data_collectors_id' => $CommonDataCollect->id,
                     'pest_name' => $pest->name, // This should just get the name from the Pest model
-                    'location_one' => $request->input($pest->id . '_location_1'),
-                    'location_two' => $request->input($pest->id . '_location_2'),
-                    'location_three' => $request->input($pest->id . '_location_3'),
-                    'location_four' => $request->input($pest->id . '_location_4'),
-                    'location_five' => $request->input($pest->id . '_location_5'),
-                    'location_six' => $request->input($pest->id . '_location_6'),
-                    'location_seven' => $request->input($pest->id . '_location_7'),
-                    'location_eight' => $request->input($pest->id . '_location_8'),
-                    'location_nine' => $request->input($pest->id . '_location_9'),
-                    'location_ten' => $request->input($pest->id . '_location_10'),
+                    'location_one' => $request->input($pest->id . '_location_1')?:0,
+                    'location_two' => $request->input($pest->id . '_location_2')?:0,
+                    'location_three' => $request->input($pest->id . '_location_3')?:0,
+                    'location_four' => $request->input($pest->id . '_location_4')?:0,
+                    'location_five' => $request->input($pest->id . '_location_5')?:0,
+                    'location_six' => $request->input($pest->id . '_location_6')?:0,
+                    'location_seven' => $request->input($pest->id . '_location_7')?:0,
+                    'location_eight' => $request->input($pest->id . '_location_8')?:0,
+                    'location_nine' => $request->input($pest->id . '_location_9')?:0,
+                    'location_ten' => $request->input($pest->id . '_location_10')?:0,
                     'total' =>
                     $request->input($pest->id . '_location_1', 0) +
                         $request->input($pest->id . '_location_2', 0) +
@@ -139,10 +140,10 @@ class PestDataCollectController extends Controller
 
     public function update(Request $request, $Id)
     {
-
+      
         $commonData = CommonDataCollect::findOrFail($Id);
         $commonData->update([
-            'c_date' => $request->input('date_collected'),
+            'c_date' =>Carbon::createFromFormat('d-m-Y', $request->input('date_collected')),
             'temperature' => $request->input('temperature'),
             'numbrer_r_day'=> $request->input('numbrer_r_day'),
             'growth_s_c'=>$request->input('growth_s_c'),
@@ -170,16 +171,16 @@ class PestDataCollectController extends Controller
                 
                 $pestData->update([
                     
-                    'location_one' => $request->input($pestData->pest_name . '_location_1'),
-                    'location_two' => $request->input(key: $pestData->pest_name . '_location_2'),
-                    'location_three' => $request->input($pestData->pest_name . '_location_3'),  
-                    'location_four' => $request->input($pestData->pest_name . '_location_4'),
-                    'location_five' => $request->input($pestData->pest_name . '_location_5'),
-                    'location_six' => $request->input($pestData->pest_name . '_location_6'),
-                    'location_seven' => $request->input($pestData->pest_name . '_location_7'),
-                    'location_eight' => $request->input($pestData->pest_name . '_location_8'),
-                    'location_nine' => $request->input($pestData->pest_name . '_location_9'),
-                    'location_ten' => $request->input($pestData->pest_name . '_location_10'),
+                    'location_one' => $request->input($pestData->pest_name . '_location_1')?:0,
+                    'location_two' => $request->input(key: $pestData->pest_name . '_location_2')?:0,
+                    'location_three' => $request->input($pestData->pest_name . '_location_3')?:0,  
+                    'location_four' => $request->input($pestData->pest_name . '_location_4')?:0,
+                    'location_five' => $request->input($pestData->pest_name . '_location_5')?:0,
+                    'location_six' => $request->input($pestData->pest_name . '_location_6')?:0,
+                    'location_seven' => $request->input($pestData->pest_name . '_location_7')?:0,
+                    'location_eight' => $request->input($pestData->pest_name . '_location_8')?:0,
+                    'location_nine' => $request->input($pestData->pest_name . '_location_9')?:0,
+                    'location_ten' => $request->input($pestData->pest_name . '_location_10')?:0,
                     'total' =>
                     $request->input($pestData->pest_name . '_location_1', 0) +
                         $request->input($pestData->pest_name . '_location_2', 0) +

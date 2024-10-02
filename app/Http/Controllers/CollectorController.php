@@ -132,6 +132,18 @@ class CollectorController extends Controller
      */
     public function update(Request $request, Collector $collector)
     {
+        $request->validate([
+            'phone_no' => 'required',
+            'province' => 'required',
+            'district' => 'required',
+            'as_center' => 'required',
+            'ai_range' => 'required',
+            'village' => 'required',
+            'gps_lati' => 'required',
+            'gps_long' => 'required',
+            'rice_variety' => 'required',
+            'date_establish' => 'required',
+        ]);
           
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
 
