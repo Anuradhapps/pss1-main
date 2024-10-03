@@ -59,7 +59,7 @@
                                 <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
                                 <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="{{ $pest->id }}all_location" label="All Location:" min=0>{{ old($pest->id . 'all_location') }}</x-form.input>
+                                        <x-form.input type="number" name="{{ $pest->id }}all_location" label="Code:" min=0>{{ old($pest->id . 'all_location') }}</x-form.input>
                                     </div>
                                 </div>
                             </div>

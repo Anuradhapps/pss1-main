@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -12,22 +13,24 @@ class Collector extends Model
 
     protected $guarded = [];
 
-    public function district(){
+    public function district()
+    {
         return $this->belongsTo(District::class);
     }
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
-public function asCenter()
-{
-    return $this->belongsTo(As_center::class, 'asc');
-}
+    public function asCenter()
+    {
+        return $this->belongsTo(As_center::class, 'asc');
+    }
 
 
-public function aiRange()
-{
-    return $this->belongsTo(AiRange::class);
-}
+    public function aiRange()
+    {
+        return $this->belongsTo(AiRange::class);
+    }
+
 }

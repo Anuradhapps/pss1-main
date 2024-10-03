@@ -13,10 +13,14 @@ class PestDataCollect extends Model
 
     protected $fillable = [
 
-        'common_data_collectors_id', 'pest_name', 'location_one', 'location_two', 'location_three', 'location_four', 'location_five', 'location_six', 'location_seven', 'location_eight', 'location_nine', 'location_ten','total','mean','code',
+        'common_data_collectors_id', 'pest_name', 'location_1', 'location_2', 'location_3', 'location_4', 'location_5', 'location_6', 'location_7', 'location_8', 'location_9', 'location_10','total','mean','code',
     ];
     public function commonDataCollect()
     {
         return $this->belongsTo(CommonDataCollect::class, 'common_data_collectors_id');
+    }
+
+    public function pest(){
+        return $this->belongsTo(Pest::class);
     }
 }

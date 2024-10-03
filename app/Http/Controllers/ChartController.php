@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\Collector;
+use App\Models\CommonDataCollect;
 use App\Models\district;
 use App\Models\PestDataCollect;
 use App\Models\Province;
@@ -17,10 +18,6 @@ class ChartController extends Controller
     public function index()
     {
         $provinces = Province::all();
-        // $district = district::all();
-        // $as_centers = As_center::all();
-        // $ai_ranges= AiRange::all();
-
         return view('chart.index',['provinces' => $provinces]);
     }
 
@@ -35,9 +32,11 @@ class ChartController extends Controller
     }
 
     public function show(Request $request)
-    {
-           $datas = Collector::where('ai_range', '=', $request->ai_range)->get();
-           return view('chart.show', ['datas' => $datas]);
+    {       
+
+           $collector = Collector::where('ai_range', '=', $request->ai_range)->with('user')->get()->first();
+           $commonData = CommonDataCollect::where('user_id', '=', $collector->user_id)->get();
+           return view('chart.show', ['collector' => $collector,'commonData' => $commonData]);
     }
 
     public function edit($id)
