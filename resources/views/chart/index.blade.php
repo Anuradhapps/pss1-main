@@ -4,10 +4,10 @@
     </div>
 
     <div class="m-5">
-        <x-form action="{{ route('chart.show') }}">
+        <x-form action="{{ route('chart.chartAi') }}">
             @csrf
            <livewire:location-select/>
-            <x-form.submit>Save</x-form.submit>
+            <x-form.submit>View Chart</x-form.submit>
         </x-form>
     </div>
 

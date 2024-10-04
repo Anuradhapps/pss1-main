@@ -13,24 +13,25 @@ class Collector extends Model
 
     protected $guarded = [];
 
-    public function district()
+    public function getDistrict()
     {
-        return $this->belongsTo(District::class);
+        return $this->belongsTo(District::class, 'district');
+    }
+    public function getProvince()
+    {
+        return $this->belongsTo(Province::class, 'province');
+    }
+
+    public function getAsCenter()
+    {
+        return $this->belongsTo(As_center::class, 'asc');
+    }
+    public function getAiRange()
+    {
+        return $this->belongsTo(AiRange::class, 'ai_range');
     }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function asCenter()
-    {
-        return $this->belongsTo(As_center::class, 'asc');
-    }
-
-
-    public function aiRange()
-    {
-        return $this->belongsTo(AiRange::class);
-    }
-
 }
