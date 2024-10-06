@@ -34,19 +34,22 @@ class UsersExport implements FromCollection, WithHeadings
 
         foreach ($commonDataCollect as $cdata) {
             // Flag to check if there's pest data for the current $cdata
+
             $hasPestData = false;
             $check = true;
             foreach ($cdata->pestDataCollect as $pdata) {
                 if($check){
-                    $check = false;
+                    // $check = false;
                     $result[] = [
                         'Data Collected Date'      => $cdata->c_date,
                         'Name'                    => $cdata->user->name,
                         'Email'                   => $cdata->user->email,
                         'Phone Number'            => $cdata->user->collector ? $cdata->user->collector->phone_no : 'N/A',
-                        'Collector District'      => $cdata->user->collector ? district::where('id', $cdata->user->collector->district)->first()->name : 'N/A',
-                        'Collector ASC'           => $cdata->user->collector ? As_center::where('id', $cdata->user->collector->asc)->first()->name : 'N/A',
-                        'Collector Ai Range'      => $cdata->user->collector ? AiRange::where('id', $cdata->user->collector->ai_range)->first()->name : 'N/A',
+
+                        
+                        'Collector District'      => $cdata->user->collector ? district::where('id', $cdata->user->collector->getDistrict->id)->first()->name : 'N/A',
+                        'Collector ASC'           => $cdata->user->collector ? As_center::where('id', $cdata->user->collector->getAsCenter->id)->first()->name : 'N/A',
+                        'Collector Ai Range'      => $cdata->user->collector ? AiRange::where('id', $cdata->user->collector->getAiRange->id)->first()->name : 'N/A',
                         'Collector Village'        => $cdata->user->collector ? $cdata->user->collector->village : 'N/A',
                         'Collector GPS Latitude'   => $cdata->user->collector ? $cdata->user->collector->gps_lati : 'N/A',
                         'Collector GPS Longitude'   => $cdata->user->collector ? $cdata->user->collector->gps_long : 'N/A',
@@ -72,41 +75,42 @@ class UsersExport implements FromCollection, WithHeadings
                         'Code'                     => $pdata->code?: '0',
                         'Other Info'               => $cdata->otherinfo?: 'N/A',
                     ];
-                }else{
-                    $result[] = [
-                        'Data Collected Date'      => '',
-                        'Name'                    => '',
-                        'Email'                   => '',
-                        'Phone Number'            => '',
-                        'Collector District'      => '',
-                        'Collector ASC'           => '',
-                        'Collector Ai Range'      => '',
-                        'Collector Village'        => '',
-                        'Collector GPS Latitude'   => '',
-                        'Collector GPS Longitude'   =>'',
-                        'Collector Rice Variety'   => '',
-                        'Date Established'         => '',
-    
-                        'Growth Stage'             => '',
-                        'Temperature'              => '',
-                        'Number of Rainny Days'      => '',
-                        'Pest Name'                => $pdata->pest_name,
-                        'Location 01'              => $pdata->location_1?: '0',
-                        'Location 02'              => $pdata->location_2?: '0',
-                        'Location 03'              => $pdata->location_3?: '0',
-                        'Location 04'              => $pdata->location_4?: '0',
-                        'Location 05'              => $pdata->location_5?: '0',
-                        'Location 06'              => $pdata->location_6?: '0',
-                        'Location 07'              => $pdata->location_7?: '0',
-                        'Location 08'              => $pdata->location_8?: '0',
-                        'Location 09'              => $pdata->location_9?: '0',
-                        'Location 10'              => $pdata->location_10?: '0',
-                        'Total'                    => $pdata->total?: '0',
-                        'Mean'                     => $pdata->mean?: '0',
-                        'Code'                     => $pdata->code?: '0',
-                        'Other Info'               => '',
-                    ];
                 }
+                // else{
+                //     $result[] = [
+                //         'Data Collected Date'      => '',
+                //         'Name'                    => '',
+                //         'Email'                   => '',
+                //         'Phone Number'            => '',
+                //         'Collector District'      => '',
+                //         'Collector ASC'           => '',
+                //         'Collector Ai Range'      => '',
+                //         'Collector Village'        => '',
+                //         'Collector GPS Latitude'   => '',
+                //         'Collector GPS Longitude'   =>'',
+                //         'Collector Rice Variety'   => '',
+                //         'Date Established'         => '',
+    
+                //         'Growth Stage'             => '',
+                //         'Temperature'              => '',
+                //         'Number of Rainny Days'      => '',
+                //         'Pest Name'                => $pdata->pest_name,
+                //         'Location 01'              => $pdata->location_1?: '0',
+                //         'Location 02'              => $pdata->location_2?: '0',
+                //         'Location 03'              => $pdata->location_3?: '0',
+                //         'Location 04'              => $pdata->location_4?: '0',
+                //         'Location 05'              => $pdata->location_5?: '0',
+                //         'Location 06'              => $pdata->location_6?: '0',
+                //         'Location 07'              => $pdata->location_7?: '0',
+                //         'Location 08'              => $pdata->location_8?: '0',
+                //         'Location 09'              => $pdata->location_9?: '0',
+                //         'Location 10'              => $pdata->location_10?: '0',
+                //         'Total'                    => $pdata->total?: '0',
+                //         'Mean'                     => $pdata->mean?: '0',
+                //         'Code'                     => $pdata->code?: '0',
+                //         'Other Info'               => '',
+                //     ];
+                // }
                 
                 $hasPestData = true;
             }

@@ -1,7 +1,10 @@
 <x-app-layout>
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-bold mb-4 text-red-900">Chart</h1>
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold mb-4 text-white">District Chart</h1>
+        <a href="{{ route('chart.index') }}"
+           class="bg-red-800 text-white font-bold py-2 px-4 rounded hover:bg-red-900 text-sm mr-1">Back</a>
     </div>
+
 
     <div class="container px-2 mx-auto">
 

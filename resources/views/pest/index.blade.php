@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="flex justify-between">
-        <h1 class="text-2xl font-bold mb-4 text-red-900">Pests</h1>
+        <h1 class="text-2xl font-bold mb-4 text-white">Pests</h1>
        <a href="{{ route('pest.create') }}" class="btn btn-primary ">Add</a>
     </div>
     {{-- <x.-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
-
+    <x-success-massage/>
     <div class="p-6  border-b border-gray-200 overflow-x-auto">
         <table class="table-auto">
 
