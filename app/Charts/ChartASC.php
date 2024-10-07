@@ -13,13 +13,15 @@ class ChartASC
         $this->chart = $chart;
     }
 
-    public function build($collector): \ArielMejiaDev\LarapexCharts\BarChart
+    public function build($collectors): \ArielMejiaDev\LarapexCharts\BarChart
     {
+        
+
         return $this->chart->barChart()
-            ->setTitle('San Francisco vs Boston.')
-            ->setSubtitle('Wins during season 2021.')
-            ->addData('San Francisco', [6, 9, 3, 4, 10, 8])
-            ->addData('Boston', [7, 3, 8, 2, 6, 4])
+            ->setTitle('test')
+            ->setSubtitle('During season 2024.')
+            ->addData('test 1', [6, 9, 3, 4, 10, 8])
+            ->addData('test 2', [7, 3, 8, 2, 6, 4])
             ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
     }
 }

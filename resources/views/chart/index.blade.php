@@ -5,10 +5,11 @@
 
     {{-- Check if an error message is set in the session and display it --}}
     <x-error-massage />
-    <div class="m-5">
+    <div>&#x2705; = Already Have Data</div>
+    <div class="m-5 flex gap-5">
         <x-form action="{{ route('chart.chartAi') }}">
             @csrf
-            <livewire:location-select />
+            @livewire('location-select',['liveProvinces'=>$liveProvinces,'liveDistricts'=>$liveDistricts,'liveAsCenters'=>$liveAsCenters,'liveAiRanges'=>$liveAiRanges])
             <x-form.submit>View Chart</x-form.submit>
         </x-form>
     </div>

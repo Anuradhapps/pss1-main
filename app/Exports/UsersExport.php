@@ -47,9 +47,9 @@ class UsersExport implements FromCollection, WithHeadings
                         'Phone Number'            => $cdata->user->collector ? $cdata->user->collector->phone_no : 'N/A',
 
                         
-                        'Collector District'      => $cdata->user->collector ? district::where('id', $cdata->user->collector->getDistrict->id)->first()->name : 'N/A',
-                        'Collector ASC'           => $cdata->user->collector ? As_center::where('id', $cdata->user->collector->getAsCenter->id)->first()->name : 'N/A',
-                        'Collector Ai Range'      => $cdata->user->collector ? AiRange::where('id', $cdata->user->collector->getAiRange->id)->first()->name : 'N/A',
+                        'Collector District'      => $cdata->user->collector ? district::where('id', $cdata->user->collector->getDistrict->id)->latest()->first()->name : 'N/A',
+                        'Collector ASC'           => $cdata->user->collector ? As_center::where('id', $cdata->user->collector->getAsCenter->id)->latest()->first()->name : 'N/A',
+                        'Collector Ai Range'      => $cdata->user->collector ? AiRange::where('id', $cdata->user->collector->getAiRange->id)->latest()->first()->name : 'N/A',
                         'Collector Village'        => $cdata->user->collector ? $cdata->user->collector->village : 'N/A',
                         'Collector GPS Latitude'   => $cdata->user->collector ? $cdata->user->collector->gps_lati : 'N/A',
                         'Collector GPS Longitude'   => $cdata->user->collector ? $cdata->user->collector->gps_long : 'N/A',

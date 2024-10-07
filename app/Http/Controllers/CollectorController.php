@@ -37,7 +37,7 @@ class CollectorController extends Controller
     {
         $id = Auth::user()->id;
 
-        $collector  = Collector::where('user_id', $id)->first();
+        $collector  = Collector::where('user_id', $id)->latest()->first();
 
         if (empty($collector)) {
             $provinces = Province::all();
@@ -50,6 +50,9 @@ class CollectorController extends Controller
             $ai_ranges= AiRange::all();
             return view('collectors.edit', compact('collector',  'provinces','districts', 'as_centers','ai_ranges')); // Include provinces here
         }
+    }
+    public function createNew(){
+        return view('collectors.create');
     }
     /**
      * Store a newly created resource in storage.
@@ -146,7 +149,6 @@ class CollectorController extends Controller
         ]);
           
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
-
         $collector->phone_no = $request->phone_no;
         $collector->province = $request->province;
         $collector->district = $request->district;

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center px-3">
         <h1 class="text-2xl font-bold mb-4 text-white">District Chart</h1>
         <a href="{{ route('chart.index') }}"
            class="bg-red-800 text-white font-bold py-2 px-4 rounded hover:bg-red-900 text-sm mr-1">Back</a>

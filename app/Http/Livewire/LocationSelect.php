@@ -10,6 +10,10 @@ use Livewire\Component;
 
 class LocationSelect extends Component
 {
+    public $liveProvinces;
+    public $liveDistricts;
+    public $liveAsCenters;
+    public $liveAiRanges;
     public $provinces;
     public $districts;
     public $asCenters;

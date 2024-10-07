@@ -1,5 +1,10 @@
 @section('title', 'Add My info')
 <x-app-layout>
+<div class="flex justify-end aling-center gap-2" >
+    <span class="text-white">When start new season</span>
+    <a href="{{ route('collector.createNew') }}"
+            class="bg-green-800 text-white font-bold py-2 px-4 rounded hover:bg-green-900 text-sm mr-1">Add New Collector</a>
+</div>
     <div class="m-5">
         <x-form action="{{ route('admin.collector.update', $collector->id) }}">
             @csrf
@@ -37,7 +42,7 @@
             <x-form.input name="gps_lati" label="GPS Latitude:">{{ old('gps_lati', $collector->gps_lati) }}</x-form.input>
             <x-form.input name="gps_long" label="GPS Longitude:">{{ old('gps_long', $collector->gps_long) }}</x-form.input>
             <x-form.input name="rice_variety" label="Rice Variety:">{{ old('rice_variety', $collector->rice_variety) }}</x-form.input>
-            <x-form.date name="date_establish" label="Date Established:">{{ old('date_establish', $collector->date_establish) }}</x-form.date>
+            <x-form.date name="date_establish" label="Date Established:">{{ old('date_establish', $collector->date_establish)  }}</x-form.date>
             <x-form.submit>Save</x-form.submit>
         </x-form>
     </div>

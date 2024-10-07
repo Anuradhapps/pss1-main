@@ -100,7 +100,7 @@ class UserDatabaseSeeder extends Seeder
                 'date_establish' => Carbon::createFromTimestamp(rand(strtotime('2024-09-01'), strtotime('2024-09-10')))
             ]);
             //change for loop number to add more weekly data
-            for ($i = 1; $i <= 12; $i++) {
+            for ($i = 1; $i <= 3; $i++) {
                 $commonData = CommonDataCollect::firstOrCreate([
                     'user_id' => $testUser->id,
                     'c_date'  => Carbon::parse($collector->date_establish)->addWeeks(1 * $i),

@@ -79,6 +79,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
     
     Route::get('/specific-page-for-collector', [CollectorController::class, 'index'])->name('admin.collector.index');
     Route::get('/specific-page-for-collector/create', [CollectorController::class, 'create'])->name('admin.collector.create');
+    Route::get('/collector/create', [CollectorController::class, 'createNew'])->name('collector.createNew');
     Route::post('/specific-page-for-collector', [CollectorController::class, 'store'])->name('admin.collector.store');
     Route::post('/specific-page-for-collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
     Route::put('/specific-page-for-collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
@@ -127,4 +128,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.chartAi');
+    Route::get('/chart/table/{id}', [ChartController::class, 'chartTable']);
+    
 });
