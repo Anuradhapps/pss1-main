@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('collectors', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(RiceSeason::class)->constrained('rice_seasons')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('phone_no')->unique();
+            $table->string('phone_no');
             $table->uuid('user_id'); // Change to UUID
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('province')->constrained('provinces')->onDelete('cascade')->onUpdate('cascade');

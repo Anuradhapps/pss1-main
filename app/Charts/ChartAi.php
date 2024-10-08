@@ -29,12 +29,12 @@ class ChartAi
 
         $dataArray = [];
         $i = 0;
-        $cdataCount = $collector->user->commonDataCollect->count();
+        $cdataCount = $collector->commonDataCollect->count();
         $colorArray = [];
         for ($j = 0; $j < $cdataCount; $j++) {
             $colorArray[] = '#' . substr(md5(mt_rand()), 0, 6);
         }
-        foreach ($collector->user->commonDataCollect as $cdata) {
+        foreach ($collector->commonDataCollect as $cdata) {
             // Initialize the c_data and an empty array for p_data
             $dataArray[] = [
                 'c_data' => $cdata->c_date,

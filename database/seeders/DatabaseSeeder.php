@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AuditTrailsDatabaseSeeder::class,
             RolesDatabaseSeeder::class,
             SentEmailsDatabaseSeeder::class,
-            UserDatabaseSeeder::class
+            UserDatabaseSeeder::class,
+            DummySeeder::class
             
         ]);
 

@@ -45,13 +45,18 @@ class RiceSeasonController extends Controller
         //
     }
 
-    public function getSeasson($year=null) {
+    public function getSeasson($year=null,$season=null) {
         $date=0;
         // Get the current date
         if($year==null){
             $date = Carbon::now();
         }else{
-            $date = Carbon::create($year, 7, 1);
+            if($season=='yala'){
+                $date = Carbon::create($year, 3, 1);
+            }elseif($season=='maha'){
+                $date = Carbon::create($year, 10, 1);
+            }
+            
         }
         
         // $date = Carbon::create(2022-01-01);
@@ -67,7 +72,7 @@ class RiceSeasonController extends Controller
                 'startDate' => "$currentYear-03-01",
                 'endDate' => "$currentYear-09-30",
                 'seasonName' => "$currentYear Yala",
-                'seasonId'=>$currentYear
+                'seasonId'=>$currentYear.$currentYear
             ];
         } else {
             // Maha season (October 1 to February 28/29)

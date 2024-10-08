@@ -112,7 +112,7 @@ public $season;
     public function chartTable($id)
     {
         // $collector = Collector::find($id);
-        $collector = Collector::where('id', '=', $id)->where('rice_season_id', '=', $this->season['seasonId'])->latest()->get()->first();
+        $collector = Collector::where('id', '=', $id)->get()->first();
 
         return view('chart.dataTable', ['collector' => $collector]);
     }

@@ -13,23 +13,14 @@ class RiceSeasonSeeder extends Seeder
     public function run()
     {
         $riceSeason = new RiceSeasonController();
-        // $thisRiceSeason = $riceSeason->getSeasson();
-        // RiceSeason::create([
-        //     'id'=>$thisRiceSeason['seasonId'],
-        //     'name'=>$thisRiceSeason['seasonName'],
-        //     'start_date'=>$thisRiceSeason['startDate'],
-        //     'end_date'=>$thisRiceSeason['endDate'],
-        // ]);
-        $riceSeasonIds=[2022,2023,2024];
-        foreach($riceSeasonIds as $id){
-            $thisRiceSeason = $riceSeason->getSeasson($id);
-            RiceSeason::create([
-                'id'=>$thisRiceSeason['seasonId'],
-                'name'=>$thisRiceSeason['seasonName'],
-                'start_date'=>$thisRiceSeason['startDate'],
-                'end_date'=>$thisRiceSeason['endDate'],
-            ]); 
-        }
+        $thisRiceSeason = $riceSeason->getSeasson();
+        RiceSeason::create([
+            'id'=>$thisRiceSeason['seasonId'],
+            'name'=>$thisRiceSeason['seasonName'],
+            'start_date'=>$thisRiceSeason['startDate'],
+            'end_date'=>$thisRiceSeason['endDate'],
+        ]);
+        
 
     }
 }

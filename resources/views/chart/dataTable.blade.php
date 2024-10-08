@@ -32,7 +32,7 @@
     </div>
     
     
-    @foreach ($collector->user->commonDataCollect as $commonData)
+    @foreach ($collector->commonDataCollect as $commonData)
         <div class="container px-2 mx-auto">
 
             <div class="p-4 m-1 bg-gray-800 rounded shadow mb-3">
