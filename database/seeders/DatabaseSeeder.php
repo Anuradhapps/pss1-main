@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             // districtSeeder::class,
             // AsCenterSeeder::class,
             // AiRangeSeeder::class,
+            RiceSeasonSeeder::class,
             ProvinceDistrictAscAiRangeSeeder::class,
             PestSeeder::class,
             AppDatabaseSeeder::class,

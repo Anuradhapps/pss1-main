@@ -10,11 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommonDataCollect extends Model
 {
     use HasFactory;
-    protected $fillable = [
-
-        'user_id', 'c_date', 'temperature', 'numbrer_r_day', 'growth_s_c','otherdet','otherinfo'
-
-    ];
+    protected $guarded = [];
 
     public function user()
     {
@@ -23,5 +19,8 @@ class CommonDataCollect extends Model
     public function pestDataCollect()
     {
         return $this->hasMany(PestDataCollect::class, 'common_data_collectors_id');
+    }
+    public function collector(){
+        return $this->belongsTo(Collector::class);
     }
 }

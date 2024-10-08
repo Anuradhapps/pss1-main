@@ -7,8 +7,14 @@
     <x-error-massage />
     <div>&#x2705; = Already Have Data</div>
     <div class="m-5 flex gap-5">
-        <x-form action="{{ route('chart.chartAi') }}">
+        <x-form action="{{ route('chart.show') }}">
             @csrf
+            <x-form.select name="season" label="season" id="season" required>
+                <option value="">-- Select Season --</option>
+                @foreach ($seasons as $season)
+                    <option value="{{ $season->id }}">{{ $season->name }}</option>
+                @endforeach
+            </x-form.select>
             @livewire('location-select',['liveProvinces'=>$liveProvinces,'liveDistricts'=>$liveDistricts,'liveAsCenters'=>$liveAsCenters,'liveAiRanges'=>$liveAiRanges])
             <x-form.submit>View Chart</x-form.submit>
         </x-form>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Collector;
 use App\Models\CommonDataCollect;
 use App\Models\Pest;
 use App\Models\PestDataCollect;
@@ -20,12 +21,24 @@ class PestDataCollectController extends Controller
     public $totalPests;
     public $mean;
     public $code;
+    public  $thisSeasonId;
+    public $thisSeason;
+    public function __construct(){
+         $season = new RiceSeasonController;
+         $this->thisSeason =  $season->getSeasson();
+         $this->thisSeasonId =  $season->getSeasson()['seasonId'];
+    }
     public function index()
     {
         $user = Auth::user();
-        $CommonData = CommonDataCollect::where('user_id', '=', $user->id)->latest()->get();
+        $collector = Collector::where('user_id', $user->id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
+        if($collector){
+            $CommonData = CommonDataCollect::where('user_id', '=', $user->id)->latest()->get();
 
-        return view('pestData.index', ['CommonData' => $CommonData]);
+            return view('pestData.index', ['CommonData' => $CommonData]);
+        }
+        return redirect()->route('admin.collector.create')->with('error', 'Please Create Collector');
+        
     }
 
     public function create()

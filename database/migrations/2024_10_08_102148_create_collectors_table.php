@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\RiceSeason;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('collectors', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(RiceSeason::class)->constrained('rice_seasons')->onDelete('cascade')->onUpdate('cascade');
             $table->string('phone_no')->unique();
             $table->uuid('user_id'); // Change to UUID
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -3,6 +3,7 @@
 namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Exception;
 
 class ChartAi
 {
@@ -17,7 +18,7 @@ class ChartAi
     {
         try {
             $pestData = $collector->user->commonDataCollect[0]->pestDataCollect->toArray();
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return redirect()->route('chart.index')->with('error', 'No data found');
         }
 
@@ -52,7 +53,7 @@ class ChartAi
 
         $chart = $this->chart->barChart()
             ->setTitle($collector->getProvince->name . ' > ' . $collector->getDistrict->name . ' > ' . $collector->getAsCenter->name . ' > ' . $collector->getAiRange->name . ' > ')
-            ->setSubtitle('During Maha season 2024/25')
+            ->setSubtitle($collector->riceSeason->name)
             ->setXAxis($pests)
             ->setColors($colorArray)
             ->setGrid('#3F51B5', 0.1)

@@ -127,7 +127,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
-    Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.chartAi');
+    Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
     Route::get('/chart/table/{id}', [ChartController::class, 'chartTable']);
     
 });

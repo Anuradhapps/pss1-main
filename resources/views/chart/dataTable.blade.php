@@ -23,6 +23,12 @@
                 {{ $collector->phone_no }}
             </div>
         </div>
+        <div class="flex justify-between mb-2">
+            <div class="text-white text-lg font-semibold">Season</div>
+            <div class="text-gray-400 text-lg font-semibold">
+                {{ $collector->riceSeason->name }}
+            </div>
+        </div>
     </div>
     
     

@@ -2,6 +2,8 @@
 <x-app-layout>
 
     <div class="m-5">
+        <h3 class="mb-2">{{ $season }}</h3>
+        <x-error-massage/>
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf
             <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>

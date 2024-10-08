@@ -1,11 +1,8 @@
 @section('title', 'Add My info')
 <x-app-layout>
-<div class="flex justify-end aling-center gap-2" >
-    <span class="text-white">When start new season</span>
-    <a href="{{ route('collector.createNew') }}"
-            class="bg-green-800 text-white font-bold py-2 px-4 rounded hover:bg-green-900 text-sm mr-1">Add New Collector</a>
-</div>
+
     <div class="m-5">
+        <h3 class="mb-2">{{ $season }}</h3>
         <x-form action="{{ route('admin.collector.update', $collector->id) }}">
             @csrf
             @method('PUT')

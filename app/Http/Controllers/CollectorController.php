@@ -20,8 +20,14 @@ class CollectorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
+    public  $thisSeasonId;
+    public $thisSeason;
+    public function __construct(){
+         $season = new RiceSeasonController;
+         $this->thisSeason =  $season->getSeasson();
+         $this->thisSeasonId =  $season->getSeasson()['seasonId'];
+    }
+    
     public function index()
     {
         return view('collectors.index');
@@ -37,18 +43,20 @@ class CollectorController extends Controller
     {
         $id = Auth::user()->id;
 
-        $collector  = Collector::where('user_id', $id)->latest()->first();
+        $collector  = Collector::where('user_id', $id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
+        $season = $this->thisSeason['seasonName'];
+
 
         if (empty($collector)) {
             $provinces = Province::all();
-            return view('collectors.create');
+            return view('collectors.create',['season'=>$season]);
         } else {
 
             $provinces = Province::all();
             $districts = district::all();
             $as_centers = As_center::all();
             $ai_ranges= AiRange::all();
-            return view('collectors.edit', compact('collector',  'provinces','districts', 'as_centers','ai_ranges')); // Include provinces here
+            return view('collectors.edit', compact('collector',  'provinces','districts', 'as_centers','ai_ranges','season')); // Include provinces here
         }
     }
     public function createNew(){
@@ -62,6 +70,7 @@ class CollectorController extends Controller
      */
     public function store(Request $request)
     {
+  
         $request->validate([
             'phone_no' => 'required|unique:collectors',
             'province' => 'required',
@@ -76,8 +85,10 @@ class CollectorController extends Controller
             
         ]);
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
+
         $collector = new Collector([
             'user_id' => Auth::user()->id,
+            'rice_season_id'=>$this->thisSeasonId,
             'phone_no' => $request->get('phone_no'),
             'province' => $request->get('province'),
             'district' => $request->get('district'),
