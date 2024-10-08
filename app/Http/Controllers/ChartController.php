@@ -112,7 +112,7 @@ class ChartController extends Controller
     }
 
     public function getAiChartData($aiRangeId){
-        dd($this->getSeasson());
+        
         $collector = Collector::where('ai_range', '=', $aiRangeId)->with('user')->get()->first();
         if ($collector == null) {
             return redirect()->route('chart.index')->with('error', 'No data found');
