@@ -49,6 +49,8 @@ class PestDataCollectController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $collector = Collector::where('user_id', $user->id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
         $validatedRequest = $request->validate([
             'date_collected' => 'required',
             'growth_s_c' => 'required',
@@ -67,6 +69,7 @@ class PestDataCollectController extends Controller
 
         $CommonDataCollect = CommonDataCollect::create([
             'user_id' => Auth::user()->id,
+            'collector_id'=>$collector->id,
             'c_date' => Carbon::createFromFormat('d-m-Y', $validatedRequest['date_collected']),
             'temperature' => $request->input('temperature') ?: 0,
             'growth_s_c' => $validatedRequest['growth_s_c'],

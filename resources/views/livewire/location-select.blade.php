@@ -6,7 +6,7 @@
                 @if ($liveProvinces)
                     @foreach ($liveProvinces as $liveProvince)
                         @if ($liveProvince == $province->id)
-                            &#x2705;
+                            &#x2705; 
                         @endif
                     @endforeach
                 @endif
@@ -22,7 +22,7 @@
                  @if ($liveDistricts)
                     @foreach ($liveDistricts as $liveDistrict)
                         @if ($liveDistrict == $district->id)
-                            &#x2705;
+                            &#x2705; 
                         @endif
                     @endforeach
                 @endif
@@ -54,7 +54,7 @@
                  @if ($liveAiRanges)
                     @foreach ($liveAiRanges as $liveAiRange)
                         @if ($liveAiRange == $aiRange->id)
-                            &#x2705;
+                            &#x2705; 
                         @endif
                     @endforeach
                 @endif

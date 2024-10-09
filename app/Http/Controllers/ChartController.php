@@ -8,6 +8,7 @@ use App\Charts\ChartAi;
 use App\Charts\ChartASC;
 use App\Charts\ChartDistrict;
 use App\Charts\ChartProvince;
+use App\Charts\ChartSeason;
 use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\Collector;
@@ -22,20 +23,15 @@ use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
 class ChartController extends Controller
 {
-public $season;
-    public function __construct(){
+    public $season;
+    public function __construct()
+    {
         $season = new RiceSeasonController;
         $this->season =  $season->getSeasson();
     }
     public function index()
     {
-        $liveProvinces = Collector::distinct()->pluck('province')->toArray();
-        $liveDistricts = Collector::distinct()->pluck('district')->toArray();
-        $liveAsCenters = Collector::distinct()->pluck('asc')->toArray();
-        $liveAiRanges = Collector::distinct()->pluck('ai_range')->toArray();
-        $seasons = RiceSeason::all();
-        $provinces = Province::all();
-        return view('chart.index', ['provinces' => $provinces, 'liveProvinces' => $liveProvinces, 'liveDistricts' => $liveDistricts, 'liveAsCenters' => $liveAsCenters, 'liveAiRanges' => $liveAiRanges,'seasons'=>$seasons]);
+        return view('chart.index');
     }
 
     public function create()
@@ -51,10 +47,6 @@ public $season;
     public function show(Request $request)
     {
 
-        //    $collector = Collector::where('ai_range', '=', $request->ai_range)->with('user')->get()->first();
-        //    $commonData = CommonDataCollect::where('user_id', '=', $collector->user_id)->get();
-        //    return view('chart.show', ['collector' => $collector,'commonData' => $commonData]);
-        return view('chart.show');
     }
 
     public function edit($id)
@@ -72,42 +64,58 @@ public $season;
         //
     }
 
-    public function chart(ChartAi $chartAi, ChartASC $chartASC, ChartDistrict $chartDistrict, ChartProvince $chartProvince, Request $request)
+    public function chart(ChartAi $chartAi, ChartASC $chartASC, ChartDistrict $chartDistrict, ChartProvince $chartProvince, ChartSeason $chartSeason, Request $request)
     {
         $request->validate([
-            'season'=>'required',
-            'province' => 'required',
+            'season' => 'required',
         ]);
 
         if ($request->province && $request->district && $request->as_center && $request->ai_range && $request->season) {
-            $collector = Collector::where('ai_range', '=', $request->ai_range)->where('rice_season_id', '=', $request->season)->get()->first();
-            if ($collector == null) {
+            $aiCollector = Collector::where('ai_range', '=', $request->ai_range)->where('rice_season_id', '=', $request->season)->get()->first();
+            if ($aiCollector == null) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                return view('chart.showAi', ['chart' => $chartAi->build($collector), 'collector' => $collector]);
+                return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
             }
-        } elseif ($request->province && $request->district && $request->as_center) {
-            $collectors = $this->getAscChartData($request->as_center);
-            return view('chart.showASC', ['chart' => $chartASC->build($collectors)]);
-        } elseif ($request->province && $request->district) {
-            $collector = Collector::where('district', '=', $request->district)->with('user')->get()->first();
-            if ($collector == null) {
+        } elseif ($request->province && $request->district && $request->as_center && $request->season) {
+            $ascCollectors  = Collector::where('asc', '=', $request->as_center)->where('rice_season_id', '=', $request->season)->get();
+            if ($ascCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
+            } else {
+                dd('ASC',$ascCollectors);
+                return view('chart.showASC', ['chart' => $chartASC->build($ascCollectors)]);
             }
-            return view('chart.showDistrict', ['chart' => $chartDistrict->build($collector)]);
-        } elseif ($request->province) {
-            $riceSeason = new RiceSeasonController;
-            dd($riceSeason->getSeasson()['seasonId']);
-
-            $collector = Collector::where('province', '=', $request->province)->with('user')->get()->first();
-            if ($collector == null) {
+        } elseif ($request->province && $request->district && $request->season) {
+            $districtCollectors = Collector::where('district', '=', $request->district)->where('rice_season_id', '=', $request->season)->get();
+            if ($districtCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
+            } else {
+                dd('District',$districtCollectors);
+                return view('chart.showDistrict', ['chart' => $chartDistrict->build($districtCollectors)]);
             }
-            return view('chart.showProvince', ['chart' => $chartProvince->build($collector)]);
+        } elseif ($request->province && $request->season) {
+            $provinceCollectors = Collector::where('province', '=', $request->province)->where('rice_season_id', '=', $request->season)->get();
+            
+            if ( $provinceCollectors->count() == 0) {
+                return redirect()->route('chart.index')->with('error', 'No data found');
+            } else {
+                dd('Province',$provinceCollectors);
+                return view('chart.showProvince', ['chart' => $chartProvince->build( $provinceCollectors)]);
+            }
+        }elseif ($request->season) {
+            $seasonCollectors = Collector::where('rice_season_id', '=', $request->season)->get();
+            
+            if ( $seasonCollectors->count() == 0) {
+                return redirect()->route('chart.index')->with('error', 'No data found');
+            } else {
+                dd('Season',$seasonCollectors);
+                return view('chart.showSeason', ['chart' => $chartSeason->build( $seasonCollectors)]);
+            }
         } else {
             return redirect()->route('chart.index')->with('error', 'No data found');
         }
     }
+
 
     public function chartTable($id)
     {
@@ -118,12 +126,5 @@ public $season;
     }
 
 
-    public function getAscChartData($aiRangeId)
-    {
-        $collectors = Collector::where('asc', '=', $aiRangeId)->get();
-        if ($collectors == null) {
-            return redirect()->route('chart.index')->with('error', 'No data found');
-        }
-        return $collectors;
-    }
+    
 }

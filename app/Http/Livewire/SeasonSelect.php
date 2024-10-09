@@ -4,16 +4,20 @@ namespace App\Http\Livewire;
 
 use App\Models\AiRange;
 use App\Models\As_center;
+use App\Models\Collector;
 use App\Models\district;
 use App\Models\Province;
+use App\Models\RiceSeason;
 use Livewire\Component;
 
-class LocationSelect extends Component
+class SeasonSelect extends Component
 {
+    public $seasons;
     public $liveProvinces;
     public $liveDistricts;
     public $liveAsCenters;
     public $liveAiRanges;
+    public $selectedSeason;
     public $provinces;
     public $districts;
     public $asCenters;
@@ -22,15 +26,18 @@ class LocationSelect extends Component
     public $selectedDistrict;
     public $selectedAsCenter;
     public $selectedAiRange;
-
     public function mount(){
-
-        $this->provinces = Province::all();
+        $this->seasons = RiceSeason::all();
+        
     }
-    public function render()
-    {
-
-        return view('livewire.location-select');
+   
+    public function updatedselectedSeason(){
+        $this->provinces = Province::all();
+        $this->liveProvinces = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('province')->toArray();
+        $this->liveDistricts = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('district')->toArray();
+        $this->liveAsCenters = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('asc')->toArray();
+        $this->liveAiRanges = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('ai_range')->toArray();
+ 
     }
     public function updatedselectedProvince()
     {
@@ -43,5 +50,9 @@ class LocationSelect extends Component
     public function updatedselectedAsCenter()
     {
         $this->aiRanges = AiRange::where('as_center_id', $this->selectedAsCenter)->get();
+    }
+    public function render()
+    {
+        return view('livewire.season-select');
     }
 }
