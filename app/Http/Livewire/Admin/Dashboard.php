@@ -19,8 +19,6 @@ public $test;
         return view('livewire.admin.dashboard');
     }
 
-    public function test(){
-        dd($this->test);
-        }
+ 
     
 }

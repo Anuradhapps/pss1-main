@@ -27,7 +27,8 @@ use App\Http\Livewire\Admin\Users\Users;
 use App\Http\Livewire\Welcome;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Welcome::class);
+// Route::get('/', Welcome::class);
+Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/app', Dashboard::class)->name('admin');
 
 //Route::get('/a',maindashboard::class)->name('main.dashboard');

@@ -28,7 +28,7 @@
                 <x-form.select id="numbrer_r_day" label="Number of Rainy Days:" class="block mt-1 w-full"
                     name="numbrer_r_day">
                     <option value="">-- Select Number of Rainy Days --</option>
-                    @for ($i = 1; $i <= 7; $i++)
+                    @for ($i = 0; $i <= 7; $i++)
                         <option value="{{ $i }}" {{ $commonData->numbrer_r_day == $i ? 'selected' : '' }}>
                             {{ $i }}</option>
                     @endfor
