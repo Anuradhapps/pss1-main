@@ -73,7 +73,7 @@
                                 </th>
                                 @for ($i = 1; $i <= 10; $i++)
                                     <th scope="col" class="py-2 px-2 hidden sm:table-cell">
-                                        L-{{ $i }}
+                                        SP-{{ $i }}
                                     </th>
                                 @endfor
                                 <th scope="col" class="py-2 px-2">

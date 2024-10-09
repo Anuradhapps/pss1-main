@@ -45,7 +45,7 @@
                         <div class="grid  grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                             @for ($i = 1; $i <= 10; $i++)
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="Number_Of_Tillers_location_{{ $i }}" label="Location {{ $i }}:" min=0 required>{{ old('Number_Of_Tillers_location_' . $i) }}</x-form.input>
+                                        <x-form.input type="number" name="Number_Of_Tillers_location_{{ $i }}" label="Sample Point {{ $i }}" min=0 required>{{ old('Number_Of_Tillers_location_' . $i) }}</x-form.input>
                                     </div>
                             @endfor
                         </div>
@@ -72,7 +72,7 @@
                             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10 gap-4">
                                 @for ($i = 1; $i <= 10; $i++)
                                     <div class="col-span-1">
-                                        <x-form.input type="number" name="{{ $pest->id }}_location_{{ $i }}" label="Location {{ $i }}:" min=0>{{ old($pest->id . '_location_' . $i) }}</x-form.input>
+                                        <x-form.input type="number" name="{{ $pest->id }}_location_{{ $i }}" label="Sample Point {{ $i }}" min=0>{{ old($pest->id . '_location_' . $i) }}</x-form.input>
                                     </div>
                                 @endfor
                             </div>
