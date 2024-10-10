@@ -41,7 +41,7 @@ class DummySeeder extends Seeder
         //uncomment below when production-----------------------------
         $aiRanges = AiRange::all();
         $seasons = RiceSeason::all();
-        $DataWeeeks = 3;
+        $DataWeeeks = 2;
         foreach ($aiRanges as $aiRange) {
             $counter = $aiRange->id;
             $testUser = User::firstOrCreate(['email' => 'test@domain.com'], [
