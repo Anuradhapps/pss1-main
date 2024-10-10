@@ -129,7 +129,7 @@ class PestDataCollectController extends Controller
                     'code' => $this->thripsCode ?: 0
                 ]);
             } else {
-                for ($i = 0; $i < 10; $i++) {
+                for ($i = 1; $i <= 10; $i++) {
                     $this->totalPests += $request->input($pest->id . '_location_' . $i, 0);
                 };
                 switch ($pest->name) {
