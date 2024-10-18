@@ -59,7 +59,7 @@ class ChangePassword extends Base
     public function update(): void
     {
         $this->validate();
-
+        
         $this->user->password = Hash::make($this->newPassword);
         $this->user->save();
 

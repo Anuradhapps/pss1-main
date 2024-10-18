@@ -87,12 +87,18 @@ class Users extends Base
 
     public function deleteUser($id): void
     {
-        abort_if_cannot('delete_user');
+        // abort_if_cannot('delete_user');
+            
+        $user = User::findOrFail($id);
 
-        $this->builder()->findOrFail($id)->delete();
-
-        $this->dispatchBrowserEvent('close-modal');
+        // Check if the user is deleted
+        if ($user->forceDelete()) {
+            $this->dispatchBrowserEvent('close-modal');
+        } else {
+            dd('Delete operation failed'); // Debugging line
+        }
     }
+    
 
     public function resendInvite($id): void
     {

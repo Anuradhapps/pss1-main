@@ -12,7 +12,7 @@ class Province extends Model
 
     protected $guarded = [];
     public function district() {
-        return $this->hasMany(District::class);
+        return $this->hasMany(district::class);
     }
 
     public function collector(){

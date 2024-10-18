@@ -15,7 +15,7 @@ class Collector extends Model
 
     public function getDistrict()
     {
-        return $this->belongsTo(District::class, 'district');
+        return $this->belongsTo(district::class, 'district');
     }
     public function getProvince()
     {
