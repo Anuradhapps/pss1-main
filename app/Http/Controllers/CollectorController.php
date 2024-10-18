@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\AiRange;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Collector;
-use App\Models\District;
+use App\Models\district;
 use App\Models\As_center;
 use App\Models\Province;
 use Illuminate\Http\Request;
