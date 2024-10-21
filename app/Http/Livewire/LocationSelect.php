@@ -22,13 +22,13 @@ class LocationSelect extends Component
     public $selectedDistrict;
     public $selectedAsCenter;
     public $selectedAiRange;
-    public $collector;
+    // public $collector;
 
 
-    public function mount($collector){
+    public function mount(){
 
         $this->provinces = Province::all();
-        $this->collector = $collector;
+        // $this->collector = $collector;
     }
     public function render()
     {
