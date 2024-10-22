@@ -24,11 +24,13 @@ use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
 class ChartController extends Controller
 {
+    protected $PestDataCollectController;
     public $season;
     public function __construct()
     {
         $season = new RiceSeasonController;
-        $this->season =  $season->getSeasson();
+        $this->season = $season->getSeasson();
+        $this->PestDataCollectController = new PestDataCollectController();
     }
     public function index()
     {
@@ -81,100 +83,109 @@ class ChartController extends Controller
                 } catch (Exception $e) {
                     return redirect()->route('chart.index')->with('error', 'No data found');
                 }
-        
+
                 return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
             }
-        } 
-        
-        elseif ($request->province && $request->district && $request->as_center && $request->season) {
-            $ascCollectors  = Collector::where('asc', '=', $request->as_center)->where('rice_season_id', '=', $request->season)->get();
+        } elseif ($request->province && $request->district && $request->as_center && $request->season) {
+            $ascCollectors = Collector::where('asc', '=', $request->as_center)->where('rice_season_id', '=', $request->season)->get();
             if ($ascCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                $noOfTillers=0;
-                $thrips=0;
-                $gallMidge=0;
-                $leaffolder=0;
-                $yellowStemBorer=0;
-                $bphWbph=0;
-                $paddyBug=0;
-                
-                foreach($ascCollectors as $ascCollector){
-                    foreach($ascCollector->commonDataCollect as $commonData){ 
-                             
-                        foreach($commonData->pestDataCollect as $pestData){
-                      
-                            if($pestData->pest_name == 'Number_Of_Tillers'){  
-                                $noOfTillers += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'Thrips'){
-                                $thrips += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'Gall Midge'){
-                                $gallMidge += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'Leaffolder'){
-                                $leaffolder += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'Yellow Stem Borer'){
-                                $yellowStemBorer += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'BPH+WBPH'){
-                                $bphWbph += $pestData->total;
-                            }
-                            elseif($pestData->pest_name == 'Paddy Bug'){
-                                $paddyBug += $pestData->total;
-                            }
-                        }
-                    } 
-                }
-                dd($noOfTillers,
-                $thrips,
-                $gallMidge,
-                $leaffolder,
-                $yellowStemBorer,
-                $bphWbph,
-                $paddyBug);
-                // dd('ASC',$ascCollectors[0]->commonDataCollect[0]->pestDataCollect[0]->pest_name);
+                dd($this->avarageCalculate($ascCollectors));
                 return view('chart.showASC', ['chart' => $chartASC->build($ascCollectors)]);
             }
-        } 
-        
-        elseif ($request->province && $request->district && $request->season) {
+        } elseif ($request->province && $request->district && $request->season) {
             $districtCollectors = Collector::where('district', '=', $request->district)->where('rice_season_id', '=', $request->season)->get();
             if ($districtCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd('District',$districtCollectors);
+                dd($this->avarageCalculate($districtCollectors));
                 return view('chart.showDistrict', ['chart' => $chartDistrict->build($districtCollectors)]);
             }
-        } 
-        
-        elseif ($request->province && $request->season) {
+        } elseif ($request->province && $request->season) {
             $provinceCollectors = Collector::where('province', '=', $request->province)->where('rice_season_id', '=', $request->season)->get();
-            
-            if ( $provinceCollectors->count() == 0) {
+
+            if ($provinceCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd('Province',$provinceCollectors);
-                return view('chart.showProvince', ['chart' => $chartProvince->build( $provinceCollectors)]);
+                dd($this->avarageCalculate($provinceCollectors));
+                return view('chart.showProvince', ['chart' => $chartProvince->build($provinceCollectors)]);
             }
-        }
-        
-        elseif ($request->season) {
+        } elseif ($request->season) {
             $seasonCollectors = Collector::where('rice_season_id', '=', $request->season)->get();
-            
-            if ( $seasonCollectors->count() == 0) {
+
+            if ($seasonCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd('Season',$seasonCollectors);
-                return view('chart.showSeason', ['chart' => $chartSeason->build( $seasonCollectors)]);
+                dd($this->avarageCalculate($seasonCollectors));
+                return view('chart.showSeason', ['chart' => $chartSeason->build($seasonCollectors)]);
             }
-        } 
-        
-        
-        else {
+        } else {
             return redirect()->route('chart.index')->with('error', 'No data found');
         }
-    }    
+    }
+
+    public function avarageCalculate($collectors)
+    {
+        $noOfTillers = 0;
+        $thrips = 0;
+        $gallMidge = 0;
+        $leaffolder = 0;
+        $yellowStemBorer = 0;
+        $bphWbph = 0;
+        $paddyBug = 0;
+
+        $thripscount = 0;
+
+        foreach ($collectors as $collector) {
+            foreach ($collector->commonDataCollect as $commonData) {
+
+                foreach ($commonData->pestDataCollect as $pestData) {
+
+                    if ($pestData->pest_name == 'Number_Of_Tillers') {
+                        $noOfTillers += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Thrips') {
+                        $thripscount++;
+                        $thrips += $pestData->code;
+                    } elseif ($pestData->pest_name == 'Gall Midge') {
+                        $gallMidge += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Leaffolder') {
+                        $leaffolder += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Yellow Stem Borer') {
+                        $yellowStemBorer += $pestData->total;
+                    } elseif ($pestData->pest_name == 'BPH+WBPH') {
+                        $bphWbph += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Paddy Bug') {
+                        $paddyBug += $pestData->total;
+                    }
+                }
+            }
+        }
+        $possibleCodes = [1, 3, 5, 7, 9];
+        $thripsC = $thrips / $thripscount;
+        $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
+        $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
+        $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
+        $yellowStemBorer = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
+        $bphWbphCode = $this->PestDataCollectController->getBphWbphCode($noOfTillers, $bphWbph)['code'];
+        $paddyBugCode = $this->PestDataCollectController->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+        return [
+            "pests" => [
+                "thrips" => $thripsCode,
+                "gallMidge" => $gallMidgeCode,
+                "leaffolder" => $leaffolderCode,
+                "yellowStemBorer" => $yellowStemBorer,
+                "bphWbph" => $bphWbphCode,
+                "paddyBug" => $paddyBugCode
+            ]
+        ];
+    }
+
+    // Function to find the nearest number
+    function getNearestCode($value, $possibleCodes)
+    {
+        return array_reduce($possibleCodes, function ($carry, $item) use ($value) {
+            return (abs($item - $value) < abs($carry - $value)) ? $item : $carry;
+        }, $possibleCodes[0]);
+    }
 }
