@@ -7,7 +7,7 @@
     <x-error-massage />
     <div class="m-5 flex gap-5">
         <div>
-            <div>&#x2705; = Already Have Data</div>
+            <div>&#x2705; : Collector Registered</div>
             <x-form action="{{ route('chart.show') }}">
                 @csrf
                 @livewire('season-select')

@@ -18,6 +18,7 @@ use App\Models\PestDataCollect;
 use App\Models\Province;
 use App\Models\RiceSeason;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
@@ -73,8 +74,14 @@ class ChartController extends Controller
         if ($request->province && $request->district && $request->as_center && $request->ai_range && $request->season) {
             $aiCollector = Collector::where('ai_range', '=', $request->ai_range)->where('rice_season_id', '=', $request->season)->get()->first();
             if ($aiCollector == null) {
-                return redirect()->route('chart.index')->with('error', 'No data found');
+                return redirect()->route('chart.index')->with('error', 'No collector found');
             } else {
+                try {
+                    $pestData = $aiCollector->user->commonDataCollect[0]->pestDataCollect->toArray();
+                } catch (Exception $e) {
+                    return redirect()->route('chart.index')->with('error', 'No data found');
+                }
+        
                 return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
             }
         } 
