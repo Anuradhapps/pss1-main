@@ -108,8 +108,10 @@ class ChartController extends Controller
             if ($provinceCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd($this->avarageCalculate($provinceCollectors));
-                return view('chart.showProvince', ['chart' => $chartProvince->build($provinceCollectors)]);
+                $pestData = $this->avarageCalculate($provinceCollectors);
+                $pestData['province']=$request->province;
+                $pestData['season']=$request->season;
+                return view('chart.showProvince', ['chart' => $chartProvince->build($pestData)]);
             }
         } elseif ($request->season) {
             $seasonCollectors = Collector::where('rice_season_id', '=', $request->season)->get();
@@ -117,8 +119,9 @@ class ChartController extends Controller
             if ($seasonCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd($this->avarageCalculate($seasonCollectors));
-                return view('chart.showSeason', ['chart' => $chartSeason->build($seasonCollectors)]);
+                $pestData = $this->avarageCalculate($seasonCollectors);
+                $pestData['season']=$request->season;
+                return view('chart.showSeason', ['chart' => $chartSeason->build($pestData)]);
             }
         } else {
             return redirect()->route('chart.index')->with('error', 'No data found');
@@ -127,7 +130,7 @@ class ChartController extends Controller
 
     public function avarageCalculate($collectors)
     {
-        if($collectors->count() == 0){
+        if ($collectors->count() == 0) {
             return redirect()->route('chart.index')->with('error', 'No data found');
         }
         $noOfTillers = 0;
@@ -166,9 +169,9 @@ class ChartController extends Controller
         }
         $possibleCodes = [1, 3, 5, 7, 9];
         $thripsC = 0;
-        if($thripscount == 0){
+        if ($thripscount == 0) {
             $thripsC = 0;
-        }else{
+        } else {
             $thripsC = $thrips / $thripscount;
         }
         $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);

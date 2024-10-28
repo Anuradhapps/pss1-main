@@ -2,6 +2,8 @@
 
 namespace App\Charts;
 
+use App\Models\Province;
+use App\Models\RiceSeason;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class ChartProvince
@@ -13,13 +15,16 @@ class ChartProvince
         $this->chart = $chart;
     }
 
-    public function build($collector): \ArielMejiaDev\LarapexCharts\BarChart
+    public function build($pestData): \ArielMejiaDev\LarapexCharts\BarChart
     {
+        $pestNames = array_keys($pestData['pests']);
+        $pestCounts = array_values($pestData['pests']);
+        $season = RiceSeason::find($pestData['season']);
+        $province = Province::find($pestData['province']);
+
         return $this->chart->barChart()
-            ->setTitle( ' > ' )
-            ->setSubtitle('During season 2021.')
-            ->addData('test 1', [6, 9, 3, 4, 10, 8])
-            ->addData('test 1', [7, 3, 8, 2, 6, 4])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+            ->setTitle($season->name.' '.$province->name.' Province')
+            ->addData('San Francisco', $pestCounts)
+            ->setXAxis($pestNames);
     }
 }

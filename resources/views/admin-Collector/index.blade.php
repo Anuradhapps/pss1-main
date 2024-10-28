@@ -24,6 +24,22 @@
                         </a>
                     </th>
                     <th>
+                        Name
+                    </th>
+                    <th>
+                        <a
+                            href="{{ route('aCollector.index', ['sort_by' => 'rice_season_id', 'sort_direction' => $sortDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            Season
+                            @if ($sortColumn === 'rice_season_id')
+                                @if ($sortDirection === 'asc')
+                                    ▲
+                                @else
+                                    ▼
+                                @endif
+                            @endif
+                        </a>
+                    </th>
+                    <th>
                         <a
                             href="{{ route('aCollector.index', ['sort_by' => 'province', 'sort_direction' => $sortDirection === 'asc' ? 'desc' : 'asc']) }}">
                             province
@@ -62,6 +78,19 @@
                             @endif
                         </a>
                     </th>
+                    <th>
+                        <a
+                            href="{{ route('aCollector.index', ['sort_by' => 'ai_range', 'sort_direction' => $sortDirection === 'asc' ? 'desc' : 'asc']) }}">
+                            Ai Range
+                            @if ($sortColumn === 'ai_range')
+                                @if ($sortDirection === 'asc')
+                                    ▲
+                                @else
+                                    ▼
+                                @endif
+                            @endif
+                        </a>
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -72,9 +101,12 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 
                             <td class="py-4 px-6"> {{ $collector->id }}</td>
+                            <td class="py-4 px-6"> {{ $collector->user->name }}</td>
+                            <td class="py-4 px-6"> {{ $collector->riceSeason->name }}</td>
                             <td class="py-4 px-6"> {{ $collector->getProvince->name }}</td>
                             <td class="py-4 px-6"> {{ $collector->getDistrict->name }}</td>
                             <td class="py-4 px-6"> {{ $collector->getAsCenter->name }}</td>
+                            <td class="py-4 px-6"> {{ $collector->getAiRange->name }}</td>
                             <td class="py-4 px-6">
                                 <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 text-sm"
                                     href="{{ route('aCollector.edit', $collector->id) }}">Edit</a>

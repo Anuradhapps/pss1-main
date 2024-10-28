@@ -11,12 +11,12 @@
         cropping season on a regular basis. </p>
 </div>
 <div class="flex flex-wrap py-6 gap-2">
-    <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'"/>
-    <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-money-bill'" :color="'from-green-900 to-green-700'"/>
+    <livewire:count-card :cardName="'Users'" :iconName="''" :color="'from-purple-900 to-purple-700'"/>
+    <livewire:count-card :cardName="'Collectors'" :iconName="''" :color="'from-green-900 to-green-700'"/>
 
-    <livewire:count-card :cardName="'Provinces'" :iconName="'fas fa-map'" :color="'from-blue-900 to-blue-700'"/>
-    <livewire:count-card :cardName="'Districts'" :iconName="'fas fa-map-marker-alt'" :color="'from-red-900 to-red-700'"/>
-    <livewire:count-card :cardName="'ASC'" :iconName="'fas fa-sort-amount-up'" :color="'from-yellow-900 to-yellow-700'"/>
-    <livewire:count-card :cardName="'AiRanges'" :iconName="'fas fa-robot'" :color="'from-pink-900 to-pink-700'"/>
-    <livewire:count-card :cardName="'Pests'" :iconName="'fas fas fa-bug'" :color="'from-indigo-900 to-indigo-700'"/>
+    <livewire:count-card :cardName="'Provinces'" :iconName="''" :color="'from-blue-900 to-blue-700'"/>
+    <livewire:count-card :cardName="'Districts'" :iconName="''" :color="'from-red-900 to-red-700'"/>
+    <livewire:count-card :cardName="'ASC'" :iconName="''" :color="'from-yellow-900 to-yellow-700'"/>
+    <livewire:count-card :cardName="'AiRanges'" :iconName="''" :color="'from-pink-900 to-pink-700'"/>
+    <livewire:count-card :cardName="'Pests'" :iconName="''" :color="'from-indigo-900 to-indigo-700'"/>
 </div>
