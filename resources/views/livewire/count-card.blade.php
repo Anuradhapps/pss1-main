@@ -1,5 +1,5 @@
 <div class="mb-1">
-    <div  class="text-2xl font-bold text-white bg-gradient-to-r {{ $color }} p-2 rounded-xl flex gap-2 shadow-xl">
+    <div  class="text-2xl font-bold text-white bg-gradient-to-r {{ $color }} p-2 rounded-lg flex gap-2 shadow-xl">
         <i  class="{{ $iconName }}"></i> 
         {{ $cardName }} <span id="cardCount" > {{ $userCount }}</span>
     </div>

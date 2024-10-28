@@ -2,6 +2,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Collector;
+use App\Models\Pest;
 use App\Models\User;
 use Livewire\Component;
 
@@ -18,6 +19,9 @@ class CountCard extends Component
     {
         if($this->cardName == 'Users'){
             $this->targetCount = User::count();
+        }
+        if($this->cardName == 'Pests'){
+            $this->targetCount = Pest::count();
         }
         if($this->cardName == 'Collectors'){
             $this->targetCount = Collector::count();

@@ -146,6 +146,7 @@ class CollectorController extends Controller
      */
     public function update(Request $request, Collector $collector)
     {
+
         $request->validate([
             'phone_no' => 'required',
             'province' => 'required',
@@ -171,7 +172,13 @@ class CollectorController extends Controller
         $collector->rice_variety = $request->rice_variety;
         $collector->date_establish = $dateEstablish;
         $collector->save();
-        return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
+        if(!is_admin()){
+            return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
+        }else{
+            $collectors = Collector::all();
+            return view('admin-Collector.index',['collectors' => $collectors]);
+        }
+        
     }
 
     // In your controller

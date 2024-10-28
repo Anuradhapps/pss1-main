@@ -1,7 +1,7 @@
 <!-- GPS Location Refresh Button -->
 <div class="flex items-center mb-4">
     <button type="button" id="fill-location"
-        class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded flex items-center">
+        class="btn btn-sm btn-primary bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded flex items-center">
         <i id="refresh-icon" class="fas fa-sync-alt me-2"></i> <!-- Font Awesome Refresh Icon -->
         Refresh
     </button>

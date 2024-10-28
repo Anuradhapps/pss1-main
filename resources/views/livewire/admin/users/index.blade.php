@@ -2,7 +2,7 @@
 <div>
     <div class="flex justify-between">
 
-        <h1>Users</h1>
+        <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'"/>
 
         <div>
             @if(can('add_users'))

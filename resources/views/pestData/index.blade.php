@@ -1,8 +1,9 @@
 <x-app-layout>
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-bold ml-2 text-gray-300">Pest Data</h1>
+    <div class="sm:flex justify-between mb-2">
+        <h1 class="text-3xl font-bold ml-2 text-indigo-100 mb-3">Pest Data</h1>
+        <div class="text-sm font-bold ml-2 text-red-900 mb-3">Please check your collector information carefully before adding pest data</div>
         <a href="{{ route('pestdata.create') }}"
-            class="bg-green-800 text-white font-bold py-2 px-4 rounded hover:bg-green-900 text-sm mr-1">Add</a>
+            class="bg-green-800 text-white font-bold mb-3 ms-1 py-2 shadow-sm px-4 rounded hover:bg-green-900 hover:shadow-2xl text-sm mr-1">Add</a>     
     </div>
     <x-success-massage />
     <x-error-massage />

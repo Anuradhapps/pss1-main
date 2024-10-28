@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex justify-between">
-        <h1 class="text-2xl font-bold mb-4 text-white">Pests</h1>
+        <livewire:count-card :cardName="'Pests'" :iconName="'fas fas fa-bug'" :color="'from-indigo-900 to-indigo-700'"/>
        <a href="{{ route('pest.create') }}" class="btn btn-primary ">Add</a>
     </div>
     {{-- <x.-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}

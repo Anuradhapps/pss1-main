@@ -127,6 +127,9 @@ class ChartController extends Controller
 
     public function avarageCalculate($collectors)
     {
+        if($collectors->count() == 0){
+            return redirect()->route('chart.index')->with('error', 'No data found');
+        }
         $noOfTillers = 0;
         $thrips = 0;
         $gallMidge = 0;
@@ -162,7 +165,12 @@ class ChartController extends Controller
             }
         }
         $possibleCodes = [1, 3, 5, 7, 9];
-        $thripsC = $thrips / $thripscount;
+        $thripsC = 0;
+        if($thripscount == 0){
+            $thripsC = 0;
+        }else{
+            $thripsC = $thrips / $thripscount;
+        }
         $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
         $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
         $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];

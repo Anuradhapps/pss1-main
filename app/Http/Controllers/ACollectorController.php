@@ -9,10 +9,20 @@ use Illuminate\Http\Request;
 
 class ACollectorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $collectors = Collector::all();
-        return view('admin-Collector.index',['collectors' => $collectors]);
+        $sortColumn = $request->get('sort_by', 'id');  // Default to sorting by 'name'
+        $sortDirection = $request->get('sort_direction', 'asc');  // Default to 'asc'
+    
+        // $collectors = Collector::join('provinces', 'collectors.province', '=', 'provinces.id')
+        //     ->join('districts', 'collectors.district', '=', 'districts.id')
+        //     ->join('as_centers', 'collectors.asc', '=', 'as_centers.id')
+        //     ->join('ai_ranges', 'collectors.ai_range', '=', 'ai_ranges.id')
+        //     ->orderBy($sortColumn, $sortDirection)->paginate(10);
+        // Query the database and apply sorting
+        $collectors = Collector::orderBy($sortColumn, $sortDirection)->paginate(10);
+       
+        return view('admin-Collector.index',compact('collectors', 'sortColumn', 'sortDirection'));
     }
 
     public function create()

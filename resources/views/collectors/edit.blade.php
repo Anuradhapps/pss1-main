@@ -2,7 +2,7 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-2 text-2xl font-semibold">{{ $collector->riceSeason->name }}</h3>
+        <h3 class="mb-4 text-2xl font-bold text-gray-200 bg-emerald-700 text-center rounded-3xl">{{ $collector->riceSeason->name }}</h3>
 
         <!-- Form for updating collector information -->
         <x-form action="{{ route('admin.collector.update', $collector->id) }}">
