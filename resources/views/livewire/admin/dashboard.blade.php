@@ -1,18 +1,20 @@
 @section('title', 'Dashboard')
-
-<h1>Dashboard</h1>
-
-
-
+<h1 class="text-3xl font-bold text-red-100 p-5 border bg-purple-950 shadow-2xl">Dashboard</h1>
 
 <div class="card">
-    <h4>Pest Surveillance Program – Data Collection Program</h4>
+    <h4>Pest Surveillance Program – Data Collection</h4>
 
     <p><b>Objectives</b></p>
     <p>The system provides an understanding of the Plant Protection Service's requirements for creating a new smartphone
-        app for data collection for pest surveillance purposes. The main purpose of the pest surveillance data
+        app for data collection for pest surveillance purposes.</p><p> The main purpose of the pest surveillance data
         collection web application is to record the density of target pests in the selected location throughout the
         cropping season on a regular basis. </p>
-
-
+</div>
+<div class="flex flex-wrap py-6 gap-2">
+    <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'"/>
+    <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-money-bill'" :color="'from-green-900 to-green-700'"/>
+    <livewire:count-card :cardName="'Provinces'" :iconName="'fas fa-map'" :color="'from-blue-900 to-blue-700'"/>
+    <livewire:count-card :cardName="'Districts'" :iconName="'fas fa-map-marker-alt'" :color="'from-red-900 to-red-700'"/>
+    <livewire:count-card :cardName="'ASC'" :iconName="'fas fa-sort-amount-up'" :color="'from-yellow-900 to-yellow-700'"/>
+    <livewire:count-card :cardName="'AiRanges'" :iconName="'fas fa-robot'" :color="'from-pink-900 to-pink-700'"/>
 </div>
