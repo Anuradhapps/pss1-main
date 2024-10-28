@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ACollectorController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\JoinController;
 use App\Http\Controllers\Auth\LoginController;
@@ -129,6 +130,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
+
+    Route::get('/aCollector',[ACollectorController::class,'index'])->name('aCollector.index');
+    Route::get('/aCollector/{id}/edit',[ACollectorController::class,'edit'])->name('aCollector.edit');
 
     
 });
