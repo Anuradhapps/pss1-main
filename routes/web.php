@@ -130,6 +130,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
+    Route::get('/chart/show/allSeason', [ChartController::class, 'allSeasonChart'])->name('chart.show.allSeason');
 
     Route::get('/aCollector',[ACollectorController::class,'index'])->name('aCollector.index');
     Route::get('/aCollector/{id}/edit',[ACollectorController::class,'edit'])->name('aCollector.edit');

@@ -18,13 +18,13 @@ class ChartProvince
     public function build($pestData): \ArielMejiaDev\LarapexCharts\BarChart
     {
         $pestNames = array_keys($pestData['pests']);
-        $pestCounts = array_values($pestData['pests']);
+        $pestCodes = array_values($pestData['pests']);
         $season = RiceSeason::find($pestData['season']);
         $province = Province::find($pestData['province']);
 
         return $this->chart->barChart()
-            ->setTitle($season->name.' '.$province->name.' Province')
-            ->addData('San Francisco', $pestCounts)
+            ->setTitle($season->name.' ➔ '.$province->name.' Province')
+            ->addData('Code', $pestCodes)
             ->setXAxis($pestNames);
     }
 }

@@ -26,9 +26,10 @@ class SeasonSelect extends Component
     public $selectedDistrict;
     public $selectedAsCenter;
     public $selectedAiRange;
+
+
     public function mount(){
         $this->seasons = RiceSeason::all();
-        
     }
    
     public function updatedselectedSeason(){

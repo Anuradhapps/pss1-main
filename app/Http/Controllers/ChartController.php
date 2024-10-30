@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Charts\AllSeasonChart;
 use App\Charts\ChartAi;
 use App\Charts\ChartASC;
 use App\Charts\ChartDistrict;
@@ -34,7 +35,25 @@ class ChartController extends Controller
     }
     public function index()
     {
-        return view('chart.index');
+        $allProvinces = Province::all()->pluck('name')->unique();
+        $allDistricts = district::all()->pluck('name')->unique();
+        $dataHaveProvinces = [];
+        $dataHaveDistricts = [];
+        foreach (Province::all() as $province) {
+            $collectors = Collector::where('province', '=', $province->id)->get();
+            if ($collectors->count() != 0) {
+                array_push($dataHaveProvinces, $province->name);
+            }
+        }
+        foreach (district::all() as $district) {
+            $collectors = Collector::where('district', '=', $district->id)->get();
+            if ($collectors->count() != 0) {
+                array_push($dataHaveDistricts, $district->name);
+            }
+        }
+
+
+        return view('chart.index', ['allProvinces' => $allProvinces, 'allDistricts' => $allDistricts, 'dataHaveProvinces' => $dataHaveProvinces, 'dataHaveDistricts' => $dataHaveDistricts]);
     }
 
     public function create()
@@ -91,16 +110,21 @@ class ChartController extends Controller
             if ($ascCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd($this->avarageCalculate($ascCollectors));
-                return view('chart.showASC', ['chart' => $chartASC->build($ascCollectors)]);
+                $pestData = $this->avarageCalculate($ascCollectors);
+                $pestData['as_center'] = $request->as_center;
+                $pestData['season'] = $request->season;
+                return view('chart.showASC', ['chart' => $chartASC->build($pestData)]);
             }
         } elseif ($request->province && $request->district && $request->season) {
             $districtCollectors = Collector::where('district', '=', $request->district)->where('rice_season_id', '=', $request->season)->get();
             if ($districtCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                dd($this->avarageCalculate($districtCollectors));
-                return view('chart.showDistrict', ['chart' => $chartDistrict->build($districtCollectors)]);
+                $pestData = $this->avarageCalculate($districtCollectors);
+                $pestData['district'] = $request->district;
+                $pestData['season'] = $request->season;
+
+                return view('chart.showDistrict', ['chart' => $chartDistrict->build($pestData)]);
             }
         } elseif ($request->province && $request->season) {
             $provinceCollectors = Collector::where('province', '=', $request->province)->where('rice_season_id', '=', $request->season)->get();
@@ -109,8 +133,8 @@ class ChartController extends Controller
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
                 $pestData = $this->avarageCalculate($provinceCollectors);
-                $pestData['province']=$request->province;
-                $pestData['season']=$request->season;
+                $pestData['province'] = $request->province;
+                $pestData['season'] = $request->season;
                 return view('chart.showProvince', ['chart' => $chartProvince->build($pestData)]);
             }
         } elseif ($request->season) {
@@ -120,13 +144,90 @@ class ChartController extends Controller
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
                 $pestData = $this->avarageCalculate($seasonCollectors);
-                $pestData['season']=$request->season;
+                $pestData['season'] = $request->season;
                 return view('chart.showSeason', ['chart' => $chartSeason->build($pestData)]);
             }
         } else {
             return redirect()->route('chart.index')->with('error', 'No data found');
         }
     }
+
+    public function allSeasonChart(AllSeasonChart $allSeasonChart, Request $request)
+    {
+        $collectorCount = 0;
+        $seasons = RiceSeason::all();
+        $sortBy = $request->get('sort_by');
+        $collectors = null;
+        $pestData = null;
+        $result = ['location' => '', 'data' => []];
+        $collectorCount = 0;
+        if ($sortBy == 'allIsland') {
+            foreach ($seasons as $season) {
+                $collectors = Collector::where('rice_season_id', '=', $season->id)->get();
+                if (!$collectors->count() == 0) {
+                    $collectorCount += $collectors->count();
+                    $pestData = $this->avarageCalculate($collectors);
+                    $result['location'] = 'All Island';
+                    array_push($result['data'], [$season->name => $pestData, 'collectorCount' => $collectors->count()]);
+                }
+            }
+            if ($collectorCount == 0) {
+                dd('No Data');
+            }
+            
+            $keys = array_keys($result['data'][0]);
+            $seasonData = $keys[0];
+            $collectorCount = $keys[1];
+            $firstItem = $result['data'][0][$seasonData];
+            $secondItem = $result['data'][0][$collectorCount];
+            $pestNames = array_keys($firstItem['pests']);
+            $pestCodes = array_values($firstItem['pests']);
+            $pdata = ['location'=>$result['location'],'collectorCount'=>$secondItem,'pestNames'=>$pestNames,'pestCode'=>$pestCodes];
+            dd($pdata);
+            return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
+        } elseif ($sortBy == 'province') {
+            $provinceName = $request->get('province');
+            $province = Province::where('name', '=', $provinceName)->get()->first();
+            foreach ($seasons as $season) {
+                $collectors = Collector::where('rice_season_id', '=', $season->id)->where('province', '=', $province->id)->get();
+                if (!$collectors->count() == 0) {
+                    $collectorCount += $collectors->count();
+                    $pestData = $this->avarageCalculate($collectors);
+                    $result['location'] = $provinceName;
+                    array_push($result['data'], [$season->name => $pestData, 'collectorCount' => $collectors->count()]);
+                }
+
+            }
+            if ($collectorCount == 0) {
+                dd('No Data');
+            }
+
+            dd($result, $collectorCount);
+        } elseif ($sortBy == 'district') {
+            $districtName = $request->get('district');
+            $district = district::where('name', '=', $districtName)->get()->first();
+
+            foreach ($seasons as $season) {
+
+                $collectors = Collector::where('rice_season_id', '=', $season->id)->where('district', '=', $district->id)->get();
+                if (!$collectors->count() == 0) {
+                    $collectorCount += $collectors->count();
+                    $pestData = $this->avarageCalculate($collectors);
+                    $result['location'] = $districtName;
+                    array_push($result['data'], [$season->name => $pestData, 'collectorCount' => $collectors->count()]);
+                }
+
+            }
+            if ($collectorCount == 0) {
+                dd('No Data');
+            }
+
+            dd($result, $collectorCount);
+        } else {
+
+        }
+    }
+
 
     public function avarageCalculate($collectors)
     {

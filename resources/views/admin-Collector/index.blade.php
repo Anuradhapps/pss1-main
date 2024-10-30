@@ -91,6 +91,9 @@
                             @endif
                         </a>
                     </th>
+                    <th>
+                        GPS
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -107,6 +110,7 @@
                             <td class="py-4 px-6"> {{ $collector->getDistrict->name }}</td>
                             <td class="py-4 px-6"> {{ $collector->getAsCenter->name }}</td>
                             <td class="py-4 px-6"> {{ $collector->getAiRange->name }}</td>
+                            <td class="py-4 px-6"> {{ $collector->gps_lati.','.$collector->gps_long }}</td>
                             <td class="py-4 px-6">
                                 <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 text-sm"
                                     href="{{ route('aCollector.edit', $collector->id) }}">Edit</a>

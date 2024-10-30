@@ -2,6 +2,8 @@
 
 namespace App\Charts;
 
+use App\Models\As_center;
+use App\Models\RiceSeason;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class ChartASC
@@ -13,15 +15,16 @@ class ChartASC
         $this->chart = $chart;
     }
 
-    public function build($collectors): \ArielMejiaDev\LarapexCharts\BarChart
+    public function build($pestData): \ArielMejiaDev\LarapexCharts\BarChart
     {
-        
+        $pestNames = array_keys($pestData['pests']);
+        $pestCodes = array_values($pestData['pests']);
+        $season = RiceSeason::find($pestData['season']);
+        $as_center = As_center::find($pestData['as_center']);
 
         return $this->chart->barChart()
-            ->setTitle('test')
-            ->setSubtitle('During season 2024.')
-            ->addData('test 1', [6, 9, 3, 4, 10, 8])
-            ->addData('test 2', [7, 3, 8, 2, 6, 4])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+            ->setTitle($season->name . ' ➔ ' . $as_center->name . ' ASC')
+            ->addData('Code', $pestCodes)
+            ->setXAxis($pestNames);
     }
 }

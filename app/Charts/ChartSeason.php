@@ -17,13 +17,13 @@ class ChartSeason
     public function build($pestData): \ArielMejiaDev\LarapexCharts\BarChart
     {
         $pestNames = array_keys($pestData['pests']);
-        $pestCounts = array_values($pestData['pests']);
+        $pestCodes = array_values($pestData['pests']);
         $season = RiceSeason::find($pestData['season']);
 
         return $this->chart->barChart()
-            ->setTitle($season->name.' All Island')
+            ->setTitle($season->name.' ➔  All Island')
             ->setSubtitle('During season '.$season->name.'.')
-            ->addData('San Francisco', $pestCounts)
+            ->addData('Code', $pestCodes)
             ->setXAxis($pestNames);
     }
 }
