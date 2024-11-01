@@ -15,11 +15,13 @@ class AllSeasonChart
 
     public function build($pestData): \ArielMejiaDev\LarapexCharts\BarChart
     {
-        return $this->chart->barChart()
-            ->setTitle('San Francisco vs Boston.')
-            ->setSubtitle('Wins during season 2021.')
-            ->addData('San Francisco', [6, 9, 3, 4, 10, 8])
-            ->addData('Boston', [7, 3, 8, 2, 6, 4])
-            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
+        $chart = $this->chart->barChart()
+            ->setTitle($pestData['location'])
+            ->setXAxis($pestData['pestNames']);
+
+        foreach ($pestData['data'] as $data) {
+            $chart->addData($data['seasonName'], $data['pestCodes']);
+        }
+        return $chart;
     }
 }

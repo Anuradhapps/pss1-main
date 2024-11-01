@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
             DummySeeder::class
-            
         ]);
 
        
