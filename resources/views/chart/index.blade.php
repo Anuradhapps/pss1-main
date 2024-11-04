@@ -7,8 +7,12 @@
     <x-error-massage />
     <div class="mx-5  sm:flex gap-5">
         <div class="bg-gray-800 rounded-xl p-5 mb-3">
-            <div class="text-white bg-green-900 px-2 py-1 rounded-xl mb-3">Chart by each season</div>
-            <div class="text-white">&#x2705; : Collector Registered</div>
+            <div class="text-white bg-green-900 px-2 py-2 rounded-xl mb-3">Chart by each season</div>
+            @php
+                $CollectorCount = \App\Models\Collector::all()->count();
+            @endphp
+            <div class="text-white mb-3">&#x2705; : Collector Registered
+                {{ $CollectorCount > 0 ? ' (' . $CollectorCount . ')' : '' }}</div>
             <x-form action="{{ route('chart.show') }}">
                 @csrf
                 @livewire('season-select')
@@ -16,9 +20,9 @@
             </x-form>
         </div>
         <div class="bg-gray-800 rounded-xl p-5 mb-3">
-            <div class="text-white bg-green-900 px-2 py-1 rounded-xl mb-3">Chart by all seasons</div>
+            <div class="text-white bg-green-900 px-2 py-2 rounded-xl mb-3">Chart by all seasons</div>
             <div class="bg-gray-700 p-6 sm:flex gap-3 mb-3">
-                <div class="text-white w-24">All Island</div>
+                <div class="text-white w-24 mb-3">All Island</div>
                 <div>
                     <a href="{{ route('chart.show.allSeason', ['sort_by' => 'allIsland']) }}"
                         class="px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition duration-300">
@@ -27,7 +31,7 @@
                 </div>
             </div>
             <div class="bg-gray-700 p-6 sm:flex gap-3 mb-3">
-                <div class="text-white w-24">By Province</div>
+                <div class="text-white w-24 mb-3">By Province</div>
                 <div class="grid grid-cols-2 gap-1">
                     @foreach ($allProvinces as $allProvince)
                         @if (in_array($allProvince, $dataHaveProvinces))
@@ -46,7 +50,7 @@
                 </div>
             </div>
             <div class="bg-gray-700 p-6 sm:flex gap-3 mb-3">
-                <div class="text-white w-24">By District</div>
+                <div class="text-white w-24 mb-3">By District</div>
                 <div class="grid grid-cols-3 gap-1">
                     @foreach ($allDistricts as $allDistrict)
                         @if (in_array($allDistrict, $dataHaveDistricts))

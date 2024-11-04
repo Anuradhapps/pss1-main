@@ -215,4 +215,22 @@ class CollectorController extends Controller
         Collector::destroy($id);
         return redirect('collector')->with('flash_message', 'collector deleted!');
     }
+
+    public function getCollectorCount($seasonId=null, $provinceId=null, $districtId=null, $asCenterId=null, $aiRangeId=null){
+        if($seasonId=null){
+            $collectorCount = Collector::all()->count();
+            return $collectorCount;
+        }elseif($provinceId!=null){
+            $collectorCount = Collector::where('rice_season_id', $seasonId)->where('province', $provinceId)->count();
+        }elseif($districtId!=null){
+            $collectorCount = Collector::where('rice_season_id', $seasonId)->where('district', $districtId)->count();
+        }elseif($asCenterId!=null){
+            $collectorCount = Collector::where('rice_season_id', $seasonId)->where('asc', $asCenterId)->count();
+        }elseif($aiRangeId!=null){
+            $collectorCount = Collector::where('rice_season_id', $seasonId)->where('ai_range', $aiRangeId)->count();
+        }else{
+            dd('No Collector data found');    
+        }
+        
+    }
 }

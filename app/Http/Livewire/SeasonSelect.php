@@ -28,8 +28,12 @@ class SeasonSelect extends Component
     public $selectedAiRange;
 
 
+
+    
+
     public function mount(){
         $this->seasons = RiceSeason::all();
+       
     }
    
     public function updatedselectedSeason(){
@@ -38,7 +42,7 @@ class SeasonSelect extends Component
         $this->liveDistricts = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('district')->toArray();
         $this->liveAsCenters = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('asc')->toArray();
         $this->liveAiRanges = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('ai_range')->toArray();
- 
+
     }
     public function updatedselectedProvince()
     {

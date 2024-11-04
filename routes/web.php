@@ -127,6 +127,8 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');
     Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
 
+    Route::get('/export-pdf/{id}', [ReportController::class, 'exportToPDF'])->name('export.pdf');
+
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
