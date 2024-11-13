@@ -4,7 +4,7 @@
     </div>
     {{-- <x.-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
     <x-success-massage />
-    <div class="p-6  border-b border-gray-200 overflow-x-auto">
+    <div class="p-6 overflow-x-auto border-b border-gray-200">
         <table class="table-auto">
 
             <thead>
@@ -92,6 +92,9 @@
                         </a>
                     </th>
                     <th>
+                        Village
+                    </th>
+                    <th>
                         GPS
                     </th>
                     <th>Action</th>
@@ -103,21 +106,22 @@
                     @foreach ($collectors as $collector)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 
-                            <td class="py-4 px-6"> {{ $collector->id }}</td>
-                            <td class="py-4 px-6"> {{ $collector->user->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->riceSeason->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->getProvince->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->getDistrict->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->getAsCenter->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->getAiRange->name }}</td>
-                            <td class="py-4 px-6"> {{ $collector->gps_lati.','.$collector->gps_long }}</td>
-                            <td class="py-4 px-6">
-                                <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 text-sm"
+                            <td class="px-6 py-4"> {{ $collector->id }}</td>
+                            <td class="px-6 py-4"> {{ $collector->user->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->riceSeason->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->getProvince->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->getDistrict->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->getAsCenter->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->getAiRange->name }}</td>
+                            <td class="px-6 py-4"> {{ $collector->village }}</td>
+                            <td class="px-6 py-4"> {{ $collector->gps_lati.','.$collector->gps_long }}</td>
+                            <td class="px-6 py-4">
+                                <a class="px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                                     href="{{ route('aCollector.edit', $collector->id) }}">Edit</a>
                                 {{-- <form action="{{ route('pest.destroy', $collector->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700 text-sm">
+                                    <button type="submit" class="px-4 py-2 text-sm font-bold text-white bg-red-500 rounded hover:bg-red-700">
                                         Delete
                                     </button>
                                 </form> --}}

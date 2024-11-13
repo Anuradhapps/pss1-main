@@ -29,13 +29,13 @@ class SeasonSelect extends Component
 
 
 
-    
+
 
     public function mount(){
         $this->seasons = RiceSeason::all();
-       
+
     }
-   
+
     public function updatedselectedSeason(){
         $this->provinces = Province::all();
         $this->liveProvinces = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('province')->toArray();
