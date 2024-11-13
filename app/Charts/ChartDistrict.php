@@ -25,6 +25,7 @@ class ChartDistrict
         return $this->chart->barChart()
             ->setTitle($season->name . ' ➔ ' . $district->name . ' Province')
             ->addData('Code', $pestCodes)
-            ->setXAxis($pestNames);
+            ->setXAxis($pestNames)
+            ->setGrid();
     }
 }

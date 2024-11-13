@@ -17,7 +17,8 @@ class AllSeasonChart
     {
         $chart = $this->chart->barChart()
             ->setTitle($pestData['location'])
-            ->setXAxis($pestData['pestNames']);
+            ->setXAxis($pestData['pestNames'])
+            ->setGrid();
 
         foreach ($pestData['data'] as $data) {
             $chart->addData($data['seasonName'], $data['pestCodes']);

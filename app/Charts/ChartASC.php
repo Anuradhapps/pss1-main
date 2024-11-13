@@ -25,6 +25,7 @@ class ChartASC
         return $this->chart->barChart()
             ->setTitle($season->name . ' ➔ ' . $as_center->name . ' ASC')
             ->addData('Code', $pestCodes)
-            ->setXAxis($pestNames);
+            ->setXAxis($pestNames)
+            ->setGrid();
     }
 }

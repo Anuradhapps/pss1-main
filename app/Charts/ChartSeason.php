@@ -24,6 +24,7 @@ class ChartSeason
             ->setTitle($season->name.' ➔  All Island')
             ->setSubtitle('During season '.$season->name.'.')
             ->addData('Code', $pestCodes)
-            ->setXAxis($pestNames);
+            ->setXAxis($pestNames)
+            ->setGrid();
     }
 }
