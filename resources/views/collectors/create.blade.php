@@ -2,7 +2,7 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-4 text-2xl font-bold text-gray-200 bg-emerald-700 text-center rounded-3xl">{{ $season }}</h3>
+        <h3 class="mb-4 text-2xl font-bold text-center text-gray-200 bg-emerald-900 rounded-3xl">{{ $season }}</h3>
         <x-error-massage />
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf

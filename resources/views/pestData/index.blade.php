@@ -1,15 +1,15 @@
 <x-app-layout>
-    <div class="sm:flex justify-between mb-2">
-        <h1 class="text-3xl font-bold ml-2 text-indigo-100 mb-3">Pest Data</h1>
-        <div class="text-sm font-bold ml-2 text-red-900 mb-3">Please check your collector information carefully before adding pest data</div>
+    <div class="justify-between mb-2 sm:flex">
+        <h1 class="p-2 mb-3 ml-2 text-2xl font-bold text-center text-indigo-100 bg-emerald-900 rounded-3xl">Pest Data</h1>
+        <div class="mb-3 ml-2 text-sm font-bold text-red-900">Please check your collector information carefully before adding pest data</div>
         <a href="{{ route('pestdata.create') }}"
-            class="bg-green-800 text-white font-bold mb-3 ms-1 py-2 shadow-sm px-4 rounded hover:bg-green-900 hover:shadow-2xl text-sm mr-1">Add</a>     
+            class="px-4 py-2 mb-3 mr-1 text-sm font-bold text-white bg-green-800 rounded shadow-sm ms-1 hover:bg-green-900 hover:shadow-2xl">Add</a>
     </div>
     <x-success-massage />
     <x-error-massage />
     {{-- <x-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
 
-        <div class="p-1 border-b border-gray-200 relative overflow-x-auto">
+        <div class="relative p-1 overflow-x-auto border-b border-gray-200">
 
             <table class="table-auto">
 
@@ -26,20 +26,20 @@
                     @foreach ($CommonData as $row)
 
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td class="py-4 px-6">{{ $row->created_at }}</td>
+                        <td class="px-6 py-4">{{ $row->created_at }}</td>
 
-                        <td class="py-4 px-6"> {{ $row->growth_s_c }}</td>
-                        <td class="py-4 px-6">
-                            <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 text-sm"
+                        <td class="px-6 py-4"> {{ $row->growth_s_c }}</td>
+                        <td class="px-6 py-4">
+                            <a class="px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                                 href="{{ route('pestdata.show', $row->id) }}">view</a>
-                            {{-- <a class="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 text-sm"
+                            {{-- <a class="px-4 py-2 text-sm font-bold text-white bg-gray-500 rounded hover:bg-gray-700"
                                 href="{{ route('pestdata.edit', $row->id) }}">Edit</a> --}}
                             <form action="{{ route('pestdata.destroy', $row->id) }}" method="POST"
                                 style="display:inline;" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700 text-sm">
+                                    class="px-4 py-2 text-sm font-bold text-white bg-red-500 rounded hover:bg-red-700">
                                     Delete
                                 </button>
                             </form>

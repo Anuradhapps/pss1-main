@@ -2,7 +2,7 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-4 text-2xl font-bold text-gray-200 bg-emerald-700 text-center rounded-3xl">{{ $collector->riceSeason->name }}</h3>
+        <h3 class="mb-4 text-2xl font-bold text-center text-gray-200 bg-emerald-900 rounded-3xl">{{ $collector->riceSeason->name }}</h3>
 
         <!-- Form for updating collector information -->
         <x-form action="{{ route('admin.collector.update', $collector->id) }}">
@@ -14,19 +14,19 @@
                 class="mb-4">{{ old('phone_no', $collector->phone_no) }}</x-form.input>
 
             <!-- Display Existing Location Info -->
-            <div class="flex flex-col sm:flex-row sm:justify-between gap-4 mb-4 text-sm">
-                <span class="bg-gray-300 text-gray-900 border border-gray-300 p-2 rounded">Province:
+            <div class="flex flex-col gap-4 mb-4 text-sm sm:flex-row sm:justify-between">
+                <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">Province:
                     {{ $collector->getProvince->name }}</span>
-                <span class="bg-gray-300 text-gray-900 border border-gray-300 p-2 rounded">District:
+                <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">District:
                     {{ $collector->getDistrict->name }}</span>
-                <span class="bg-gray-300 text-gray-900 border border-gray-300 p-2 rounded">ASC Center:
+                <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">ASC Center:
                     {{ $collector->getAsCenter->name }}</span>
-                <span class="bg-gray-300 text-gray-900 border border-gray-300 p-2 rounded">AI Range:
+                <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">AI Range:
                     {{ $collector->getAiRange->name }}</span>
             </div>
 
             <!-- Message to reselect location -->
-            <span class="text-red-800 text-sm mb-4 block">If you want to change the location or any other data, please
+            <span class="block mb-4 text-sm text-red-800">If you want to change the location or any other data, please
                 select location again and save.</span>
 
             <!-- Location Selection (Livewire Component) -->
@@ -46,7 +46,7 @@
 
             <!-- Save Button -->
             <x-form.submit
-                class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Save</x-form.submit>
+                class="px-4 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600">Save</x-form.submit>
         </x-form>
     </div>
 
