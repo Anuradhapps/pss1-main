@@ -2,7 +2,8 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-4 text-2xl font-bold text-center text-gray-200 bg-emerald-900 rounded-3xl">{{ $season }}</h3>
+        <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">{{ $season }}
+        </h3>
         <x-error-massage />
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf
@@ -14,7 +15,7 @@
 
 
             <!-- GPS Location -->
-            <x-gpsFill/>
+            <x-gpsFill />
 
             <x-form.input name="rice_variety" label="Rice Variety:">{{ old('rice_variety') }}</x-form.input>
             <x-form.date name="date_establish" label="Date Established:">{{ old('date_establish') }}</x-form.date>

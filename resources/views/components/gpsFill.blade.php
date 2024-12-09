@@ -1,11 +1,12 @@
 <!-- GPS Location Refresh Button -->
 <div class="flex items-center mb-4">
     <button type="button" id="fill-location"
-        class="btn btn-sm btn-primary bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded flex items-center">
+        class="flex items-center px-4 py-2 font-semibold text-white bg-blue-500 rounded btn btn-sm btn-primary hover:bg-blue-600">
         <i id="refresh-icon" class="fas fa-sync-alt me-2"></i> <!-- Font Awesome Refresh Icon -->
         Refresh
     </button>
-    <span class="text-red-800 text-sm ml-3">Click 'Refresh' if you want to get the current GPS location. If it is not
+    <span class="ml-3 text-sm italic text-orange-400">Click 'Refresh' if you want to get the current GPS location. If it
+        is not
         correct, please enter it manually.</span>
 </div>
 

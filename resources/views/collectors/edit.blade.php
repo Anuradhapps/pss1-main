@@ -2,7 +2,8 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-4 text-2xl font-bold text-center text-gray-200 bg-emerald-900 rounded-3xl">{{ $collector->riceSeason->name }}</h3>
+        <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">
+            {{ $collector->riceSeason->name }}</h3>
 
         <!-- Form for updating collector information -->
         <x-form action="{{ route('admin.collector.update', $collector->id) }}">
@@ -26,7 +27,9 @@
             </div>
 
             <!-- Message to reselect location -->
-            <span class="block mb-4 text-sm text-red-800">If you want to change the location or any other data, please
+            <span class="block mb-4 text-sm italic text-orange-400">If you want to change the location or any other
+                data,
+                please
                 select location again and save.</span>
 
             <!-- Location Selection (Livewire Component) -->
@@ -37,7 +40,7 @@
                 class="mb-4">{{ old('village', $collector->village) }}</x-form.input>
 
             <!-- GPS Location -->
-            <x-gpsFill :collector="$collector"/>
+            <x-gpsFill :collector="$collector" />
             <!-- Rice Variety and Date Established Fields -->
             <x-form.input name="rice_variety" label="Rice Variety:"
                 class="mb-4">{{ old('rice_variety', $collector->rice_variety) }}</x-form.input>
@@ -46,7 +49,7 @@
 
             <!-- Save Button -->
             <x-form.submit
-                class="px-4 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600">Save</x-form.submit>
+                class="px-4 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600">Update</x-form.submit>
         </x-form>
     </div>
 

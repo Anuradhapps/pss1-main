@@ -75,11 +75,11 @@ class ReportController extends Controller
     {
         // Fetch data from the database
 
-        dd('hi');
+
         $districtIdArray = Collector::where('rice_season_id', $this->thisSeasonId)->where('province', $id)->get()->pluck('district')->unique()->toArray();
         foreach($districtIdArray as $districtId){
             $district = district::where('id', $districtId)->get();
-            dd($district->name);
+
             Collector::where('rice_season_id', $this->thisSeasonId)->where('district', $districtId)->get()->pluck('asc')->unique()->toArray();
         }
         // if ($records->isEmpty()) {
