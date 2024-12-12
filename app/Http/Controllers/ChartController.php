@@ -66,10 +66,7 @@ class ChartController extends Controller
         //
     }
 
-    public function show(Request $request)
-    {
-
-    }
+    public function show(Request $request) {}
 
     public function edit($id)
     {
@@ -93,17 +90,11 @@ class ChartController extends Controller
         ]);
 
         if ($request->province && $request->district && $request->as_center && $request->ai_range && $request->season) {
-            $aiCollector = Collector::where('ai_range', '=', $request->ai_range)->where('rice_season_id', '=', $request->season)->get()->first();
+            $aiCollector = Collector::where('ai_range', '=', $request->ai_range)->where('rice_season_id', '=', $request->season)->get();
             if ($aiCollector == null) {
                 return redirect()->route('chart.index')->with('error', 'No collector found');
             } else {
-                try {
-                    $pestData = $aiCollector->user->commonDataCollect[0]->pestDataCollect->toArray();
-                } catch (Exception $e) {
-                    return redirect()->route('chart.index')->with('error', 'No data found');
-                }
-
-                return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
+                return view('chart.collectors', ['collectors' => $aiCollector]);
             }
         } elseif ($request->province && $request->district && $request->as_center && $request->season) {
             $ascCollectors = Collector::where('asc', '=', $request->as_center)->where('rice_season_id', '=', $request->season)->get();
@@ -190,7 +181,6 @@ class ChartController extends Controller
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
                 }
-
             }
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
@@ -211,7 +201,6 @@ class ChartController extends Controller
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
                 }
-
             }
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
@@ -219,7 +208,6 @@ class ChartController extends Controller
 
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } else {
-
         }
     }
 
@@ -294,5 +282,11 @@ class ChartController extends Controller
         return array_reduce($possibleCodes, function ($carry, $item) use ($value) {
             return (abs($item - $value) < abs($carry - $value)) ? $item : $carry;
         }, $possibleCodes[0]);
+    }
+
+    function chartAiShow($id, ChartAi $chartAi)
+    {
+        $aiCollector = Collector::findOrFail($id);
+        return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
     }
 }

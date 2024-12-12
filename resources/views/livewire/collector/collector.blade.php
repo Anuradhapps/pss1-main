@@ -1,5 +1,5 @@
 @section('title', 'Collector')
-<div class="bg-slate-50">
+<div class="bg-slate-500 p-2">
     <div class="flex justify-between">
 
         <h1>Collectors Information</h1>
@@ -24,9 +24,9 @@
                     <th>
                         <a href="#" wire:click.prevent="sortBy('name')">Name</a>
                     </th>
-                    <th>
+                    {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('email')">Email</a>
-                    </th>
+                    </th> --}}
                     <th>
                         <a href="#" wire:click.prevent="sortBy('phone_no')">Phone No.</a>
                     </th>
@@ -44,6 +44,9 @@
                         <a href="#" wire:click.prevent="sortBy('village')"> Village</a>
                     </th>
                     <th>
+                        <a href="#"> Rice Season</a>
+                    </th>
+                    {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('rice_variety')"> Rice Variety</a>
                     </th>
                     <th>
@@ -55,7 +58,7 @@
 
                     <th>
                         <a href="#" wire:click.prevent="sortBy('date_establish')">Date Establish</a>
-                    </th>
+                    </th> --}}
                     <th>
                         More info.
                     </th>
@@ -65,17 +68,18 @@
                 @foreach ($this->collectors() as $collector)
                     <tr>
                         <td> {{ $collector->name }}</td>
-                        <td> {{ $collector->email }}</td>
+                        {{-- <td> {{ $collector->email }}</td> --}}
                         <td> {{ $collector->phone_no }}</td>
                         <td> {{ $collector->dname }}</td>
                         <td> {{ $collector->asname }}</td>
-                        <td> {{ $collector->ai_range }}</td>
+                        <td> {{ $collector->ainame }}</td>
                         <td> {{ $collector->village }}</td>
-                        <td> {{ $collector->rice_variety }}</td>
+                        <td> {{ $collector->riceSeasonName }}</td>
+                        {{-- <td> {{ $collector->rice_variety }}</td>
                         <td> {{ $collector->gps_lati }}</td>
                         <td> {{ $collector->gps_long }}</td>
-                        <td> {{ $collector->date_establish }}</td>
-                        <td> <a href="{{ route('admin.collector.common.show', $collector->user_id) }}"> More>>
+                        <td> {{ $collector->date_establish }}</td> --}}
+                        <td> <a href="{{ route('admin.collector.common.show', $collector->id) }}"> More>>
                             </a>
                         </td>
 

@@ -114,7 +114,7 @@
                             <td class="px-6 py-4"> {{ $collector->getAsCenter->name }}</td>
                             <td class="px-6 py-4"> {{ $collector->getAiRange->name }}</td>
                             <td class="px-6 py-4"> {{ $collector->village }}</td>
-                            <td class="px-6 py-4"> {{ $collector->gps_lati.','.$collector->gps_long }}</td>
+                            <td class="px-6 py-4"> {{ $collector->gps_lati . ',' . $collector->gps_long }}</td>
                             <td class="px-6 py-4">
                                 <a class="px-4 py-2 text-sm font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                                     href="{{ route('aCollector.edit', $collector->id) }}">Edit</a>

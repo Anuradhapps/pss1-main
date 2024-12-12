@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use App\Models\CommonDataCollect;
 use App\Models\Collector;
@@ -34,10 +35,10 @@ class CommonDataCollectController extends Controller
 
     public function show($Id)
     {
-        $commons = CommonDataCollect::where('user_id', '=', $Id)->get(); 
-     
+        dd($Id);
+        $commons = CommonDataCollect::where('user_id', '=', $Id)->get();
+
         return view('collectors.show-common_data', compact('commons'));
-        
     }
 
     public function edit(CommonDataCollect $commonDataCollect)
@@ -57,37 +58,39 @@ class CommonDataCollectController extends Controller
     public function updateLocation(Request $request)
     {
         try {
-            $geoLocation=Validator::make($request->all(),
-            [
-               'latitude'=>'required',
-               'longitude'=>'required',
-               'id'=>'required'
+            $geoLocation = Validator::make(
+                $request->all(),
+                [
+                    'latitude' => 'required',
+                    'longitude' => 'required',
+                    'id' => 'required'
 
-            ]);
-            if($geoLocation->fails()){
+                ]
+            );
+            if ($geoLocation->fails()) {
                 return response()->json([
-                   'status'=>false,
-                   'message'=>'validation error',
-                   'error'=>$geoLocation->error()
-                ],401 );
-             }
-         
-             $location=Collector::where('user_id',$request->id )->update([
-                'gps_lati'=>$request->latitude,
-                 'gps_long'=>$request->longitude,
-                 'user_id'=>$request->id
-             ]);
-             return response()->json([
-                'status'=>true,
-                'message'=>'Location updated Successfully'
-                
-             ],200 );
-        }catch (\Throwable $th) {
+                    'status' => false,
+                    'message' => 'validation error',
+                    'error' => $geoLocation->error()
+                ], 401);
+            }
+
+            $location = Collector::where('user_id', $request->id)->update([
+                'gps_lati' => $request->latitude,
+                'gps_long' => $request->longitude,
+                'user_id' => $request->id
+            ]);
             return response()->json([
-               'status'=>false,
-               'message'=>$th->getMessage()
-              
-            ],500 );
-         }
+                'status' => true,
+                'message' => 'Location updated Successfully'
+
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+
+            ], 500);
+        }
     }
 }

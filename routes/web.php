@@ -78,7 +78,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
     Route::get('/get-districts/{id}', [CollectorController::class, 'getDistricts'])->name('admin.get.districts');
     Route::get('/get-as-centers/{id}', [CollectorController::class, 'getAsCenters'])->name('admin.get.as.centers');
     Route::get('/get-aiRanges/{id}', [CollectorController::class, 'getAiRanges'])->name('admin.get.ai.ranges');
-    
+
     Route::get('/specific-page-for-collector', [CollectorController::class, 'index'])->name('admin.collector.index');
     Route::get('/specific-page-for-collector/create', [CollectorController::class, 'create'])->name('admin.collector.create');
     Route::get('/collector/create', [CollectorController::class, 'createNew'])->name('collector.createNew');
@@ -99,9 +99,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 });
 //Admin only routes
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
-    
+
     Route::post('/export-users', [UserController::class, 'exportUsers'])->name('export.users');
-    
+
     Route::get('/', Dashboard::class)->name('admin');
     Route::get('settings/system-settings', Settings::class)->name('admin.settings');
     Route::get('settings/roles', Roles::class)->name('admin.settings.roles.index');
@@ -132,10 +132,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
+    Route::get('/chart/aiShow/{id}', [ChartController::class, 'chartAiShow'])->name('chart.ai.show');
     Route::get('/chart/show/allSeason', [ChartController::class, 'allSeasonChart'])->name('chart.show.allSeason');
 
-    Route::get('/aCollector',[ACollectorController::class,'index'])->name('aCollector.index');
-    Route::get('/aCollector/{id}/edit',[ACollectorController::class,'edit'])->name('aCollector.edit');
-
-    
+    Route::get('/aCollector', [ACollectorController::class, 'index'])->name('aCollector.index');
+    Route::get('/aCollector/{id}/edit', [ACollectorController::class, 'edit'])->name('aCollector.edit');
 });
