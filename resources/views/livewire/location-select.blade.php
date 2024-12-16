@@ -6,7 +6,7 @@
                 @if ($liveProvinces)
                     @foreach ($liveProvinces as $liveProvince)
                         @if ($liveProvince == $province->id)
-                            &#x2705; 
+                            &#x2705;
                         @endif
                     @endforeach
                 @endif
@@ -19,14 +19,15 @@
             <option value="">-- Select District --</option>
             @foreach ($districts as $district)
                 <option value="{{ $district->id }}">
-                 @if ($liveDistricts)
-                    @foreach ($liveDistricts as $liveDistrict)
-                        @if ($liveDistrict == $district->id)
-                            &#x2705; 
-                        @endif
-                    @endforeach
-                @endif
-                {{ old('district', $district->name) }}</option>
+                    @if ($liveDistricts)
+                        @foreach ($liveDistricts as $liveDistrict)
+                            @if ($liveDistrict == $district->id)
+                                &#x2705;
+                            @endif
+                        @endforeach
+                    @endif
+                    {{ old('district', $district->name) }}
+                </option>
             @endforeach
         </x-form.select>
     @endif
@@ -35,14 +36,15 @@
             <option value="">-- Select ASC --</option>
             @foreach ($asCenters as $asCenter)
                 <option value="{{ $asCenter->id }}">
-                @if ($liveAsCenters)
-                    @foreach ($liveAsCenters as $liveAsCenter)
-                        @if ($liveAsCenter == $asCenter->id)
-                            &#x2705;
-                        @endif
-                    @endforeach
-                @endif
-                {{ old('as_center', $asCenter->name) }}</option>
+                    @if ($liveAsCenters)
+                        @foreach ($liveAsCenters as $liveAsCenter)
+                            @if ($liveAsCenter == $asCenter->id)
+                                &#x2705;
+                            @endif
+                        @endforeach
+                    @endif
+                    {{ old('as_center', $asCenter->name) }}
+                </option>
             @endforeach
         </x-form.select>
     @endif
@@ -51,14 +53,15 @@
             <option value="">-- Select AI Range --</option>
             @foreach ($aiRanges as $aiRange)
                 <option value="{{ $aiRange->id }}">
-                 @if ($liveAiRanges)
-                    @foreach ($liveAiRanges as $liveAiRange)
-                        @if ($liveAiRange == $aiRange->id)
-                            &#x2705; 
-                        @endif
-                    @endforeach
-                @endif
-                {{ old('ai_range', $aiRange->name) }}</option>
+                    @if ($liveAiRanges)
+                        @foreach ($liveAiRanges as $liveAiRange)
+                            @if ($liveAiRange == $aiRange->id)
+                                &#x2705;
+                            @endif
+                        @endforeach
+                    @endif
+                    {{ old('ai_range', $aiRange->name) }}
+                </option>
             @endforeach
         </x-form.select>
     @endif

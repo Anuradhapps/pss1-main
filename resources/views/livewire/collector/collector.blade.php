@@ -1,13 +1,10 @@
 @section('title', 'Collector')
-<div class="bg-slate-500 p-2">
+<div class="p-2 bg-slate-500">
     <div class="flex justify-between">
-
-        <h1>Collectors Information</h1>
-
-
+        <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'" />
     </div>
 
-    <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-4">
 
         <div class="col-span-2 py-2">
             <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
@@ -27,9 +24,9 @@
                     {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('email')">Email</a>
                     </th> --}}
-                    <th>
+                    {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('phone_no')">Phone No.</a>
-                    </th>
+                    </th> --}}
                     <th>
                         <a href="#" wire:click.prevent="sortBy('district')">District</a>
                     </th>
@@ -69,7 +66,7 @@
                     <tr>
                         <td> {{ $collector->name }}</td>
                         {{-- <td> {{ $collector->email }}</td> --}}
-                        <td> {{ $collector->phone_no }}</td>
+                        {{-- <td> {{ $collector->phone_no }}</td> --}}
                         <td> {{ $collector->dname }}</td>
                         <td> {{ $collector->asname }}</td>
                         <td> {{ $collector->ainame }}</td>
@@ -79,7 +76,7 @@
                         <td> {{ $collector->gps_lati }}</td>
                         <td> {{ $collector->gps_long }}</td>
                         <td> {{ $collector->date_establish }}</td> --}}
-                        <td> <a href="{{ route('admin.collector.common.show', $collector->id) }}"> More>>
+                        <td> <a href="{{ route('admin.collector.edit', $collector->id) }}"> More>>
                             </a>
                         </td>
 

@@ -47,7 +47,7 @@
 @if (can('view_users'))
     <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
     <x-nav.link route="pest.index" icon="fas fa-bug">Pest</x-nav.link>
-    <x-nav.link route="aCollector.index" icon="fas fa-user-tie">Collectors</x-nav.link>
+    <x-nav.link route="admin.collector.records" icon="fas fa-user-tie">Collectors</x-nav.link>
     <x-nav.link route="report.index" icon="fas fa-file-alt">Report</x-nav.link>
     <x-nav.link route="chart.index" icon="fas fa-chart-bar">Data/Charts</x-nav.link>
 @endif

@@ -4,9 +4,8 @@
     <div class="m-5">
         <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">
             {{ $collector->riceSeason->name }}</h3>
-
         <!-- Form for updating collector information -->
-        <x-form action="{{ route('admin.collector.update', $collector->id) }}">
+        <x-form action="{{ route('admin.collector.update', $collector->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -15,7 +14,7 @@
                 class="mb-4">{{ old('phone_no', $collector->phone_no) }}</x-form.input>
 
             <!-- Display Existing Location Info -->
-            <div class="flex flex-col gap-4 mb-4 text-sm sm:flex-row sm:justify-between">
+            {{-- <div class="flex flex-col gap-4 mb-4 text-sm sm:flex-row sm:justify-between">
                 <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">Province:
                     {{ $collector->getProvince->name }}</span>
                 <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">District:
@@ -24,7 +23,7 @@
                     {{ $collector->getAsCenter->name }}</span>
                 <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">AI Range:
                     {{ $collector->getAiRange->name }}</span>
-            </div>
+            </div> --}}
             <x-form.select name="region" label="Region:" id="region">
                 <option value="1" {{ $collector->region_id == 1 ? 'selected' : '' }}>Provicial</option>
                 <option value="2" {{ $collector->region_id == 2 ? 'selected' : '' }}>Inter Provicial</option>
@@ -37,7 +36,8 @@
                 select location again and save.</span>
 
             <!-- Location Selection (Livewire Component) -->
-            <livewire:location-select />
+            <livewire:location-select :selectedProvince="$collector->province" :selectedDistrict="$collector->district" :selectedAsCenter="$collector->asc" :selectedAiRange="$collector->ai_range" />
+
 
             <!-- Village Field -->
             <x-form.input name="village" label="Village:"

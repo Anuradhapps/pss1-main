@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', Welcome::class);
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/app', Dashboard::class)->name('admin');
-
 //Route::get('/a',maindashboard::class)->name('main.dashboard');
 //unauthenticated
 Route::middleware(['web', 'guest'])->group(function () {
@@ -106,8 +105,10 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('settings/system-settings', Settings::class)->name('admin.settings');
     Route::get('settings/roles', Roles::class)->name('admin.settings.roles.index');
     Route::get('settings/roles/{role}/edit', Edit::class)->name('admin.settings.roles.edit');
-    // Route::get('/collector-records', [CollectorController::class, 'view'])->name('admin.collector.records');
+
     Route::get('/collector-records', CollectorLivewire::class)->name('admin.collector.records');
+    Route::get('/specific-page-for-collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
+    Route::put('/specific-page-for-collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
     Route::get('/collector-show-common_data/{id}', [CommonDataCollectController::class, 'show'])->name('admin.collector.common.show');
     Route::get('/collector-show-pest_data/{id}', [PestDataCollectController::class, 'show'])->name('admin.collector.pest.show');
 
@@ -134,7 +135,4 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
     Route::get('/chart/aiShow/{id}', [ChartController::class, 'chartAiShow'])->name('chart.ai.show');
     Route::get('/chart/show/allSeason', [ChartController::class, 'allSeasonChart'])->name('chart.show.allSeason');
-
-    Route::get('/aCollector', [ACollectorController::class, 'index'])->name('aCollector.index');
-    Route::get('/aCollector/{id}/edit', [ACollectorController::class, 'edit'])->name('aCollector.edit');
 });

@@ -18,17 +18,25 @@ class LocationSelect extends Component
     public $districts;
     public $asCenters;
     public $aiRanges;
-    public $selectedProvince;
-    public $selectedDistrict;
-    public $selectedAsCenter;
-    public $selectedAiRange;
+    public $selectedProvince = null;
+    public $selectedDistrict = null;
+    public $selectedAsCenter = null;
+    public $selectedAiRange = null;
     // public $collector;
 
 
-    public function mount(){
-
+    public function mount($selectedProvince = null, $selectedDistrict = null, $selectedAsCenter = null, $selectedAiRange = null)
+    {
         $this->provinces = Province::all();
-        // $this->collector = $collector;
+        if ($selectedProvince != null) {
+            $this->selectedProvince = $selectedProvince;
+            $this->selectedDistrict = $selectedDistrict;
+            $this->selectedAsCenter = $selectedAsCenter;
+            $this->selectedAiRange = $selectedAiRange;
+            $this->updatedselectedProvince();
+            $this->updatedselectedDistrict();
+            $this->updatedselectedAsCenter();
+        }
     }
     public function render()
     {

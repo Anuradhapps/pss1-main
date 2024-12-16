@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Collector;
 
 use App\Http\Controllers\RiceSeasonController;
+use App\Models\As_center;
 use App\Models\Collector;
+use App\Models\district;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -19,6 +21,15 @@ class CollectorLivewire extends Component
     public function render()
     {
         return view('livewire.collector.collector');
+    }
+
+    public function edit(Collector $collector)
+    {
+        $districts = district::all();
+        $selected_asc = $collector->asc;
+        $ascs = As_center::where('district_id', $collector->district)->get();
+
+        return view('collector.edit', compact('collector', 'districts', 'selected_asc', 'ascs'));
     }
     public function sortBy(string $field): void
     {

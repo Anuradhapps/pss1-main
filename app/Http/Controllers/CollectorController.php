@@ -10,6 +10,7 @@ use App\Models\Collector;
 use App\Models\district;
 use App\Models\As_center;
 use App\Models\Province;
+use App\Models\RiceSeason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -52,12 +53,13 @@ class CollectorController extends Controller
             // $provinces = Province::all();
             return view('collectors.create', ['season' => $season]);
         } else {
-
+            $seasonId = $collector->rice_season_id;
+            $season = RiceSeason::find($seasonId)->name;
             $provinces = Province::all();
             $districts = district::all();
             $as_centers = As_center::all();
             $ai_ranges = AiRange::all();
-            return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season')); // Include provinces here
+            return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
         }
     }
     public function createNew()
@@ -135,11 +137,14 @@ class CollectorController extends Controller
      */
     public function edit(Collector $collector)
     {
-        $districts = District::all();
-        $selected_asc = $collector->asc;
-        $ascs = As_center::where('district_id', $collector->district)->get();
-
-        return view('collector.edit', compact('collector', 'districts', 'selected_asc', 'ascs'));
+        dd($collector);
+        $seasonId = $collector->rice_season_id;
+        $season = RiceSeason::find($seasonId)->name;
+        $provinces = Province::all();
+        $districts = district::all();
+        $as_centers = As_center::all();
+        $ai_ranges = AiRange::all();
+        return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
     }
     /**
      * Update the specified resource in storage.
@@ -150,9 +155,9 @@ class CollectorController extends Controller
      */
     public function update(Request $request, Collector $collector)
     {
-
         $request->validate([
             'phone_no' => 'required',
+            'region' => 'required',
             'province' => 'required',
             'district' => 'required',
             'as_center' => 'required',
@@ -166,6 +171,7 @@ class CollectorController extends Controller
 
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
         $collector->phone_no = $request->phone_no;
+        $collector->region_id = $request->region;
         $collector->province = $request->province;
         $collector->district = $request->district;
         $collector->asc = $request->as_center;
@@ -180,13 +186,16 @@ class CollectorController extends Controller
             return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
         } else {
             $collectors = Collector::all();
-            return view('admin-Collector.index', ['collectors' => $collectors]);
+            return redirect(route('admin.collector.records'));
         }
     }
 
     // In your controller
 
-
+    public function update1()
+    {
+        dd("update1");
+    }
 
     public function getDistricts($provinceId)
     {
