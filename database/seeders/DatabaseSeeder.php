@@ -18,9 +18,8 @@ class DatabaseSeeder extends Seeder
             RolesDatabaseSeeder::class,
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
+            RegionSeeder::class,
             DummySeeder::class
         ]);
-
-
     }
 }

@@ -13,10 +13,6 @@
                     label="Date of Collected Data:">{{ old('date_collected') }}</x-form.date>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.input type="number" name="temperature" label="Temperature:" min=-50
-                    max=50>{{ old('temperature') }}</x-form.input>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
                 <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full mt-1" name="growth_s_c">
                     <option value="">-- Select code --</option>
                     @php
@@ -38,6 +34,11 @@
                     @endfor
                 </x-form.select>
             </div>
+            <div class="col-span-2 sm:col-span-1">
+                <x-form.input type="number" name="temperature" label="Temperature:" min=-50
+                    max=50>{{ old('temperature') }}</x-form.input>
+            </div>
+
             <div class="col-span-2 sm:col-span-1">
                 <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (In last week)" class="block w-full mt-1"
                     name="numbrer_r_day">

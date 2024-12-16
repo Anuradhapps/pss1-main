@@ -25,7 +25,11 @@
                 <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">AI Range:
                     {{ $collector->getAiRange->name }}</span>
             </div>
-
+            <x-form.select name="region" label="Region:" id="region">
+                <option value="1" {{ $collector->region_id == 1 ? 'selected' : '' }}>Provicial</option>
+                <option value="2" {{ $collector->region_id == 2 ? 'selected' : '' }}>Inter Provicial</option>
+                <option value="3" {{ $collector->region_id == 3 ? 'selected' : '' }}>Mahaweli</option>
+            </x-form.select>
             <!-- Message to reselect location -->
             <span class="block mb-4 text-sm italic text-orange-400">If you want to change the location or any other
                 data,

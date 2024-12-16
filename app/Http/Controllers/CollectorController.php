@@ -22,12 +22,13 @@ class CollectorController extends Controller
      */
     public  $thisSeasonId;
     public $thisSeason;
-    public function __construct(){
-         $season = new RiceSeasonController;
-         $this->thisSeason =  $season->getSeasson();
-         $this->thisSeasonId =  $season->getSeasson()['seasonId'];
+    public function __construct()
+    {
+        $season = new RiceSeasonController;
+        $this->thisSeason =  $season->getSeasson();
+        $this->thisSeasonId =  $season->getSeasson()['seasonId'];
     }
-    
+
     public function index()
     {
         return view('collectors.index');
@@ -48,18 +49,19 @@ class CollectorController extends Controller
 
 
         if (empty($collector)) {
-            $provinces = Province::all();
-            return view('collectors.create',['season'=>$season]);
+            // $provinces = Province::all();
+            return view('collectors.create', ['season' => $season]);
         } else {
 
             $provinces = Province::all();
             $districts = district::all();
             $as_centers = As_center::all();
-            $ai_ranges= AiRange::all();
-            return view('collectors.edit', compact('collector',  'provinces','districts', 'as_centers','ai_ranges','season')); // Include provinces here
+            $ai_ranges = AiRange::all();
+            return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season')); // Include provinces here
         }
     }
-    public function createNew(){
+    public function createNew()
+    {
         return view('collectors.create');
     }
     /**
@@ -70,9 +72,10 @@ class CollectorController extends Controller
      */
     public function store(Request $request)
     {
-  
+
         $request->validate([
             'phone_no' => 'required|unique:collectors',
+            'region' => 'required',
             'province' => 'required',
             'district' => 'required',
             'as_center' => 'required',
@@ -82,14 +85,15 @@ class CollectorController extends Controller
             //  'gps_long' => 'required',
             'rice_variety' => 'required',
             'date_establish' => 'required',
-            
+
         ]);
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
 
         $collector = new Collector([
             'user_id' => Auth::user()->id,
-            'rice_season_id'=>$this->thisSeasonId,
+            'rice_season_id' => $this->thisSeasonId,
             'phone_no' => $request->get('phone_no'),
+            'region_id' => $request->get('region'),
             'province' => $request->get('province'),
             'district' => $request->get('district'),
             'asc' => $request->get('as_center'),
@@ -159,7 +163,7 @@ class CollectorController extends Controller
             'rice_variety' => 'required',
             'date_establish' => 'required',
         ]);
-          
+
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
         $collector->phone_no = $request->phone_no;
         $collector->province = $request->province;
@@ -172,13 +176,12 @@ class CollectorController extends Controller
         $collector->rice_variety = $request->rice_variety;
         $collector->date_establish = $dateEstablish;
         $collector->save();
-        if(!is_admin()){
+        if (!is_admin()) {
             return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
-        }else{
+        } else {
             $collectors = Collector::all();
-            return view('admin-Collector.index',['collectors' => $collectors]);
+            return view('admin-Collector.index', ['collectors' => $collectors]);
         }
-        
     }
 
     // In your controller
@@ -216,21 +219,21 @@ class CollectorController extends Controller
         return redirect('collector')->with('flash_message', 'collector deleted!');
     }
 
-    public function getCollectorCount($seasonId=null, $provinceId=null, $districtId=null, $asCenterId=null, $aiRangeId=null){
-        if($seasonId=null){
+    public function getCollectorCount($seasonId = null, $provinceId = null, $districtId = null, $asCenterId = null, $aiRangeId = null)
+    {
+        if ($seasonId = null) {
             $collectorCount = Collector::all()->count();
             return $collectorCount;
-        }elseif($provinceId!=null){
+        } elseif ($provinceId != null) {
             $collectorCount = Collector::where('rice_season_id', $seasonId)->where('province', $provinceId)->count();
-        }elseif($districtId!=null){
+        } elseif ($districtId != null) {
             $collectorCount = Collector::where('rice_season_id', $seasonId)->where('district', $districtId)->count();
-        }elseif($asCenterId!=null){
+        } elseif ($asCenterId != null) {
             $collectorCount = Collector::where('rice_season_id', $seasonId)->where('asc', $asCenterId)->count();
-        }elseif($aiRangeId!=null){
+        } elseif ($aiRangeId != null) {
             $collectorCount = Collector::where('rice_season_id', $seasonId)->where('ai_range', $aiRangeId)->count();
-        }else{
-            dd('No Collector data found');    
+        } else {
+            dd('No Collector data found');
         }
-        
     }
 }

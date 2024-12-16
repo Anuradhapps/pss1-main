@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('phone_no');
             $table->uuid('user_id'); // Change to UUID
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('region_id')->references('id')->on('regions')->onDelete('cascade')->onUpdate('cascade')->default(1);
             $table->foreignId('province')->constrained('provinces')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('district')->constrained('districts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('asc')->constrained('as_centers')->onDelete('cascade')->onUpdate('cascade');
@@ -28,7 +29,6 @@ return new class extends Migration
             $table->date('date_establish')->nullable(true);
             $table->timestamps();
         });
-        
     }
 
     public function down()

@@ -8,7 +8,11 @@
         <x-form action="{{ route('admin.collector.store') }}">
             @csrf
             <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>
-
+            <x-form.select name="region" label="Region:" id="region">
+                <option value="1" {{ old('region') == 1 ? 'selected' : '' }}>Provicial</option>
+                <option value="2" {{ old('region') == 2 ? 'selected' : '' }}>Inter Provicial</option>
+                <option value="3" {{ old('region') == 3 ? 'selected' : '' }}>Mahaweli</option>
+            </x-form.select>
             <livewire:location-select />
 
             <x-form.input name="village" label="Village:">{{ old('village') }}</x-form.input>

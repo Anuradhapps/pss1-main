@@ -16,7 +16,7 @@ class ProvinceDistrictAscAiRangeSeeder extends Seeder
     {
         // Path to your CSV file
         $csvFile = base_path('database/dbai.csv');
-        
+
         // Open and read the CSV file
         $file = fopen($csvFile, 'r');
         $firstline = true; // To skip the header

@@ -16,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Arr;
 use Nette\Utils\Random;
 
 class DummySeeder extends Seeder
@@ -72,10 +73,11 @@ class DummySeeder extends Seeder
 
                 $baseLatitude = 7.8731;
                 $baseLongitude = 80.7718;
-                
+
                 // Adjusting code to add random variation around the base coordinates
                 $collector = Collector::firstOrCreate([
                     'user_id' => $testUser->id,
+                    'region_id' => Arr::random([1, 2, 3]),
                     'rice_season_id' => $season->id,
                     'phone_no' => '07' . mt_rand(0, 9) . mt_rand(1000000, 9999999),
                     'ai_range' => $aiRange->id,
