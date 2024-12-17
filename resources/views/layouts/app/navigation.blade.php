@@ -31,20 +31,13 @@
 
 
 
-
 <x-nav.link route="admin" icon="fas fa-home">Dashboard</x-nav.link>
-@if (!is_admin())
-    <x-nav.link route="admin.collector.create" icon="fas fa-user-tie">Collector Info</x-nav.link>
+@if (has_role('collector'))
+    <x-nav.link route="collector.create" icon="fas fa-user-tie">Collector Info</x-nav.link>
     <x-nav.link route="pestdata.index" icon="fa fa-id-card">Pest Data</x-nav.link>
 @endif
 
-
-
-
-
-@if (can('view_dashboard'))
-@endif
-@if (can('view_users'))
+@if (has_role('admin'))
     <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
     <x-nav.link route="pest.index" icon="fas fa-bug">Pest</x-nav.link>
     <x-nav.link route="admin.collector.records" icon="fas fa-user-tie">Collectors</x-nav.link>

@@ -27,7 +27,8 @@ class CollectorController extends Controller
     {
         $season = new RiceSeasonController;
         $this->thisSeason =  $season->getSeasson();
-        $this->thisSeasonId =  $season->getSeasson()['seasonId'];
+        $this->thisSeasonId =  $this->thisSeason['seasonId'];
+        // $this->thisSeasonId =  20252025;
     }
 
     public function index()
@@ -44,28 +45,22 @@ class CollectorController extends Controller
     public function create()
     {
         $id = Auth::user()->id;
-
         $collector  = Collector::where('user_id', $id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
-        $season = $this->thisSeason['seasonName'];
-
-
-        if (empty($collector)) {
-            // $provinces = Province::all();
+        if (empty($collector) || $collector->rice_season_id != $this->thisSeasonId) {
+            $season = $this->thisSeason['seasonName'];
             return view('collectors.create', ['season' => $season]);
         } else {
-            $seasonId = $collector->rice_season_id;
-            $season = RiceSeason::find($seasonId)->name;
-            $provinces = Province::all();
-            $districts = district::all();
-            $as_centers = As_center::all();
-            $ai_ranges = AiRange::all();
-            return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
+            $collectors = Collector::where('user_id', $id)
+                ->orderBy('rice_season_id', 'desc') // Or any column you want to order by
+                ->get();
+
+            // Set a success message in the session
+            // session()->flash('success', 'Collectors list updated successfully!');
+
+            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collectors list updated successfully!']);
         }
     }
-    public function createNew()
-    {
-        return view('collectors.create');
-    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -108,7 +103,7 @@ class CollectorController extends Controller
         ]);
         $collector->save();
         //return redirect('/collectors')->with('success', 'Collector added successfully!');
-        return redirect()->route('admin.collector.index')->with('success', 'Collector Data created successfully.');
+        return redirect()->route('collector.index')->with('success', 'Collector Data created successfully.');
     }
     /**
      * Display the specified resource.
@@ -135,9 +130,9 @@ class CollectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Collector $collector)
+    public function edit($id)
     {
-        dd($collector);
+        $collector = Collector::find($id);
         $seasonId = $collector->rice_season_id;
         $season = RiceSeason::find($seasonId)->name;
         $provinces = Province::all();
@@ -153,8 +148,9 @@ class CollectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Collector $collector)
+    public function update(Request $request, $collectorId)
     {
+        $collector = Collector::findorfail($collectorId);
         $request->validate([
             'phone_no' => 'required',
             'region' => 'required',
@@ -182,9 +178,13 @@ class CollectorController extends Controller
         $collector->rice_variety = $request->rice_variety;
         $collector->date_establish = $dateEstablish;
         $collector->save();
-        if (!is_admin()) {
-            return redirect()->route('admin.collector.index')->with('success', 'Collector updated successfully.');
-        } else {
+        if (has_role('collector')) {
+            $id = Auth::user()->id;
+            $collectors  = Collector::where('user_id', $id)->get();
+            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector updated successfully.']);
+
+            // return redirect()->route('collector.index', ['collectors' => $collectors])->with('success', 'Collector updated successfully.');
+        } elseif (has_role('admin')) {
             $collectors = Collector::all();
             return redirect(route('admin.collector.records'));
         }
@@ -192,10 +192,6 @@ class CollectorController extends Controller
 
     // In your controller
 
-    public function update1()
-    {
-        dd("update1");
-    }
 
     public function getDistricts($provinceId)
     {

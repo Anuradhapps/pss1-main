@@ -5,7 +5,9 @@
         <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">
             {{ $collector->riceSeason->name }}</h3>
         <!-- Form for updating collector information -->
-        <x-form action="{{ route('admin.collector.update', $collector->id) }}" method="POST">
+        <x-form action="{{ route(has_role('admin') ? 'admin.collector.update' : 'collector.update', $collector->id) }}"
+            method="POST">
+
             @csrf
             @method('PUT')
 

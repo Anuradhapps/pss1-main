@@ -23,22 +23,22 @@ class PestDataCollectController extends Controller
     public $code;
     public  $thisSeasonId;
     public $thisSeason;
-    public function __construct(){
-         $season = new RiceSeasonController;
-         $this->thisSeason =  $season->getSeasson();
-         $this->thisSeasonId =  $season->getSeasson()['seasonId'];
+    public function __construct()
+    {
+        $season = new RiceSeasonController;
+        $this->thisSeason =  $season->getSeasson();
+        $this->thisSeasonId =  $season->getSeasson()['seasonId'];
     }
     public function index()
     {
         $user = Auth::user();
         $collector = Collector::where('user_id', $user->id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
-        if($collector){
+        if ($collector) {
             $CommonData = CommonDataCollect::where('user_id', '=', $user->id)->latest()->get();
 
             return view('pestData.index', ['CommonData' => $CommonData]);
         }
         return redirect()->route('admin.collector.create')->with('error', 'Please Create Collector');
-        
     }
 
     public function create()
@@ -69,7 +69,7 @@ class PestDataCollectController extends Controller
 
         $CommonDataCollect = CommonDataCollect::create([
             'user_id' => Auth::user()->id,
-            'collector_id'=>$collector->id,
+            'collector_id' => $collector->id,
             'c_date' => Carbon::createFromFormat('d-m-Y', $validatedRequest['date_collected']),
             'temperature' => $request->input('temperature') ?: 0,
             'growth_s_c' => $validatedRequest['growth_s_c'],

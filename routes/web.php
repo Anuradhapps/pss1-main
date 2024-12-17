@@ -31,8 +31,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', Welcome::class);
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/app', Dashboard::class)->name('admin');
-//Route::get('/a',maindashboard::class)->name('main.dashboard');
-//unauthenticated
+
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [LoginController::class, 'login']);
@@ -71,23 +70,16 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->prefix('a
 
 
 
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('admin')->group(function () {
-    Route::get('/', Dashboard::class)->name('admin');
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('collector')->group(function () {
 
-    Route::get('/get-districts/{id}', [CollectorController::class, 'getDistricts'])->name('admin.get.districts');
-    Route::get('/get-as-centers/{id}', [CollectorController::class, 'getAsCenters'])->name('admin.get.as.centers');
-    Route::get('/get-aiRanges/{id}', [CollectorController::class, 'getAiRanges'])->name('admin.get.ai.ranges');
 
-    Route::get('/specific-page-for-collector', [CollectorController::class, 'index'])->name('admin.collector.index');
-    Route::get('/specific-page-for-collector/create', [CollectorController::class, 'create'])->name('admin.collector.create');
-    Route::get('/collector/create', [CollectorController::class, 'createNew'])->name('collector.createNew');
-    Route::post('/specific-page-for-collector', [CollectorController::class, 'store'])->name('admin.collector.store');
-    Route::post('/specific-page-for-collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
-    Route::put('/specific-page-for-collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
+    Route::get('/', [CollectorController::class, 'index'])->name('collector.index');
+    Route::get('/create', [CollectorController::class, 'create'])->name('collector.create');
+    Route::post('/store', [CollectorController::class, 'store'])->name('collector.store');
+    Route::get('/edit/{id}', [CollectorController::class, 'edit'])->name('collector.edit');
+    Route::put('/{id}', [CollectorController::class, 'update'])->name('collector.update');
 
-    Route::get('/collector-my-records/commondata', [CommonDataCollectController::class, 'index'])->name('admin.collector.mycommon.index');
 
-    // Index Route
     Route::get('/pestdata', [PestDataCollectController::class, 'index'])->name('pestdata.index');
     Route::get('/pestdata/create', [PestDataCollectController::class, 'create'])->name('pestdata.create');
     Route::post('/pestdata/store', [PestDataCollectController::class, 'store'])->name('pestdata.store');
@@ -106,10 +98,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('settings/roles', Roles::class)->name('admin.settings.roles.index');
     Route::get('settings/roles/{role}/edit', Edit::class)->name('admin.settings.roles.edit');
 
-    Route::get('/collector-records', CollectorLivewire::class)->name('admin.collector.records');
-    Route::get('/specific-page-for-collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
-    Route::put('/specific-page-for-collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
-    Route::get('/collector-show-common_data/{id}', [CommonDataCollectController::class, 'show'])->name('admin.collector.common.show');
+    Route::get('/collector', CollectorLivewire::class)->name('admin.collector.records');
+    Route::get('/collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
+    Route::put('/collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
     Route::get('/collector-show-pest_data/{id}', [PestDataCollectController::class, 'show'])->name('admin.collector.pest.show');
 
     Route::get('/pest', [PestController::class, 'index'])->name('pest.index');
@@ -127,7 +118,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/report/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');
     Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');
     Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
-
     Route::get('/export-pdf/{id}', [ReportController::class, 'exportToPDF'])->name('export.pdf');
 
 

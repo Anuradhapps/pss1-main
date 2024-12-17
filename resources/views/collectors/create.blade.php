@@ -5,7 +5,7 @@
         <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">{{ $season }}
         </h3>
         <x-error-massage />
-        <x-form action="{{ route('admin.collector.store') }}">
+        <x-form action="{{ route('collector.store') }}">
             @csrf
             <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>
             <x-form.select name="region" label="Region:" id="region">
