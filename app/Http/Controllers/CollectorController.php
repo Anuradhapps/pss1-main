@@ -28,7 +28,6 @@ class CollectorController extends Controller
         $season = new RiceSeasonController;
         $this->thisSeason =  $season->getSeasson();
         $this->thisSeasonId =  $this->thisSeason['seasonId'];
-        // $this->thisSeasonId =  20252025;
     }
 
     public function index()
@@ -51,12 +50,8 @@ class CollectorController extends Controller
             return view('collectors.create', ['season' => $season]);
         } else {
             $collectors = Collector::where('user_id', $id)
-                ->orderBy('rice_season_id', 'desc') // Or any column you want to order by
+                ->orderBy('rice_season_id', 'desc')
                 ->get();
-
-            // Set a success message in the session
-            // session()->flash('success', 'Collectors list updated successfully!');
-
             return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collectors list updated successfully!']);
         }
     }
@@ -102,7 +97,6 @@ class CollectorController extends Controller
             'date_establish' => $dateEstablish,
         ]);
         $collector->save();
-        //return redirect('/collectors')->with('success', 'Collector added successfully!');
         return redirect()->route('collector.index')->with('success', 'Collector Data created successfully.');
     }
     /**
@@ -207,7 +201,7 @@ class CollectorController extends Controller
 
     public function getAiRanges($ascId)
     {
-        $airRanges = AiRange::where('as_center_id', $ascId)->get(); // Assuming you have a relationship set up for this
+        $airRanges = AiRange::where('as_center_id', $ascId)->get();
         return response()->json($airRanges);
     }
 

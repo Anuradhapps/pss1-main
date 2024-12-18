@@ -215,6 +215,11 @@ class PestDataCollectController extends Controller
         CommonDataCollect::findOrFail($id)->delete();
         return redirect()->route('pestdata.index')->with('success', 'Pest Data deleted successfully.');
     }
+    public function adminDestroy($id)
+    {
+        CommonDataCollect::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Pest data deleted successfully.');
+    }
 
     public function getGallMidgeCode($tillerTotal, $pestTotal)
     {

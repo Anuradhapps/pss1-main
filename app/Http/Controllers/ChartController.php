@@ -214,8 +214,9 @@ class ChartController extends Controller
 
     public function avarageCalculate($collectors)
     {
+
         if ($collectors->count() == 0) {
-            return redirect()->route('chart.index')->with('error', 'No data found');
+            return redirect()->route('chart.index')->with('error', 'No collectors found');
         }
         $noOfTillers = 0;
         $thrips = 0;
@@ -228,8 +229,8 @@ class ChartController extends Controller
         $thripscount = 0;
 
         foreach ($collectors as $collector) {
-            foreach ($collector->commonDataCollect as $commonData) {
 
+            foreach ($collector->commonDataCollect as $commonData) {
                 foreach ($commonData->pestDataCollect as $pestData) {
 
                     if ($pestData->pest_name == 'Number_Of_Tillers') {
@@ -251,19 +252,29 @@ class ChartController extends Controller
                 }
             }
         }
-        $possibleCodes = [1, 3, 5, 7, 9];
+        $possibleCodes = [0, 1, 3, 5, 7, 9];
         $thripsC = 0;
         if ($thripscount == 0) {
             $thripsC = 0;
         } else {
             $thripsC = $thrips / $thripscount;
         }
+
+
         $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
-        $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
-        $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
-        $yellowStemBorer = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
-        $bphWbphCode = $this->PestDataCollectController->getBphWbphCode($noOfTillers, $bphWbph)['code'];
-        $paddyBugCode = $this->PestDataCollectController->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+        $gallMidgeCode = 0;
+        $leaffolderCode = 0;
+        $yellowStemBorer = 0;
+        $bphWbphCode = 0;
+        $paddyBugCode = 0;
+        if ($noOfTillers != 0) {
+            $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
+            $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
+            $yellowStemBorer = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
+            $bphWbphCode = $this->PestDataCollectController->getBphWbphCode($noOfTillers, $bphWbph)['code'];
+            $paddyBugCode = $this->PestDataCollectController->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+        }
+
         return [
             "pests" => [
                 "thrips" => $thripsCode,
@@ -287,6 +298,9 @@ class ChartController extends Controller
     function chartAiShow($id, ChartAi $chartAi)
     {
         $aiCollector = Collector::findOrFail($id);
+        if ($aiCollector->commonDataCollect->count() == 0) {
+            return redirect()->route('chart.index')->with('error', 'No data found');
+        }
         return view('chart.showAi', ['chart' => $chartAi->build($aiCollector), 'collector' => $aiCollector]);
     }
 }

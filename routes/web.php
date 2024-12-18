@@ -111,6 +111,8 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::put('/pest/{id}', [PestController::class, 'update'])->name('pest.update');
     Route::delete('/pest/{id}', [PestController::class, 'destroy'])->name('pest.destroy');
 
+    Route::delete('/pestdata/{id}', [PestDataCollectController::class, 'adminDestroy'])->name('admin.pestdata.destroy');
+
     Route::get('/report', [ReportController::class, 'index'])->name('report.index');
     Route::get('/report/create', [ReportController::class, 'create'])->name('report.create');
     Route::post('/report', [ReportController::class, 'store'])->name('report.store');

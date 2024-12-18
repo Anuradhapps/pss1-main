@@ -5,7 +5,7 @@
             class="px-4 py-2 mr-1 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
     </div>
 
-
+    <x-error-massage />
     <div class="container px-2 mx-auto ">
 
 

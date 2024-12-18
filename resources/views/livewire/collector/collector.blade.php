@@ -63,7 +63,7 @@
             </thead>
             <tbody>
                 @foreach ($this->collectors() as $collector)
-                    <tr>
+                    <tr class="bg-emerald-900">
                         <td> {{ $collector->name }}</td>
                         {{-- <td> {{ $collector->email }}</td> --}}
                         {{-- <td> {{ $collector->phone_no }}</td> --}}
@@ -76,7 +76,13 @@
                         <td> {{ $collector->gps_lati }}</td>
                         <td> {{ $collector->gps_long }}</td>
                         <td> {{ $collector->date_establish }}</td> --}}
-                        <td> <a href="{{ route('admin.collector.edit', $collector->id) }}"> More>>
+                        <td> <a href="{{ route('admin.collector.edit', $collector->id) }}"
+                                class="px-2 py-1 text-sm font-bold text-white bg-red-800 rounded me-1 hover:bg-red-900">
+                                Edit
+                            </a>
+                            <a href="{{ route('chart.ai.show', $collector->id, 'yes') }}"
+                                class="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded hover:bg-orange-600">
+                                View pest Data
                             </a>
                         </td>
 
