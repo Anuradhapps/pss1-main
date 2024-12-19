@@ -23,14 +23,11 @@ class UserController extends Controller
 {
     public function exportUsers(Request $request)
     {
-        
-       
         // Validate the date inputs
         $validated = $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
-
         // Pass the dates to the export class
         return Excel::download(new UsersExport($validated['start_date'], $validated['end_date']), 'users.xlsx');
     }

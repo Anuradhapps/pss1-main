@@ -30,20 +30,31 @@
 </div>
 
 
-
 <x-nav.link route="admin" icon="fas fa-home">Dashboard</x-nav.link>
-@if (has_role('collector'))
+
+@if (can('create_collectors') && !is_admin())
     <x-nav.link route="collector.create" icon="fas fa-user-tie">Collector Info</x-nav.link>
+@endif
+@if (can('create_data') && !is_admin())
     <x-nav.link route="pestdata.index" icon="fa fa-id-card">Pest Data</x-nav.link>
 @endif
-
-@if (has_role('admin'))
+@if (can('view_users'))
     <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
+@endif
+@if (can('view_pests'))
     <x-nav.link route="pest.index" icon="fas fa-bug">Pest</x-nav.link>
+@endif
+@if (can('view_collectors'))
     <x-nav.link route="admin.collector.records" icon="fas fa-user-tie">Collectors</x-nav.link>
+@endif
+@if (can('view_reports'))
     <x-nav.link route="report.index" icon="fas fa-file-alt">Report</x-nav.link>
+@endif
+@if (can('view_data_charts'))
     <x-nav.link route="chart.index" icon="fas fa-chart-bar">Data/Charts</x-nav.link>
 @endif
+
+
 @if (can('view_audit_trails') || can('view_sent_emails'))
     <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
         @if (can('view_audit_trails'))

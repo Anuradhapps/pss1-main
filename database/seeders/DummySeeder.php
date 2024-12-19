@@ -26,7 +26,7 @@ class DummySeeder extends Seeder
         $faker = Faker::create();
         $riceSeason = new RiceSeasonController();
 
-        $seasons = [[2022, 'yala'], [2022, 'maha'], [2023, 'yala'], [2023, 'maha'], [2024, 'yala']];
+        $seasons = [[2022, 'maha'], [2023, 'yala'], [2023, 'maha'], [2024, 'yala']];
 
 
         foreach ($seasons as $season) {

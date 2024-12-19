@@ -25,29 +25,30 @@
 
         </div>
 
-        @if ($role?->name != 'admin')
+        {{-- @if ($role?->name != 'admin') --}}
+        @if (true)
 
-            <div class="mx-auto max-w-screen-md">
-                    @foreach($modules as $module)
-                        <h3 class="mt-4">{{ $module }}</h3>
-                        <table>
-                            <thead>
+            <div class="max-w-screen-md mx-auto">
+                @foreach ($modules as $module)
+                    <h3 class="mt-4">{{ $module }}</h3>
+                    <table>
+                        <thead>
                             <tr>
                                 <th class="dark:text-gray-300">Permission</th>
                                 <th class="dark:text-gray-300">Action</th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             @foreach (\App\Models\Roles\Permission::where('module', $module)->orderby('name')->get() as $perm)
                                 <tr>
                                     <td>{{ $perm->label }}</td>
                                     <td><input type="checkbox" wire:model="permission" value="{{ $perm->id }}"></td>
                                 </tr>
                             @endforeach
-                            </tbody>
-                        </table>
-                    @endforeach
-                </div>
+                        </tbody>
+                    </table>
+                @endforeach
+            </div>
 
         @endif
 

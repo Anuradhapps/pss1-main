@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\ACollectorController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\JoinController;
@@ -92,6 +93,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::post('/export-users', [UserController::class, 'exportUsers'])->name('export.users');
+    Route::post('/export', [UsersExport::class, 'export'])->name('export');
 
     Route::get('/', Dashboard::class)->name('admin');
     Route::get('settings/system-settings', Settings::class)->name('admin.settings');
@@ -120,6 +122,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/report/{id}/edit', [ReportController::class, 'edit'])->name('report.edit');
     Route::put('/report/{id}', [ReportController::class, 'update'])->name('report.update');
     Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
+
     Route::get('/export-pdf/{id}', [ReportController::class, 'exportToPDF'])->name('export.pdf');
 
 

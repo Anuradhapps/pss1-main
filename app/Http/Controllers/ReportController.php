@@ -77,7 +77,7 @@ class ReportController extends Controller
 
 
         $districtIdArray = Collector::where('rice_season_id', $this->thisSeasonId)->where('province', $id)->get()->pluck('district')->unique()->toArray();
-        foreach($districtIdArray as $districtId){
+        foreach ($districtIdArray as $districtId) {
             $district = district::where('id', $districtId)->get();
 
             Collector::where('rice_season_id', $this->thisSeasonId)->where('district', $districtId)->get()->pluck('asc')->unique()->toArray();
@@ -87,9 +87,9 @@ class ReportController extends Controller
         // }
         // Load a view and pass the data to it
 
-        $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $records])->setPaper('a4', 'landscape');
+        // $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $records])->setPaper('a4', 'landscape');
 
         // Stream the PDF file as a download
-        return $pdf->download('data_export.pdf');
+        // return $pdf->download('data_export.pdf');
     }
 }

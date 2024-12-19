@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
             RegionSeeder::class,
-            // DummySeeder::class
+            DummySeeder::class
         ]);
     }
 }
