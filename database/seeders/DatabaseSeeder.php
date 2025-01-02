@@ -18,8 +18,12 @@ class DatabaseSeeder extends Seeder
             RolesDatabaseSeeder::class,
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
+<<<<<<< Updated upstream
             RegionSeeder::class,
             DummySeeder::class
+=======
+            // DummySeeder::class
+>>>>>>> Stashed changes
         ]);
     }
 }
