@@ -3,8 +3,13 @@
         <span class="px-2 py-1 text-lg font-bold text-blue-100 rounded ">Ai Chart</span>
 
         <div>
-            <a href="{{ route('chart.index') }}"
-                class="px-4 py-2 mr-1 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            @if (has_role('collector'))
+                <a href="{{ route('chart.index') }}"
+                    class="px-4 py-2 mr-1 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            @else
+                <a href="{{ route('admin.collector.records') }}"
+                    class="px-4 py-2 mr-1 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            @endif
         </div>
 
     </div>

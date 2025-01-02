@@ -16,7 +16,7 @@
     @endif
 
     <div
-        class="flex flex-col items-center min-h-screen pt-6  dark:text-white bg-gray-50 dark:bg-gray-700 sm:justify-center sm:pt-0">
+        class="flex flex-col items-center min-h-screen pt-6 dark:text-white bg-gray-50 dark:bg-gray-700 sm:justify-center sm:pt-0">
         @php
             //cache the logo setting to reduce calling the database
             $loginLogo = Cache::rememberForever('loginLogo', function () {

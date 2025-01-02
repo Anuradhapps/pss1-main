@@ -31,6 +31,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $this->validateLogin($request);
 
         if ($this->hasTooManyLoginAttempts($request)) {
@@ -70,11 +71,13 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
+
         return $request->only($this->email(), 'password');
     }
 
     protected function sendLoginResponse(Request $request)
     {
+
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
@@ -85,6 +88,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
         AuditTrail::create([
             'user_id'      => $user->id,
             'reference_id' => $user->id,
@@ -109,8 +113,6 @@ class LoginController extends Controller
                 session(['2fa-login' => true]);
             }
         }
-
-       
     }
 
     protected function sendFailedLoginResponse(Request $request)
@@ -121,7 +123,7 @@ class LoginController extends Controller
         AuditTrail::create([
             'user_id'      => $id,
             'reference_id' => $id,
-            'title'        => "Login Failed - ".$request->input($this->username()),
+            'title'        => "Login Failed - " . $request->input($this->username()),
             'section'      => 'Auth',
             'type'         => 'login'
         ]);
@@ -138,6 +140,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+
         AuditTrail::create([
             'user_id'      => auth()->id(),
             'reference_id' => auth()->id(),
@@ -150,7 +153,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect()->route('admin');
+        return redirect()->route('login');
     }
 
     protected function guard()

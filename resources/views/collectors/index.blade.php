@@ -4,9 +4,15 @@
             {{ session('success') }}
         </div>
     @endif
+    {{-- @if (isset($success))
+        <div id="success-message" class="alert alert-success" role="alert">
+            {{ $success }}
+        </div>
+    @endif --}}
+
 
     <div class="container p-6 mx-auto">
-        <h1 class="p-3 mb-6 text-3xl font-bold text-gray-200 bg-orange-900">My Collectors</h1>
+        <h1 class="p-3 mb-6 text-3xl font-bold text-gray-200 bg-orange-700">My Records</h1>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($collectors as $collector)
@@ -29,4 +35,13 @@
 
 
 
+    <!-- JavaScript to Hide Message After 5 Seconds -->
+    <script>
+        setTimeout(() => {
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.style.display = 'none'; // Hide message
+            }
+        }, 5000); // 5000ms = 5 seconds
+    </script>
 </x-app-layout>

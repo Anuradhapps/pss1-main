@@ -11,14 +11,11 @@ use function view;
 
 class Dashboard extends Base
 {
-public $test;
+    public $test;
     public function render(): View
     {
-        abort_if_cannot('view_dashboard');
+        // abort_if_cannot('view_dashboard');
 
         return view('livewire.admin.dashboard');
     }
-
- 
-    
 }

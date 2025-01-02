@@ -10,7 +10,7 @@
         <div class="grid grid-cols-2 gap-2 mb-3">
             <div class="col-span-2 sm:col-span-1">
                 <x-form.date name="date_collected"
-                    label="Date of Collected Data:">{{ old('date_collected') }}</x-form.date>
+                    label="Data Collecting Date : ">{{ old('date_collected') }}</x-form.date>
             </div>
             <div class="col-span-2 sm:col-span-1">
                 <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full mt-1" name="growth_s_c">
@@ -40,8 +40,8 @@
             </div>
 
             <div class="col-span-2 sm:col-span-1">
-                <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (In last week)" class="block w-full mt-1"
-                    name="numbrer_r_day">
+                <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (Within the week)"
+                    class="block w-full mt-1" name="numbrer_r_day">
                     <option value="">-- Select Number of Rainy Days --</option>
                     @for ($i = 0; $i <= 7; $i++)
                         <option value="{{ $i }}" {{ old('numbrer_r_day') == $i ? 'selected' : '' }}>
@@ -54,7 +54,7 @@
 
 
 
-        <h5 class="mb-2 italic text-orange-400">Select and enter a value for the identified pest only</h5>
+        <h5 class="mb-2 italic text-orange-400">If you have identified the pest, Please select and enter the value.</h5>
         <span class="text-sm italic text-orange-400">* SP - Sample point</span>
         <div class="mt-2">
             <div class="mb-2">
@@ -177,7 +177,8 @@
             @endforeach
 
             <div class="col-span-2 sm:col-span-1">
-                <x-form.textarea name="otherinfo" label="Other info:">{{ old('otherinfo') }}</x-form.input>
+                <x-form.textarea name="otherinfo" label="Other information within the Ai Range :"
+                    placeholder="Example: Any insects damage (% damage or extent) , Any disease, Any weeds">{{ old('otherinfo') }}</x-form.input>
             </div>
 
         </div>

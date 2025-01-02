@@ -27,10 +27,7 @@ class RegisterController extends Controller
             'email'           => 'required|email|unique:users,email',
             'password'        => [
                 'required',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
+                Password::min(3)
                     ->uncompromised()
             ],
             'confirmPassword' => 'required|same:password'
@@ -52,7 +49,7 @@ class RegisterController extends Controller
 
         //generate image
         $name      = get_initials($user->name);
-        $id        = $user->id.'.png';
+        $id        = $user->id . '.png';
         $path      = 'users/';
         $imagePath = create_avatar($name, $id, $path);
 
@@ -68,7 +65,7 @@ class RegisterController extends Controller
         ]);
 
         add_user_log([
-            'title'        => "registered ".$user->name,
+            'title'        => "registered " . $user->name,
             'reference_id' => $user->id,
             'section'      => 'Auth',
             'type'         => 'Register'

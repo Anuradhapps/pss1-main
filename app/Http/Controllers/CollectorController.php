@@ -45,6 +45,7 @@ class CollectorController extends Controller
     {
         $id = Auth::user()->id;
         $collector  = Collector::where('user_id', $id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
+
         if (empty($collector) || $collector->rice_season_id != $this->thisSeasonId) {
             $season = $this->thisSeason['seasonName'];
             return view('collectors.create', ['season' => $season]);
@@ -52,7 +53,7 @@ class CollectorController extends Controller
             $collectors = Collector::where('user_id', $id)
                 ->orderBy('rice_season_id', 'desc')
                 ->get();
-            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collectors list updated successfully!']);
+            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
         }
     }
 
@@ -97,7 +98,14 @@ class CollectorController extends Controller
             'date_establish' => $dateEstablish,
         ]);
         $collector->save();
-        return redirect()->route('collector.index')->with('success', 'Collector Data created successfully.');
+        if (has_role('collector')) {
+            $id = Auth::user()->id;
+            $collectors  = Collector::where('user_id', $id)->get();
+            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
+        } elseif (has_role('admin')) {
+            $collectors = Collector::all();
+            return redirect(route('admin.collector.records'))->with('success', 'Collector updated successfully.');
+        }
     }
     /**
      * Display the specified resource.

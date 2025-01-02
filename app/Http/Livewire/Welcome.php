@@ -9,6 +9,6 @@ class Welcome extends Component
 {
     public function render(): View
     {
-        return view('livewire.welcome')->layout('layouts.guest');
+        return view('livewire.welcome');
     }
 }

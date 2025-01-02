@@ -58,8 +58,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->prefix('a
     Route::post('2fa-setup', [TwoFaController::class, 'setupUpdate'])->name('2fa-setup.update');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/', Dashboard::class)->name('admin');
-
     Route::get('settings/audit-trails', AuditTrails::class)->name('admin.settings.audit-trails.index');
     Route::get('settings/sent-emails', SentEmails::class)->name('admin.settings.sent-emails');
     Route::get('settings/sent-emails-body/{id}', SentEmailsBody::class)->name('admin.settings.sent-emails.body');

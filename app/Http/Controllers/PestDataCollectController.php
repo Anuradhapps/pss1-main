@@ -38,7 +38,11 @@ class PestDataCollectController extends Controller
 
             return view('pestData.index', ['CommonData' => $CommonData]);
         }
-        return redirect()->route('admin.collector.create')->with('error', 'Please Create Collector');
+        if (is_admin()) {
+            return redirect()->route('admin.collector.create')->with('error', 'Please Create Collector');
+        } else {
+            return redirect()->route('collector.create')->with('error', 'Please Create Collector');
+        }
     }
 
     public function create()

@@ -51,7 +51,7 @@
                                 </svg>
                             </button>
 
-                            <livewire:admin.search />
+                            {{-- <livewire:admin.search /> --}}
                         </div>
 
                         <div class="flex">
