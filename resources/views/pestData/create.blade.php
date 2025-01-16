@@ -1,11 +1,11 @@
 <x-app-layout>
     <div class="flex justify-between p-3 mb-4 bg-orange-700">
         <h1 class="text-2xl font-bold text-indigo-100">Create Pest Data</h1>
-        <a href="{{ route('pestdata.index') }}"
+        <a href="{{ route('pestdata.view', $collectorId) }}"
             class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
     </div>
 
-    <x-form method="POST" action="{{ route('pestdata.store') }}">
+    <x-form method="GET" action="{{ route('pestdata.store', $collectorId) }}">
         @csrf
         <div class="grid grid-cols-2 gap-2 mb-3">
             <div class="col-span-2 sm:col-span-1">

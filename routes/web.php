@@ -74,14 +74,16 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 
     Route::get('/', [CollectorController::class, 'index'])->name('collector.index');
     Route::get('/create', [CollectorController::class, 'create'])->name('collector.create');
+    Route::get('/newCollector', [CollectorController::class, 'newCollector'])->name('collector.newCollector');
     Route::post('/store', [CollectorController::class, 'store'])->name('collector.store');
     Route::get('/edit/{id}', [CollectorController::class, 'edit'])->name('collector.edit');
     Route::put('/{id}', [CollectorController::class, 'update'])->name('collector.update');
 
 
     Route::get('/pestdata', [PestDataCollectController::class, 'index'])->name('pestdata.index');
-    Route::get('/pestdata/create', [PestDataCollectController::class, 'create'])->name('pestdata.create');
-    Route::post('/pestdata/store', [PestDataCollectController::class, 'store'])->name('pestdata.store');
+    Route::get('/pestdata/view/{id}', [PestDataCollectController::class, 'view'])->name('pestdata.view');
+    Route::get('/pestdata/create/{id}', [PestDataCollectController::class, 'create'])->name('pestdata.create');
+    Route::get('/pestdata/store/{id}', [PestDataCollectController::class, 'store'])->name('pestdata.store');
     Route::get('/pestdata/{id}', [PestDataCollectController::class, 'show'])->name('pestdata.show');
     Route::get('/pestdata/{id}/edit', [PestDataCollectController::class, 'edit'])->name('pestdata.edit');
     Route::put('/pestdata/{id}', [PestDataCollectController::class, 'update'])->name('pestdata.update');
@@ -100,6 +102,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     Route::get('/collector', CollectorLivewire::class)->name('admin.collector.records');
     Route::get('/collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
+    Route::delete('/collector/{collector}/destroy', [CollectorController::class, 'destroy'])->name('admin.collector.destroy');
     Route::put('/collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
     Route::get('/collector-show-pest_data/{id}', [PestDataCollectController::class, 'show'])->name('admin.collector.pest.show');
 

@@ -2,8 +2,14 @@
 <x-app-layout>
 
     <div class="m-5">
-        <h3 class="mb-4 text-2xl font-bold text-center text-indigo-100 bg-orange-700 rounded-3xl">{{ $season }}
-        </h3>
+        <div class="flex items-center justify-between px-2 mb-3 bg-orange-700">
+            <h3 class="text-2xl font-bold text-center text-indigo-100">{{ $season }}
+            </h3>
+
+            <a href="{{ route('collector.create') }}"
+                class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+        </div>
+
         <x-error-massage />
         <x-form action="{{ route('collector.store') }}">
             @csrf

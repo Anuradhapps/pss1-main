@@ -32,8 +32,8 @@
 
 <x-nav.link route="admin" icon="fas fa-home">Dashboard</x-nav.link>
 @if (has_role('collector'))
-    <x-nav.link route="collector.create" icon="fas fa-user-tie">Collector Info</x-nav.link>
-    <x-nav.link route="pestdata.index" icon="fa fa-id-card">Pest Data</x-nav.link>
+    <x-nav.link route="collector.create" icon="fas fa-user-tie">Collector</x-nav.link>
+    {{-- <x-nav.link route="pestdata.index" icon="fa fa-id-card">Pest Data</x-nav.link> --}}
 @endif
 
 @if (can('view_users'))

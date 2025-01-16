@@ -1,10 +1,17 @@
 <x-app-layout>
-    <div class="flex items-center justify-between bg-orange-700">
-        <h1 class="p-2 mx-3 text-2xl font-bold text-center text-indigo-100 rounded-3xl">Pest Data</h1>
-        <a href="{{ route('pestdata.create') }}"
-            class="px-4 py-2 mx-3 text-sm font-bold text-white bg-green-800 rounded shadow-sm hover:bg-green-900 hover:shadow-2xl">
-            Add
-        </a>
+    <div class="flex items-center justify-between bg-gray-900">
+        <h1 class="p-2 mx-3 text-2xl font-bold text-center text-indigo-100 rounded-3xl">Pest Data
+        </h1>
+
+        <div class="flex gap-1 mx-3">
+            <a href="{{ route('pestdata.create', $collectorId) }}"
+                class="px-4 py-2 text-sm font-bold text-white bg-green-800 rounded shadow-sm hover:bg-green-900 hover:shadow-2xl">
+                Add
+            </a>
+            <a href="{{ route('collector.create') }}"
+                class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+        </div>
+
     </div>
     <div class="mb-3 ml-2 text-sm italic text-orange-400">Please check your collector information carefully before
         adding pest data</div>
@@ -12,7 +19,14 @@
     <x-success-massage />
     <x-error-massage />
     {{-- <x-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
-
+    <p class="p-2 m-1 bg-gray-900">
+        <span class="text-orange-700">{{ $collector->getDistrict->name }}</span>
+        <i class="fas fa-arrow-right"></i>
+        <span class="text-pink-500"> {{ $collector->getAsCenter->name }}</span>
+        <i class="fas fa-arrow-right"></i>
+        <span class="text-yellow-500">{{ $collector->getAiRange->name }}</span>
+        <span class="text-white">( {{ $collector->region->name }} )</span>
+    </p>
     <div class="relative p-1 overflow-x-auto border-b border-gray-200">
 
         <table class="table-auto">

@@ -56,6 +56,11 @@ class CollectorController extends Controller
             return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
         }
     }
+    public function newCollector()
+    {
+        $season = $this->thisSeason['seasonName'];
+        return view('collectors.create', ['season' => $season]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -223,7 +228,8 @@ class CollectorController extends Controller
     public function destroy($id)
     {
         Collector::destroy($id);
-        return redirect('collector')->with('flash_message', 'collector deleted!');
+        return redirect(route('admin.collector.records'));
+        // return redirect('collector')->with('flash_message', 'collector deleted!');
     }
 
     public function getCollectorCount($seasonId = null, $provinceId = null, $districtId = null, $asCenterId = null, $aiRangeId = null)

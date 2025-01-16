@@ -44,17 +44,31 @@ class PestDataCollectController extends Controller
             return redirect()->route('collector.create')->with('error', 'Please Create Collector');
         }
     }
-
-    public function create()
+    public function view($id)
     {
-        $pests = Pest::all();
-        return view('pestData.create', ['pests' => $pests]);
+        $collector = Collector::find($id);
+        if ($collector) {
+            $CommonData = CommonDataCollect::where('collector_id', '=', $collector->id)->latest()->get();
+
+            return view('pestData.index', ['CommonData' => $CommonData, 'collectorId' => $id, 'collector' => $collector]);
+        }
+        if (is_admin()) {
+            return redirect()->route('admin.collector.create')->with('error', 'Please Create Collector');
+        } else {
+            return redirect()->route('collector.create')->with('error', 'Please Create Collector');
+        }
     }
 
-    public function store(Request $request)
+    public function create($id)
+    {
+        $pests = Pest::all();
+        return view('pestData.create', ['pests' => $pests, 'collectorId' => $id]);
+    }
+
+    public function store($id, Request $request)
     {
         $user = Auth::user();
-        $collector = Collector::where('user_id', $user->id)->where('rice_season_id', $this->thisSeasonId)->latest()->first();
+        $collector = Collector::find($id);
         $validatedRequest = $request->validate([
             'date_collected' => 'required',
             'growth_s_c' => 'required',
@@ -191,7 +205,7 @@ class PestDataCollectController extends Controller
             }
         }
 
-        return redirect()->route('pestdata.index')->with('success', 'Pest Data created successfully.');
+        return redirect()->route('pestdata.view', $id)->with('success', 'Pest Data created successfully.');
     }
 
     public function show($Id)
@@ -216,8 +230,11 @@ class PestDataCollectController extends Controller
 
     public function destroy($id)
     {
-        CommonDataCollect::findOrFail($id)->delete();
-        return redirect()->route('pestdata.index')->with('success', 'Pest Data deleted successfully.');
+        // CommonDataCollect::findOrFail($id)->delete();
+        $commonData = CommonDataCollect::findOrFail($id);
+        $collectorId = $commonData->collector_id;
+        $commonData->delete();
+        return redirect()->route('pestdata.view', $collectorId)->with('success', 'Pest Data deleted successfully.');
     }
     public function adminDestroy($id)
     {

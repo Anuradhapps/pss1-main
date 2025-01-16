@@ -34,8 +34,13 @@ class Collector extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function riceSeason(){
+    public function riceSeason()
+    {
         return $this->belongsTo(RiceSeason::class);
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
     public function commonDataCollect()
     {

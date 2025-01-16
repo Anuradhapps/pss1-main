@@ -77,13 +77,22 @@
                         <td> {{ $collector->gps_long }}</td>
                         <td> {{ $collector->date_establish }}</td> --}}
                         <td> <a href="{{ route('admin.collector.edit', $collector->id) }}"
-                                class="px-2 py-1 text-sm font-bold text-white bg-red-800 rounded me-1 hover:bg-red-900">
+                                class="px-2 py-1 text-sm font-bold text-white bg-orange-400 rounded me-1 hover:bg-orange-500">
                                 Edit
                             </a>
                             <a href="{{ route('chart.ai.show', $collector->id, 'yes') }}"
-                                class="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded hover:bg-orange-600">
+                                class="px-2 py-1 text-sm font-bold text-white bg-blue-600 rounded me-1 hover:bg-blue-600">
                                 View pest Data
                             </a>
+                            <form action="{{ route('admin.collector.destroy', $collector->id) }}" method="POST"
+                                style="display:inline;" onsubmit="return confirmDelete()">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="px-2 py-1 text-sm font-bold text-white bg-red-600 rounded hover:bg-red-600">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
 
                     </tr>

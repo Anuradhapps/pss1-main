@@ -1,16 +1,22 @@
 <x-app-layout>
     <div class="mx-5">
-        <div class="flex justify-between border-b border-gray-200 py-1">
+        <div class="flex justify-between py-1 border-b border-gray-200">
             <h1 class="text-2xl font-bold text-gray-300">Pest Data</h1>
             <div>
                 {{-- <a href="{{ route('pestdata.edit',$commonData->id) }}"
-                    class="bg-green-800 text-white font-bold py-2 px-4 rounded hover:bg-green-900 text-sm mr-1">Edit</a>
+                    class="px-4 py-2 mr-1 text-sm font-bold text-white bg-green-800 rounded hover:bg-green-900">Edit</a>
                 --}}
-                <a href="{{ route('pestdata.index') }}"
-                    class="bg-red-800 text-white font-bold py-2 px-4 rounded hover:bg-red-900 text-sm mr-1">Back</a>
+                @if (has_role('collector'))
+                    <a href="{{ route('pestdata.view', $commonData->collector_id) }}"
+                        class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+                @else
+                    <a href="{{ route('pestdata.index') }}"
+                        class="px-4 py-2 mr-1 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+                @endif
+
             </div>
         </div>
-        <div class="sm:flex justify-between text-white mt-4">
+        <div class="justify-between mt-4 text-white sm:flex">
             <div class="mb-4"><span>Created At : </span> <span
                     class="p-1 border border-gray-200">{{ $commonData->created_at }}</span></div>
             <div class="mb-4"><span>Date of Data Collected : </span> <span
@@ -23,22 +29,22 @@
                     class="p-1 border border-gray-200">{{ $commonData->growth_s_c }}</span></div>
         </div>
         <div class="border-b border-gray-200"></div>
-        <table class="table-auto my-4">
+        <table class="my-4 table-auto">
             <thead>
                 <tr>
 
-                    <th scope="col" class="py-2 px-2">
+                    <th scope="col" class="px-2 py-2">
                         Pest Name
                     </th>
                     @for ($i = 1; $i <= 10; $i++)
-                        <th scope="col" class="py-2 px-2 hidden sm:table-cell">
+                        <th scope="col" class="hidden px-2 py-2 sm:table-cell">
                             SP-{{ $i }}
                         </th>
                     @endfor
-                    <th scope="col" class="py-2 px-2">
+                    <th scope="col" class="px-2 py-2">
                         Total
                     </th>
-                    <th scope="col" class="py-2 px-2">
+                    <th scope="col" class="px-2 py-2">
                         code
                     </th>
                 </tr>
@@ -56,7 +62,7 @@
                             <td class=" {{ $pestData->code > 5 ? 'bg-red-700' : '' }}">{{ $pestData->code }}</td>
                         @else
                             <td>{{ $pestData->pest_name }}</td>
-                           
+
                             <td class="hidden sm:table-cell">{{ $pestData->location_1 }}</td>
                             <td class="hidden sm:table-cell">{{ $pestData->location_2 }}</td>
                             <td class="hidden sm:table-cell">{{ $pestData->location_3 }}</td>

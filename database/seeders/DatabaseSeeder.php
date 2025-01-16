@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            RegionSeeder::class,
             RiceSeasonSeeder::class,
             ProvinceDistrictAscAiRangeSeeder::class,
             PestSeeder::class,
@@ -18,12 +19,8 @@ class DatabaseSeeder extends Seeder
             RolesDatabaseSeeder::class,
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
-<<<<<<< Updated upstream
-            RegionSeeder::class,
-            DummySeeder::class
-=======
             // DummySeeder::class
->>>>>>> Stashed changes
+
         ]);
     }
 }
