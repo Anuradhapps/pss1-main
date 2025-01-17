@@ -70,7 +70,6 @@ class DummySeeder extends Seeder
             foreach ($seasons as $season) {
                 $start = Carbon::parse($season->start_date)->addWeek(2);
                 $end = Carbon::parse($season->start_date)->addWeek(4);
-
                 $baseLatitude = 7.8731;
                 $baseLongitude = 80.7718;
 

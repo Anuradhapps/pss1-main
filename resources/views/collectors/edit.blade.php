@@ -6,8 +6,14 @@
             <h3 class="text-2xl font-bold text-center text-indigo-100">{{ $collector->riceSeason->name }}
             </h3>
 
-            <a href="{{ route('collector.create') }}"
-                class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+
+            @if (is_admin())
+                <a href="{{ route('admin.collector.records') }}"
+                    class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            @else
+                <a href="{{ route('collector.create') }}"
+                    class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            @endif
         </div>
 
         <!-- Form for updating collector information -->

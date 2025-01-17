@@ -19,14 +19,45 @@
     <x-success-massage />
     <x-error-massage />
     {{-- <x-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
-    <p class="p-2 m-1 bg-gray-900">
-        <span class="text-orange-700">{{ $collector->getDistrict->name }}</span>
-        <i class="fas fa-arrow-right"></i>
-        <span class="text-pink-500"> {{ $collector->getAsCenter->name }}</span>
-        <i class="fas fa-arrow-right"></i>
-        <span class="text-yellow-500">{{ $collector->getAiRange->name }}</span>
-        <span class="text-white">( {{ $collector->region->name }} )</span>
-    </p>
+
+    <div>
+        <div class="p-2 m-1 text-white bg-gray-900">
+            <div class="text-white bg-gray-900 rounded-lg shadow-lg ">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-gray-400 bg-gray-800">
+                            <th class="px-4 py-2">Field</th>
+                            <th class="px-4 py-2">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-700">
+                            <td class="px-4 py-2">Collector Name</td>
+                            <td class="px-4 py-2">{{ $collector->user->name }}</td>
+                        </tr>
+                        <tr class="hover:bg-gray-700">
+                            <td class="px-4 py-2">Location</td>
+                            <td class="px-4 py-2">
+                                <span class="text-orange-700">{{ $collector->getDistrict->name }}</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="text-pink-500">{{ $collector->getAsCenter->name }}</span>
+                                <i class="fas fa-arrow-right"></i>
+                                <br>
+                                <span class="text-yellow-500">{{ $collector->getAiRange->name }}</span>
+                                <span class="text-white">( {{ $collector->region->name }} )</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-700">
+                            <td class="px-4 py-2">Rice Variety</td>
+                            <td class="px-4 py-2">{{ $collector->rice_variety }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
     <div class="relative p-1 overflow-x-auto border-b border-gray-200">
 
         <table class="table-auto">
