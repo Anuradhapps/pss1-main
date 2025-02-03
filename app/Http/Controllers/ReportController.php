@@ -74,22 +74,26 @@ class ReportController extends Controller
     public function exportToPDF($id)
     {
         // Fetch data from the database
-
-
+        $result = [];
         $districtIdArray = Collector::where('rice_season_id', $this->thisSeasonId)->where('province', $id)->get()->pluck('district')->unique()->toArray();
+        // dd($districtIdArray);
         foreach ($districtIdArray as $districtId) {
             $district = district::where('id', $districtId)->get();
-
-            Collector::where('rice_season_id', $this->thisSeasonId)->where('district', $districtId)->get()->pluck('asc')->unique()->toArray();
+            dd($district);
+            $asc = Collector::where('rice_season_id', $this->thisSeasonId)->where('district', $districtId)->get()->pluck('asc')->unique()->toArray();
+            $result['$district'] = $asc;
         }
+        dd($result);
         // if ($records->isEmpty()) {
         //     return 'No data found.';
         // }
-        // Load a view and pass the data to it
 
-        // $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $records])->setPaper('a4', 'landscape');
+
+        // Load a view and pass the data to it
+        $records = '';
+        $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $records])->setPaper('a4', 'landscape');
 
         // Stream the PDF file as a download
-        // return $pdf->download('data_export.pdf');
+        return $pdf->download('data_export.pdf');
     }
 }

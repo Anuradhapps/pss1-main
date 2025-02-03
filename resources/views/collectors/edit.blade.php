@@ -23,10 +23,10 @@
             @csrf
             @method('PUT')
 
+
             <!-- Phone Number -->
             <x-form.input name="phone_no" label="Phone Number:"
                 class="mb-4">{{ old('phone_no', $collector->phone_no) }}</x-form.input>
-
             <!-- Display Existing Location Info -->
             {{-- <div class="flex flex-col gap-4 mb-4 text-sm sm:flex-row sm:justify-between">
                 <span class="p-2 text-gray-900 bg-gray-300 border border-gray-300 rounded">Province:

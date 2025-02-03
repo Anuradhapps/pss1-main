@@ -88,7 +88,7 @@
                                 style="display:inline;" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
+                                <button type="submit" onclick="confirmDelete(event)"
                                     class="px-2 py-1 text-sm font-bold text-white bg-red-600 rounded hover:bg-red-600">
                                     Delete
                                 </button>
@@ -103,3 +103,11 @@
         {{ $this->collectors()->links() }}
     </div>
 </div>
+<!-- Include this script in your Blade view -->
+<script>
+    function confirmDelete(event) {
+        if (!confirm('Are you sure you want to delete this collector?')) {
+            event.preventDefault();
+        }
+    }
+</script>
