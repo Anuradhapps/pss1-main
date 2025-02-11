@@ -26,7 +26,7 @@
                             class="h-8 px-2 py-2 text-xs font-bold text-white bg-blue-800 rounded-xl hover:bg-blue-900">{{ $province->name }}</a>
                     @else
                         <a href="{{ route('export.pdf', ['id' => $province->id]) }}"
-                            class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">{{ $province->name }}</a>
+                            class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 cursor-not-allowed pointer-events-none opacity-80 rounded-xl hover:bg-red-900">{{ $province->name }}</a>
                     @endif
                 @endforeach
             </div>

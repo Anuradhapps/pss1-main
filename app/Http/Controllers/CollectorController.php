@@ -71,6 +71,17 @@ class CollectorController extends Controller
     public function store(Request $request)
     {
 
+
+        if (!RiceSeason::find($this->thisSeason['seasonId'])) {
+            RiceSeason::create([
+                'id' => $this->thisSeason['seasonId'],
+                'name' => $this->thisSeason['seasonName'],
+                'start_date' => $this->thisSeason['startDate'],
+                'end_date' => $this->thisSeason['endDate'],
+            ]);
+        }
+
+
         $request->validate([
             'phone_no' => 'required|unique:collectors',
             'region' => 'required',
@@ -102,6 +113,7 @@ class CollectorController extends Controller
             'rice_variety' => $request->get('rice_variety'),
             'date_establish' => $dateEstablish,
         ]);
+
         $collector->save();
         if (has_role('collector')) {
             $id = Auth::user()->id;

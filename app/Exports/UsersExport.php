@@ -40,9 +40,11 @@ class UsersExport implements FromCollection, WithHeadings
             $hasPestData = false;
             $check = true;
             foreach ($cdata->pestDataCollect as $pdata) {
+
                 if ($check) {
                     // $check = false;
                     $result[] = [
+                        'Created At' => $cdata->created_at,
                         'Data Collected Date'      => $cdata->c_date,
                         'Name'                    => $cdata->user->name,
                         'Email'                   => $cdata->user->email,
@@ -121,6 +123,7 @@ class UsersExport implements FromCollection, WithHeadings
             // Add an empty row if there was pest data for the current cdata
             if ($hasPestData) {
                 $result[] = [
+                    'Created At' => '',
                     'Data Collected Date' => '',
                     'Name' => '',
                     'Email' => '',
@@ -163,6 +166,7 @@ class UsersExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
+            'Created At',
             'Data Collected Date',
             'Name',
             'Email',
