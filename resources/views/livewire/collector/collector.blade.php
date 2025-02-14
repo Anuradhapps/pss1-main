@@ -63,7 +63,7 @@
             </thead>
             <tbody>
                 @foreach ($this->collectors() as $collector)
-                    <tr class="bg-emerald-900">
+                    <tr class="">
                         <td> {{ $collector->name }}</td>
                         {{-- <td> {{ $collector->email }}</td> --}}
                         {{-- <td> {{ $collector->phone_no }}</td> --}}

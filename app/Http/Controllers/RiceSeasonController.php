@@ -45,45 +45,45 @@ class RiceSeasonController extends Controller
         //
     }
 
-    public function getSeasson($year=null,$season=null) {
-        $date=0;
+    public function getSeasson($year = null, $season = null)
+    {
+        $date = 0;
         // Get the current date
-        if($year==null){
+        if ($year == null) {
             $date = Carbon::now();
-        }else{
-            if($season=='yala'){
+        } else {
+            if ($season == 'yala') {
                 $date = Carbon::create($year, 3, 1);
-            }elseif($season=='maha'){
+            } elseif ($season == 'maha') {
                 $date = Carbon::create($year, 10, 1);
             }
-            
         }
-        
+
         // $date = Carbon::create(2022-01-01);
-        
+
         // Extract the current year and month
         $currentYear = $date->year;
         $currentMonth = $date->month;
-        
+
         // Check if the date is between February 1 and September 30
-        if ($date->between(Carbon::create($currentYear, 2, 1), Carbon::create($currentYear, 9, 30))) {
+        if ($date->between(Carbon::create($currentYear, 3, 1), Carbon::create($currentYear, 9, 30))) {
             // Yala season (March 1 to September 30)
             return [
                 'startDate' => "$currentYear-03-01",
                 'endDate' => "$currentYear-09-30",
                 'seasonName' => "$currentYear Yala",
-                'seasonId'=>$currentYear.$currentYear
+                'seasonId' => $currentYear . $currentYear
             ];
         } else {
             // Maha season (October 1 to February 28/29)
-            if ($currentMonth === 1) {
+            if ($currentMonth === 1 || $currentMonth === 2) {
                 // If it's January, we are still in the previous year's Maha season
                 $previousYear = $currentYear - 1;
                 return [
                     'startDate' => "$previousYear-10-01",
                     'endDate' => "$currentYear-02-28",
                     'seasonName' => "$previousYear/$currentYear Maha",
-                    'seasonId'=>"$previousYear$currentYear"
+                    'seasonId' => "$previousYear$currentYear"
                 ];
             } else {
                 // Otherwise, we are in the current year's Maha season
@@ -92,7 +92,7 @@ class RiceSeasonController extends Controller
                     'startDate' => "$currentYear-10-01",
                     'endDate' => Carbon::create($nextYear, 2, 28)->isLeapYear() ? "$nextYear-02-29" : "$nextYear-02-28",
                     'seasonName' => "$currentYear/$nextYear Maha",
-                    'seasonId'=>"$currentYear$nextYear"
+                    'seasonId' => "$currentYear$nextYear"
                 ];
             }
         }

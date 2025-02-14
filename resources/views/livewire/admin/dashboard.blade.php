@@ -2,13 +2,13 @@
 <h1 class="p-5 text-3xl font-bold text-red-100 border shadow-2xl bg-purple-950">Dashboard</h1>
 
 <div class="card">
-    <h4 class="text-indigo-100">Pest Surveillance Program – Data Collection</h4>
+    <h4 class="">Pest Surveillance Program – Data Collection</h4>
 
-    <p class="text-indigo-100"><b>Objectives</b></p>
-    <p class="text-indigo-100">The system provides an understanding of the Plant Protection Service's requirements for
+    <p class=""><b>Objectives</b></p>
+    <p class="">The system provides an understanding of the Plant Protection Service's requirements for
         creating a new smartphone
         app for data collection for pest surveillance purposes.</p>
-    <p class="text-indigo-100"> The main purpose of the pest surveillance data
+    <p class=""> The main purpose of the pest surveillance data
         collection web application is to record the density of target pests in the selected location throughout the
         cropping season on a regular basis. </p>
 </div>

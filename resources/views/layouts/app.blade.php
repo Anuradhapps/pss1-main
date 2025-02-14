@@ -62,7 +62,7 @@
                     </div>
                 @endauth
 
-                <div class="px-1 py-1 bg-slate-700">
+                <div class="px-1 py-1 bg-gray-200 dark:bg-slate-700">
                     {{ $slot ?? '' }}
                 </div>
             </div>

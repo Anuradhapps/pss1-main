@@ -24,20 +24,7 @@ class DummySeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $riceSeason = new RiceSeasonController();
 
-        $seasons = [[2022, 'maha'], [2023, 'yala'], [2023, 'maha'], [2024, 'yala']];
-
-
-        foreach ($seasons as $season) {
-            $thisRiceSeason = $riceSeason->getSeasson($season[0], $season[1]);
-            RiceSeason::create([
-                'id' => $thisRiceSeason['seasonId'],
-                'name' => $thisRiceSeason['seasonName'],
-                'start_date' => $thisRiceSeason['startDate'],
-                'end_date' => $thisRiceSeason['endDate'],
-            ]);
-        }
 
         //uncomment below when production-----------------------------
         $aiRanges = AiRange::all();

@@ -101,7 +101,7 @@
                                             <td class="hidden sm:table-cell">-</td>
                                         @endfor
                                         <td>-</td>
-                                        <td class=" {{ $pestData->code > 5 ? 'bg-red-700' : '' }}">
+                                        <td class=" {{ $pestData->code > 5 ? 'bg-red-500' : '' }}">
                                             {{ $pestData->code }}
                                         </td>
                                     @else
@@ -118,7 +118,7 @@
                                         <td class="hidden sm:table-cell">{{ $pestData->location_9 }}</td>
                                         <td class="hidden sm:table-cell">{{ $pestData->location_10 }}</td>
                                         <td>{{ $pestData->total }}</td>
-                                        <td class=" {{ $pestData->code > 5 ? 'bg-red-700' : '' }}">
+                                        <td class=" {{ $pestData->code > 5 ? 'bg-red-500' : '' }}">
                                             {{ $pestData->code }}
                                         </td>
                                     @endif

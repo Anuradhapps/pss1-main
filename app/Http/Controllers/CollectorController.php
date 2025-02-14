@@ -83,7 +83,7 @@ class CollectorController extends Controller
 
 
         $request->validate([
-            'phone_no' => 'required|unique:collectors',
+            'phone_no' => 'required',
             'region' => 'required',
             'province' => 'required',
             'district' => 'required',
@@ -100,6 +100,7 @@ class CollectorController extends Controller
 
         $collector = new Collector([
             'user_id' => Auth::user()->id,
+            // 'rice_season_id' => 20242024,
             'rice_season_id' => $this->thisSeasonId,
             'phone_no' => $request->get('phone_no'),
             'region_id' => $request->get('region'),
