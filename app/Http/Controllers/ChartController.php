@@ -10,18 +10,11 @@ use App\Charts\ChartASC;
 use App\Charts\ChartDistrict;
 use App\Charts\ChartProvince;
 use App\Charts\ChartSeason;
-use App\Models\AiRange;
-use App\Models\As_center;
 use App\Models\Collector;
-use App\Models\CommonDataCollect;
 use App\Models\district;
-use App\Models\PestDataCollect;
 use App\Models\Province;
 use App\Models\RiceSeason;
-use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Chart\Chart;
 
 class ChartController extends Controller
 {

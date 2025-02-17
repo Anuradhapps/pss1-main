@@ -1,8 +1,14 @@
 <x-app-layout>
-    <div class="flex justify-between">
-        <livewire:count-card :cardName="'Pests'" :iconName="'fas fas fa-bug'" :color="'from-indigo-900 to-indigo-700'" />
-        <a href="{{ route('pest.create') }}" class="btn btn-primary ">Add</a>
+
+    <div class="flex items-center justify-between p-2 bg-gray-700">
+        <livewire:count-card :cardName="'Pests'" :iconName="'fas fa-bug'" :color="'from-indigo-900 to-indigo-700'" />
+
+        <a href="{{ route('pest.create') }}"
+            class="px-4 py-2 text-sm font-bold bg-blue-800 rounded shadow-sm hover:bg-blue-900 hover:shadow-2xl whitespace-nowrap">
+            Add
+        </a>
     </div>
+
     {{-- <x.-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
     <x-success-massage />
     <div class="p-6 overflow-x-auto border-b border-gray-200">

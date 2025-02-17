@@ -1,19 +1,21 @@
 @section('title', 'Collector')
 <div class="p-2 bg-slate-500">
-    <div class="flex justify-between">
+    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700">Collectors</h1>
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="grid flex-grow gap-4 sm:grid-cols-1 md:grid-cols-4">
+            <div class="col-span-2 py-2">
+                <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
+                    placeholder="Search Collector Information">
+                    {{ old('query', request('query')) }}
+                </x-form.input>
+            </div>
+        </div>
+
         <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'" />
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-4">
 
-        <div class="col-span-2 py-2">
-            <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
-                placeholder="Search Collector Information">
-                {{ old('query', request('query')) }}
-            </x-form.input>
-        </div>
 
-    </div>
     <div class="overflow-x-auto">
         <table>
             <thead>

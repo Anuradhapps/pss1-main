@@ -36,6 +36,7 @@
             border: 1px solid black;
             padding: 6px;
             text-align: center;
+
         }
 
         .table th {
@@ -45,6 +46,13 @@
         .note {
             font-size: 10px;
             margin-top: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
     </style>
 </head>
