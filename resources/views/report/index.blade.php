@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-black">Report</h1>
+    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700">Report</h1>
 
     <div class="grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         <div class="p-3 bg-gray-900 rounded shadow-xl">

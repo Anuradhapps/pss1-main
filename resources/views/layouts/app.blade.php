@@ -26,13 +26,13 @@
 
             @auth
                 <!-- regular sidebar -->
-                <div class="flex-none hidden w-full px-4 bg-green-900 sidebar md:block md:w-60 dark:bg-green-900">
+                <div class="flex-none hidden w-full px-4 bg-gray-700 sidebar md:block md:w-60 dark:bg-green-900">
                     @include('layouts.app.navigation')
                 </div>
 
                 <!--sidebar on mobile-->
                 <div x-show.transition.origin.top.left="sidebarOpen"
-                    class="min-w-full px-4 bg-green-900 sidebar dark:bg-green-900 md:hidden">
+                    class="min-w-full px-4 bg-gray-700 sidebar dark:bg-green-900 md:hidden">
                     @include('layouts.app.navigation')
                 </div>
             @endauth
