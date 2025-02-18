@@ -1,10 +1,10 @@
 <x-app-layout>
 
-    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700">Report</h1>
+    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700 dark:bg-gray-900">Report</h1>
 
     <div class="grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         <div class="p-3 bg-gray-900 rounded shadow-xl">
-            <h5 class="mb-3 text-xl font-bold text-orange-600">By Date Data</h5>
+            <h5 class="mb-3 text-xl font-bold text-orange-600">All Data</h5>
             <x-form id="export-form" action="{{ route('export.users') }}" method="post">
 
                 @csrf
@@ -18,7 +18,7 @@
         </div>
 
         <div class="flex flex-wrap gap-3 p-3 bg-gray-900 rounded shadow-xl">
-            <h5 class="mb-3 text-xl font-bold text-orange-600">By Current Season & Province</h5>
+            <h5 class="mb-3 text-xl font-bold text-orange-600">Memo - last 2 weeks</h5>
             <div class= "flex flex-wrap gap-3">
                 @foreach ($provinces as $province)
                     @if (in_array($province->id, $dataHaveProvinces))

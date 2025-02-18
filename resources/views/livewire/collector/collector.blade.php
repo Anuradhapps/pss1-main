@@ -30,6 +30,9 @@
                         <a href="#" wire:click.prevent="sortBy('phone_no')">Phone No.</a>
                     </th> --}}
                     <th>
+                        Region
+                    </th>
+                    <th>
                         <a href="#" wire:click.prevent="sortBy('district')">District</a>
                     </th>
                     <th>
@@ -69,6 +72,7 @@
                         <td> {{ $collector->name }}</td>
                         {{-- <td> {{ $collector->email }}</td> --}}
                         {{-- <td> {{ $collector->phone_no }}</td> --}}
+                        <td> {{ $collector->regionName }}</td>
                         <td> {{ $collector->dname }}</td>
                         <td> {{ $collector->asname }}</td>
                         <td> {{ $collector->ainame }}</td>

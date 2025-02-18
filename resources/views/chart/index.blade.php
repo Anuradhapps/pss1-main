@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700">Chart</h1>
+    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700 dark:bg-gray-900">Chart</h1>
 
 
     {{-- Check if an error message is set in the session and display it --}}

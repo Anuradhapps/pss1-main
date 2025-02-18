@@ -101,10 +101,6 @@ class ReportController extends Controller
                 $subresult['ascNames'][] = $asc->name;
             }
 
-
-
-
-
             $collectors = Collector::where('rice_season_id', $this->thisSeasonId)
                 ->where('district', $districtId)
                 ->whereHas('commonDataCollect', function ($query) use ($startDate, $endDate) {
@@ -125,12 +121,14 @@ class ReportController extends Controller
 
                     switch ($pestData->pest_name) {
                         case 'Number_Of_Tillers':
+
                             $totTillers += $pestData->total;
                             break;
                         case 'Thrips':
                             $totThripsCode += $pestData->code;
                             break;
                         case 'Gall Midge':
+
                             $totGM += $pestData->total;
                             break;
                         case 'Leaffolder':
@@ -206,6 +204,6 @@ class ReportController extends Controller
         // dd($result);
         // return view('report.reportThisWeek', ['records' => $result]);
         $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $result])->setPaper('a4', 'landscape');
-        return $pdf->download('data_export.pdf');
+        return $pdf->download("PPS_Memo ({$province->name}) {$startDate->toDateString()} to {$endDate->toDateString()}.pdf");
     }
 }
