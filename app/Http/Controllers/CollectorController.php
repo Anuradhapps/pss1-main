@@ -170,6 +170,7 @@ class CollectorController extends Controller
      */
     public function update(Request $request, $collectorId)
     {
+
         $collector = Collector::findorfail($collectorId);
         $request->validate([
             'phone_no' => 'required',
@@ -179,8 +180,8 @@ class CollectorController extends Controller
             'as_center' => 'required',
             'ai_range' => 'required',
             'village' => 'required',
-            'gps_lati' => 'required',
-            'gps_long' => 'required',
+            // 'gps_lati' => 'required',
+            // 'gps_long' => 'required',
             'rice_variety' => 'required',
             'date_establish' => 'required',
         ]);
@@ -206,7 +207,7 @@ class CollectorController extends Controller
             // return redirect()->route('collector.index', ['collectors' => $collectors])->with('success', 'Collector updated successfully.');
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
-            return redirect(route('admin.collector.records'));
+            return redirect()->route('admin.collector.records');
         }
     }
 

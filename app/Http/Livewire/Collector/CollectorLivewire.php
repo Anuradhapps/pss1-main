@@ -25,6 +25,8 @@ class CollectorLivewire extends Component
 
     public function edit(Collector $collector)
     {
+
+
         $districts = district::all();
         $selected_asc = $collector->asc;
         $ascs = As_center::where('district_id', $collector->district)->get();

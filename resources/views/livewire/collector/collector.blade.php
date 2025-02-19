@@ -20,7 +20,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>
+                    <th class="bg-red-700 dark:bg-red-900">
                         <a href="#" wire:click.prevent="sortBy('name')">Name</a>
                     </th>
                     {{-- <th>
@@ -29,24 +29,24 @@
                     {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('phone_no')">Phone No.</a>
                     </th> --}}
-                    <th>
-                        Region
+                    <th class="bg-green-700 dark:bg-green-900">
+                        <a href="#" wire:click.prevent="sortBy('regions.name')">Region</a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('district')">District</a>
+                    <th class="bg-blue-700 dark:bg-blue-900">
+                        <a href="#" wire:click.prevent="sortBy('districts.name')">District</a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('asc')"> ASC</a>
+                    <th class="bg-pink-700 dark:bg-pink-900">
+                        <a href="#" wire:click.prevent="sortBy('as_centers.name')"> ASC</a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('ai_range')"> AI Range</a>
+                    <th class="bg-yellow-700 dark:bg-yellow-900">
+                        <a href="#" wire:click.prevent="sortBy('ai_ranges.name')"> AI Range</a>
                     </th>
 
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('village')"> Village</a>
+                    <th class="bg-purple-700 dark:bg-purple-900">
+                        Village
                     </th>
-                    <th>
-                        <a href="#"> Rice Season</a>
+                    <th class="bg-teal-700 dark:bg-teal-900">
+                        Rice Season
                     </th>
                     {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('rice_variety')"> Rice Variety</a>
@@ -68,16 +68,44 @@
             </thead>
             <tbody>
                 @foreach ($this->collectors() as $collector)
-                    <tr class="">
-                        <td> {{ $collector->name }}</td>
+                    <tr>
+
+                        <td class="bg-red-200 dark:bg-red-700">
+                            <div class="flex justify-between">
+                                <div>{{ $collector->name }} </div>
+                                @if ($collector->commonDataCollect->count() == 0)
+                                    <div
+                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-red-500 rounded-full ms-2">
+                                        {{ $collector->commonDataCollect->count() }}
+                                    </div>
+                                @elseif ($collector->commonDataCollect->count() >= 7)
+                                    <div
+                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-green-500 rounded-full ms-2">
+                                        {{ $collector->commonDataCollect->count() }}
+                                    </div>
+                                @else
+                                    <div
+                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-yellow-500 rounded-full ms-2">
+                                        {{ $collector->commonDataCollect->count() }}
+                                    </div>
+                                @endif
+
+
+                            </div>
+                        </td>
                         {{-- <td> {{ $collector->email }}</td> --}}
                         {{-- <td> {{ $collector->phone_no }}</td> --}}
-                        <td> {{ $collector->regionName }}</td>
-                        <td> {{ $collector->dname }}</td>
-                        <td> {{ $collector->asname }}</td>
-                        <td> {{ $collector->ainame }}</td>
-                        <td> {{ $collector->village }}</td>
-                        <td> {{ $collector->riceSeasonName }}</td>
+                        @if ($collector->regionName == 'Inter Provincial')
+                            <td class="bg-green-300 dark:bg-green-700"> {{ $collector->regionName }}</td>
+                        @else
+                            <td class="bg-green-200 dark:bg-green-600"> {{ $collector->regionName }}</td>
+                        @endif
+
+                        <td class="bg-blue-200 dark:bg-blue-700"> {{ $collector->dname }}</td>
+                        <td class="bg-pink-200 dark:bg-pink-700"> {{ $collector->asname }}</td>
+                        <td class="bg-yellow-200 dark:bg-yellow-700"> {{ $collector->ainame }}</td>
+                        <td class="bg-purple-200 dark:bg-purple-700"> {{ $collector->village }}</td>
+                        <td class="bg-teal-200 dark:bg-teal-700"> {{ $collector->riceSeasonName }}</td>
                         {{-- <td> {{ $collector->rice_variety }}</td>
                         <td> {{ $collector->gps_lati }}</td>
                         <td> {{ $collector->gps_long }}</td>
