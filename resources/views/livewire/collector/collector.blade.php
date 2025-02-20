@@ -21,7 +21,7 @@
             <thead>
                 <tr>
                     <th class="bg-red-700 dark:bg-red-900">
-                        <a href="#" wire:click.prevent="sortBy('name')">Name</a>
+                        <a href="#" wire:click.prevent="sortBy('name')">Name & Data Count</a>
                     </th>
                     {{-- <th>
                         <a href="#" wire:click.prevent="sortBy('email')">Email</a>
