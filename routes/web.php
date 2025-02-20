@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\TwoFaController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\CommonDataCollectController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PestDataCollectController;
 use App\Http\Controllers\PestController;
 use App\Http\Controllers\ReportController;
@@ -125,6 +126,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::delete('/report/{id}', [ReportController::class, 'destroy'])->name('report.destroy');
 
     Route::get('/export-pdf/{id}', [ReportController::class, 'exportToPDF'])->name('export.pdf');
+    Route::get('/exportl', [ExportController::class, 'export']);
 
     Route::get('/chart', [ChartController::class, 'index'])->name('chart.index');
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');

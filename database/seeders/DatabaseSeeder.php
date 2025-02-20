@@ -11,14 +11,21 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RegionSeeder::class,
-            RiceSeasonSeeder::class,
-            ProvinceDistrictAscAiRangeSeeder::class,
-            PestSeeder::class,
+
+            // RiceSeasonSeeder::class,
+            // ProvinceDistrictAscAiRangeSeeder::class,
+            //run an individual seeder>
+            //php artisan db:seed --class=ProvinceDistrictAscAiRangeSeeder  
+            // PestSeeder::class,
+
             AppDatabaseSeeder::class,
             AuditTrailsDatabaseSeeder::class,
-            RolesDatabaseSeeder::class,
+
+            // RolesDatabaseSeeder::class,
+
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
+
             // DummySeeder::class
 
         ]);

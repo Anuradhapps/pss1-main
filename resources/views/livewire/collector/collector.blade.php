@@ -42,9 +42,9 @@
                         <a href="#" wire:click.prevent="sortBy('ai_ranges.name')"> AI Range</a>
                     </th>
 
-                    <th class="bg-purple-700 dark:bg-purple-900">
+                    {{-- <th class="bg-purple-700 dark:bg-purple-900">
                         Village
-                    </th>
+                    </th> --}}
                     <th class="bg-teal-700 dark:bg-teal-900">
                         Rice Season
                     </th>
@@ -104,7 +104,7 @@
                         <td class="bg-blue-200 dark:bg-blue-700"> {{ $collector->dname }}</td>
                         <td class="bg-pink-200 dark:bg-pink-700"> {{ $collector->asname }}</td>
                         <td class="bg-yellow-200 dark:bg-yellow-700"> {{ $collector->ainame }}</td>
-                        <td class="bg-purple-200 dark:bg-purple-700"> {{ $collector->village }}</td>
+                        {{-- <td class="bg-purple-200 dark:bg-purple-700"> {{ $collector->village }}</td> --}}
                         <td class="bg-teal-200 dark:bg-teal-700"> {{ $collector->riceSeasonName }}</td>
                         {{-- <td> {{ $collector->rice_variety }}</td>
                         <td> {{ $collector->gps_lati }}</td>
