@@ -1,9 +1,11 @@
 <x-app-layout>
-    <div class="flex justify-between p-3 mb-4 bg-orange-700">
-        <h1 class="text-2xl font-bold text-indigo-100">Create Pest Data</h1>
+    <div
+        class="flex flex-col items-start justify-between p-4 mb-6 space-y-4 bg-green-700 rounded-md shadow-md md:flex-row md:items-center md:space-y-0">
+        <h1 class="text-2xl font-bold text-white">Create Pest Data</h1>
         <a href="{{ route('pestdata.view', $collectorId) }}"
-            class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+            class="px-4 py-2 text-sm font-bold text-white transition bg-green-800 rounded hover:bg-green-900">Back</a>
     </div>
+
 
     <x-form method="GET" action="{{ route('pestdata.store', $collectorId) }}">
         @csrf
@@ -13,7 +15,7 @@
                     label="Data Collecting Date : ">{{ old('date_collected') }}</x-form.date>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full mt-1" name="growth_s_c">
+                <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full" name="growth_s_c">
                     <option value="">-- Select code --</option>
                     @php
                         $growthStageCode = [
@@ -40,8 +42,8 @@
             </div>
 
             <div class="col-span-2 sm:col-span-1">
-                <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (Within the week)"
-                    class="block w-full mt-1" name="numbrer_r_day">
+                <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (Within the week)" class="block w-full"
+                    name="numbrer_r_day">
                     <option value="">-- Select Number of Rainy Days --</option>
                     @for ($i = 0; $i <= 7; $i++)
                         <option value="{{ $i }}" {{ old('numbrer_r_day') == $i ? 'selected' : '' }}>
@@ -54,8 +56,8 @@
 
 
 
-        <h5 class="mb-2 italic text-orange-400">If you have identified the pest, Please select and enter the value.</h5>
-        <span class="text-sm italic text-orange-400">* SP - Sample point</span>
+        <h5 class="mb-2 italic text-green-400">If you have identified the pest, Please select and enter the value.</h5>
+        <span class="text-sm italic text-green-400">* SP - Sample point</span>
         <div class="mt-2">
             <div class="mb-2">
                 <h2
@@ -137,23 +139,23 @@
                             <div class="mb-2">
                                 @switch($pest->name)
                                     @case($pest->name == 'Gall Midge')
-                                        <div class="text-sm italic text-orange-500">No of silver shoots</div>
+                                        <div class="text-sm italic text-green-400">No of silver shoots</div>
                                     @break
 
                                     @case($pest->name == 'Leaffolder')
-                                        <div class="text-sm italic text-orange-500">No of damaged tillers</div>
+                                        <div class="text-sm italic text-green-400">No of damaged tillers</div>
                                     @break
 
                                     @case($pest->name == 'Yellow Stem Borer')
-                                        <div class="text-sm italic text-orange-500">No of dead hearts + white heads</div>
+                                        <div class="text-sm italic text-green-400">No of dead hearts + white heads</div>
                                     @break
 
                                     @case($pest->name == 'BPH+WBPH')
-                                        <div class="text-sm italic text-orange-500">No of adults and nymphs</div>
+                                        <div class="text-sm italic text-green-400">No of adults and nymphs</div>
                                     @break
 
                                     @case($pest->name == 'Paddy Bug')
-                                        <div class="text-sm italic text-orange-500">No of adults and nymphs</div>
+                                        <div class="text-sm italic text-green-400">No of adults and nymphs</div>
                                     @break
 
                                     @default
@@ -183,8 +185,8 @@
 
         </div>
 
-        <div class="mt-6">
-            <x-form.submit class="text-white transition bg-red-900 hover:bg-red-700">Submit</x-form.submit>
+        <div class="mt-1">
+            <x-form.submit class="">Submit</x-form.submit>
         </div>
     </x-form>
 

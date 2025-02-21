@@ -5,7 +5,7 @@
         <i id="refresh-icon" class="fas fa-sync-alt me-2"></i> <!-- Font Awesome Refresh Icon -->
         Refresh
     </button>
-    <span class="ml-3 text-sm italic text-orange-400">Click 'Refresh' if you want to get the current GPS location. If it
+    <span class="ml-3 text-sm italic text-green-400">Click 'Refresh' if you want to get the current GPS location. If it
         is not
         correct, please enter it manually.</span>
 </div>

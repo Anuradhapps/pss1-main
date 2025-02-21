@@ -26,7 +26,7 @@ class CollectorController extends Controller
     public function __construct()
     {
         $season = new RiceSeasonController;
-        $this->thisSeason =  $season->getSeasson(2024, 'yala'); // change this for add old data
+        $this->thisSeason =  $season->getSeasson(); // change this for add old data -  2024, 'yala'
         $this->thisSeasonId =  $this->thisSeason['seasonId'];
     }
 

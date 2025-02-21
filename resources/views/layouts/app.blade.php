@@ -16,45 +16,61 @@
         [x-cloak] {
             display: none !important;
         }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+
+        .footer {
+            flex-shrink: 0;
+        }
     </style>
 </head>
 
-<body>
-
-    <div x-data="{ sidebarOpen: false }" x-cloak>
-        <div class="flex min-h-screen">
-
+<body class=":bg-gray-800">
+    <div x-data="{ sidebarOpen: false }" x-cloak class="main-container">
+        <div class="flex flex-1">
             @auth
-                <!-- regular sidebar -->
-                <div class="flex-none hidden w-full px-4 bg-gray-700 sidebar md:block md:w-60 dark:bg-green-900">
-                    @include('layouts.app.navigation')
-                </div>
+                <!-- Sidebar -->
+                <div class="hidden bg-green-900 w-60 md:block">
+                    <div class="mt-2">
+                        @include('layouts.app.navigation')
+                    </div>
 
-                <!--sidebar on mobile-->
-                <div x-show.transition.origin.top.left="sidebarOpen"
-                    class="min-w-full px-4 bg-gray-700 sidebar dark:bg-green-900 md:hidden">
-                    @include('layouts.app.navigation')
+                </div>
+                <!-- Mobile Sidebar -->
+                <div x-show="sidebarOpen"
+                    class="fixed inset-0 z-50 bg-gradient-to-r from-green-800 to-green-950 w-60 md:hidden">
+                    <button @click="sidebarOpen = false" class="absolute text-white top-1 right-1">✖</button>
+                    <div class="mt-10">
+                        @include('layouts.app.navigation')
+                    </div>
+
                 </div>
             @endauth
 
-            <div id="main" class="w-full bg-gray-600 dark:bg-gray-700">
-
+            <div id="main" class="flex flex-col w-full bg-gray-700">
                 @auth
-                    <div class="flex justify-between px-2 py-1 mb-5 bg-gray-400 dark:bg-gray-900">
-
-                        <div class="flex">
-                            <button @click.stop="sidebarOpen = !sidebarOpen" class="pl-1 pr-2 md:hidden focus:outline-none">
-                                <svg class="w-6 text-gray-900 transition duration-150 ease-in-out dark:text-gray-200"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 6h16M4 12h8m-8 6h16" />
-                                </svg>
-                            </button>
-
-                            {{-- <livewire:admin.search /> --}}
-                        </div>
-
-                        <div class="flex">
+                    <!-- Topbar -->
+                    <div class="flex items-center justify-between px-3 bg-teal-800">
+                        <button @click="sidebarOpen = !sidebarOpen" class="md:hidden">
+                            <svg class="w-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h8m-8 6h16" />
+                            </svg>
+                        </button>
+                        <div class="flex justify-end gap-3 ml-auto">
                             <livewire:admin.notifications-menu />
                             <livewire:admin.help-menu />
                             <livewire:admin.users.user-menu />
@@ -62,20 +78,20 @@
                     </div>
                 @endauth
 
-                <div class="px-1 py-1 bg-gray-200 dark:bg-slate-700">
+                <!-- Main Content -->
+                <div class="px-2 py-2 content bg-slate-500">
                     {{ $slot ?? '' }}
                 </div>
             </div>
-
         </div>
 
-        <div class="flex justify-between p-5 text-xs bg-white dark:bg-gray-900 dark:text-gray-300">
-            <div>{{ __('Copyright') }} &copy; {{ date('Y') }} {{ config('app.name') }}</div>
-        </div>
-
+        <!-- Footer -->
+        <footer class="w-full p-4 text-xs text-center text-gray-300 bg-teal-900 footer">
+            {{ __('Copyright') }} &copy; {{ date('Y') }} {{ config('app.name') }}
+        </footer>
     </div>
-    <script src="//unpkg.com/alpinejs" defer></script>
 
+    <script src="//unpkg.com/alpinejs" defer></script>
     <livewire:scripts />
 </body>
 

@@ -4,10 +4,10 @@
     'name' => '',
     'label' => '',
     'value' => '',
+    'placeholder' => '',
 ])
 
 @if ($label === 'none')
-
 @elseif ($label === '')
     @php
         //remove underscores from name
@@ -22,20 +22,19 @@
 @endif
 
 <div class="mb-5">
-    @if ($label !='none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-100">{{ $label }} @if ($required != '') <span class="text-red-600">*</span>@endif</label>
+    @if ($label != 'none')
+        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-100">{{ $label }}
+            @if ($required != '')
+                <span class="text-red-600">*</span>
+            @endif
+        </label>
     @endif
     <div class="rounded-md shadow-sm">
-        <input
-            type="{{ $type }}"
-            id="{{ $name }}"
-            name="{{ $name }}"
-            value="{{ $slot }}"
-            {{ $required }}
-            {{ $attributes->merge(['class' => 'block w-full dark:bg-gray-600 dark:text-gray-200 dark:placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm']) }}>
+        <input placeholder="{{ $placeholder }}" type="{{ $type }}" id="{{ $name }}"
+            name="{{ $name }}" value="{{ $slot }}" {{ $required }}
+            {{ $attributes->merge(['class' => 'block w-full bg-gray-600 text-gray-200 placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500  focus:border-light-blue-500 text-sm']) }}>
         @error($name)
             <p class="error">{{ $message }}</p>
         @enderror
     </div>
 </div>
-

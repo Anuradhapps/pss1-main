@@ -1,5 +1,5 @@
-<div class="bg-gray-200 dark:bg-gray-700 dark:text-white min-h-screen bg-gray-50 dark:bg-gray-700 flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-    <section class="hero container max-w-screen-lg mx-auto text-center">
+<div class="flex flex-col items-center min-h-screen pt-6 text-white bg-gray-700 sm:justify-center sm:pt-0">
+    <section class="container max-w-screen-lg mx-auto text-center hero">
         @php
             //cache the logo setting to reduce calling the database
             $loginLogo = Cache::rememberForever('loginLogo', function () {
@@ -22,8 +22,7 @@
             @endif
         </a>
     </section>
-
-    <div class="w-full sm:max-w-md mt-6 mb-10 px-6 py-4 bg-white dark:bg-gray-900 shadow-md overflow-hidden sm:rounded-lg">
+    <div class="w-full px-6 py-4 mt-6 mb-10 bg-gray-900 overflow-hiddenshadow-md sm:max-w-md sm:rounded-lg">
         {{ $slot }}
     </div>
 </div>

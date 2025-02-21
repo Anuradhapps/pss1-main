@@ -1,54 +1,90 @@
-@section('title', 'Add My info')
+@section('title', 'Add My Info')
+
 <x-app-layout>
-
-    <div class="m-5">
-        <div class="flex items-center justify-between px-2 mb-3 bg-orange-700">
-            <h3 class="text-2xl font-bold text-center text-indigo-100">{{ $season }}
-            </h3>
-
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div
+            class="flex flex-col items-start justify-between p-4 mb-6 space-y-4 bg-green-700 rounded-md shadow-md md:flex-row md:items-center md:space-y-0">
+            <h3 class="text-2xl font-bold text-white">{{ $season }}</h3>
             <a href="{{ route('collector.create') }}"
-                class="px-4 py-2 text-sm font-bold text-white bg-red-800 rounded hover:bg-red-900">Back</a>
+                class="px-4 py-2 text-sm font-bold text-white transition bg-green-800 rounded hover:bg-green-900">
+                Back
+            </a>
         </div>
 
+        <!-- Error Messages -->
         <x-error-massage />
-        <x-form action="{{ route('collector.store') }}">
+
+        <!-- Form -->
+        <x-form action="{{ route('collector.store') }}" method="POST">
             @csrf
-            <x-form.input name="phone_no" label="Phone Number:">{{ old('phone_no') }}</x-form.input>
+
+            <!-- Phone Number -->
+            <x-form.input placeholder="Enter your phone number" name="phone_no" label="Phone Number:" class="mb-4">
+                {{ old('phone_no') }}
+            </x-form.input>
+
+            <!-- Region Selection -->
             <x-form.select name="region" label="Region:" id="region">
-                <option value="1" {{ old('region') == 1 ? 'selected' : '' }}>Provicial</option>
-                <option value="2" {{ old('region') == 2 ? 'selected' : '' }}>Inter Provicial</option>
+                <option>-- Select Region--</option>
+                <option value="1" {{ old('region') == 1 ? 'selected' : '' }}>Provincial</option>
+                <option value="2" {{ old('region') == 2 ? 'selected' : '' }}>Inter Provincial</option>
                 <option value="3" {{ old('region') == 3 ? 'selected' : '' }}>Mahaweli</option>
             </x-form.select>
+
+            <!-- Location Selection Component -->
             <livewire:location-select />
 
-            <x-form.input name="village" label="Village:">{{ old('village') }}</x-form.input>
-
+            <!-- Village Field -->
+            <x-form.input placeholder="Enter your village" name="village" label="Village:" class="mb-4">
+                {{ old('village') }}
+            </x-form.input>
 
             <!-- GPS Location -->
             <x-gpsFill />
 
-            <x-form.input name="rice_variety" label="Rice Variety:">{{ old('rice_variety') }}</x-form.input>
-            <x-form.date name="date_establish" label="Date Established:">{{ old('date_establish') }}</x-form.date>
-            <x-form.submit>Save</x-form.submit>
+            <!-- Rice Variety & Date Established -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <x-form.input placeholder="Enter your rice variety" name="rice_variety" label="Rice Variety:"
+                    class="mb-4">
+                    {{ old('rice_variety') }}
+                </x-form.input>
+
+                <x-form.date name="date_establish" label="Date Established:" class="mb-4">
+                    {{ old('date_establish') }}
+                </x-form.date>
+            </div>
+
+            <!-- Save Button -->
+            <x-form.submit
+                class="w-full px-4 py-2 font-semibold text-center text-white transition bg-green-600 rounded hover:bg-green-700">
+                Save
+            </x-form.submit>
         </x-form>
     </div>
-    <script>
-        document.getElementById('fill-location').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    // Get the current position
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
 
-                    // Set the values of the latitude and longitude input fields
-                    document.getElementById('gps_lati').value = latitude;
-                    document.getElementById('gps_long').value = longitude;
-                }, function(error) {
-                    console.error('Error getting location:', error);
-                    alert('Unable to retrieve your location. Please enter it manually.');
+    <!-- GPS Auto-Fill Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fillLocationBtn = document.getElementById('fill-location');
+
+            if (fillLocationBtn) {
+                fillLocationBtn.addEventListener('click', function() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                document.getElementById('gps_lati').value = position.coords.latitude;
+                                document.getElementById('gps_long').value = position.coords.longitude;
+                            },
+                            function(error) {
+                                console.error('Error getting location:', error);
+                                alert('Unable to retrieve your location. Please enter it manually.');
+                            }
+                        );
+                    } else {
+                        alert('Geolocation is not supported by this browser.');
+                    }
                 });
-            } else {
-                alert('Geolocation is not supported by this browser.');
             }
         });
     </script>

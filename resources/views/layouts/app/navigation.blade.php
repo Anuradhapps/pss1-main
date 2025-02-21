@@ -1,72 +1,81 @@
-<button @click.stop="sidebarOpen = !sidebarOpen" class="pt-4 pl-1 pr-2 md:hidden focus:outline-none">
-    <svg class="w-6 text-white transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
-        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-</button>
+<div class="px-2">
 
-<div class="py-4">
-    <a href="{{ route('admin') }}" class="font-bold text-gray-100">
-        @php
-            //cache the logo setting to reduce calling the database
-            $applicationLogo = Cache::rememberForever('applicationLogo', function () {
-                return \App\Models\Setting::where('key', 'applicationLogo')->value('value');
-            });
+    <!-- Sidebar Logo -->
+    <div class="flex items-center justify-center p-2 rounded bg-green-950 ">
+        <a href="{{ route('admin') }}" class="text-lg font-bold text-gray-100">
+            @php
+                $applicationLogo = Cache::rememberForever(
+                    'applicationLogo',
+                    fn() => \App\Models\Setting::where('key', 'applicationLogo')->value('value'),
+                );
+                $applicationLogoDark = Cache::rememberForever(
+                    'applicationLogoDark',
+                    fn() => \App\Models\Setting::where('key', 'applicationLogoDark')->value('value'),
+                );
+            @endphp
+            @if (storage_exists($applicationLogo))
+                <picture>
+                    <source srcset="{{ storage_url($applicationLogoDark) }}" media="(prefers-color-scheme: dark)">
+                    <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}" class="w-32">
+                </picture>
+            @else
+                {{ config('app.name') }}
+            @endif
+        </a>
+    </div>
 
-            $applicationLogoDark = Cache::rememberForever('applicationLogoDark', function () {
-                return \App\Models\Setting::where('key', 'applicationLogoDark')->value('value');
-            });
-        @endphp
+    <!-- Navigation Links -->
+    <div class="space-y-2">
+        <x-nav.link route="admin" icon="fas fa-home" class="text-purple-300 hover:bg-purple-800">Dashboard</x-nav.link>
 
-        @if (storage_exists($applicationLogo))
-            <picture>
-                <source srcset="{{ storage_url($applicationLogoDark) }}" media="(prefers-color-scheme: dark)">
-                <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}">
-            </picture>
-        @else
-            {{ config('app.name') }}
+        @if (has_role('collector'))
+            <x-nav.link route="collector.create" icon="fas fa-user-tie"
+                class="text-purple-300 hover:bg-purple-800">Collector</x-nav.link>
         @endif
-    </a>
+
+        @if (can('view_users'))
+            <x-nav.link route="admin.users.index" icon="fas fa-users"
+                class="text-purple-300 hover:bg-purple-800">Users</x-nav.link>
+        @endif
+
+        @if (can('view_pests'))
+            <x-nav.link route="pest.index" icon="fas fa-bug"
+                class="text-purple-300 hover:bg-purple-800">Pest</x-nav.link>
+        @endif
+
+        @if (can('view_collectors'))
+            <x-nav.link route="admin.collector.records" icon="fas fa-user-tie"
+                class="text-purple-300 hover:bg-purple-800">Collectors</x-nav.link>
+        @endif
+
+        @if (can('view_reports'))
+            <x-nav.link route="report.index" icon="fas fa-file-alt"
+                class="text-purple-300 hover:bg-purple-800">Reports</x-nav.link>
+        @endif
+
+        @if (can('view_data_charts'))
+            <x-nav.link route="chart.index" icon="fas fa-chart-bar"
+                class="text-purple-300 hover:bg-purple-800">Data/Charts</x-nav.link>
+        @endif
+
+        <!-- Settings Section -->
+        @if (can('view_audit_trails') || can('view_sent_emails'))
+            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs"
+                class="text-purple-300 hover:bg-purple-800">
+                @if (can('view_audit_trails'))
+                    <x-nav.group-item route="admin.settings.audit-trails.index" icon="far fa-circle">Audit
+                        Trails</x-nav.group-item>
+                @endif
+                @if (can('view_sent_emails'))
+                    <x-nav.group-item route="admin.settings.sent-emails" icon="far fa-circle">Sent
+                        Emails</x-nav.group-item>
+                @endif
+                @if (is_admin())
+                    <x-nav.group-item route="admin.settings" icon="far fa-circle">System Settings</x-nav.group-item>
+                    <x-nav.group-item route="admin.settings.roles.index" icon="far fa-circle">Roles</x-nav.group-item>
+                @endif
+            </x-nav.group>
+        @endif
+    </div>
+
 </div>
-
-
-<x-nav.link route="admin" icon="fas fa-home">Dashboard</x-nav.link>
-@if (has_role('collector'))
-    <x-nav.link route="collector.create" icon="fas fa-user-tie">Collector</x-nav.link>
-    {{-- <x-nav.link route="pestdata.index" icon="fa fa-id-card">Pest Data</x-nav.link> --}}
-@endif
-
-@if (can('view_users'))
-    <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
-@endif
-@if (can('view_pests'))
-    <x-nav.link route="pest.index" icon="fas fa-bug">Pest</x-nav.link>
-@endif
-@if (can('view_collectors'))
-    <x-nav.link route="admin.collector.records" icon="fas fa-user-tie">Collectors</x-nav.link>
-@endif
-@if (can('view_reports'))
-    <x-nav.link route="report.index" icon="fas fa-file-alt">Report</x-nav.link>
-@endif
-@if (can('view_data_charts'))
-    <x-nav.link route="chart.index" icon="fas fa-chart-bar">Data/Charts</x-nav.link>
-@endif
-
-
-@if (can('view_audit_trails') || can('view_sent_emails'))
-    <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
-        @if (can('view_audit_trails'))
-            <x-nav.group-item route="admin.settings.audit-trails.index" icon="far fa-circle">Audit Trails
-            </x-nav.group-item>
-        @endif
-
-        @if (can('view_sent_emails'))
-            <x-nav.group-item route="admin.settings.sent-emails" icon="far fa-circle">Sent Emails</x-nav.group-item>
-        @endif
-
-        @if (is_admin())
-            <x-nav.group-item route="admin.settings" icon="far fa-circle">System Settings</x-nav.group-item>
-            <x-nav.group-item route="admin.settings.roles.index" icon="far fa-circle">Roles</x-nav.group-item>
-        @endif
-    </x-nav.group>
-@endif

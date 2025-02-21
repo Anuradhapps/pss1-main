@@ -12,21 +12,29 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RegionSeeder::class,
 
-            // RiceSeasonSeeder::class,
+            //comment when actual database is ready
+            RiceSeasonSeeder::class,
+
+
             // ProvinceDistrictAscAiRangeSeeder::class,
             //run an individual seeder>
-            //php artisan db:seed --class=ProvinceDistrictAscAiRangeSeeder  
-            // PestSeeder::class,
+            //php artisan db:seed --class=ProvinceDistrictAscAiRangeSeeder
+
+
+
+            PestSeeder::class,
 
             AppDatabaseSeeder::class,
             AuditTrailsDatabaseSeeder::class,
 
-            // RolesDatabaseSeeder::class,
+            //comment when actual database is ready
+            RolesDatabaseSeeder::class,
 
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
 
-            // DummySeeder::class
+            //comment when actual database is ready
+            DummySeeder::class
 
         ]);
     }
