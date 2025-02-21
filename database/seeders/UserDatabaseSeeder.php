@@ -75,7 +75,7 @@ class UserDatabaseSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'delete_data', 'label' => 'Delete Data', 'module' => 'Data']);
         Permission::firstOrCreate(['name' => 'edit_data', 'label' => 'Edit Data', 'module' => 'Data']);
 
-        $this->makeUser('admin');
+        // $this->makeUser('admin');
         // $this->makeUser('deputyDirector');
         //create developer uncomment to use when seeding
 

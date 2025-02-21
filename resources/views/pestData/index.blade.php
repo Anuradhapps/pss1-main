@@ -1,8 +1,11 @@
 <x-app-layout>
-    <div class="flex flex-wrap items-center justify-between p-2 bg-gray-900">
-        <h1 class="mx-3 text-lg font-bold text-center text-indigo-100 sm:text-2xl">Pest Data</h1>
 
-        <div class="flex flex-wrap gap-1 mx-3">
+    <div
+        class="flex flex-row items-start justify-between p-3 mb-6 rounded-md shadow-md bg-gradient-to-r from-green-800 to-green-600 ">
+
+        <h1 class="mx-2 text-lg font-bold text-center text-indigo-100 sm:text-2xl">Pest Data</h1>
+
+        <div class="flex flex-wrap gap-1 ">
             <a href="{{ route('pestdata.create', $collectorId) }}"
                 class="px-2 py-1 text-xs font-bold text-white bg-green-800 rounded shadow-sm sm:px-4 sm:py-2 sm:text-sm hover:bg-green-900 hover:shadow-2xl">
                 Add

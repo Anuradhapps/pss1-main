@@ -82,13 +82,14 @@
                 <div class="px-2 py-2 content bg-slate-500">
                     {{ $slot ?? '' }}
                 </div>
+                <!-- Footer -->
+                <footer class="w-full p-4 text-xs text-center text-gray-300 bg-teal-800 footer">
+                    {{ __('Copyright') }} &copy; {{ date('Y') }} {{ config('app.name') }}
+                </footer>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="w-full p-4 text-xs text-center text-gray-300 bg-teal-900 footer">
-            {{ __('Copyright') }} &copy; {{ date('Y') }} {{ config('app.name') }}
-        </footer>
+
     </div>
 
     <script src="//unpkg.com/alpinejs" defer></script>

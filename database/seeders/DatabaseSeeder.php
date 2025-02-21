@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
 
             //comment when actual database is ready
-            RiceSeasonSeeder::class,
+            // RiceSeasonSeeder::class,
 
 
             // ProvinceDistrictAscAiRangeSeeder::class,
@@ -28,13 +28,14 @@ class DatabaseSeeder extends Seeder
             AuditTrailsDatabaseSeeder::class,
 
             //comment when actual database is ready
-            RolesDatabaseSeeder::class,
+            //comment on user seeder also
+            // RolesDatabaseSeeder::class,
 
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
 
             //comment when actual database is ready
-            DummySeeder::class
+            // DummySeeder::class
 
         ]);
     }
