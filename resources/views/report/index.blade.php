@@ -1,9 +1,12 @@
 <x-app-layout>
+    <div
+        class="flex flex-col items-start justify-between p-3 mb-2 space-y-4 rounded-md shadow-md bg-gradient-to-r from-gray-900 to-gray-600 md:flex-row md:items-center md:space-y-0">
+        <h1 class="text-2xl font-bold text-white">Report</h1>
+    </div>
 
-    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700 dark:bg-gray-900">Report</h1>
 
     <div class="grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        <div class="p-3 bg-gray-500 rounded shadow-xl dark:bg-gray-900">
+        <div class="p-3 mb-1 bg-gray-500 rounded shadow-xl dark:bg-gray-900">
             <h5 class="mb-3 text-xl font-bold text-orange-100 dark:text-orange-600">All Data</h5>
             <x-form id="export-form" action="{{ route('export.users') }}" method="post">
 
@@ -17,7 +20,7 @@
             </x-form>
         </div>
 
-        <div class="flex flex-wrap gap-3 p-3 bg-gray-500 rounded shadow-xl dark:bg-gray-900">
+        <div class="flex flex-wrap gap-3 p-3 mb-1 bg-gray-500 rounded shadow-xl dark:bg-gray-900">
             <h5 class="mb-3 text-xl font-bold text-orange-100 dark:text-orange-600">Memo - last 2 weeks</h5>
             <div class= "flex flex-wrap gap-3">
                 @foreach ($provinces as $province)

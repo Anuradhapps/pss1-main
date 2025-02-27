@@ -1,14 +1,16 @@
 @section('title', 'Users')
 <div>
-    <div class="flex justify-between">
+
+    <div
+        class="flex flex-col items-start justify-between p-1 space-y-4 rounded-md shadow-md bg-gradient-to-r from-purple-900 to-purple-600 md:flex-row md:items-center md:space-y-0">
 
         <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'" />
 
-        <div>
+        {{-- <div>
             @if (can('add_users'))
                 <livewire:admin.users.invite />
             @endif
-        </div>
+        </div> --}}
 
     </div>
 

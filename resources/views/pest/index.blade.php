@@ -1,10 +1,11 @@
 <x-app-layout>
 
-    <div class="flex items-center justify-between p-2 bg-gray-700">
+    <div
+        class="flex flex-col items-start justify-between p-2 space-y-4 rounded-md shadow-md bg-gradient-to-r from-blue-900 to-blue-600 md:flex-row md:items-center md:space-y-0">
         <livewire:count-card :cardName="'Pests'" :iconName="'fas fa-bug'" :color="'from-indigo-900 to-indigo-700'" />
 
         <a href="{{ route('pest.create') }}"
-            class="px-4 py-2 text-sm font-bold bg-blue-800 rounded shadow-sm hover:bg-blue-900 hover:shadow-2xl whitespace-nowrap">
+            class="px-4 py-2 text-sm font-bold text-white bg-blue-800 rounded shadow-sm hover:bg-blue-900 hover:shadow-2xl whitespace-nowrap">
             Add
         </a>
     </div>

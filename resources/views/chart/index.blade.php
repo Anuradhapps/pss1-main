@@ -1,11 +1,14 @@
 <x-app-layout>
 
-    <h1 class="px-1 py-3 mb-3 text-2xl font-bold text-gray-300 bg-gray-700 dark:bg-gray-900">Chart</h1>
+    <div
+        class="flex flex-col items-start justify-between p-3 mb-2 space-y-4 rounded-md shadow-md bg-gradient-to-r from-green-900 to-green-600 md:flex-row md:items-center md:space-y-0">
+        <h1 class="text-2xl font-bold text-white">Data / Charts</h1>
+    </div>
 
 
     {{-- Check if an error message is set in the session and display it --}}
     <x-error-massage />
-    <div class="gap-5 mx-5 sm:flex">
+    <div class="gap-5 sm:flex">
         <div class="p-5 mb-3 bg-gray-800 rounded-xl">
             <div class="px-2 py-2 mb-3 text-white bg-green-900 rounded-xl">Chart by each season</div>
             @php
