@@ -79,7 +79,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
     Route::post('/store', [CollectorController::class, 'store'])->name('collector.store');
     Route::get('/edit/{id}', [CollectorController::class, 'edit'])->name('collector.edit');
     Route::put('/{id}', [CollectorController::class, 'update'])->name('collector.update');
-
+    Route::delete('/collector/{collector}/destroy', [CollectorController::class, 'collectordestroy'])->name('collector.destroy');
 
     Route::get('/pestdata', [PestDataCollectController::class, 'index'])->name('pestdata.index');
     Route::get('/pestdata/view/{id}', [PestDataCollectController::class, 'view'])->name('pestdata.view');

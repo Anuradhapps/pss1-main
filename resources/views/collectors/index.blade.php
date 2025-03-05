@@ -20,9 +20,26 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($collectors as $collector)
                 <div class="p-4 transition duration-300 rounded-lg shadow-lg bg-slate-800 hover:bg-slate-900">
-                    <h2 class="mb-2 text-xl font-semibold text-white">
-                        {{ $collector->riceSeason->name }}
-                    </h2>
+                    <div class="flex items-center justify-between">
+                        <h2 class="mb-2 text-xl font-semibold text-white">
+                            {{ $collector->riceSeason->name }}
+                        </h2>
+                        @if (Auth::user()->name == 'npssoldata')
+                            <form action="{{ route('collector.destroy', $collector->id) }}" method="POST"
+                                style="display:inline;" onsubmit="return confirmDelete()">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="confirmDelete(event)"
+                                    class="text-red-600 hover:text-red-800">
+                                    <i class="text-lg fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        @endif
+
+
+                    </div>
+
+
                     <p class="mb-3 text-sm">
                         <span class="text-orange-400">{{ $collector->getDistrict->name }}</span>
                         <i class="text-gray-400 fas fa-arrow-right"></i>
@@ -53,5 +70,11 @@
                 successMessage.style.display = 'none';
             }
         }, 5000);
+
+        function confirmDelete(event) {
+            if (!confirm('Are you sure you want to delete this collector?')) {
+                event.preventDefault();
+            }
+        }
     </script>
 </x-app-layout>
