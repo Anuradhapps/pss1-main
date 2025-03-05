@@ -188,6 +188,7 @@ class CollectorController extends Controller
 
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
         $collector->phone_no = $request->phone_no;
+        $collector->rice_season_id = $request->season;
         $collector->region_id = $request->region;
         $collector->province = $request->province;
         $collector->district = $request->district;

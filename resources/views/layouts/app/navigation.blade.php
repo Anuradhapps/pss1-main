@@ -38,10 +38,10 @@
                 class="text-purple-300 hover:bg-purple-800">Users</x-nav.link>
         @endif
 
-        @if (can('view_pests'))
+        {{-- @if (can('view_pests'))
             <x-nav.link route="pest.index" icon="fas fa-bug"
                 class="text-purple-300 hover:bg-purple-800">Pest</x-nav.link>
-        @endif
+        @endif --}}
 
         @if (can('view_collectors'))
             <x-nav.link route="admin.collector.records" icon="fas fa-user-tie"

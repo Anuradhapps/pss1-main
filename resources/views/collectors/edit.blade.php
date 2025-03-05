@@ -22,6 +22,22 @@
                 {{ old('phone_no', $collector->phone_no) }}
             </x-form.input>
 
+            @if (Auth::user()->name == 'npssoldata')
+                <!-- season Selection -->
+                <x-form.select name="season" label="Season:" id="season">
+                    <option value="20232024" {{ $collector->rice_season_id == 20232024 ? 'selected' : '' }}>2023/2024
+                        maha
+                    </option>
+                    <option value="20242024" {{ $collector->rice_season_id == 20242024 ? 'selected' : '' }}>2024 yala
+                    </option>
+                    <option value="20242025" {{ $collector->rice_season_id == 20242025 ? 'selected' : '' }}>2024/2025
+                        maha
+                    </option>
+                    <option value="20252025" {{ $collector->rice_season_id == 20252025 ? 'selected' : '' }}>2025 yala
+                    </option>
+                </x-form.select>
+            @endif
+
             <!-- Region Selection -->
             <x-form.select name="region" label="Region:" id="region">
                 <option value="1" {{ $collector->region_id == 1 ? 'selected' : '' }}>Provincial</option>
