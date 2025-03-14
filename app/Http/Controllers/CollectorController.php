@@ -246,6 +246,8 @@ class CollectorController extends Controller
     {
         Collector::destroy($id);
         return redirect(route('admin.collector.records'));
+
+
         // return redirect('collector')->with('flash_message', 'collector deleted!');
     }
     public function collectordestroy($id)

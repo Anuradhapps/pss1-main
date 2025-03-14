@@ -72,7 +72,7 @@ class ReportController extends Controller
         //
     }
 
-    public function exportToPDF($id)
+    public function last2weeksDataexportToPDF($id)
     {
 
         $endDate = Carbon::today(); // Today's date
@@ -195,7 +195,7 @@ class ReportController extends Controller
                 $subresult['pestData']['BPH+WBPH'] = $BPH['code'];
             }
             if ($totPB != 0) {
-                $Paddy_Bug = $pestController->getPaddyBugCod($totTillers, $totPB);
+                $Paddy_Bug = $pestController->getPaddyBugCode($totTillers, $totPB);
                 $subresult['pestData']['Paddy_Bug'] = $Paddy_Bug['code'];
             }
             $result['data'][] = $subresult;
@@ -205,5 +205,21 @@ class ReportController extends Controller
         // return view('report.reportThisWeek', ['records' => $result]);
         $pdf = Pdf::loadView('report.reportThisWeek', ['records' => $result])->setPaper('a4', 'landscape');
         return $pdf->download("PPS_Memo ({$province->name}) {$startDate->toDateString()} to {$endDate->toDateString()}.pdf");
+    }
+
+    public function collectorsList()
+    {
+        $collectors = Collector::all()->groupBy('district');
+        dd($collectors);
+        $pdf = Pdf::loadView('report.collectorsList', ['collectors' => $collectors])->setPaper('a4', 'landscape');
+        return $pdf->download("collectorsList.pdf");
+    }
+    public function reportOfOtherInfo()
+    {
+
+        // return view('report.reportOfOtherInfo', ['records' => 'Totalresult']);
+
+        $pdf = Pdf::loadView('report.reportOfOtherInfo', ['records' => 'Totalresult'])->setPaper('a4', 'landscape');
+        return $pdf->download("reportOfOtherInfo.pdf");
     }
 }

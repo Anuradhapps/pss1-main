@@ -21,7 +21,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
-    public function exportUsers(Request $request)
+    public function allpestdata(Request $request)
     {
         // Validate the date inputs
         $validated = $request->validate([
