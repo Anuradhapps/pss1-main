@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\Collector;
 use App\Models\district;
@@ -209,8 +210,20 @@ class ReportController extends Controller
 
     public function collectorsList()
     {
+        $result[] = null;
         $collectors = Collector::all()->groupBy('district');
-        dd($collectors);
+        foreach ($collectors as $key => $collectorGroup) {
+            $disrict = district::find($key);
+            $subresult = ['district' => $disrict->name, 'collectors' => []];
+            foreach ($collectorGroup as $collector) {
+                $province = Province::find($collector->province);
+                $asc = As_center::find($collector->asc);
+                $aiRange = AiRange::find($collector->ai_range);
+                $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name];
+            }
+            $result[] = $subresult;
+        }
+        dd($result);
         $pdf = Pdf::loadView('report.collectorsList', ['collectors' => $collectors])->setPaper('a4', 'landscape');
         return $pdf->download("collectorsList.pdf");
     }
