@@ -7,59 +7,141 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        /* Reset for body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+
+        /* Page Layout for Print */
         @page {
             size: A4 portrait;
             margin: 20mm;
         }
 
+        /* Report Container */
+        .report-container {
+            width: 100%;
+            max-width: 210mm;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Header */
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: #333;
+        }
+
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Media Query for Print */
         @media print {
             body {
+                background-color: white;
                 margin: 0;
                 padding: 0;
-                background: white;
             }
 
             .report-container {
-                max-width: 100%;
+                padding: 20px;
                 box-shadow: none;
-                padding: 100px;
+                margin: 0;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            th {
+                background-color: #f4f4f4;
+                color: #333;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            tr:hover {
+                background-color: transparent;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="bg-gray-100 p-4">
+    <div class="p-4 bg-gray-100">
 
-        <div class="max-w-[210mm] mx-auto bg-white shadow-lg p-6 rounded-lg report-container">
-            <h2 class="text-2xl font-bold text-center mb-4">{{ $records }}</h2>
+        <div class="report-container">
+            <h2>{{ $season }}</h2>
 
             <div class="overflow-x-auto">
-                <table class="w-full border border-gray-300">
+                <table>
                     <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border border-gray-400 px-4 py-2 text-left">Date</th>
-                            <th class="border border-gray-400 px-4 py-2 text-left">District</th>
-                            <th class="border border-gray-400 px-4 py-2 text-left">ASC</th>
-                            <th class="border border-gray-400 px-4 py-2 text-left">AI</th>
-                            <th class="border border-gray-400 px-4 py-2 text-left">Other Info</th>
+                        <tr>
+                            <th>Date</th>
+                            <th>District</th>
+                            <th>ASC</th>
+                            <th>AI</th>
+                            <th>Other Info</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border border-gray-300">
-                            <td class="border border-gray-400 px-4 py-2">2025-03-12</td>
-                            <td class="border border-gray-400 px-4 py-2">Colombo</td>
-                            <td class="border border-gray-400 px-4 py-2">ASC1</td>
-                            <td class="border border-gray-400 px-4 py-2">AI1</td>
-                            <td class="border border-gray-400 px-4 py-2">Sample info</td>
-                        </tr>
-                        <tr class="border border-gray-300 bg-gray-100">
-                            <td class="border border-gray-400 px-4 py-2">2025-03-11</td>
-                            <td class="border border-gray-400 px-4 py-2">Gampaha</td>
-                            <td class="border border-gray-400 px-4 py-2">ASC2</td>
-                            <td class="border border-gray-400 px-4 py-2">AI2</td>
-                            <td class="border border-gray-400 px-4 py-2">Another info</td>
-                        </tr>
+                        @foreach ($records as $commonDataCollect)
+                            @if ($commonDataCollect['otherinfo'] != null)
+                                <tr>
+                                    <td>{{ $commonDataCollect['c_date'] }}</td>
+                                    <td>{{ $commonDataCollect['district_name'] }}</td>
+                                    <td>{{ $commonDataCollect['asc_name'] }}</td>
+                                    <td>{{ $commonDataCollect['ai_range_name'] }}</td>
+                                    <td>{{ $commonDataCollect['otherinfo'] }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>

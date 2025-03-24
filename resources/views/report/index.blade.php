@@ -6,7 +6,7 @@
 
 
     <div class="grid-cols-2 gap-4 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        <div class="p-3 mb-1 rounded shadow-xl bg-gray-900">
+        <div class="p-3 mb-1 bg-gray-900 rounded shadow-xl">
             <h5 class="mb-3 text-xl font-bold text-orange-600">All Data</h5>
             <x-form id="export-form" action="{{ route('export.allpestdata') }}" method="post">
 
@@ -20,7 +20,7 @@
             </x-form>
         </div>
 
-        <div class="flex flex-wrap gap-3 p-3 mb-1 rounded shadow-xl bg-gray-900">
+        <div class="flex flex-wrap gap-3 p-3 mb-1 bg-gray-900 rounded shadow-xl">
             <h5 class="mb-3 text-xl font-bold text-orange-600">Memo - last 2 weeks</h5>
             <div class= "flex flex-wrap gap-3">
                 @foreach ($provinces as $province)
@@ -35,20 +35,20 @@
             </div>
 
         </div>
-        <div class="p-3 mb-1  rounded shadow-xl bg-gray-900">
-            <div>
-                <h5 class="mb-3 text-xl font-bold text-white">Other Information</h5>
+        <div class="p-1 mb-1 bg-gray-900 rounded shadow-xl">
+            <div class="flex flex-row justify-between gap-1 p-2 mb-1 bg-slate-600">
+                <h5 class="mb-3 text-sm font-bold text-white">Other Information</h5>
                 <div class= "flex flex-wrap gap-3">
                     <a href="{{ route('export.reportOfOtherInfo') }}"
-                        class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">downlord</a>
+                        class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">Download</a>
                 </div>
             </div>
 
-            <div>
-                <h5 class="mb-3 text-xl font-bold text-white">Total collector list</h5>
+            <div class="flex flex-row justify-between gap-1 p-2 bg-slate-600">
+                <h5 class="mb-3 text-sm font-bold text-white ">Total collector list</h5>
                 <div class= "flex flex-wrap gap-3">
                     <a href="{{ route('export.collectorsList') }}"
-                        class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">downlord</a>
+                        class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">Download</a>
                 </div>
             </div>
 

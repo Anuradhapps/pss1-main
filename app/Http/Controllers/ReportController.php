@@ -8,12 +8,15 @@ use App\Http\Controllers\Controller;
 use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\Collector;
+use App\Models\CommonDataCollect;
 use App\Models\district;
 use App\Models\Province;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+
+use function Pest\Laravel\get;
 
 class ReportController extends Controller
 {
@@ -210,7 +213,7 @@ class ReportController extends Controller
 
     public function collectorsList()
     {
-        $result[] = null;
+        $result = [];
         $collectors = Collector::all()->groupBy('district');
         foreach ($collectors as $key => $collectorGroup) {
             $disrict = district::find($key);
@@ -219,20 +222,40 @@ class ReportController extends Controller
                 $province = Province::find($collector->province);
                 $asc = As_center::find($collector->asc);
                 $aiRange = AiRange::find($collector->ai_range);
-                $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name];
+                $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name, $collector->phone_no, $collector->date_establish];
             }
             $result[] = $subresult;
         }
-        dd($result);
-        $pdf = Pdf::loadView('report.collectorsList', ['collectors' => $collectors])->setPaper('a4', 'landscape');
+        // dd($result);
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result])->setPaper('a4', 'landscape');
         return $pdf->download("collectorsList.pdf");
     }
     public function reportOfOtherInfo()
     {
+        $commonDataCollects = CommonDataCollect::whereHas('collector', function ($query) {
+            $query->where('rice_season_id', $this->thisSeasonId);
+        })
+            ->join('collectors', 'common_data_collects.collector_id', '=', 'collectors.id')
+            ->join('districts', 'collectors.district', '=', 'districts.id') // Join with districts table
+            ->join('as_centers', 'collectors.asc', '=', 'as_centers.id') // Join with as_centers table
+            ->join('ai_ranges', 'collectors.ai_range', '=', 'ai_ranges.id') // Join with as_centers table
+            ->select(
+                'districts.name as district_name', // Get district name from districts table
+                'as_centers.name as asc_name', // Get asc name from as_centers table
+                'ai_ranges.name as ai_range_name', // Get ai_range name from ai_ranges table
+                'common_data_collects.otherinfo',
+                'common_data_collects.c_date'
+            )
+            ->orderBy('common_data_collects.c_date', 'desc')
+            ->get();
+
+
 
         // return view('report.reportOfOtherInfo', ['records' => 'Totalresult']);
 
-        $pdf = Pdf::loadView('report.reportOfOtherInfo', ['records' => 'Totalresult'])->setPaper('a4', 'landscape');
+        // dd($commonDataCollects);
+        $seasonName = $this->thisSeason['seasonName'];
+        $pdf = Pdf::loadView('report.reportOfOtherInfo', ['records' => $commonDataCollects, 'season' => $seasonName])->setPaper('a4', 'landscape');
         return $pdf->download("reportOfOtherInfo.pdf");
     }
 }

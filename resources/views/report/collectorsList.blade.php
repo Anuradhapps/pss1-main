@@ -12,57 +12,91 @@
             margin: 20mm;
         }
 
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-                background: white;
-            }
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            margin: 0;
+            padding: 0;
+        }
 
-            .report-container {
-                max-width: 100%;
-                box-shadow: none;
-                padding: 100px;
-            }
+        .report-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            border: 1px solid #646464;
+            background: #d4d4d4;
+        }
+
+        .district-header {
+            background: #fa9494;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
-    <div class="p-4 bg-gray-100">
+    <div class="report-container">
+        <h2>NPSS Collectors</h2>
 
-        <div class="max-w-[210mm] mx-auto bg-white shadow-lg p-6 rounded-lg report-container">
-            <h2 class="mb-4 text-2xl font-bold text-center">Collectors</h2>
+        <div class="table-container">
+            <table>
 
-
-            <div class="overflow-x-auto">
-                <table class="w-full border border-gray-300">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="px-4 py-2 text-left border border-gray-400">Province</th>
-                            <th class="px-4 py-2 text-left border border-gray-400">District</th>
-                            <th class="px-4 py-2 text-left border border-gray-400">ASC</th>
-                            <th class="px-4 py-2 text-left border border-gray-400">AI</th>
-                            <th class="px-4 py-2 text-left border border-gray-400">Name</th>
-                            <th class="px-4 py-2 text-left border border-gray-400">Phone Number</th>
+                <tbody>
+                    @foreach ($data as $asDistricts)
+                        <tr class="district-header">
+                            <td colspan="4">{{ $asDistricts['district'] }} - Collectors:
+                                {{ count($asDistricts['collectors']) }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($collectors as $collector)
-                            <tr class="border border-gray-300">
-                                <td class="px-4 py-2 border border-gray-400">{{ $collector[0] }}</td>
-                                <td class="px-4 py-2 border border-gray-400">Colombo</td>
-                                <td class="px-4 py-2 border border-gray-400">ASC1</td>
-                                <td class="px-4 py-2 border border-gray-400">AI1</td>
-                                <td class="px-4 py-2 border border-gray-400">Sample info</td>
+
+                        <tr>
+                            <th>Name</th>
+                            <th>ASC</th>
+                            <th>AI</th>
+                            <th>Phone Number</th>
+                        </tr>
+
+                        @foreach ($asDistricts['collectors'] as $collector)
+                            <tr>
+                                <td>{{ $collector[0] }}</td>
+                                <td>{{ $collector[1] }}</td>
+                                <td>{{ $collector[2] }}</td>
+                                <td>{{ $collector[3] }}</td>
                             </tr>
                         @endforeach
-
-                    </tbody>
-                </table>
-            </div>
+                        <br>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-
     </div>
 </body>
 
