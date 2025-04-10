@@ -28,30 +28,38 @@
         }
 
         h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid #444444;
+            font-size: 20px;
             text-align: center;
+            color: #333;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
         }
 
+
         .table-container {
+            margin-top: 10px;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
         }
 
         td {
-            border: 1px solid #ccc;
-            padding: 8px;
+            border: 1px solid #8f8f8f;
+            padding: 3px;
             text-align: left;
+            font-size: 13px
         }
 
         th {
-            border: 1px solid #646464;
+            border: 1px solid #444444;
             background: #d4d4d4;
+            font-size: 14px
         }
 
         .district-header {
@@ -65,7 +73,7 @@
 
 <body>
     <div class="report-container">
-        <h2>NPSS Collectors</h2>
+        <h2>NPSS Collectors List</h2>
 
         <div class="table-container">
             <table>
@@ -92,7 +100,9 @@
                                 <td>{{ $collector[3] }}</td>
                             </tr>
                         @endforeach
-                        <br>
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

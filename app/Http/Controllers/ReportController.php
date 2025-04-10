@@ -226,6 +226,7 @@ class ReportController extends Controller
             }
             $result[] = $subresult;
         }
+        // return view('report.collectorsList', ['data' => $result]);
         // dd($result);
         $pdf = Pdf::loadView('report.collectorsList', ['data' => $result])->setPaper('a4', 'landscape');
         return $pdf->download("collectorsList.pdf");

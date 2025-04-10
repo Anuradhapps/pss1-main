@@ -12,7 +12,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
+            background-color: #ffffff;
         }
 
         /* Page Layout for Print */
@@ -32,8 +32,25 @@
 
         /* Header */
         h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+        }
+
+        .date {
+            white-space: nowrap;
+            min-width: 60px;
+        }
+
+        h5 {
+            margin: 0;
+            margin-top: 5px;
+            padding: 0;
+            font-size: 10px;
             text-align: center;
             color: #333;
             font-weight: bold;
@@ -43,12 +60,13 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         th,
         td {
-            padding: 12px;
+            font-size: 10px;
+            padding: 3px;
             text-align: left;
             border: 1px solid #ddd;
         }
@@ -117,17 +135,19 @@
     <div class="p-4 bg-gray-100">
 
         <div class="report-container">
-            <h2>{{ $season }}</h2>
+            <h2>Sri Lanka Rice Cultivation Report ({{ $season }})</h2>
+            <h5>Plant Protection service, Gannoruwa.</h5>
+            <hr>
 
             <div class="overflow-x-auto">
                 <table>
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th class="date">Date</th>
                             <th>District</th>
                             <th>ASC</th>
                             <th>AI</th>
-                            <th>Other Info</th>
+                            <th>Other Infomation</th>
                         </tr>
                     </thead>
                     <tbody>
