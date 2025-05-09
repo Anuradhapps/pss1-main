@@ -25,6 +25,16 @@
             @if (Auth::user()->name == 'npssoldata')
                 <!-- season Selection -->
                 <x-form.select name="season" label="Season:" id="season">
+                    <option value="20212022" {{ $collector->rice_season_id == 20212022 ? 'selected' : '' }}>2021/2022
+                        maha
+                    </option>
+                    <option value="20222022" {{ $collector->rice_season_id == 20222022 ? 'selected' : '' }}>2022 Yala
+                    </option>
+                    <option value="20222023" {{ $collector->rice_season_id == 20222023 ? 'selected' : '' }}>2022/2023
+                        maha
+                    </option>
+                    <option value="20232023" {{ $collector->rice_season_id == 20232023 ? 'selected' : '' }}>2023 Yala
+                    </option>
                     <option value="20232024" {{ $collector->rice_season_id == 20232024 ? 'selected' : '' }}>2023/2024
                         maha
                     </option>
