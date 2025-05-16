@@ -26,7 +26,7 @@
 
                 @if (!empty($pests) && $pests->count())
                     @foreach ($pests as $pest)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr class="bg-gray-800 border-b border-gray-700 ">
 
                             <td class="px-6 py-4"> {{ $pest->id }}</td>
                             <td class="px-6 py-4"> {{ $pest->name }}</td>

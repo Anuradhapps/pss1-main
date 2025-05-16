@@ -5,7 +5,7 @@
             <h2 class="mb-5">Account Settings</h2>
             <div>
                 <span class="error">*</span>
-                <span class="dark:text-gray-200"> = required</span>
+                <span class="text-gray-200"> = required</span>
             </div>
         </div>
 

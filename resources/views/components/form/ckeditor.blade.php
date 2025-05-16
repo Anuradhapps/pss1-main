@@ -1,11 +1,11 @@
 @push('scripts')
-  <script src="/js/ckeditor/ckeditor.js"></script>
+    <script src="/js/ckeditor/ckeditor.js"></script>
 @endpush
 
 @props([
     'name' => '',
     'label' => '',
-    'required' => false
+    'required' => false,
 ])
 
 @if ($label == '')
@@ -21,20 +21,17 @@
     @endphp
 @endif
 <div wire:ignore class="mt-5">
-    @if ($label !='none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200">{{ $label }} @if ($required != '') <span class="text-red-600">*</span>@endif</label>
+    @if ($label != 'none')
+        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-200">{{ $label }}
+            @if ($required != '')
+                <span class="text-red-600">*</span>
+            @endif
+        </label>
     @endif
-    <textarea
-        x-data
-        x-init="
-            editor = CKEDITOR.replace($refs.item);
-            editor.on('change', function(event){
-                @this.set('{{ $name }}', event.editor.getData());
-            })
-        "
-        x-ref="item"
-        {{ $attributes }}
-    >
+    <textarea x-data x-init="editor = CKEDITOR.replace($refs.item);
+    editor.on('change', function(event) {
+        @this.set('{{ $name }}', event.editor.getData());
+    })" x-ref="item" {{ $attributes }}>
         {{ $slot }}
     </textarea>
 </div>

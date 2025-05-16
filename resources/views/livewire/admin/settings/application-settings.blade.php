@@ -6,23 +6,24 @@
 
         <x-form wire:submit.prevent="update" method="put">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                 <x-form.input wire:model="siteName" name="siteName" label="Site Name" />
 
                 <fieldset>
 
-                    <div class="mt-1 bg-white dark:bg-gray-500 dark:text-gray-200 rounded-md shadow-sm -space-y-px">
+                    <div class="mt-1 -space-y-px text-gray-200 bg-gray-500 rounded-md shadow-sm">
 
-                        <div class="relative border rounded-tl-md rounded-tr-md p-4 flex border-gray-200">
+                        <div class="relative flex p-4 border border-gray-200 rounded-tl-md rounded-tr-md">
                             <div class="flex items-center h-5">
-                                <input wire:model="isForced2Fa" id="isForced2Fa" type="checkbox" class="h-4 w-4 text-light-blue-600 cursor-pointer focus:ring-light-blue-500 border-gray-300">
+                                <input wire:model="isForced2Fa" id="isForced2Fa" type="checkbox"
+                                    class="w-4 h-4 border-gray-300 cursor-pointer text-light-blue-600 focus:ring-light-blue-500">
                             </div>
-                            <label for="isOfficeLoginOnly" class="ml-3 flex flex-col cursor-pointer">
-                                <span class="block text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <label for="isOfficeLoginOnly" class="flex flex-col ml-3 cursor-pointer">
+                                <span class="block text-sm font-medium text-gray-300">
                                     Enforce 2Fa
                                 </span>
-                                <span class="block text-sm text-gray-500 dark:text-gray-200">
+                                <span class="block text-sm text-gray-200">
                                     Force 2 factor authentication for all users on login.
                                     Users can only login at pre-approved IP addresses.
                                 </span>

@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', Welcome::class);
 Route::get('/', [LoginController::class, 'showLoginForm']);
-Route::get('/app', Dashboard::class)->name('admin');
+Route::get('/app', Dashboard::class);
 
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

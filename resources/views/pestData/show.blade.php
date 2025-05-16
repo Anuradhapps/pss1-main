@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="mx-5">
         <div class="flex justify-between py-1 border-b border-gray-200">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Pest Data</h1>
+            <h1 class="text-2xl font-bold text-gray-100">Pest Data</h1>
             <div>
                 @if (has_role('collector'))
                     <a href="{{ route('pestdata.view', $commonData->collector_id) }}"
@@ -12,19 +12,19 @@
                 @endif
             </div>
         </div>
-        <div class="mt-4 text-black dark:text-gray-100 sm:flex sm:justify-between sm:space-x-4">
+        <div class="mt-4 text-gray-100 sm:flex sm:justify-between sm:space-x-4">
             <div class="mb-4"><span>Created At : </span> <span
-                    class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->created_at }}</span></div>
+                    class="p-1 border border-gray-200">{{ $commonData->created_at }}</span></div>
             <div class="mb-4"><span>Date of Data Collected : </span> <span
-                    class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->c_date }}</span></div>
+                    class="p-1 border border-gray-200">{{ $commonData->c_date }}</span></div>
             <div class="mb-5"><span>Temperature : </span> <span
-                    class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->temperature }} °C</span>
+                    class="p-1 border border-gray-200">{{ $commonData->temperature }} °C</span>
             </div>
             <div class="mb-5"><span>No of Rainy Days : </span> <span
-                    class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->numbrer_r_day }}</span>
+                    class="p-1 border border-gray-200">{{ $commonData->numbrer_r_day }}</span>
             </div>
             <div class="mb-5"><span>Growth Stage Code : </span><span
-                    class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->growth_s_c }}</span></div>
+                    class="p-1 border border-gray-200">{{ $commonData->growth_s_c }}</span></div>
         </div>
         <div class="border-b border-gray-200"></div>
         <table class="w-full my-4 table-auto">
@@ -55,8 +55,8 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="mb-4 text-black dark:text-gray-100"><span>Other Info: </span> <span
-                class="p-1 border border-gray-400 dark:border-gray-200">{{ $commonData->otherinfo }}</span></div>
+        <div class="mb-4 text-gray-100"><span>Other Info: </span> <span
+                class="p-1 border border-gray-200">{{ $commonData->otherinfo }}</span></div>
     </div>
 
     <!-- Add Tailwind dark mode toggle (optional) -->

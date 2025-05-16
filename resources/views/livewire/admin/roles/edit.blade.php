@@ -2,11 +2,11 @@
 <div>
     <div class="mb-5">
         <a href="{{ route('admin.settings.roles.index') }}">Roles</a>
-        <span class="dark:text-gray-200">- Edit Role</span>
+        <span class="text-gray-200">- Edit Role</span>
     </div>
 
 
-    <div class="float-right"><span class="text-red-600">*</span> <span class="dark:text-gray-200"> = required</span>
+    <div class="float-right"><span class="text-red-600">*</span> <span class="text-gray-200"> = required</span>
     </div>
 
     <div class="clearfix"></div>
@@ -34,8 +34,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="dark:text-gray-300">Permission</th>
-                                <th class="dark:text-gray-300">Action</th>
+                                <th class="text-gray-300">Permission</th>
+                                <th class="text-gray-300">Action</th>
                             </tr>
                         </thead>
                         <tbody>

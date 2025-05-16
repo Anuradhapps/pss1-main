@@ -87,17 +87,17 @@
 
                         <tr>
                             <th>Name</th>
-                            <th>ASC</th>
                             <th>AI</th>
                             <th>Phone Number</th>
+                            <th>Email</th>
                         </tr>
 
                         @foreach ($asDistricts['collectors'] as $collector)
                             <tr>
                                 <td>{{ $collector[0] }}</td>
-                                <td>{{ $collector[1] }}</td>
                                 <td>{{ $collector[2] }}</td>
                                 <td>{{ $collector[3] }}</td>
+                                <td>{{ $collector[5] }}</td>
                             </tr>
                         @endforeach
                         <tr>

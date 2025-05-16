@@ -3,20 +3,18 @@
     @if (Route::has('login'))
         <div class="fixed top-0 right-0 hidden px-6 py-4 sm:block">
             @auth
-                <a href="{{ route('admin') }}" class="text-sm text-gray-700 underline dark:text-gray-200">Dashboard</a>
+                <a href="{{ route('admin') }}" class="text-sm text-gray-200 underline">Dashboard</a>
             @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline dark:text-gray-200">Log in</a>
+                <a href="{{ route('login') }}" class="text-sm text-gray-200 underline">Log in</a>
 
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="ml-4 text-sm text-gray-700 underline dark:text-gray-200">Register</a>
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-200 underline">Register</a>
                 @endif
             @endauth
         </div>
     @endif
 
-    <div
-        class="flex flex-col items-center min-h-screen pt-6 dark:text-white bg-gray-50 dark:bg-gray-700 sm:justify-center sm:pt-0">
+    <div class="flex flex-col items-center min-h-screen pt-6 text-white bg-gray-700 sm:justify-center sm:pt-0">
         @php
             //cache the logo setting to reduce calling the database
             $loginLogo = Cache::rememberForever('loginLogo', function () {

@@ -7,7 +7,6 @@
 ])
 
 @if ($label === 'none')
-
 @elseif ($label === '')
     @php
         //remove underscores from name
@@ -22,28 +21,28 @@
 @endif
 
 @php
-    $options = array_merge([
-        'dateFormat' => 'd-m-Y H:i',
-        'enableTime' => true,
-        'time_24hr' => true
-    ], $options);
+    $options = array_merge(
+        [
+            'dateFormat' => 'd-m-Y H:i',
+            'enableTime' => true,
+            'time_24hr' => true,
+        ],
+        $options,
+    );
 @endphp
 
 <div class="mb-5">
-    @if ($label !='none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-200">{{ $label }} @if ($required != '') <span class="text-red-600">*</span>@endif</label>
+    @if ($label != 'none')
+        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-200">{{ $label }}
+            @if ($required != '')
+                <span class="text-red-600">*</span>
+            @endif
+        </label>
     @endif
-    <div class=" rounded-md shadow-sm">
-        <input
-            x-data
-            x-init="flatpickr($refs.input, {{json_encode((object)$options)}});"
-            x-ref="input"
-            type="text"
-            id="{{ $name }}"
-            name="{{ $name }}"
-            value="{{ $slot }}"
-            {{ $required }}
-            {{ $attributes->merge(['class' => 'block w-full dark:bg-gray-500 dark:text-gray-200 dark:placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm']) }}>
+    <div class="rounded-md shadow-sm ">
+        <input x-data x-init="flatpickr($refs.input, {{ json_encode((object) $options) }});" x-ref="input" type="text" id="{{ $name }}"
+            name="{{ $name }}" value="{{ $slot }}" {{ $required }}
+            {{ $attributes->merge(['class' => 'block w-full bg-gray-500 text-gray-200 placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm']) }}>
         @error($name)
             <p class="error">{{ $message }}</p>
         @enderror

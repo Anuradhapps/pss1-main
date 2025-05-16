@@ -65,9 +65,9 @@
             </thead>
             <tbody>
                 @foreach ($this->collectors() as $collector)
-                    <tr>
+                    <tr class="text-sm text-white">
 
-                        <td class="bg-red-200 dark:bg-red-700">
+                        <td class="text-white bg-red-700">
                             <div class="flex justify-between">
                                 <div>{{ $collector->name }} </div>
                                 @if ($collector->commonDataCollect->count() == 0)
@@ -93,34 +93,40 @@
                         {{-- <td> {{ $collector->email }}</td> --}}
                         {{-- <td> {{ $collector->phone_no }}</td> --}}
                         @if ($collector->regionName == 'Inter Provincial')
-                            <td class="bg-green-700"> {{ $collector->regionName }}</td>
+                            <td class="text-white bg-green-700"> {{ $collector->regionName }}</td>
                         @else
-                            <td class="bg-green-600"> {{ $collector->regionName }}</td>
+                            <td class="text-white bg-green-600"> {{ $collector->regionName }}</td>
                         @endif
 
-                        <td class="bg-blue-700"> {{ $collector->dname }}</td>
-                        <td class="bg-pink-700"> {{ $collector->asname }}</td>
-                        <td class="bg-yellow-700"> {{ $collector->ainame }}</td>
+                        <td class="text-white bg-blue-700"> {{ $collector->dname }}</td>
+                        <td class="text-white bg-pink-700"> {{ $collector->asname }}</td>
+                        <td class="text-white bg-yellow-700"> {{ $collector->ainame }}</td>
                         {{-- <td class="bg-purple-200 dark:bg-purple-700"> {{ $collector->village }}</td> --}}
-                        <td class="bg-teal-700"> {{ $collector->riceSeasonName }}</td>
+                        <td class="text-white bg-teal-700"> {{ $collector->riceSeasonName }}</td>
                         {{-- <td> {{ $collector->rice_variety }}</td>
                         <td> {{ $collector->gps_lati }}</td>
                         <td> {{ $collector->gps_long }}</td>
                         <td> {{ $collector->date_establish }}</td> --}}
-                        <td class="bg-gray-800"> <a href="{{ route('admin.collector.edit', $collector->id) }}"
-                                class="px-2 py-1 text-sm font-bold text-white bg-orange-400 rounded me-1 hover:bg-orange-500">
-                                Edit
+                        <td class="bg-gray-800">
+                            <a href="{{ route('admin.collector.edit', $collector->id) }}"
+                                class="px-2 py-1 text-[10px] font-bold text-white bg-orange-400 rounded me-1 hover:bg-orange-600">
+                                C Edit
+                            </a>
+                            <a href="{{ route('admin.users.edit', ['user' => $collector->user->id]) }}"
+                                class="px-2 py-1 text-[10px] font-bold text-white bg-green-600 rounded me-1 hover:bg-green-800">
+                                U Edit
                             </a>
                             <a href="{{ route('chart.ai.show', $collector->id, 'yes') }}"
-                                class="px-2 py-1 text-sm font-bold text-white bg-blue-600 rounded me-1 hover:bg-blue-600">
-                                pest Data
+                                class="px-2 py-1 text-[10px] font-bold text-white bg-blue-600 rounded me-1 hover:bg-blue-800">
+                                Pest Data
                             </a>
+
                             <form action="{{ route('admin.collector.destroy', $collector->id) }}" method="POST"
                                 style="display:inline;" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="confirmDelete(event)"
-                                    class="px-2 py-1 text-sm font-bold text-white bg-red-600 rounded hover:bg-red-600">
+                                    class="px-[6px] py-[1px] text-[10px] font-bold text-white bg-red-600 rounded hover:bg-red-800">
                                     Delete
                                 </button>
                             </form>
