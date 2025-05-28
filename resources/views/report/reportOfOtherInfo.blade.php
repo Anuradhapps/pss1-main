@@ -135,7 +135,7 @@
     <div class="p-4 bg-gray-100">
 
         <div class="report-container">
-            <h2>Sri Lanka Rice Cultivation Report ({{ $season }})</h2>
+            <h2>Reported information from the AI Ranges in Sri Lanka ({{ $season }})</h2>
             <h5>Plant Protection service, Gannoruwa.</h5>
             <hr>
 

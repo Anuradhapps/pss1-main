@@ -22,10 +22,21 @@ class ChartASC
         $season = RiceSeason::find($pestData['season']);
         $as_center = As_center::find($pestData['as_center']);
 
+        $pestNamess = collect($pestNames)->map(function ($item) {
+            return match ($item) {
+                'thrips' => 'Thrips',
+                'gallMidge' => 'Gall Midge',
+                'leaffolder' => 'Leaffolder',
+                'yellowStemBorer' => 'Yellow Stem Borer',
+                'bphWbph' => 'Brown Planthopper/WBPH',
+                'paddyBug' => 'Paddy Bug',
+                default => $item,
+            };
+        })->toArray();
         return $this->chart->barChart()
             ->setTitle($season->name . ' ➔ ' . $as_center->name . ' ASC')
             ->addData('Code', $pestCodes)
-            ->setXAxis($pestNames)
+            ->setXAxis($pestNamess)
             ->setGrid();
     }
 }

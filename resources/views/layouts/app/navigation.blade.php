@@ -19,7 +19,8 @@
                     <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}" class="w-32">
                 </picture>
             @else
-                {{ config('app.name') }}
+                {{-- {{ config('app.name') }} --}}
+                National Pest Surveillance System
             @endif
         </a>
     </div>

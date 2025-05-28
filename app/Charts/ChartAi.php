@@ -50,14 +50,20 @@ class ChartAi
             $i++;
         }
 
+        $pests = collect($pests)->map(function ($item) {
+            return match ($item) {
+                'BPH+WBPH' => 'Brown Planthopper/WBPH',
+                'Gall Midge' => 'Gall Midge',
+                default => $item,
+            };
+        })->toArray();
 
         $chart = $this->chart->barChart()
             ->setTitle($collector->getProvince->name . ' > ' . $collector->getDistrict->name . ' > ' . $collector->getAsCenter->name . ' > ' . $collector->getAiRange->name . ' > ')
             ->setSubtitle($collector->riceSeason->name)
             ->setXAxis($pests)
             ->setColors($colorArray)
-            ->setGrid('#3F51B5', 0.1)
-            ;
+            ->setGrid('#3F51B5', 0.1);
 
         // Add data to the chart after initialization
         foreach ($dataArray as $data) {

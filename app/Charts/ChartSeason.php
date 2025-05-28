@@ -20,11 +20,22 @@ class ChartSeason
         $pestCodes = array_values($pestData['pests']);
         $season = RiceSeason::find($pestData['season']);
 
+        $pestNamess = collect($pestNames)->map(function ($item) {
+            return match ($item) {
+                'thrips' => 'Thrips',
+                'gallMidge' => 'Gall Midge',
+                'leaffolder' => 'Leaffolder',
+                'yellowStemBorer' => 'Yellow Stem Borer',
+                'bphWbph' => 'Brown Planthopper/WBPH',
+                'paddyBug' => 'Paddy Bug',
+                default => $item,
+            };
+        })->toArray();
         return $this->chart->barChart()
-            ->setTitle($season->name.' ➔  All Island')
-            ->setSubtitle('During season '.$season->name.'.')
+            ->setTitle($season->name . ' ➔  All Island')
+            ->setSubtitle('During season ' . $season->name . '.')
             ->addData('Code', $pestCodes)
-            ->setXAxis($pestNames)
+            ->setXAxis($pestNamess)
             ->setGrid();
     }
 }

@@ -84,7 +84,8 @@
                 </div>
                 <!-- Footer -->
                 <footer class="w-full p-4 text-xs text-center text-gray-300 bg-teal-800 footer">
-                    {{ __('Copyright') }} &copy; {{ date('Y') }} {{ config('app.name') }}
+                    {{ __('Copyright') }} &copy; {{ date('Y') }} National Pest Surveillance System – PPS, SL
+                    {{-- {{ config('app.name') }} --}}
                 </footer>
             </div>
         </div>

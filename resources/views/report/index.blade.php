@@ -45,7 +45,7 @@
             </div>
 
             <div class="flex flex-row justify-between gap-1 p-2 bg-slate-600">
-                <h5 class="mb-3 text-sm font-bold text-white ">Total collector list</h5>
+                <h5 class="mb-3 text-sm font-bold text-white ">Name list of Data Collectors</h5>
                 <div class= "flex flex-wrap gap-3">
                     <a href="{{ route('export.collectorsList') }}"
                         class="h-8 px-2 py-2 text-xs font-bold text-white bg-red-800 rounded-xl hover:bg-red-900">Download</a>

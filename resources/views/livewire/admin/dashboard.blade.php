@@ -6,15 +6,17 @@
 
 
 <div class="p-3 my-2 bg-white rounded-lg shadow-md">
-    <h4 class="text-lg font-semibold text-gray-800">Pest Surveillance Program – Data Collection</h4>
+    <h4 class="text-lg font-semibold text-gray-800">Pest Surveillance Programme – Data Collection</h4>
 
     <p class="mt-2 text-sm text-gray-700">
         <b>Objectives:</b> The system provides an understanding of the Plant Protection Service's requirements for
-        creating a new smartphone app for data collection for pest surveillance purposes.
+        creating a
+        new smartphone web app to collect data on pest surveillance purposes.
     </p>
     <p class="mt-2 text-sm text-gray-700">
-        The main purpose of the pest surveillance data collection web application is to record the density of target
-        pests in the selected location throughout the cropping season on a regular basis.
+        The main purpose of the pest surveillance data collection web application is to record the density of
+        target pests and damage intensity in the selected location throughout the cropping season on a
+        regular basis (Weekly).
     </p>
 </div>
 

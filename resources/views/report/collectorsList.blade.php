@@ -73,7 +73,7 @@
 
 <body>
     <div class="report-container">
-        <h2>NPSS Collectors List</h2>
+        <h2>Name List of NPSS Data Collectors</h2>
 
         <div class="table-container">
             <table>
