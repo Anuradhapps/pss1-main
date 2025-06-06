@@ -96,6 +96,7 @@ class CollectorController extends Controller
             'date_establish' => 'required',
 
         ]);
+
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
 
         $collector = new Collector([
@@ -159,6 +160,8 @@ class CollectorController extends Controller
         $districts = district::all();
         $as_centers = As_center::all();
         $ai_ranges = AiRange::all();
+        $collector->date_establish = Carbon::createFromFormat('Y-m-d', $collector->date_establish)->format('d-m-Y');
+
         return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
     }
     /**

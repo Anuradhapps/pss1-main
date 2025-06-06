@@ -24,6 +24,7 @@
     $options = array_merge(
         [
             'dateFormat' => 'd-m-Y',
+            // 'altInput' => false,
             'enableTime' => false,
             'time_24hr' => true,
         ],
