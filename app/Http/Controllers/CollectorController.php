@@ -94,6 +94,7 @@ class CollectorController extends Controller
             //  'gps_long' => 'required',
             'rice_variety' => 'required',
             'date_establish' => 'required',
+            'established_method' => 'required',
 
         ]);
 
@@ -114,6 +115,7 @@ class CollectorController extends Controller
             'gps_long' => $request->get('gps_long'),
             'rice_variety' => $request->get('rice_variety'),
             'date_establish' => $dateEstablish,
+            'established_method' => $request->get('established_method'),
         ]);
 
         $collector->save();
@@ -187,6 +189,7 @@ class CollectorController extends Controller
             // 'gps_long' => 'required',
             'rice_variety' => 'required',
             'date_establish' => 'required',
+            'established_method' => 'required',
         ]);
 
         $dateEstablish = Carbon::createFromFormat('d-m-Y', $request->get('date_establish'))->format('Y-m-d');
@@ -204,6 +207,7 @@ class CollectorController extends Controller
         $collector->gps_long = $request->gps_long;
         $collector->rice_variety = $request->rice_variety;
         $collector->date_establish = $dateEstablish;
+        $collector->established_method = $request->established_method;
         $collector->save();
         if (has_role('collector')) {
             $id = Auth::user()->id;

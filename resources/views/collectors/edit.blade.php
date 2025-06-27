@@ -78,7 +78,19 @@
             <x-form.date name="date_establish" label="Date Established:" class="mb-4">
                 {{ old('date_establish', $collector->date_establish) }}
             </x-form.date>
-
+            <!-- Established Method Field -->
+            <x-form.select name="established_method" label="Established Method:" id="established_method">
+                <option>-- Select established method--</option>
+                <option value="Broadcast" {{ $collector->established_method == 'Broadcast' ? 'selected' : '' }}>
+                    Broadcast
+                </option>
+                <option value="Transplant" {{ $collector->established_method == 'Transplant' ? 'selected' : '' }}>
+                    Transplant
+                </option>
+                <option value="Parachute" {{ $collector->established_method == 'Parachute' ? 'selected' : '' }}>
+                    Parachute
+                </option>
+            </x-form.select>
 
             <!-- Save Button -->
             <x-form.submit

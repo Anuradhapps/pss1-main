@@ -21,9 +21,15 @@
             @foreach ($collectors as $collector)
                 <div class="p-4 transition duration-300 rounded-lg shadow-lg bg-slate-800 hover:bg-slate-900">
                     <div class="flex items-center justify-between">
-                        <h2 class="mb-2 text-xl font-semibold text-white">
+                        <h2 class="flex items-center gap-2 mb-2 text-xl font-semibold text-white">
+                            <span
+                                class="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-orange-600 rounded-full shadow">
+                                {{ $collectors->count() - $loop->index }}
+
+                            </span>
                             {{ $collector->riceSeason->name }}
                         </h2>
+
                         @if (Auth::user()->name == 'npssoldata')
                             <form action="{{ route('collector.destroy', $collector->id) }}" method="POST"
                                 style="display:inline;" onsubmit="return confirmDelete()">

@@ -54,7 +54,16 @@
                     {{ old('date_establish') }}
                 </x-form.date>
             </div>
-
+            <!-- Established Method Field -->
+            <x-form.select name="established_method" label="Established Method:" id="established_method">
+                <option>-- Select established method--</option>
+                <option value="Broadcast" {{ old('established_method') == 'Broadcast' ? 'selected' : '' }}>Broadcast
+                </option>
+                <option value="Transplant" {{ old('established_method') == 'Transplant' ? 'selected' : '' }}>Transplant
+                </option>
+                <option value="Parachute" {{ old('established_method') == 'Parachute' ? 'selected' : '' }}>Parachute
+                </option>
+            </x-form.select>
             <!-- Save Button -->
             <x-form.submit
                 class="w-full px-4 py-2 font-semibold text-center text-white transition bg-green-600 rounded hover:bg-green-700">
