@@ -26,7 +26,6 @@ class UsersExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-
         // Convert input dates to Carbon instances for comparison
         $startDate = Carbon::createFromFormat('Y-m-d', $this->startDate);
         $endDate = Carbon::createFromFormat('Y-m-d', $this->endDate)->endOfDay();
@@ -59,6 +58,7 @@ class UsersExport implements FromCollection, WithHeadings
                         'Collector GPS Longitude'   => $cdata->user->collector ? $cdata->user->collector->gps_long : 'N/A',
                         'Collector Rice Variety'   => $cdata->user->collector ? $cdata->user->collector->rice_variety : 'N/A',
                         'Date Established'         => $cdata->user->collector ? $cdata->user->collector->date_establish : 'N/A',
+                        'Established Method'       => $cdata->user->collector ? $cdata->user->collector->established_method : 'N/A',
 
                         'Growth Stage'             => $cdata->growth_s_c,
                         'Temperature'              => $cdata->temperature,
@@ -136,6 +136,7 @@ class UsersExport implements FromCollection, WithHeadings
                     'GPS Longitude' => '',
                     'Rice Variety' => '',
                     'Date Established' => '',
+                    'Established Method' => '',
 
                     'Growth Stage' => '',
                     'Temperature' => '',
@@ -179,6 +180,7 @@ class UsersExport implements FromCollection, WithHeadings
             'GPS Longitude',
             'Rice Variety',
             'Date Established',
+            'Established Method',
 
             'Growth Stage',
             'Temperature',
