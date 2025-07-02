@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
 
             //comment when actual database is ready
-            // RiceSeasonSeeder::class,
+            RiceSeasonSeeder::class,
 
 
-            // ProvinceDistrictAscAiRangeSeeder::class,
+            ProvinceDistrictAscAiRangeSeeder::class,
             //run an individual seeder>
             //php artisan db:seed --class=ProvinceDistrictAscAiRangeSeeder
 
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
             //comment when actual database is ready
             //comment on user seeder also
-            // RolesDatabaseSeeder::class,
+            RolesDatabaseSeeder::class,
 
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,

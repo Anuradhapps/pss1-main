@@ -1,8 +1,8 @@
 <div class="px-2">
 
     <!-- Sidebar Logo -->
-    <div class="flex items-center justify-center p-2 rounded bg-green-950 ">
-        <a href="{{ route('admin') }}" class="text-lg font-bold text-gray-100">
+    <div class="flex items-center justify-center px-3 py-4 mb-6 rounded-lg shadow-sm  bg-green-950">
+        <a href="{{ route('admin') }}" class="flex items-center space-x-3">
             @php
                 $applicationLogo = Cache::rememberForever(
                     'applicationLogo',
@@ -13,17 +13,21 @@
                     fn() => \App\Models\Setting::where('key', 'applicationLogoDark')->value('value'),
                 );
             @endphp
+
             @if (storage_exists($applicationLogo))
                 <picture>
                     <source srcset="{{ storage_url($applicationLogoDark) }}" media="(prefers-color-scheme: dark)">
-                    <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}" class="w-32">
+                    <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}"
+                        class="w-32 h-auto transition duration-300 hover:scale-105">
                 </picture>
             @else
-                {{-- {{ config('app.name') }} --}}
-                National Pest Surveillance System
+                <span class="text-lg font-semibold tracking-tight text-white">
+                    National Pest Surveillance System
+                </span>
             @endif
         </a>
     </div>
+
 
     <!-- Navigation Links -->
     <div class="space-y-2">

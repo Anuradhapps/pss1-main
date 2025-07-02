@@ -1,58 +1,38 @@
 @section('title', 'Users')
-<div>
 
+<div class="p-4 space-y-6 text-white">
+
+    <!-- Header -->
     <div
-        class="flex flex-col items-start justify-between p-1 space-y-4 rounded-md shadow-md bg-gradient-to-r from-purple-900 to-purple-600 md:flex-row md:items-center md:space-y-0">
-
+        class="flex flex-col p-4 rounded-md shadow md:flex-row md:items-center md:justify-between bg-gradient-to-r from-purple-900 to-purple-600">
         <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'" />
-
-        {{-- <div>
-            @if (can('add_users'))
-                <livewire:admin.users.invite />
-            @endif
-        </div> --}}
-
+        {{-- @if (can('add_users')) <livewire:admin.users.invite /> @endif --}}
     </div>
 
-    <div class="grid gap-4 mt-5 mb-5 sm:grid-cols-1 md:grid-cols-3">
-
-        <div class="col-span-2">
-            <x-form.input type="search" name="name" wire:model="name" label="none" placeholder="Search Users">
+    <!-- Search Bar & Filters -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="md:col-span-2">
+            <x-form.input type="search" name="name" wire:model="name" label="none" placeholder="🔍 Search Users">
                 {{ old('name', request('name')) }}
             </x-form.input>
         </div>
-
     </div>
 
-    <div class="mb-5" x-data="{ isOpen: @if ($openFilter || request('openFilter')) true @else false @endif }">
+    <!-- Advanced Filter -->
+    <div class="mb-4" x-data="{ isOpen: {{ $openFilter || request('openFilter') ? 'true' : 'false' }} }">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <button @click="isOpen = !isOpen"
+                class="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded bg-gray-800 hover:bg-gray-700 transition">
+                <i class="text-gray-300 fas fa-filter"></i> Advanced Search
+            </button>
+            <button wire:click="resetFilters" @click="isOpen = false"
+                class="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded bg-red-800 hover:bg-red-900 transition">
+                <i class="text-white fas fa-sync-alt"></i> Reset
+            </button>
+        </div>
 
-        <button type="button" @click="isOpen = !isOpen"
-            class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded-t text-grey-700 hover:bg-grey-300 bg-gray-900 text-gray-200 transition ease-in-out duration-150">
-            <svg class="w-5 h-5 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            Advanced Search
-        </button>
-
-        <button type="button" wire:click="resetFilters" @click="isOpen = false"
-            class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-grey-700  hover:bg-grey-300 bg-gray-900 text-gray-200 transition ease-in-out duration-150">
-            <svg class="w-5 h-5 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Reset form
-        </button>
-
-        <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
-            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75 transform"
-            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-            class="p-5 bg-gray-700 rounded-b-md" wire:ignore.self>
+        <div x-show="isOpen" x-transition class="p-4 bg-gray-700 rounded-md shadow">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-
                 <x-form.input type="email" id="email" name="email" label="Email" wire:model="email">
                     {{ old('email', request('email')) }}
                 </x-form.input>
@@ -60,108 +40,104 @@
                 <x-form.daterange id="joined" name="joined" label="Joined Date Range" wire:model.lazy="joined">
                     {{ old('joined', request('joined')) }}
                 </x-form.daterange>
-
             </div>
         </div>
-
     </div>
 
-    <div class="overflow-x-scroll shadow-md">
-        <table>
-            <thead>
+    <!-- Users Table -->
+    <div class="overflow-x-auto bg-gray-900 rounded-lg shadow">
+        <table class="min-w-full text-sm text-left text-gray-100">
+            <thead class="text-xs text-gray-400 uppercase bg-gray-800">
                 <tr>
-                    <th><a href="#" wire:click.prevent="sortBy('first_name')">Name</a></th>
-                    <th><a href="#" wire:click.prevent="sortBy('email')">Email</a></th>
-                    <th>Joined</th>
-                    <th>Roles</th>
-                    <th>Action</th>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Joined</th>
+                    <th class="px-4 py-3">Roles</th>
+                    <th class="px-4 py-3 text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-700">
                 @foreach ($this->users() as $user)
-                    <tr>
-                        <td class="flex">
-                            <div>
-                                @if (storage_exists($user->image))
-                                    <img src="{{ storage_url($user->image) }}" width="30"
-                                        class="w-8 h-8 rounded-full">
-                                @endif
-                            </div>
-                            <div class="pt-1 pl-1">{{ $user->name }}</div>
+                    <tr class="transition duration-200 hover:bg-gray-600 ">
+                        <!-- Name + Avatar -->
+                        <td class="flex items-center gap-2 px-4 py-3 whitespace-nowrap">
+                            @if (storage_exists($user->image))
+                                <img src="{{ storage_url($user->image) }}" class="object-cover w-8 h-8 rounded-full" />
+                            @endif
+                            <span>{{ $user->name }}</span>
                         </td>
-                        <td>{{ $user->email }}</td>
-                        <td>
+
+                        <!-- Email -->
+                        <td class="px-4 py-3 whitespace-nowrap">{{ $user->email }}</td>
+
+                        <!-- Joined -->
+                        <td class="px-4 py-3 whitespace-nowrap">
                             @if (!empty($user->invite_token))
-                                <small class="text-gray-300">Invited<br>
-                                    {{ date('jS M Y H:i', strtotime($user->invited_at)) }}</small>
+                                <small
+                                    class="text-gray-400">Invited<br>{{ date('jS M Y H:i', strtotime($user->invited_at)) }}</small>
                             @else
-                                {{ $user->created_at !== '' ? date('jS M Y', strtotime($user->created_at)) : '' }}
+                                {{ $user->created_at ? date('jS M Y', strtotime($user->created_at)) : '' }}
                             @endif
                         </td>
-                        <td>
+
+                        <!-- Roles -->
+                        <td class="px-4 py-3">
                             @foreach ($user->roles as $role)
-                                {{ $role->label }}<br>
+                                <span
+                                    class="inline-block px-2 py-0.5 text-xs font-medium bg-purple-700 text-white rounded-full">
+                                    {{ $role->label }}
+                                </span>
                             @endforeach
                         </td>
-                        <td>
-                            <div class="flex space-x-2">
 
+                        <!-- Actions -->
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex flex-wrap justify-center gap-2">
                                 @if (can('view_users_profiles'))
-                                    <a href="{{ route('admin.users.show', ['user' => $user->id]) }}">Profile</a>
+                                    <a href="{{ route('admin.users.show', ['user' => $user->id]) }}"
+                                        class="px-3 py-1 text-xs text-white transition bg-blue-600 rounded hover:bg-blue-700">Profile</a>
                                 @endif
 
-                                @if (can('edit_users'))
-                                    <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}">Edit</a>
-                                @elseif(auth()->id() === $user->id && can('edit_own_account'))
-                                    <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}">Edit</a>
+                                @if (can('edit_users') || (auth()->id() === $user->id && can('edit_own_account')))
+                                    <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}"
+                                        class="px-3 py-1 text-xs text-white transition bg-yellow-500 rounded hover:bg-yellow-600">Edit</a>
                                 @endif
 
-                                @if (can('add_users'))
-                                    @if (!empty($user->invite_token))
-                                        <x-modal>
-                                            <x-slot name="trigger">
-                                                <a href="#" @click="on = true">Resend Invite</a>
-                                            </x-slot>
-
-                                            @if ($sentEmail === false)
-                                                <x-slot name="title">Send {{ $user->name }} another invite
-                                                    email.</x-slot>
-                                                <x-slot name="content"></x-slot>
-                                                <x-slot name="footer">
-                                                    <button @click="on = false">Cancel</button>
-                                                    <button class="btn btn-primary"
-                                                        wire:click="resendInvite('{{ $user->id }}')">Yes, Send
-                                                        Email</button>
-                                                </x-slot>
-                                            @else
-                                                <x-slot name="title">Invite email sent</x-slot>
-                                                <x-slot name="content"></x-slot>
-                                                <x-slot name="footer">
-                                                    <button @click="on = false">Close</button>
-                                                </x-slot>
-                                            @endif
-                                        </x-modal>
-                                    @endif
+                                @if (can('add_users') && !empty($user->invite_token))
+                                    <x-modal>
+                                        <x-slot name="trigger">
+                                            <a href="#" @click="on = true"
+                                                class="px-3 py-1 text-xs text-white transition bg-indigo-600 rounded hover:bg-indigo-700">
+                                                Resend Invite
+                                            </a>
+                                        </x-slot>
+                                        <x-slot name="title">Resend Invite Email</x-slot>
+                                        <x-slot name="footer">
+                                            <button @click="on = false">Cancel</button>
+                                            <button wire:click="resendInvite('{{ $user->id }}')"
+                                                class="btn btn-primary">
+                                                Send
+                                            </button>
+                                        </x-slot>
+                                    </x-modal>
                                 @endif
 
                                 @if (can('delete_users') && auth()->id() !== $user->id)
                                     <x-modal>
                                         <x-slot name="trigger">
-                                            <a href="#" @click="on = true">Delete</a>
+                                            <a href="#" @click="on = true"
+                                                class="px-3 py-1 text-xs text-white transition bg-red-600 rounded hover:bg-red-700">
+                                                Delete
+                                            </a>
                                         </x-slot>
-
                                         <x-slot name="title">Confirm Delete</x-slot>
-
                                         <x-slot name="content">
-                                            <div class="text-center">
-                                                Are you sure you want to delete: <b>{{ $user->name }}</b>
-                                            </div>
+                                            Are you sure you want to delete <b>{{ $user->name }}</b>?
                                         </x-slot>
-
                                         <x-slot name="footer">
                                             <button @click="on = false">Cancel</button>
-                                            <button class="btn btn-red"
-                                                wire:click="deleteUser('{{ $user->id }}')">Delete User</button>
+                                            <button wire:click="deleteUser('{{ $user->id }}')"
+                                                class="btn btn-red">Delete</button>
                                         </x-slot>
                                     </x-modal>
                                 @endif
@@ -173,6 +149,9 @@
         </table>
     </div>
 
-    {{ $this->users()->links() }}
 
+    <!-- Pagination -->
+    <div class="mt-4">
+        {{ $this->users()->links('pagination::tailwind') }}
+    </div>
 </div>

@@ -1,23 +1,26 @@
-<div class="mb-1">
-    <div  class="text-2xl font-bold text-white bg-gradient-to-r {{ $color }} p-2 rounded-lg flex gap-2 shadow-xl">
-        <i  class="{{ $iconName }}"></i> 
-        {{ $cardName }} <span id="cardCount" > {{ $userCount }}</span>
+<div class="w-full">
+    <div class="flex items-center justify-between p-3 rounded-lg shadow-md text-white bg-gradient-to-r {{ $color }} hover:scale-[1.1] transition-transform duration-300"
+        wire:key="{{ $cardName }}">
+
+        <div class="flex items-center space-x-3">
+            <i class="{{ $iconName }} text-xl"></i>
+            <span class="text-sm font-semibold sm:text-base">{{ $cardName }}</span>
+        </div>
+
+        <span id="cardCount_{{ Str::slug($cardName) }}" class="text-lg font-bold">{{ $userCount }}</span>
     </div>
-    
+
     <script>
-        document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:load', function() {
             let count = 0;
-            let targetCount = @this.targetCount; // Livewire's reactive property
-            let speed = 1; // Adjust speed here for faster or slower animation
-    
-            const countLabel = document.getElementById('cardCount');
-    
-            const counter = setInterval(function() {
+            const targetCount = @this.targetCount;
+            const speed = 10; // Slow down a bit for readability
+            const countLabel = document.getElementById('cardCount_{{ Str::slug($cardName) }}');
+
+            const counter = setInterval(() => {
                 if (count < targetCount) {
                     count++;
                     countLabel.textContent = count;
-    
-                    // Update the Livewire property to maintain reactivity
                     @this.set('userCount', count);
                 } else {
                     clearInterval(counter);
@@ -25,5 +28,4 @@
             }, speed);
         });
     </script>
-    
 </div>

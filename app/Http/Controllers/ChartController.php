@@ -257,13 +257,13 @@ class ChartController extends Controller
         $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
         $gallMidgeCode = 0;
         $leaffolderCode = 0;
-        $yellowStemBorer = 0;
+        $yellowStemBorerCode = 0;
         $bphWbphCode = 0;
         $paddyBugCode = 0;
         if ($noOfTillers != 0) {
             $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
             $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
-            $yellowStemBorer = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
+            $yellowStemBorerCode = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
             $bphWbphCode = $this->PestDataCollectController->getBphWbphCode($noOfTillers, $bphWbph)['code'];
             $paddyBugCode = $this->PestDataCollectController->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
         }
@@ -273,7 +273,7 @@ class ChartController extends Controller
                 "thrips" => $thripsCode,
                 "gallMidge" => $gallMidgeCode,
                 "leaffolder" => $leaffolderCode,
-                "yellowStemBorer" => $yellowStemBorer,
+                "yellowStemBorer" => $yellowStemBorerCode,
                 "bphWbph" => $bphWbphCode,
                 "paddyBug" => $paddyBugCode
             ]

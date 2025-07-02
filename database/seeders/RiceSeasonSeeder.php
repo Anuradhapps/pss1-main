@@ -23,7 +23,7 @@ class RiceSeasonSeeder extends Seeder
 
         $riceSeason = new RiceSeasonController();
 
-        $seasons = [[2023, 'maha'], [2024, 'yala'], [2024, 'maha']];
+        $seasons = [[2021, 'maha'], [2022, 'yala'], [2022, 'maha'], [2023, 'yala'], [2023, 'maha'], [2024, 'yala'], [2024, 'maha']];
 
 
         foreach ($seasons as $season) {

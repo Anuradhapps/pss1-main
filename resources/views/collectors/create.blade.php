@@ -4,11 +4,11 @@
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div
-            class="flex flex-col items-start justify-between p-4 mb-6 space-y-4 bg-green-700 rounded-md shadow-md md:flex-row md:items-center md:space-y-0">
-            <h3 class="text-2xl font-bold text-white">{{ $season }}</h3>
+            class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-lg bg-gradient-to-r from-green-700 to-green-800 rounded-xl md:flex-row md:items-center md:space-y-0">
+            <h3 class="text-3xl font-extrabold tracking-wide text-white">🌿 {{ $season }} Season</h3>
             <a href="{{ route('collector.create') }}"
-                class="px-4 py-2 text-sm font-bold text-white transition bg-green-800 rounded hover:bg-green-900">
-                Back
+                class="px-5 py-2 text-sm font-bold text-white transition duration-200 bg-green-900 rounded-full shadow-md hover:bg-green-700">
+                ⬅️ Back
             </a>
         </div>
 
@@ -16,17 +16,17 @@
         <x-error-massage />
 
         <!-- Form -->
-        <x-form action="{{ route('collector.store') }}" method="POST">
+        <x-form action="{{ route('collector.store') }}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Phone Number -->
-            <x-form.input placeholder="Enter your phone number" name="phone_no" label="Phone Number:" class="mb-4">
+            <x-form.input placeholder="📞 Enter your phone number" name="phone_no" label="Phone Number:" class="mb-4">
                 {{ old('phone_no') }}
             </x-form.input>
 
             <!-- Region Selection -->
-            <x-form.select name="region" label="Region:" id="region">
-                <option>-- Select Region--</option>
+            <x-form.select name="region" label="🌍 Region:" id="region">
+                <option>-- Select Region --</option>
                 <option value="1" {{ old('region') == 1 ? 'selected' : '' }}>Provincial</option>
                 <option value="2" {{ old('region') == 2 ? 'selected' : '' }}>Inter Provincial</option>
                 <option value="3" {{ old('region') == 3 ? 'selected' : '' }}>Mahaweli</option>
@@ -36,7 +36,7 @@
             <livewire:location-select />
 
             <!-- Village Field -->
-            <x-form.input placeholder="Enter your village" name="village" label="Village:" class="mb-4">
+            <x-form.input placeholder="🏘️ Enter your village" name="village" label="Village:" class="mb-4">
                 {{ old('village') }}
             </x-form.input>
 
@@ -44,19 +44,20 @@
             <x-gpsFill />
 
             <!-- Rice Variety & Date Established -->
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <x-form.input placeholder="Enter your rice variety" name="rice_variety" label="Rice Variety:"
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <x-form.input placeholder="🌾 Enter your rice variety" name="rice_variety" label="Rice Variety:"
                     class="mb-4">
                     {{ old('rice_variety') }}
                 </x-form.input>
 
-                <x-form.date name="date_establish" label="Date Established:" class="mb-4">
+                <x-form.date name="date_establish" label="📅 Date Established:" class="mb-4">
                     {{ old('date_establish') }}
                 </x-form.date>
             </div>
+
             <!-- Established Method Field -->
-            <x-form.select name="established_method" label="Established Method:" id="established_method">
-                <option>-- Select established method--</option>
+            <x-form.select name="established_method" label="🛠️ Established Method:" id="established_method">
+                <option>-- Select Method --</option>
                 <option value="Broadcast" {{ old('established_method') == 'Broadcast' ? 'selected' : '' }}>Broadcast
                 </option>
                 <option value="Transplant" {{ old('established_method') == 'Transplant' ? 'selected' : '' }}>Transplant
@@ -64,10 +65,11 @@
                 <option value="Parachute" {{ old('established_method') == 'Parachute' ? 'selected' : '' }}>Parachute
                 </option>
             </x-form.select>
+
             <!-- Save Button -->
             <x-form.submit
-                class="w-full px-4 py-2 font-semibold text-center text-white transition bg-green-600 rounded hover:bg-green-700">
-                Save
+                class="w-full px-6 py-3 font-bold text-white transition duration-300 bg-green-600 rounded-xl hover:bg-green-700">
+                ✅ Save Information
             </x-form.submit>
         </x-form>
     </div>
@@ -97,5 +99,4 @@
             }
         });
     </script>
-
 </x-app-layout>

@@ -1,66 +1,92 @@
 <x-app-layout>
     @if (session('success'))
-        <div class="p-4 mb-4 text-sm text-white bg-green-600 rounded-md shadow-lg" role="alert">
-            {{ session('success') }}
+        <div class="p-4 mb-6 text-sm font-medium text-white rounded-lg shadow-lg bg-emerald-600 animate-fade-in-down"
+            role="alert">
+            🎉 {{ session('success') }}
         </div>
     @endif
 
     <div class="container mx-auto">
         <!-- Page Header -->
         <div
-            class="flex flex-col items-start justify-between p-3 mb-6 space-y-4 rounded-md shadow-md bg-gradient-to-r from-green-800 to-green-600 md:flex-row md:items-center md:space-y-0">
-            <h1 class="text-2xl font-bold text-white">My Records</h1>
+            class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-xl rounded-xl bg-gradient-to-r from-green-800 to-green-600 md:flex-row md:items-center md:space-y-0">
+            <h1 class="text-3xl font-extrabold tracking-wide text-white">📄 My Records</h1>
             <a href="{{ route('collector.newCollector') }}"
-                class="px-4 py-2 text-sm font-bold text-white transition bg-gray-900 rounded shadow-sm hover:bg-teal-950 hover:shadow-lg">
-                + Add Collector
+                class="inline-flex items-center px-5 py-2 text-sm font-semibold text-white transition duration-300 bg-gray-900 rounded-full shadow-md hover:bg-teal-950 hover:shadow-lg">
+                ➕ Add Collector
             </a>
         </div>
 
         <!-- Collector Cards -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($collectors as $collector)
-                <div class="p-4 transition duration-300 rounded-lg shadow-lg bg-slate-800 hover:bg-slate-900">
-                    <div class="flex items-center justify-between">
-                        <h2 class="flex items-center gap-2 mb-2 text-xl font-semibold text-white">
+                <div
+                    class="p-5 transition duration-300 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl shadow-2xl hover:shadow-xl hover:scale-[1.01]">
+                    <div class="flex items-center justify-between mb-2">
+                        <!-- Arrow Tag -->
+                        <span class="inline-flex items-center">
                             <span
-                                class="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-orange-600 rounded-full shadow">
+                                class="inline-flex items-center py-1 pl-3 pr-3 text-sm font-bold text-white rounded-l-full shadow-md bg-emerald-600">
                                 {{ $collectors->count() - $loop->index }}
-
                             </span>
-                            {{ $collector->riceSeason->name }}
-                        </h2>
+                            <span
+                                class="w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-emerald-600"></span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold tracking-wide text-white rounded-r-full shadow-md bg-emerald-700">
+                                {{ $collector->riceSeason->name }} Season
+                            </span>
+                        </span>
 
                         @if (Auth::user()->name == 'npssoldata')
                             <form action="{{ route('collector.destroy', $collector->id) }}" method="POST"
-                                style="display:inline;" onsubmit="return confirmDelete()">
+                                onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="confirmDelete(event)"
-                                    class="text-red-600 hover:text-red-800">
+                                    class="text-red-500 transition duration-150 hover:text-red-700">
                                     <i class="text-lg fas fa-trash-alt"></i>
                                 </button>
                             </form>
                         @endif
-
-
                     </div>
 
-
-                    <p class="mb-3 text-sm">
-                        <span class="text-orange-400">{{ $collector->getDistrict->name }}</span>
-                        <i class="text-gray-400 fas fa-arrow-right"></i>
-                        <span class="text-pink-400"> {{ $collector->getAsCenter->name }}</span>
-                        <i class="text-gray-400 fas fa-arrow-right"></i>
-                        <span class="text-yellow-400">{{ $collector->getAiRange->name }}</span>
+                    <!-- Location Info -->
+                    <p class="mt-1 mb-1 text-sm text-slate-300">
+                        <span class="font-medium text-orange-400">{{ $collector->getDistrict->name }}</span>
+                        <i class="mx-1 text-slate-400 fas fa-chevron-right"></i>
+                        <span class="font-medium text-pink-400">{{ $collector->getAsCenter->name }}</span>
+                        <i class="mx-1 text-slate-400 fas fa-chevron-right"></i>
+                        <span class="font-medium text-yellow-400">{{ $collector->getAiRange->name }}</span>
                     </p>
-                    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+
+                    <!-- Metadata -->
+                    <div class="mb-4 space-y-1 text-xs leading-snug text-slate-400">
+                        <div><span class="font-semibold text-slate-300">Created at:</span> {{ $collector->created_at }}
+                        </div>
+                        <div><span class="font-semibold text-slate-300">Updated at:</span> {{ $collector->updated_at }}
+                        </div>
+                        <div><span class="font-semibold text-slate-300">Rice Varity:</span>
+                            {{ $collector->rice_variety }}
+                        </div>
+                        <div><span class="font-semibold text-slate-300">Rice Established Date:</span>
+                            {{ $collector->date_establish }}
+                        </div>
+                        <div><span class="font-semibold text-slate-300">Established Method:</span>
+                            {{ $collector->established_method ? $collector->established_method : 'N/A' }}
+                        </div>
+                        <div><span class="font-semibold text-slate-300">Pest Dataset Count:</span>
+                            {{ $collector->commonDataCollect->count() }}</div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-2 gap-3">
                         <a href="{{ route('collector.edit', $collector->id) }}"
-                            class="w-full px-4 py-2 text-sm font-bold text-white transition bg-red-700 rounded shadow-sm hover:bg-red-900 hover:shadow-lg">
-                            Edit Collector
+                            class="w-full px-4 py-2 text-sm font-bold text-white transition duration-200 rounded-full shadow-md bg-rose-700 hover:bg-rose-900 hover:shadow-lg">
+                            ✏️ Edit Collector
                         </a>
                         <a href="{{ route('pestdata.view', $collector->id) }}"
-                            class="w-full px-4 py-2 text-sm font-bold text-white transition bg-blue-700 rounded shadow-sm hover:bg-blue-900 hover:shadow-lg">
-                            Pest Data
+                            class="w-full px-4 py-2 text-sm font-bold text-white transition duration-200 bg-indigo-700 rounded-full shadow-md hover:bg-indigo-900 hover:shadow-lg">
+                            🐛 View Pest Data
                         </a>
                     </div>
                 </div>

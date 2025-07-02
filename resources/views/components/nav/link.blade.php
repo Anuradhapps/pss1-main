@@ -2,10 +2,17 @@
     'route' => '',
     'icon' => '',
 ])
+
+@php
+    $isActive = Route::is($route)
+        ? 'bg-gradient-to-r from-green-700 to-green-800 text-white'
+        : 'text-gray-300 hover:bg-gray-800 hover:text-white';
+@endphp
+
 <a href="{{ route($route) }}"
-    class="flex items-center px-2 py-2 my-2 {{ Route::is($route) ? 'bg-gray-500 text-gray-100' : 'text-gray-100' }}  hover:bg-gray-100 hover:text-gray-800 rounded-md cursor-pointer">
+    class="flex items-center w-full px-4 py-2 text-lg font-medium rounded-lg transition-all duration-200 {{ $isActive }}">
     @if ($icon)
-        <i class="{{ $icon }} pr-2"></i>
+        <i class="{{ $icon }} w-5 mr-3 text-green-400"></i>
     @endif
-    <span>{{ $slot }}</span>
+    <span class="truncate">{{ $slot }}</span>
 </a>

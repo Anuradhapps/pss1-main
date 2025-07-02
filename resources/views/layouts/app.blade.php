@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('images/LOGO.ico') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-pO1YBw+f9u0xvq5fO8PQp9U8uCJokR+XYFpCCGJOU9EYJ+f+VpEt9nRgiTGB9TxFo5YUbMZl2kv40mwYmP5F6w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -84,7 +88,7 @@
                 </div>
                 <!-- Footer -->
                 <footer class="w-full p-4 text-xs text-center text-gray-300 bg-teal-800 footer">
-                    {{ __('Copyright') }} &copy; {{ date('Y') }} National Pest Surveillance System – PPS, SL
+                    {{ __('Copyright') }} &copy; {{ date('Y') }} National Pest Surveillance System – NPPS, SL
                     {{-- {{ config('app.name') }} --}}
                 </footer>
             </div>
