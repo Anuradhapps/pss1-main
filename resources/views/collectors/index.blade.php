@@ -21,7 +21,7 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($collectors as $collector)
                 <div
-                    class="p-5 transition duration-300 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl shadow-2xl hover:shadow-xl hover:scale-[1.01]">
+                    class="p-5 transition duration-300 bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-2xl shadow-sm hover:shadow-3xl hover:scale-[1.01]">
                     <div class="flex items-center justify-between mb-2">
                         <!-- Arrow Tag -->
                         <span class="inline-flex items-center">
@@ -86,7 +86,7 @@
                         </a>
                         <a href="{{ route('pestdata.view', $collector->id) }}"
                             class="w-full px-4 py-2 text-sm font-bold text-white transition duration-200 bg-indigo-700 rounded-full shadow-md hover:bg-indigo-900 hover:shadow-lg">
-                            🐛 View Pest Data
+                            🐛Pest Data
                         </a>
                     </div>
                 </div>

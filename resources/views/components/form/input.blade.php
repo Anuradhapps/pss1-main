@@ -10,31 +10,41 @@
 @if ($label === 'none')
 @elseif ($label === '')
     @php
-        //remove underscores from name
         $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
         $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
         $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
         $label = ucwords(strtolower($label));
     @endphp
 @endif
 
 <div class="mb-5">
     @if ($label != 'none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-100">{{ $label }}
+        <label for="{{ $name }}"
+            class="block mb-2 ml-1 text-sm font-medium leading-5 text-gray-900">{{ $label }}
             @if ($required != '')
-                <span class="text-red-600">*</span>
+                <span class="text-red-500">*</span>
             @endif
         </label>
     @endif
-    <div class="rounded-md shadow-sm">
-        <input placeholder="{{ $placeholder }}" type="{{ $type }}" id="{{ $name }}"
-            name="{{ $name }}" value="{{ $slot }}" {{ $required }}
-            {{ $attributes->merge(['class' => 'block w-full bg-gray-600 text-gray-200 placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500  focus:border-light-blue-500 text-sm']) }}>
+
+    <div class="relative rounded-md shadow-sm">
+        <input placeholder="{{ $placeholder }}" type="{{ $type === 'password' ? 'password' : $type }}"
+            id="{{ $name }}" name="{{ $name }}" value="{{ $slot }}" {{ $required }}
+            {{ $attributes->merge([
+                'class' =>
+                    'block w-full bg-gray-900 text-gray-200 placeholder-gray-400 border border-gray-600 rounded-xl shadow-sm py-2 px-3 pr-10 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm',
+            ]) }}>
+
+        {{-- Show/hide password toggle --}}
+        @if ($type === 'password')
+            <button type="button" onclick="togglePassword('{{ $name }}')"
+                class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white focus:outline-none">
+                <i id="icon-{{ $name }}" class="text-sm fas fa-eye"></i>
+            </button>
+        @endif
+
         @error($name)
-            <p class="error">{{ $message }}</p>
+            <p class="p-2 mt-2 text-sm text-white bg-red-700 rounded">{{ $message }}</p>
         @enderror
     </div>
 </div>

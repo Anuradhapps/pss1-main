@@ -1,18 +1,18 @@
 <x-app-layout>
     <div class="mx-4 sm:mx-6 md:mx-10">
         <!-- Header -->
-        <div class="flex flex-col items-start justify-between py-4 border-b border-gray-700 sm:flex-row sm:items-center">
+        <div class="flex justify-between py-4 border-b border-gray-700">
             <h1 class="text-2xl font-extrabold text-white">🐛 Pest Data</h1>
-            <div class="mt-3 sm:mt-0">
+            <div>
                 @if (has_role('collector'))
                     <a href="{{ route('pestdata.view', $commonData->collector_id) }}"
                         class="inline-block px-4 py-2 text-sm font-semibold text-white transition bg-red-700 rounded hover:bg-red-800">
-                        ⬅️ Back
+                        <i class="mr-2 fas fa-arrow-left"></i> Back
                     </a>
                 @else
                     <a href="{{ route('pestdata.index') }}"
                         class="inline-block px-4 py-2 text-sm font-semibold text-white transition bg-red-700 rounded hover:bg-red-800">
-                        ⬅️ Back
+                        <i class="mr-2 fas fa-arrow-left"></i> Back
                     </a>
                 @endif
             </div>
@@ -61,17 +61,30 @@
                             <td class="px-4 py-3">{{ $pestData->pest_name }}</td>
                             @for ($i = 1; $i <= 10; $i++)
                                 <td class="hidden px-4 py-3 text-center sm:table-cell">
-                                    {{ $pestData->{'location_' . $i} }}
+                                    {{ $pestData->pest_name == 'Thrips' ? '-' : $pestData->{'location_' . $i} }}
                                 </td>
                             @endfor
-                            <td class="px-4 py-3 font-semibold text-center">{{ $pestData->total }}</td>
+                            <td class="px-4 py-3 font-semibold text-center">
+                                {{ $pestData->pest_name == 'Thrips' ? '-' : $pestData->total }}</td>
                             <td class="px-4 py-3 text-center">
+                                @php
+                                    $colorClass = match ($pestData->code) {
+                                        0 => 'bg-white text-black', // Light green
+                                        1 => 'bg-green-600 text-white', // Green
+                                        3 => 'bg-yellow-400 text-black', // Yellow
+                                        5 => 'bg-orange-500 text-white', // Orange
+                                        7 => 'bg-red-600 text-white', // Red
+                                        9 => 'bg-red-900 text-white', // Dark red
+                                        default => 'bg-gray-300 text-black', // Default/unknown codes
+                                    };
+                                @endphp
+
                                 <span
-                                    class="inline-block px-2 py-1 text-xs font-bold rounded-full
-                                    {{ $pestData->code > 5 ? 'bg-red-600 text-white' : 'bg-green-600 text-white' }}">
+                                    class="inline-block px-2 py-1 text-xs font-bold rounded-full {{ $colorClass }}">
                                     {{ $pestData->code }}
                                 </span>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -81,7 +94,7 @@
         <!-- Other Info -->
         @if ($commonData->otherinfo)
             <div class="mt-6 text-white">
-                <h2 class="font-semibold">📝 Other Info:</h2>
+                <h2 class="font-semibold text-white">📝 Other Infomation:</h2>
                 <div class="p-3 mt-1 text-gray-200 bg-gray-800 rounded">{{ $commonData->otherinfo }}</div>
             </div>
         @endif

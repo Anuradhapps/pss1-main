@@ -1,9 +1,10 @@
 <x-app-layout>
     <!-- Header -->
     <div
-        class="flex flex-col items-start justify-between p-6 mb-6 shadow-lg sm:flex-row rounded-xl bg-gradient-to-r from-green-800 to-green-600">
-        <h1 class="text-3xl font-extrabold tracking-wide text-white">🐛 Pest Data Overview</h1>
-        <div class="flex gap-3 mt-3 sm:mt-0">
+        class="flex flex-col items-start justify-between p-5 mb-6 shadow-lg sm:flex-row rounded-xl bg-gradient-to-r from-green-800 to-green-600">
+        <h1 class="w-full text-3xl font-extrabold tracking-wide text-center text-white sm:text-start">🐛 Pest Data
+            Overview</h1>
+        <div class="flex justify-between w-full mt-5 sm:gap-3 sm:justify-end sm:mt-0">
 
             <a href="{{ route('pestdata.create', $collectorId) }}"
                 class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 rounded-full shadow-md bg-emerald-700 hover:bg-emerald-800">
@@ -11,7 +12,7 @@
             </a>
             <a href="{{ route('collector.create') }}"
                 class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
-                ⬅️ Back
+                <i class="mr-2 fas fa-arrow-left"></i> Back
             </a>
         </div>
     </div>

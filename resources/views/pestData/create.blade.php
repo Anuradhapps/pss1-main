@@ -1,9 +1,12 @@
 <x-app-layout>
-    <div
-        class="flex flex-col items-start justify-between p-4 mb-6 space-y-4 bg-green-700 rounded-md shadow-md md:flex-row md:items-center md:space-y-0">
-        <h1 class="text-2xl font-bold text-white">Create Pest Data</h1>
+    <div class="flex justify-between p-5 mb-6 shadow-lg rounded-xl bg-gradient-to-r from-green-800 to-green-600">
+        <h1 class="w-full text-2xl font-extrabold tracking-wide text-white sm:text-3xl text-start">🐛➕
+            Create Pest
+            Data</h1>
         <a href="{{ route('pestdata.view', $collectorId) }}"
-            class="px-4 py-2 text-sm font-bold text-white transition bg-green-800 rounded hover:bg-green-900">Back</a>
+            class="inline-flex items-center px-3 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full sm:px-4 :py-2 hover:bg-red-800">
+            <i class="mr-2 fas fa-arrow-left"></i> Back
+        </a>
     </div>
 
 
@@ -15,8 +18,8 @@
                     label="Data Collecting Date : ">{{ old('date_collected') }}</x-form.date>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full" name="growth_s_c">
-                    <option value="">-- Select code --</option>
+                <x-form.select id="growth_s_c" label="Growth Stage Code" class="block w-full" name="growth_s_c"
+                    placeholder="Select Growth Stage code">
                     @php
                         $growthStageCode = [
                             'Germination',
@@ -37,14 +40,13 @@
                 </x-form.select>
             </div>
             <div class="col-span-2 sm:col-span-1">
-                <x-form.input type="number" name="temperature" label="Temperature:" min=-50
-                    max=50>{{ old('temperature') }}</x-form.input>
+                <x-form.input type="number" placeholder="Enter Temperature in celsius" name="temperature"
+                    label="Temperature:" min=-50 max=50>{{ old('temperature') }}</x-form.input>
             </div>
 
             <div class="col-span-2 sm:col-span-1">
                 <x-form.select id="numbrer_r_day" label="Number of Rainy Days: (Within the week)" class="block w-full"
-                    name="numbrer_r_day">
-                    <option value="">-- Select Number of Rainy Days --</option>
+                    name="numbrer_r_day" placeholder="Select Number of Rainy Days">
                     @for ($i = 0; $i <= 7; $i++)
                         <option value="{{ $i }}" {{ old('numbrer_r_day') == $i ? 'selected' : '' }}>
                             {{ $i }}</option>
@@ -54,16 +56,18 @@
 
         </div>
 
+        <div class="p-2 mb-3 transition transform border-2 border-gray-900 shadow-lg rounded-xl hover:shadow-xl">
+            <h5 class="mb-2 italic text-red-600">If you have identified the pest, Please select and enter the value.
+            </h5>
+            <span class="text-sm italic text-red-600">* SP - Sample point</span>
+        </div>
 
-
-        <h5 class="mb-2 italic text-green-400">If you have identified the pest, Please select and enter the value.</h5>
-        <span class="text-sm italic text-green-400">* SP - Sample point</span>
         <div class="mt-2">
             <div class="mb-2">
                 <h2
-                    class="p-2 text-base font-bold text-white transition bg-gray-600 border border-gray-100 rounded-lg cursor-pointer toggleButton hover:bg-gray-500">
+                    class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
                     Number Of Tillers</h2>
-                <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
+                <div class="hidden p-4 bg-gray-300 border border-black rounded-md toggleDiv">
                     <input type="text" hidden name="Number_Of_Tillers" value="Number_Of_Tillers">
                     <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10">
                         @for ($i = 1; $i <= 10; $i++)
@@ -80,13 +84,12 @@
                 @if ($pest->name == 'Thrips')
                     <div class="mb-2">
                         <h2
-                            class="p-2 text-base font-bold text-white transition bg-gray-600 border border-gray-100 rounded-lg cursor-pointer toggleButton hover:bg-gray-500">
+                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
                             {{ $pest->name }}</h2>
                         <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
                             <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
-                            <div
-                                class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10">
-                                <div class="col-span-1">
+                            <div class="">
+                                <div class="">
                                     <x-form.select id="{{ $pest->id }}all_location" label="Code:" class="block"
                                         name="{{ $pest->id }}all_location">
                                         <option value="0"
@@ -132,30 +135,30 @@
                 @else
                     <div class="mb-2">
                         <h2
-                            class="p-2 text-base font-bold text-white transition bg-gray-600 border border-gray-100 rounded-lg cursor-pointer toggleButton hover:bg-gray-500">
+                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
                             {{ $pest->name }}</h2>
                         <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
                             <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
                             <div class="mb-2">
                                 @switch($pest->name)
                                     @case($pest->name == 'Gall Midge')
-                                        <div class="text-sm italic text-green-400">No of silver shoots</div>
+                                        <div class="text-sm italic text-red-600">No of silver shoots</div>
                                     @break
 
                                     @case($pest->name == 'Leaffolder')
-                                        <div class="text-sm italic text-green-400">No of damaged tillers</div>
+                                        <div class="text-sm italic text-red-600">No of damaged tillers</div>
                                     @break
 
                                     @case($pest->name == 'Yellow Stem Borer')
-                                        <div class="text-sm italic text-green-400">No of dead hearts + white heads</div>
+                                        <div class="text-sm italic text-red-600">No of dead hearts + white heads</div>
                                     @break
 
                                     @case($pest->name == 'BPH+WBPH')
-                                        <div class="text-sm italic text-green-400">No of adults and nymphs</div>
+                                        <div class="text-sm italic text-red-600">No of adults and nymphs</div>
                                     @break
 
                                     @case($pest->name == 'Paddy Bug')
-                                        <div class="text-sm italic text-green-400">No of adults and nymphs</div>
+                                        <div class="text-sm italic text-red-600">No of adults and nymphs</div>
                                     @break
 
                                     @default

@@ -1,7 +1,7 @@
 <div class="px-2">
 
     <!-- Sidebar Logo -->
-    <div class="flex items-center justify-center px-3 py-4 mb-6 rounded-lg shadow-sm  bg-green-950">
+    <div class="flex items-center justify-center px-3 py-4 mb-6 rounded-lg shadow-sm bg-green-950">
         <a href="{{ route('admin') }}" class="flex items-center space-x-3">
             @php
                 $applicationLogo = Cache::rememberForever(

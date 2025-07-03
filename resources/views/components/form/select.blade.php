@@ -22,19 +22,21 @@
 
 <div class="mb-5">
     @if ($label != 'none')
-        <label for='{{ $name }}' class='block text-sm font-medium text-gray-200'>{{ $label }} @if ($required != '')
+        <label for='{{ $name }}' class='block mb-2 ml-1 text-sm font-medium text-gray-900'>{{ $label }}
+            @if ($required != '')
                 <span class="text-red-600">*</span>
             @endif
         </label>
     @endif
     <select name='{{ $name }}' id='{{ $name }}' {{ $required }}
-        {{ $attributes->merge(['class' => 'border border-gray-300 bg-gray-600 text-gray-200 py-2 text-sm w-full rounded-md']) }}>
+        {{ $attributes->merge(['class' => 'border border-gray-300 bg-gray-900 text-gray-200 pl-2  py-2 text-sm w-full rounded-xl']) }}>
         @if ($placeholder != '')
             <option value=''>{{ $placeholder }}</option>
         @endif
         {{ $slot }}
     </select>
+
     @error($name)
-        <p class="error">{{ $message }}</p>
+        <p class="p-2 mt-2 text-lg text-white bg-red-700">{{ $message }}</p>
     @enderror
 </div>

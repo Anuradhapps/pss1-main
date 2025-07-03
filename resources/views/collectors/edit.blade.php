@@ -8,9 +8,9 @@
             <h3 class="text-3xl font-extrabold tracking-wide text-white">
                 🌾 {{ $collector->riceSeason->name }} Season
             </h3>
-            <a href="{{ is_admin() ? route('admin.collector.records') : route('collector.create') }}"
-                class="px-5 py-2 text-sm font-bold text-white transition duration-200 bg-green-900 rounded-full shadow-md hover:bg-green-700">
-                ⬅️ Back
+            <a href="{{ route('collector.create') }}"
+                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
+                <i class="mr-2 fas fa-arrow-left"></i> Back
             </a>
         </div>
 
