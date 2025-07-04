@@ -1,7 +1,7 @@
 <div x-data="{ isOpen: false }" class="relative inline-block text-left">
     <!-- Icon Button with Tooltip -->
     <div class="relative group">
-        <button @click="isOpen = !isOpen" class="p-2 transition rounded-full focus:outline-none hover:bg-red-500">
+        <button @click="isOpen = !isOpen" class="p-2 transition rounded-full focus:outline-none hover:bg-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

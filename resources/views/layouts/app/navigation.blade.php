@@ -1,7 +1,7 @@
-<div class="px-2">
+<div class="px-0">
 
     <!-- Sidebar Logo -->
-    <div class="flex items-center justify-center px-3 py-4 mb-6 rounded-lg shadow-sm bg-green-950">
+    <div class="flex items-center justify-center mb-2 rounded-lg shadow-sm ">
         <a href="{{ route('admin') }}" class="flex items-center space-x-3">
             @php
                 $applicationLogo = Cache::rememberForever(
@@ -21,9 +21,20 @@
                         class="w-32 h-auto transition duration-300 hover:scale-105">
                 </picture>
             @else
-                <span class="text-lg font-semibold tracking-tight text-white">
+                <div class="max-w-md bg-gray-900 rounded-lg shadow-md">
+                    <!-- Example 1: Pass custom width and height -->
+                    {{-- <x-logo-dark width="250" height="100" /> --}}
+
+                    <!-- Example 2: Responsive using wrapper -->
+                    <div class="w-60">
+                        <x-logo-dark class="w-full h-auto" />
+                    </div>
+                </div>
+
+
+                {{-- <span class="text-lg font-semibold tracking-tight text-white">
                     National Pest Surveillance System
-                </span>
+                </span> --}}
             @endif
         </a>
     </div>

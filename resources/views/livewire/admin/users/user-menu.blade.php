@@ -4,15 +4,15 @@
         <div class="relative group">
             <!-- Profile Button -->
             <button @click="isOpen = !isOpen"
-                class="flex items-center justify-center p-1 transition duration-200 bg-gray-800 border border-white rounded hover:bg-red-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                @if (storage_exists(user()->image))
+                class="flex items-center justify-center p-1 transition duration-200 bg-teal-800 border border-white rounded hover:bg-gray-900 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                {{-- @if (storage_exists(user()->image))
                     <img src="{{ storage_url(user()->image) }}" alt="Profile" class="object-cover w-8 h-8 rounded">
-                @else
-                    <span class="text-sm font-bold text-white">
-                        {{-- {{ strtoupper(substr(user()->name, 0, 1)) }} --}}
-                        {{ user()->name }}
-                    </span>
-                @endif
+                @else --}}
+                <span class="text-sm font-bold text-white">
+                    {{-- {{ strtoupper(substr(user()->name, 0, 1)) }} --}}
+                    {{ user()->name }}
+                </span>
+                {{-- @endif --}}
             </button>
         </div>
 

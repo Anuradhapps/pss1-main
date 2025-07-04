@@ -16,6 +16,7 @@
 </head>
 
 <body class="min-h-screen text-gray-100 bg-gray-900">
+
     <div class="font-sans antialiased">
         {{ $slot }}
     </div>

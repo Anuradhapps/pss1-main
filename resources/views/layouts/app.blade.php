@@ -48,7 +48,7 @@
             @auth
                 <!-- Desktop Sidebar -->
                 <aside class="hidden w-64 bg-green-900 shadow-lg md:block">
-                    <div class="mt-4">
+                    <div class="m-1">
                         @include('layouts.app.navigation')
                     </div>
                 </aside>
@@ -56,12 +56,12 @@
                 <!-- Mobile Sidebar -->
                 <aside x-show="sidebarOpen"
                     class="fixed inset-0 z-50 w-64 transition-all duration-300 bg-green-900 shadow-xl md:hidden">
-                    <div class="flex justify-end p-4">
+                    <div class="flex justify-end pr-4">
                         <button @click="sidebarOpen = false" class="text-xl text-white">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <div class="px-4">
+                    <div class="px-1">
                         @include('layouts.app.navigation')
                     </div>
                 </aside>
@@ -87,7 +87,7 @@
                 @endauth
 
                 <!-- Slot Content -->
-                <main class="px-4 py-5 text-black bg-gray-300 content">
+                <main class="text-black bg-gray-400 content">
                     {{ $slot ?? '' }}
                 </main>
 

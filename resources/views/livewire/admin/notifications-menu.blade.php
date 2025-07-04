@@ -2,7 +2,7 @@
     <div x-data="{ isOpen: false }" class="relative">
         <!-- Notification Button -->
         <button wire:click="open" @click="isOpen = !isOpen"
-            class="relative p-2 transition rounded-full focus:outline-none hover:bg-red-500">
+            class="relative p-2 transition rounded-full focus:outline-none hover:bg-gray-900">
             <!-- Notification Count -->
             @if ($unseenCount > 0)
                 <span

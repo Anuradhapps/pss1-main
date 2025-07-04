@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="mx-4 sm:mx-6 md:mx-10">
         <!-- Header -->
-        <div class="flex justify-between py-4 border-b border-gray-700">
+        <div class="flex justify-between p-2 py-4 bg-green-800 border border-gray-700 rounded-lg shadow">
             <h1 class="text-2xl font-extrabold text-white">🐛 Pest Data</h1>
             <div>
                 @if (has_role('collector'))
@@ -94,7 +94,7 @@
         <!-- Other Info -->
         @if ($commonData->otherinfo)
             <div class="mt-6 text-white">
-                <h2 class="font-semibold text-white">📝 Other Infomation:</h2>
+                <h2 class="font-semibold text-green-900 border-b-2 border-gray-700">📝 Other Infomation:</h2>
                 <div class="p-3 mt-1 text-gray-200 bg-gray-800 rounded">{{ $commonData->otherinfo }}</div>
             </div>
         @endif
