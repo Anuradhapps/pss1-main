@@ -8,31 +8,31 @@
 @if ($label === 'none')
 @elseif ($label === '')
     @php
-        //remove underscores from name
+        // Remove underscores and split camel case to generate label
         $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
         $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
         $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
         $label = ucwords(strtolower($label));
     @endphp
 @endif
 
-<div class="mt-5 mb-5">
+<div class="my-5">
     @if ($label != 'none')
-        <label for="{{ $name }}"
-            class="block ml-2 text-sm font-medium leading-5 text-gray-900 ">{{ $label }}
+        <label for="{{ $name }}" class="block mb-2 ml-2 text-sm font-medium text-gray-900">
+            {{ $label }}
             @if ($required != '')
                 <span class="text-red-600">*</span>
             @endif
         </label>
     @endif
-    <div class="mt-1 rounded-md shadow-sm">
-        <textarea name='{{ $name }}' id='{{ $name }}'
-            {{ $attributes->merge(['class' => 'mt-1 block w-full bg-gray-900 text-gray-100 placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 text-sm']) }}>{{ $slot }}</textarea>
-        @error($name)
-            <p class="error">{{ $message }}</p>
-        @enderror
-    </div>
+
+    <textarea name="{{ $name }}" id="{{ $name }}"
+        {{ $attributes->merge([
+            'class' =>
+                'block w-full rounded-md border border-gray-300 bg-gray-900 py-2 px-3 text-sm text-gray-100 placeholder-gray-400 shadow-sm focus:border-light-blue-500 focus:outline-none focus:ring-1 focus:ring-light-blue-500',
+        ]) }}>{{ $slot }}</textarea>
+
+    @error($name)
+        <p class="mt-2 ml-2 text-sm text-red-600">{{ $message }}</p>
+    @enderror
 </div>

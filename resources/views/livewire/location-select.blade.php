@@ -1,9 +1,13 @@
-<div class="p-4 space-y-6 text-white bg-gray-900 shadow-lg rounded-xl">
+<div class="p-3 space-y-6 text-white bg-gray-900 rounded-lg shadow-lg">
+    {{-- Title --}}
+    <label class="text-lg font-semibold text-white">📌 Location Selection</label>
+
+    {{-- Region --}}
     {{-- Province --}}
     <div class="p-1 bg-gray-800 border border-green-400 rounded-lg shadow-sm">
         <label for="province" class="block mb-1 text-sm font-semibold text-white">Province</label>
         <select wire:model.live="selectedProvince" id="province" name="province"
-            class="w-full px-4 py-2 text-sm text-white bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:ring-blue-400 focus:border-blue-400">
+            class="w-full px-4 py-2 text-sm text-white bg-gray-900 border border-white rounded-lg shadow-sm focus:ring-blue-400 focus:border-blue-400">
             <option value="">-- Select Province --</option>
             @foreach ($provinces as $province)
                 <option value="{{ $province->id }}">
@@ -15,7 +19,7 @@
 
     {{-- District --}}
     @if ($districts)
-        <div x-data x-transition.duration.400ms class="p-1 bg-gray-800 border border-green-400 rounded-lg shadow-sm">
+        <div x-data x-transition.duration.400ms class="p-1 bg-gray-800 border border-green-400 rounded-lg shadow-sm ">
             <label for="district" class="block mb-1 text-sm font-semibold text-white">District</label>
             <select wire:model.live="selectedDistrict" id="district" name="district"
                 class="w-full px-4 py-2 text-sm text-white bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:ring-green-400 focus:border-green-400">

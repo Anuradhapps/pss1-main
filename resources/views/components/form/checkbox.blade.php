@@ -1,31 +1,26 @@
 @props([
-    'name'  => '',
-    'id'    => '',
+    'name' => '',
+    'id' => '',
     'label' => '',
     'value' => '',
-    'selected' => ''
+    'selected' => null,
 ])
 
 @php
-if ($id === '') {
-    $id = $name;
-}
+    $id = $id ?: $name;
+
+    if ($label === '') {
+        $label = ucwords(strtolower(implode(' ', preg_split('/(?=[A-Z])/', str_replace('_', ' ', $name)))));
+    }
 @endphp
 
-@if ($label === '')
-    @php
-        //remove underscores from name
-        $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
-        $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
-        $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
-        $label = ucwords(strtolower($label));
-    @endphp
-@endif
-
-<div>
-    <input type='checkbox' name='{{ $name }}' id='{{ $id }}' value='{{ $value }}' @if ($selected === $value) checked='checked' @endif {{ $attributes }}>
-    <label for='{{ $id }}'>{{ $label }}</label>
+<div class="flex items-center mb-2 space-x-2">
+    <input type="checkbox" name="{{ $name }}" id="{{ $id }}" value="{{ $value }}"
+        @checked($selected == $value)
+        {{ $attributes->merge([
+            'class' => 'text-blue-600 border-gray-300 rounded focus:ring-blue-500',
+        ]) }}>
+    <label for="{{ $id }}" class="text-sm text-gray-200 cursor-pointer">
+        {{ $label }}
+    </label>
 </div>

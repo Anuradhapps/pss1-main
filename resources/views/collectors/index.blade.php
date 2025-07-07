@@ -9,12 +9,15 @@
     <div class="container mx-auto">
         <!-- Page Header -->
         <div
-            class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-xl rounded-xl bg-gradient-to-r from-green-800 to-green-600 md:flex-row md:items-center md:space-y-0">
+            class="flex flex-col items-start justify-between p-4 mb-8 space-y-4 shadow-xl rounded-xl bg-gradient-to-r from-sky-900 to-sky-700 md:flex-row md:items-center md:space-y-0">
             <h1 class="text-3xl font-extrabold tracking-wide text-white">📄 My Records</h1>
-            <a href="{{ route('collector.newCollector') }}"
-                class="inline-flex items-center px-5 py-2 text-sm font-semibold text-white transition duration-300 bg-gray-900 rounded-full shadow-md hover:bg-teal-950 hover:shadow-lg">
-                ➕ Add Collector
-            </a>
+            <div class="flex justify-end w-full sm:w-auto">
+                <a href="{{ route('collector.newCollector') }}"
+                    class="inline-flex items-center px-5 py-2 text-sm font-semibold text-white transition duration-300 bg-green-700 rounded-full shadow-md hover:bg-teal-950 hover:shadow-lg">
+                    ➕ Add Collector
+                </a>
+            </div>
+
         </div>
 
         <!-- Collector Cards -->

@@ -45,6 +45,16 @@
                     </button>
                 </div>
             </div>
+            @if ($errors->any())
+                <div class="p-4 text-sm text-red-300 bg-red-800 border border-red-600 rounded-md">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
 
             <!-- Remember Me and Forgot Password -->
             <div class="flex items-center justify-between text-sm text-gray-300">

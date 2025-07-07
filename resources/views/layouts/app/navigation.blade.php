@@ -72,6 +72,9 @@
         @if (can('view_data_charts'))
             <x-nav.link route="chart.index" icon="fas fa-chart-bar"
                 class="text-purple-300 hover:bg-purple-800">Data/Charts</x-nav.link>
+            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check" class="text-purple-300 hover:bg-purple-800">
+                Conducted Programs
+            </x-nav.link>
         @endif
 
         <!-- Settings Section -->

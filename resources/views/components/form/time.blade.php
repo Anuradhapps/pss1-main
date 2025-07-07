@@ -9,13 +9,10 @@
 @if ($label === 'none')
 @elseif ($label === '')
     @php
-        //remove underscores from name
+        // Format label from name
         $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
         $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
         $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
         $label = ucwords(strtolower($label));
     @endphp
 @endif
@@ -34,18 +31,22 @@
 
 <div class="mb-5">
     @if ($label != 'none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-200">{{ $label }}
+        <label for="{{ $name }}" class="block mb-1 text-sm font-medium text-gray-200">
+            {{ $label }}
             @if ($required != '')
                 <span class="text-red-600">*</span>
             @endif
         </label>
     @endif
-    <div class="mt-1 rounded-md shadow-sm">
-        <input x-data x-init="flatpickr($refs.input, {{ json_encode((object) $options) }});" x-ref="input" type="text" id="{{ $name }}"
-            name="{{ $name }}" value="{{ $slot }}" {{ $required }}
-            {{ $attributes->merge(['class' => 'mt-1 block w-full bg-gray-500 text-gray-200 placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm']) }}>
-        @error($name)
-            <p class="error">{{ $message }}</p>
-        @enderror
-    </div>
+
+    <input x-data x-init="flatpickr($refs.input, {{ json_encode((object) $options) }});" x-ref="input" type="text" id="{{ $name }}" name="{{ $name }}"
+        value="{{ $slot }}" {{ $required }}
+        {{ $attributes->merge([
+            'class' =>
+                'block w-full rounded-md border border-gray-400 bg-gray-700 py-2 px-3 text-gray-200 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 sm:text-sm',
+        ]) }}>
+
+    @error($name)
+        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+    @enderror
 </div>

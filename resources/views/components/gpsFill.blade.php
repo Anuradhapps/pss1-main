@@ -12,20 +12,20 @@
 
 <!-- Latitude and Longitude Input Fields -->
 @if (isset($collector))
-    <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:"
+    <x-form.input name="gps_lati" id="gps_lati" label="📍 GPS Latitude:"
         class="mb-4 text-white bg-gray-800 border-gray-600">
         {{ old('gps_lati', $collector->gps_lati) }}
     </x-form.input>
-    <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:"
+    <x-form.input name="gps_long" id="gps_long" label="📍📍 GPS Longitude:"
         class="mb-4 text-white bg-gray-800 border-gray-600">
         {{ old('gps_long', $collector->gps_long) }}
     </x-form.input>
 @else
-    <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:"
+    <x-form.input name="gps_lati" id="gps_lati" label="📍 GPS Latitude:"
         class="mb-4 text-white bg-gray-800 border-gray-600">
         {{ old('gps_lati') }}
     </x-form.input>
-    <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:"
+    <x-form.input name="gps_long" id="gps_long" label="📍📍 GPS Longitude:"
         class="mb-4 text-white bg-gray-800 border-gray-600">
         {{ old('gps_long') }}
     </x-form.input>

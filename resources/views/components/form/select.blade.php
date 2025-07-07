@@ -20,9 +20,9 @@
     @endphp
 @endif
 
-<div class="mb-5">
+<div class="w-full p-2 mb-5 bg-gray-700 shadow-sm rounded-xl">
     @if ($label != 'none')
-        <label for='{{ $name }}' class='block mb-2 ml-1 text-sm font-medium text-gray-900'>{{ $label }}
+        <label for='{{ $name }}' class='block mb-2 ml-1 text-sm font-medium text-gray-100'>{{ $label }}
             @if ($required != '')
                 <span class="text-red-600">*</span>
             @endif
@@ -37,6 +37,6 @@
     </select>
 
     @error($name)
-        <p class="p-2 mt-2 text-lg text-white bg-red-700">{{ $message }}</p>
+        <p class="p-2 mt-2 text-lg text-white bg-red-700 rounded-xl">{{ $message }}</p>
     @enderror
 </div>

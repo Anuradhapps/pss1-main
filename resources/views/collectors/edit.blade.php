@@ -1,17 +1,33 @@
 @section('title', 'Add My Info')
 
 <x-app-layout>
-    <div class="max-w-4xl p-6 mx-auto">
+    <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div
-            class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-lg bg-gradient-to-r from-green-700 to-green-800 rounded-xl md:flex-row md:items-center md:space-y-0">
-            <h3 class="text-3xl font-extrabold tracking-wide text-white">
-                🌾 {{ $collector->riceSeason->name }} Season
-            </h3>
-            <a href="{{ route('collector.create') }}"
-                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
-                <i class="mr-2 fas fa-arrow-left"></i> Back
-            </a>
+            class="flex flex-col items-start justify-between p-2 space-y-4 shadow-lg bg-gradient-to-r from-gray-900 to-gray-600 rounded-xl md:flex-row md:items-center md:space-y-0">
+
+            <div class="flex justify-between">
+                <div class="font-extrabold text-7xl">
+                    🌾
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold tracking-wide text-white">
+                        Collector Edit
+                    </h3>
+                    <h5 class="text-lg italic text-white">{{ $collector->riceSeason->name }} Season</h5>
+                </div>
+            </div>
+
+            <div class="flex justify-end w-full sm:w-auto">
+                <a href="{{ route('collector.create') }}"
+                    class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
+                    <i class="mr-2 fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+
+
+
+
         </div>
 
         <!-- Form -->

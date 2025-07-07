@@ -8,33 +8,30 @@
     'required' => false,
 ])
 
-@if ($label == '')
-    @php
-        //remove underscores from name
-        $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
-        $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
-        $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
-        $label = ucwords(strtolower($label));
-    @endphp
-@endif
-<div wire:ignore class="mt-5">
-    @if ($label != 'none')
-        <label for="{{ $name }}" class="block text-sm font-medium leading-5 text-gray-200">{{ $label }}
-            @if ($required != '')
-                <span class="text-red-600">*</span>
+@php
+    if ($label === '') {
+        $label = ucwords(strtolower(implode(' ', preg_split('/(?=[A-Z])/', str_replace('_', ' ', $name)))));
+    }
+@endphp
+
+<div wire:ignore class="w-full mt-5">
+    @if ($label !== 'none')
+        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-gray-100">
+            {{ $label }}
+            @if ($required)
+                <span class="text-red-500">*</span>
             @endif
         </label>
     @endif
-    <textarea x-data x-init="editor = CKEDITOR.replace($refs.item);
-    editor.on('change', function(event) {
-        @this.set('{{ $name }}', event.editor.getData());
-    })" x-ref="item" {{ $attributes }}>
-        {{ $slot }}
-    </textarea>
+
+    <textarea x-data x-init="const editor = CKEDITOR.replace($refs.ckeditor);
+    editor.on('change', () => {
+        @this.set('{{ $name }}', editor.getData());
+    });" x-ref="ckeditor" wire:ignore id="{{ $name }}"
+        class="w-full px-4 py-2 text-sm text-white bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring focus:ring-blue-500 focus:outline-none"
+        {{ $required ? 'required' : '' }} {{ $attributes }}>{{ $slot }}</textarea>
+
+    @error($name)
+        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+    @enderror
 </div>
-@error($name)
-    <p class="error">{{ $message }}</p>
-@enderror

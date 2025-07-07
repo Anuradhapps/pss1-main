@@ -1,30 +1,24 @@
 @props([
-    'name'  => '',
-    'id'    => '',
+    'name' => '',
+    'id' => '',
     'label' => '',
-    'value' => ''
+    'value' => '',
+    // optionally pass the selected value for comparison
+    'selected' => null,
 ])
 
-@if ($id === '')
-    @php
+@php
+    if ($id === '') {
         $id = $name;
-    @endphp
-@endif
+    }
 
-@if ($label === '')
-    @php
-        //remove underscores from name
-        $label = str_replace('_', ' ', $name);
-        //detect subsequent letters starting with a capital
-        $label = preg_split('/(?=[A-Z])/', $label);
-        //display capital words with a space
-        $label = implode(' ', $label);
-        //uppercase first letter and lower the rest of a word
-        $label = ucwords(strtolower($label));
-    @endphp
-@endif
+    if ($label === '') {
+        $label = ucwords(strtolower(implode(' ', preg_split('/(?=[A-Z])/', str_replace('_', ' ', $name)))));
+    }
+@endphp
 
 <div>
-    <input type='radio' name='{{ $name }}' id='{{ $id }}' value='{{ $value }}' @if ($slot != '') checked="checked" @endif {{ $attributes }}>
-    <label for='{{ $id }}'>{{ $label }}</label>
+    <input type="radio" name="{{ $name }}" id="{{ $id }}" value="{{ $value }}"
+        @if ($selected !== null && $selected == $value) checked @endif {{ $attributes }}>
+    <label for="{{ $id }}">{{ $label }}</label>
 </div>

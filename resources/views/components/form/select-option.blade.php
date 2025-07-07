@@ -1,6 +1,8 @@
 @props([
     'value' => '',
-    'selected' => ''
+    'selected' => '',
 ])
 
-<option value="{{ $value }}" @if($selected == $value) selected=selected @endif {{ $attributes }}>{{ $slot }}</option>
+<option value="{{ $value }}" @if ($selected == $value) selected="selected" @endif {{ $attributes }}>
+    {{ $slot }}
+</option>

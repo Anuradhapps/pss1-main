@@ -31,16 +31,16 @@
             </thead>
             <tbody class="divide-y divide-gray-700">
                 <tr>
-                    <td class="px-4 py-3">👤 Collector Name</td>
-                    <td class="px-4 py-3">{{ $collector->user->name }}</td>
+                    <td class="px-4 py-1"> <span class="mr-1 text-lg">👤</span> Collector Name</td>
+                    <td class="px-4 py-1">{{ $collector->user->name }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-3">📍 Location</td>
-                    <td class="px-4 py-3">{{ $collector->getAiRange->name }}</td>
+                    <td class="px-4 py-1"><span class="mr-1 text-lg">📌</span> Location</td>
+                    <td class="px-4 py-1">{{ $collector->getAiRange->name }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-3">🌾 Rice Variety</td>
-                    <td class="px-4 py-3">{{ $collector->rice_variety }}</td>
+                    <td class="px-4 py-1"><span class="mr-1 text-lg">🌾</span> Rice Variety</td>
+                    <td class="px-4 py-1">{{ $collector->rice_variety }}</td>
                 </tr>
             </tbody>
         </table>

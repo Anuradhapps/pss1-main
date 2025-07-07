@@ -5,12 +5,25 @@
         <!-- Header -->
         <div
             class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-lg bg-gradient-to-r from-green-700 to-green-800 rounded-xl md:flex-row md:items-center md:space-y-0">
-            <h3 class="text-3xl font-extrabold tracking-wide text-white">🌿 {{ $season }} Season</h3>
 
-            <a href="{{ route('collector.create') }}"
-                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
-                <i class="mr-2 fas fa-arrow-left"></i> Back
-            </a>
+            <div class="flex justify-between">
+                <div class="font-extrabold text-7xl">
+                    🌾
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold tracking-wide text-white">
+                        Collector Create
+                    </h3>
+                    <h5 class="text-lg italic text-white">{{ $season }} Season</h5>
+                </div>
+
+            </div>
+            <div class="flex justify-end w-full sm:w-auto">
+                <a href="{{ route('collector.create') }}"
+                    class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
+                    <i class="mr-2 fas fa-arrow-left"></i> Back
+                </a>
+            </div>
         </div>
 
         <!-- Error Messages -->
@@ -21,7 +34,7 @@
             @csrf
 
             <!-- Phone Number -->
-            <x-form.input placeholder="📞 Enter your phone number" name="phone_no" label="Phone Number:" class="mb-4">
+            <x-form.input placeholder="Enter your phone number" name="phone_no" label="📞 Phone Number:" class="mb-4">
                 {{ old('phone_no') }}
             </x-form.input>
 
@@ -36,7 +49,7 @@
             <livewire:location-select />
 
             <!-- Village Field -->
-            <x-form.input placeholder="🏘️ Enter your village" name="village" label="Village:" class="mb-4">
+            <x-form.input placeholder="Enter your village" name="village" label="🏘️ Village:" class="mb-4">
                 {{ old('village') }}
             </x-form.input>
 
@@ -45,7 +58,7 @@
 
             <!-- Rice Variety & Date Established -->
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <x-form.input placeholder="🌾 Enter your rice variety" name="rice_variety" label="Rice Variety:"
+                <x-form.input placeholder="Enter your rice variety" name="rice_variety" label="🌾 Rice Variety:"
                     class="mb-4">
                     {{ old('rice_variety') }}
                 </x-form.input>

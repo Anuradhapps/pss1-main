@@ -18,6 +18,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Admin\AuditTrails;
 use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\Programs\ConductedPrograms;
 use App\Http\Livewire\Admin\Roles\Edit;
 use App\Http\Livewire\Admin\Roles\Roles;
 use App\Http\Livewire\Collector\CollectorLivewire;
@@ -134,4 +135,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::post('/chart/show', [ChartController::class, 'chart'])->name('chart.show');
     Route::get('/chart/aiShow/{id}', [ChartController::class, 'chartAiShow'])->name('chart.ai.show');
     Route::get('/chart/show/allSeason', [ChartController::class, 'allSeasonChart'])->name('chart.show.allSeason');
+
+    Route::get('conducted-programs', ConductedPrograms::class)->name('admin.conducted-programs');
 });

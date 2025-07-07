@@ -87,7 +87,7 @@
                 @endauth
 
                 <!-- Slot Content -->
-                <main class="text-black bg-gray-400 content">
+                <main class="p-2 text-black bg-gray-400 content">
                     {{ $slot ?? '' }}
                 </main>
 

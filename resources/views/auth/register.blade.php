@@ -47,7 +47,7 @@
                     <li>At least one lowercase & uppercase letter</li>
                     <li>Include at least one number</li>
                 </ul>
-                <p class="mt-2">Use <a href="https://1password.com/password-generator/" target="_blank"
+                <p class="mt-2 text-white">Use <a href="https://1password.com/password-generator/" target="_blank"
                         class="text-blue-400 underline hover:text-blue-300">1Password Generator</a> for strong
                     passwords.</p>
             </div>
@@ -72,19 +72,19 @@
 
             <!-- Confirm Password -->
             <div>
-                <label for="password_confirmation" class="block mb-1 text-sm font-semibold text-gray-300">Confirm
+                <label for="confirmPassword" class="block mb-1 text-sm font-semibold text-gray-300">Confirm
                     Password</label>
                 <div class="relative">
-                    <input id="password_confirmation" name="password_confirmation" type="password" required
+                    <input id="confirmPassword" name="confirmPassword" type="password" required
                         class="w-full px-4 py-2 pr-10 text-white bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Confirm password" />
                     <button type="button"
                         class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white focus:outline-none toggle-password"
-                        data-target="password_confirmation">
-                        <i class="fas fa-eye" id="eye-password_confirmation"></i>
+                        data-target="confirmPassword">
+                        <i class="fas fa-eye" id="eye-confirmPassword"></i>
                     </button>
                 </div>
-                @error('password_confirmation')
+                @error('confirmPassword')
                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>
