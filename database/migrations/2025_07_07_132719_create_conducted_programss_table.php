@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('conducted_date');
             $table->time('start_time');
             $table->time('end_time');
+            $table->integer('participants_count');
             $table->string('other_details')->nullable();
             $table->timestamps();
         });

@@ -2,7 +2,7 @@
 
 <!-- Header Section -->
 <div
-    class="flex flex-col items-start justify-between p-4 space-y-4 rounded-md shadow-md bg-gradient-to-r from-purple-900 to-purple-600 md:flex-row md:items-center md:space-y-0">
+    class="flex flex-col items-start justify-between p-4 space-y-4 rounded-md shadow-md bg-gradient-to-r from-gray-900 to-gray-700 md:flex-row md:items-center md:space-y-0">
     <h1 class="text-3xl font-extrabold tracking-wide text-white">Dashboard</h1>
 </div>
 

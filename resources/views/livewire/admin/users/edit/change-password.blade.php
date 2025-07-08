@@ -30,7 +30,7 @@
                             <li>At least one digit</li>
                         </ul>
                     </div>
-                    <div class="p-2 bg-gray-500 rounded-lg">
+                    <div class="p-2 space-y-2 bg-gray-500 rounded-lg">
                         <x-form.input wire:model.defer="newPassword" type="password" label="New Password"
                             name="newPassword" required autocomplete="new-password"
                             class="text-gray-200 bg-gray-900 border-gray-700 focus:border-emerald-500 focus:ring-emerald-400" />

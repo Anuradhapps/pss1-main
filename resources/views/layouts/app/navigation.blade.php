@@ -3,39 +3,17 @@
     <!-- Sidebar Logo -->
     <div class="flex items-center justify-center mb-2 rounded-lg shadow-sm ">
         <a href="{{ route('admin') }}" class="flex items-center space-x-3">
-            @php
-                $applicationLogo = Cache::rememberForever(
-                    'applicationLogo',
-                    fn() => \App\Models\Setting::where('key', 'applicationLogo')->value('value'),
-                );
-                $applicationLogoDark = Cache::rememberForever(
-                    'applicationLogoDark',
-                    fn() => \App\Models\Setting::where('key', 'applicationLogoDark')->value('value'),
-                );
-            @endphp
 
-            @if (storage_exists($applicationLogo))
-                <picture>
-                    <source srcset="{{ storage_url($applicationLogoDark) }}" media="(prefers-color-scheme: dark)">
-                    <img src="{{ storage_url($applicationLogo) }}" alt="{{ config('app.name') }}"
-                        class="w-32 h-auto transition duration-300 hover:scale-105">
-                </picture>
-            @else
-                <div class="max-w-md bg-gray-900 rounded-lg shadow-md">
-                    <!-- Example 1: Pass custom width and height -->
-                    {{-- <x-logo-dark width="250" height="100" /> --}}
+            <div class="max-w-sm bg-gray-900 rounded-lg shadow-md">
+                <p class="p-1 text-lg font-semibold text-center text-white">{{ config('app.name') }}</P>
 
-                    <!-- Example 2: Responsive using wrapper -->
-                    <div class="w-60">
-                        <x-logo-dark class="w-full h-auto" />
-                    </div>
-                </div>
+                <!-- Example 2: Responsive using wrapper -->
+                {{-- <div class="w-60">
+                    <x-logo-dark class="w-full h-auto" />
+                </div> --}}
+            </div>
 
 
-                {{-- <span class="text-lg font-semibold tracking-tight text-white">
-                    National Pest Surveillance System
-                </span> --}}
-            @endif
         </a>
     </div>
 
@@ -72,7 +50,8 @@
         @if (can('view_data_charts'))
             <x-nav.link route="chart.index" icon="fas fa-chart-bar"
                 class="text-purple-300 hover:bg-purple-800">Data/Charts</x-nav.link>
-            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check" class="text-purple-300 hover:bg-purple-800">
+            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check"
+                class="text-purple-300 hover:bg-purple-800">
                 Conducted Programs
             </x-nav.link>
         @endif

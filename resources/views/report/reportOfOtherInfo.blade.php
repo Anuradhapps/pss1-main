@@ -3,60 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Other Information Report</title>
     <style>
-        /* Reset for body */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-        }
-
-        /* Page Layout for Print */
         @page {
             size: A4 portrait;
             margin: 20mm;
         }
 
-        /* Report Container */
-        .report-container {
-            width: 100%;
-            max-width: 210mm;
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        /* Header */
-        h2 {
-
-            font-size: 20px;
-            text-align: center;
-            color: #333;
-            font-weight: bold;
+        body {
+            font-family: DejaVu Sans, Arial, sans-serif;
+            font-size: 11px;
             margin: 0;
             padding: 0;
+            color: #000;
+            background-color: #fff;
         }
 
-        .date {
-            white-space: nowrap;
-            min-width: 60px;
+        .report-container {
+            width: 100%;
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 5px;
         }
 
         h5 {
-            margin: 0;
-            margin-top: 5px;
-            padding: 0;
-            font-size: 10px;
+            font-size: 12px;
             text-align: center;
-            color: #333;
-            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
         }
 
-        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -65,108 +45,69 @@
 
         th,
         td {
-            font-size: 10px;
-            padding: 3px;
+            border: 1px solid #333;
+            padding: 6px 8px;
+            font-size: 11px;
             text-align: left;
-            border: 1px solid #ddd;
+            vertical-align: top;
         }
 
         th {
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             font-weight: bold;
-            color: #333;
         }
 
-        td {
-            background-color: #fff;
-            color: #333;
+        tr:nth-child(even) td {
+            background-color: #fafafa;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Media Query for Print */
-        @media print {
-            body {
-                background-color: white;
-                margin: 0;
-                padding: 0;
-            }
-
-            .report-container {
-                padding: 20px;
-                box-shadow: none;
-                margin: 0;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            th,
-            td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            th {
-                background-color: #f4f4f4;
-                color: #333;
-            }
-
-            tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-
-            tr:hover {
-                background-color: transparent;
-            }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #555;
         }
     </style>
 </head>
 
 <body>
-    <div class="p-4 bg-gray-100">
+    <div class="report-container">
+        <h2>Reported Information from AI Ranges in Sri Lanka ({{ $season }})</h2>
+        <h5>National Plant Protection Service, Gannoruwa</h5>
+        <hr>
 
-        <div class="report-container">
-            <h2>Reported information from the AI Ranges in Sri Lanka ({{ $season }})</h2>
-            <h5>Plant Protection service, Gannoruwa.</h5>
-            <hr>
-
-            <div class="overflow-x-auto">
-                <table>
-                    <thead>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Date</th>
+                    <th style="width: 120px;">District</th>
+                    <th style="width: 120px;">ASC</th>
+                    <th style="width: 120px;">AI Range</th>
+                    <th>Other Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($records as $record)
+                    @if (!empty($record['otherinfo']))
                         <tr>
-                            <th class="date">Date</th>
-                            <th>District</th>
-                            <th>ASC</th>
-                            <th>AI</th>
-                            <th>Other Infomation</th>
+                            <td>{{ $record['c_date'] }}</td>
+                            <td>{{ $record['district_name'] }}</td>
+                            <td>{{ $record['asc_name'] }}</td>
+                            <td>{{ $record['ai_range_name'] }}</td>
+                            <td>{{ $record['otherinfo'] }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($records as $commonDataCollect)
-                            @if ($commonDataCollect['otherinfo'] != null)
-                                <tr>
-                                    <td>{{ $commonDataCollect['c_date'] }}</td>
-                                    <td>{{ $commonDataCollect['district_name'] }}</td>
-                                    <td>{{ $commonDataCollect['asc_name'] }}</td>
-                                    <td>{{ $commonDataCollect['ai_range_name'] }}</td>
-                                    <td>{{ $commonDataCollect['otherinfo'] }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    @endif
+                @empty
+                    <tr>
+                        <td colspan="5" style="text-align: center;">No data available.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
 
+        {{-- <div class="footer">
+            "Working Together for a Pest-Free Sri Lanka"
+        </div> --}}
     </div>
 </body>
 

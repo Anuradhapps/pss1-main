@@ -11,6 +11,7 @@ use App\Models\district;
 use App\Models\As_center;
 use App\Models\Province;
 use App\Models\RiceSeason;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -55,6 +56,21 @@ class CollectorController extends Controller
                 ->get();
             return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
         }
+    }
+
+    public function adminCollectorView($id)
+    {
+        $collectors = Collector::where('user_id', $id)
+            ->orderBy('rice_season_id', 'desc')
+            ->get();
+        return view('collectors.admin-index', ['collectors' => $collectors, 'user' => User::find($id)]);
+    }
+    public function adminCollectorDestroy($id)
+    {
+        Collector::destroy($id);
+        return redirect()->back();
+
+        // return redirect('collector')->with('flash_message', 'collector deleted!');
     }
     public function newCollector()
     {

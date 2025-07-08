@@ -219,10 +219,11 @@ class ReportController extends Controller
             $disrict = district::find($key);
             $subresult = ['district' => $disrict->name, 'collectors' => []];
             foreach ($collectorGroup as $collector) {
-                $province = Province::find($collector->province);
-                $asc = As_center::find($collector->asc);
-                $aiRange = AiRange::find($collector->ai_range);
-                $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name, $collector->phone_no, $collector->date_establish, $collector->user->email];
+                if ($collector->user->name != "npssoldata") {
+                    $asc = As_center::find($collector->asc);
+                    $aiRange = AiRange::find($collector->ai_range);
+                    $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name, $collector->phone_no, $collector->date_establish, $collector->user->email];
+                }
             }
             $result[] = $subresult;
         }

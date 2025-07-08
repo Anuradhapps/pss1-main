@@ -1,146 +1,152 @@
 @section('title', 'Collector')
-<div class="p-2 bg-slate-500">
 
+<div class="space-y-4">
+    <!-- Header -->
     <div
-        class="flex flex-col items-start justify-between p-2 mb-2 space-y-4 rounded-md shadow-md bg-gradient-to-r from-purple-900 to-purple-600 md:flex-row md:items-center md:space-y-0">
-        <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-users'" :color="'from-purple-900 to-purple-700'" />
-
-        <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
-            placeholder="Search Collector Information">
-            {{ old('query', request('query')) }}
-        </x-form.input>
+        class="flex flex-col items-start justify-between p-4 space-y-4 rounded-md shadow-md bg-gradient-to-r from-green-700 to-green-500 md:flex-row md:items-center md:space-y-0">
+        <h1 class="text-2xl font-bold tracking-wider text-white">📋 Collector Information</h1>
     </div>
 
+    <!-- Search -->
+    <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
+        placeholder="🔍 Search Collector Information by Name , District , ASC or AI-RANGE">
+        {{ old('query', request('query')) }}
+    </x-form.input>
 
-
-    <div class="overflow-x-auto">
-        <table>
-            <thead>
+    <!-- Table -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md ">
+        <table class="min-w-full text-sm text-left divide-y divide-gray-300 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
                 <tr>
-                    <th class="bg-red-900">
-                        <a href="#" wire:click.prevent="sortBy('name')">Name & Data Count</a>
+                    <th class="px-4 py-2 text-white bg-red-900">
+                        <a href="#" wire:click.prevent="sortBy('name')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold">Name & Data Count</span>
+                                <span class="text-xs text-gray-300"> &#9650;&#9660;</span>
+                            </div>
+
+                        </a>
                     </th>
-                    {{-- <th>
-                        <a href="#" wire:click.prevent="sortBy('email')">Email</a>
-                    </th> --}}
-                    {{-- <th>
-                        <a href="#" wire:click.prevent="sortBy('phone_no')">Phone No.</a>
-                    </th> --}}
-                    <th class="bg-green-900">
+                    {{-- <th class="px-4 py-2 text-white bg-green-900">
                         <a href="#" wire:click.prevent="sortBy('regions.name')">Region</a>
-                    </th>
-                    <th class="bg-blue-900">
-                        <a href="#" wire:click.prevent="sortBy('districts.name')">District</a>
-                    </th>
-                    <th class="bg-pink-900">
-                        <a href="#" wire:click.prevent="sortBy('as_centers.name')"> ASC</a>
-                    </th>
-                    <th class="bg-yellow-900">
-                        <a href="#" wire:click.prevent="sortBy('ai_ranges.name')"> AI Range</a>
-                    </th>
-
-                    {{-- <th class="bg-purple-700 dark:bg-purple-900">
-                        Village
                     </th> --}}
-                    <th class="bg-teal-900">
-                        Rice Season
+                    <th class="px-4 py-2 text-white bg-blue-900">
+                        <a href="#" wire:click.prevent="sortBy('districts.name')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold">District</span>
+                                <span class="text-xs text-gray-300"> &#9650;&#9660;</span>
+                            </div>
+                        </a>
                     </th>
-                    {{-- <th>
-                        <a href="#" wire:click.prevent="sortBy('rice_variety')"> Rice Variety</a>
+                    <th class="px-4 py-2 text-white bg-pink-900">
+                        <a href="#" wire:click.prevent="sortBy('as_centers.name')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold">ASC</span>
+                                <span class="text-xs text-gray-300"> &#9650;&#9660;</span>
+                            </div>
+                        </a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('gps_lati')"> Latitude</a>
+                    <th class="px-4 py-2 text-white bg-yellow-900">
+                        <a href="#" wire:click.prevent="sortBy('ai_ranges.name')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold">AI Range</span>
+                                <span class="text-xs text-gray-300"> &#9650;&#9660;</span>
+                            </div>
+                        </a>
                     </th>
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('gps_long')"> Longitude</a>
-                    </th>
-
-                    <th>
-                        <a href="#" wire:click.prevent="sortBy('date_establish')">Date Establish</a>
-                    </th> --}}
-                    <th class="bg-gray-900">
-                        More info.
-                    </th>
+                    {{-- <th class="px-4 py-2 text-white bg-teal-900">Rice Season</th> --}}
+                    <th class="px-4 py-2 text-white bg-gray-900">More Info</th>
                 </tr>
             </thead>
-            <tbody>
+
+            <tbody class="divide-x divide-y divide-gray-200 ">
                 @foreach ($this->collectors() as $collector)
-                    <tr class="text-sm text-white">
+                    <tr class="transition bg-white hover:bg-gray-100 ">
+                        <!-- Name & Count -->
+                        <td class="px-4 py-2 text-white bg-gray-700">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div>{{ $collector->name }}</div>
+                                    <div class="text-xs italic"> {{ $collector->regionName }} -
+                                        {{ $collector->riceSeasonName }}</div>
+                                </div>
 
-                        <td class="text-white bg-red-700">
-                            <div class="flex justify-between">
-                                <div>{{ $collector->name }} </div>
-                                @if ($collector->commonDataCollect->count() == 0)
-                                    <div
-                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-red-500 rounded-full ms-2">
-                                        {{ $collector->commonDataCollect->count() }}
-                                    </div>
-                                @elseif ($collector->commonDataCollect->count() >= 7)
-                                    <div
-                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-green-500 rounded-full ms-2">
-                                        {{ $collector->commonDataCollect->count() }}
-                                    </div>
-                                @else
-                                    <div
-                                        class="inline-flex items-center justify-center w-6 h-6 text-white bg-yellow-500 rounded-full ms-2">
-                                        {{ $collector->commonDataCollect->count() }}
-                                    </div>
-                                @endif
-
-
+                                <div
+                                    class="ml-2 w-6 h-6 text-xs flex items-center justify-center rounded-full
+                                    {{ $collector->commonDataCollect->count() == 0
+                                        ? 'bg-red-500'
+                                        : ($collector->commonDataCollect->count() >= 7
+                                            ? 'bg-green-500'
+                                            : 'bg-yellow-500') }}">
+                                    {{ $collector->commonDataCollect->count() }}
+                                </div>
                             </div>
                         </td>
-                        {{-- <td> {{ $collector->email }}</td> --}}
-                        {{-- <td> {{ $collector->phone_no }}</td> --}}
-                        @if ($collector->regionName == 'Inter Provincial')
-                            <td class="text-white bg-green-700"> {{ $collector->regionName }}</td>
-                        @else
-                            <td class="text-white bg-green-600"> {{ $collector->regionName }}</td>
-                        @endif
 
-                        <td class="text-white bg-blue-700"> {{ $collector->dname }}</td>
-                        <td class="text-white bg-pink-700"> {{ $collector->asname }}</td>
-                        <td class="text-white bg-yellow-700"> {{ $collector->ainame }}</td>
-                        {{-- <td class="bg-purple-200 dark:bg-purple-700"> {{ $collector->village }}</td> --}}
-                        <td class="text-white bg-teal-700"> {{ $collector->riceSeasonName }}</td>
-                        {{-- <td> {{ $collector->rice_variety }}</td>
-                        <td> {{ $collector->gps_lati }}</td>
-                        <td> {{ $collector->gps_long }}</td>
-                        <td> {{ $collector->date_establish }}</td> --}}
-                        <td class="bg-gray-800">
+                        <!-- Region -->
+                        {{-- <td
+                            class="px-4 py-2 text-white {{ $collector->regionName == 'Inter Provincial' ? 'bg-green-700' : 'bg-green-600' }}">
+                            {{ $collector->regionName }}
+                        </td> --}}
+
+                        <!-- District -->
+                        <td class="px-4 py-2 text-white bg-gray-700">
+                            {{ $collector->dname }}
+                        </td>
+
+                        <!-- ASC -->
+                        <td class="px-4 py-2 text-white bg-gray-700">
+                            {{ $collector->asname }}
+                        </td>
+
+                        <!-- AI Range -->
+                        <td class="px-4 py-2 text-white bg-gray-700">
+                            {{ $collector->ainame }}
+                        </td>
+
+                        <!-- Rice Season -->
+                        {{-- <td class="px-4 py-2 text-white bg-teal-700">
+                            {{ $collector->riceSeasonName }}
+                        </td> --}}
+
+                        <!-- Action Buttons -->
+                        <td class="px-4 py-2 space-x-1 text-white bg-gray-800 whitespace-nowrap">
                             <a href="{{ route('admin.collector.edit', $collector->id) }}"
-                                class="px-2 py-1 text-[10px] font-bold text-white bg-orange-400 rounded me-1 hover:bg-orange-600">
+                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-orange-500 hover:bg-orange-600">
                                 C Edit
                             </a>
                             <a href="{{ route('admin.users.edit', ['user' => $collector->user->id]) }}"
-                                class="px-2 py-1 text-[10px] font-bold text-white bg-green-600 rounded me-1 hover:bg-green-800">
+                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-green-600 hover:bg-green-800">
                                 U Edit
                             </a>
-                            <a href="{{ route('chart.ai.show', $collector->id, 'yes') }}"
-                                class="px-2 py-1 text-[10px] font-bold text-white bg-blue-600 rounded me-1 hover:bg-blue-800">
+                            <a href="{{ route('chart.ai.show', [$collector->id, 'yes']) }}"
+                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-blue-600 hover:bg-blue-800">
                                 Pest Data
                             </a>
 
                             <form action="{{ route('admin.collector.destroy', $collector->id) }}" method="POST"
-                                style="display:inline;" onsubmit="return confirmDelete()">
+                                class="inline-block" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="confirmDelete(event)"
-                                    class="px-[6px] py-[1px] text-[10px] font-bold text-white bg-red-600 rounded hover:bg-red-800">
+                                <button type="submit"
+                                    class="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-red-600 hover:bg-red-800">
                                     Delete
                                 </button>
                             </form>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        {{ $this->collectors()->links() }}
+        <!-- Pagination -->
+        <div class="p-4">
+            {{ $this->collectors()->links() }}
+        </div>
     </div>
 </div>
-<!-- Include this script in your Blade view -->
+
+<!-- Confirm delete script -->
 <script>
     function confirmDelete(event) {
         if (!confirm('Are you sure you want to delete this collector?')) {

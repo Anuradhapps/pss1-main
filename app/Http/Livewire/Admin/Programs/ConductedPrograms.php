@@ -12,7 +12,7 @@ class ConductedPrograms extends Component
 
     use WithPagination;
 
-    public $program_id, $program_name, $district, $conducted_date, $start_time, $end_time, $other_details, $districts;
+    public $program_id, $program_name, $district, $conducted_date, $start_time, $end_time, $participants_count, $other_details, $districts, $users;
     public $isModalOpen = false;
 
     public function render()
@@ -46,8 +46,25 @@ class ConductedPrograms extends Component
         $this->conducted_date = '';
         $this->start_time = '';
         $this->end_time = '';
+        $this->participants_count = 0; // Assuming you want to reset this to 0
         $this->other_details = '';
     }
+    public function viewUsers($id)
+    {
+        $program = ConductedProgram::findOrFail($id);
+
+        // Define datetime range
+        $startDateTime = \Carbon\Carbon::parse("{$program->conducted_date} {$program->start_time}");
+        $endDateTime = \Carbon\Carbon::parse("{$program->conducted_date} {$program->end_time}");
+
+        // Filter users who registered during program (by created_at)
+        $this->users = \App\Models\User::whereBetween('created_at', [$startDateTime, $endDateTime])->get();
+    }
+    public function closeP()
+    {
+        $this->users = null; // Clear the users list
+    }
+
     public function store()
     {
         $this->validate([
@@ -56,6 +73,7 @@ class ConductedPrograms extends Component
             'conducted_date' => 'required|date',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
+            'participants_count' => 'required|integer|min:0', // Ensure participants count is a non-negative integer
             'other_details' => 'nullable|string|max:1000',
 
         ]);
@@ -66,6 +84,7 @@ class ConductedPrograms extends Component
             'conducted_date' => $this->conducted_date,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
+            'participants_count' => $this->participants_count,
             'other_details' => $this->other_details,
         ]);
 
@@ -85,6 +104,7 @@ class ConductedPrograms extends Component
         $this->conducted_date = $program->conducted_date;
         $this->start_time = $program->start_time;
         $this->end_time = $program->end_time;
+        $this->participants_count = $program->participants_count;
         $this->other_details = $program->other_details;
 
         $this->openModal();

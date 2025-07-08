@@ -17,62 +17,79 @@ class ChartAi
     public function build($collector): \ArielMejiaDev\LarapexCharts\BarChart
     {
         try {
-            $pestData = $collector->user->commonDataCollect[0]->pestDataCollect->toArray();
-        } catch (Exception $e) {
-            return redirect()->route('chart.index')->with('error', 'No data found');
-        }
-
-
-
-        $pests = array_column($pestData, 'pest_name');
-        array_shift($pests);
-
-        $dataArray = [];
-        $i = 0;
-        $cdataCount = $collector->commonDataCollect->count();
-        $colorArray = [];
-        for ($j = 0; $j < $cdataCount; $j++) {
-            $colorArray[] = '#' . substr(md5(mt_rand()), 0, 6);
-        }
-        foreach ($collector->commonDataCollect as $cdata) {
-            // Initialize the c_data and an empty array for p_data
-            $dataArray[] = [
-                'c_data' => $cdata->c_date,
-                'p_data' => [] // Initialize p_data as an empty array
-            ];
-            // Collect all p_data codes and append to the current item
-            foreach ($cdata->pestDataCollect as $p_data) {
-
-                if ($p_data->pest_name != 'Number_Of_Tillers') {
-                    $dataArray[$i]['p_data'][] = $p_data->code; // Append each p_data code to the array
-                }
+            if ($collector->commonDataCollect->isEmpty()) {
+                throw new Exception('No data available');
             }
-            $i++;
+        } catch (Exception $e) {
+            return redirect()->route('chart.index')->with('error', 'No pest data available for this AI range.');
         }
 
-        $pests = collect($pests)->map(function ($item) {
-            return match ($item) {
-                'BPH+WBPH' => 'Brown Planthopper/WBPH',
-                'Gall Midge' => 'Gall Midge',
-                default => $item,
-            };
-        })->toArray();
+        // Get pest names (excluding 'Number_Of_Tillers')
+        $firstEntry = $collector->commonDataCollect->first();
+        $pestNames = $firstEntry->pestDataCollect
+            ->where('pest_name', '!=', 'Number_Of_Tillers')
+            ->pluck('pest_name')
+            ->map(function ($name) {
+                return match ($name) {
+                    'BPH+WBPH' => 'Brown Planthopper / WBPH',
+                    'Gall Midge' => 'Gall Midge',
+                    'Leaffolder' => 'Leaf Folder',
+                    'Yellow Stem Borer' => 'YSB',
+                    default => $name,
+                };
+            })
+            ->unique()
+            ->values()
+            ->toArray();
+
+        $colorPalette = [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+            '#C9CBCF',
+            '#607D8B'
+        ];
 
         $chart = $this->chart->barChart()
-            ->setTitle($collector->getProvince->name . ' > ' . $collector->getDistrict->name . ' > ' . $collector->getAsCenter->name . ' > ' . $collector->getAiRange->name . ' > ')
-            ->setSubtitle($collector->riceSeason->name)
-            ->setXAxis($pests)
-            ->setColors($colorArray)
-            ->setGrid('#3F51B5', 0.1);
+            ->setTitle("Pest Infestation Levels")
+            ->setSubtitle(
+                "{$collector->getProvince->name} > {$collector->getDistrict->name} > {$collector->getAsCenter->name} > {$collector->getAiRange->name} ({$collector->riceSeason->name})"
+            )
+            ->setXAxis($pestNames)
+            ->setColors($colorPalette)
+            ->setGrid('#888', 0.3);
 
-        // Add data to the chart after initialization
-        foreach ($dataArray as $data) {
-            $chart->addData($data['c_data'], $data['p_data']);
+        // Prepare data: each dataset is one date (c_date)
+        foreach ($collector->commonDataCollect as $dataEntry) {
+            $label = $dataEntry->c_date;
+            $pestCodes = [];
+
+            foreach ($pestNames as $pest) {
+                $pestRaw = $this->normalizePestName($pest);
+                $code = $dataEntry->pestDataCollect
+                    ->where('pest_name', $pestRaw)
+                    ->first()
+                    ->code ?? 0;
+
+                $pestCodes[] = $code;
+            }
+
+            $chart->addData($label, $pestCodes);
         }
 
-
-
-        // $chart->addData('kkk',[6, 9, 3]);
         return $chart;
+    }
+
+    private function normalizePestName($name)
+    {
+        return match ($name) {
+            'Brown Planthopper / WBPH' => 'BPH+WBPH',
+            'Leaf Folder' => 'Leaffolder',
+            'YSB' => 'Yellow Stem Borer',
+            default => $name,
+        };
     }
 }

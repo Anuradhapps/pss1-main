@@ -106,6 +106,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/collector/{collector}/edit', [CollectorController::class, 'edit'])->name('admin.collector.edit');
     Route::delete('/collector/{collector}/destroy', [CollectorController::class, 'destroy'])->name('admin.collector.destroy');
     Route::put('/collector/{collector}', [CollectorController::class, 'update'])->name('admin.collector.update');
+
+    Route::get('/admin-collector-view/{id}', [CollectorController::class, 'adminCollectorView'])->name('admin.collectors.view');
+
     Route::get('/collector-show-pest_data/{id}', [PestDataCollectController::class, 'show'])->name('admin.collector.pest.show');
 
     Route::get('/pest', [PestController::class, 'index'])->name('pest.index');

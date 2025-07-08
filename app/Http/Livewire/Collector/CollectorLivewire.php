@@ -22,6 +22,10 @@ class CollectorLivewire extends Component
     {
         return view('livewire.collector.collector');
     }
+    public function updatedQuery()
+    {
+        $this->resetPage();
+    }
 
     public function edit(Collector $collector)
     {

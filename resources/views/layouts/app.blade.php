@@ -71,7 +71,7 @@
             <div id="main" class="flex flex-col w-full bg-gray-800">
                 @auth
                     <!-- Topbar -->
-                    <header class="flex items-center justify-between px-4 py-3 bg-teal-800 shadow-sm">
+                    <header class="flex items-center justify-between px-2 py-1 bg-teal-800 shadow-sm">
                         <!-- Mobile menu toggle -->
                         <button @click="sidebarOpen = !sidebarOpen" class="text-white md:hidden">
                             <i class="text-xl fas fa-bars"></i>
