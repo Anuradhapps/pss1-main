@@ -78,6 +78,8 @@
                 </option>
                 <option value="Parachute" {{ old('established_method') == 'Parachute' ? 'selected' : '' }}>Parachute
                 </option>
+                <option value="N/A" {{ old('established_method') == 'N/A' ? 'selected' : '' }}>N/A
+                </option>
             </x-form.select>
 
             <!-- Save Button -->

@@ -81,17 +81,50 @@
 
 
 @if (!empty($users))
-    <div class="flex justify-end p-4 bg-gray-900 border-t border-gray-800">
-        <div class="max-w-6xl p-3 mx-auto bg-gray-800 border border-gray-700 rounded-lg shadow-md">
-            <h2 class="text-xl font-bold text-white">👥 Participants</h2> <span wire:click="closeP">close</span>
-            <ul class="mt-4 space-y-2">
-                @foreach ($users as $user)
-                    <li class="px-4 py-2 bg-gray-700 rounded">
-                        {{ $user->name }} ({{ $user->email }})
-                    </li>
-                @endforeach
-            </ul>
+
+    <div class="w-full mx-auto p-6 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+
+            <h2 class="text-2xl font-semibold text-white flex items-center gap-2">
+                {{ $fullProgram->program_name }} - {{ $fullProgram->district }}
+            </h2>
+            <button wire:click="closeP"
+                class="text-sm text-gray-400 hover:text-red-400 transition duration-150 ease-in-out">
+                ✖ Close
+            </button>
+
+
+        </div>
+        <div class="flex items-center justify-between mb-4">
+
+            <h1 class="text-sm font-semibold text-white flex items-center gap-2">
+                Conducted Date : {{ $fullProgram->conducted_date }}
+                </h2>
+                <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+                    👥 Participants {{ $users->count() }}
+                </h2>
+
         </div>
 
+        <ul class="space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 pr-2">
+            @forelse ($users as $user)
+                <li
+                    class="flex items-center justify-between px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition">
+                    <div>
+                        <p class="text-white font-medium">{{ $user->name }}</p>
+                        <p class="text-sm text-gray-300">{{ $user->email }}</p>
+                    </div>
+                    <div class="text-gray-400">
+                        🧑‍💼
+                    </div>
+                </li>
+            @empty
+                <li class="px-4 py-3 text-gray-300 bg-gray-700 rounded-md">
+                    No participants found.
+                </li>
+            @endforelse
+        </ul>
     </div>
+
+
 @endif

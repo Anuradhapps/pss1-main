@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex justify-end w-full sm:w-auto">
-                <a href="{{ route('collector.create') }}"
+                <a href="{{ route('admin.collector.records') }}"
                     class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
                     <i class="mr-2 fas fa-arrow-left"></i> Back
                 </a>
@@ -97,10 +97,8 @@
                     Transplant</option>
                 <option value="Parachute" {{ $collector->established_method == 'Parachute' ? 'selected' : '' }}>
                     Parachute</option>
-
                 <option value="N/A" {{ $collector->established_method == 'N/A' ? 'selected' : '' }}>
                     N/A</option>
-
             </x-form.select>
 
             <!-- Submit Button -->

@@ -2,8 +2,8 @@
 
 <div class="space-y-3 text-white ">
     <div
-        class="flex flex-col items-start justify-between p-4 space-y-4 rounded-md shadow-md bg-gradient-to-r from-purple-700 to-purple-500 md:flex-row md:items-center md:space-y-0">
-        <h1 class="text-3xl font-extrabold tracking-wide text-white">Users</h1>
+        class="flex flex-col items-start justify-between p-4 space-y-4 rounded-md shadow-md bg-gradient-to-r from-green-700 to-green-500 md:flex-row md:items-center md:space-y-0">
+        <h1 class="text-2xl font-bold tracking-wider text-white">👤 Users</h1>
     </div>
 
     <!-- Search + Filter Section -->
@@ -52,7 +52,7 @@
                 </tr>
             </thead>
 
-            <tbody class="">
+            <tbody>
                 @foreach ($this->users() as $user)
                     <tr class="group hover:bg-gray-900 hover:text-white">
                         <!-- Name with avatar -->
@@ -65,7 +65,7 @@
                         </td>
 
                         <!-- Email -->
-                        <td class="transition group-hover:text-white">{{ $user->email }}</td>
+                        <td class="transition  group-hover:text-white">{{ $user->email }}</td>
 
                         <!-- Joined -->
                         <td class="transition group-hover:text-white">
@@ -96,11 +96,12 @@
 
                                 @if ($hasCollector->count() > 0)
                                     <a href="{{ route('admin.collectors.view', $user->id) }}"
-                                        class="px-3 py-1 text-xs text-black bg-green-400 rounded hover:bg-orange-700 group-hover:text-white">
+                                        class="px-3 py-1 text-xs text-black bg-green-400 rounded hover:bg-green-700 group-hover:text-white">
                                         View Collectors
                                     </a>
                                 @else
-                                    <div class="px-3 py-1 text-xs text-white bg-red-900 rounded group-hover:text-white">
+                                    <div
+                                        class="px-3 py-1 text-xs text-white bg-yellow-600 rounded group-hover:text-white">
                                         No Collector Data
                                     </div>
                                 @endif

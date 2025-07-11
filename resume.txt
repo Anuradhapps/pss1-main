@@ -1,0 +1,49 @@
+[Your Name]
+[Your Phone Number] | [Your Email] | [Your LinkedIn Profile URL] | [Your GitHub Profile URL]
+
+---
+
+**PROFESSIONAL SUMMARY**
+
+Highly skilled and self-motivated Full-Stack Developer with comprehensive experience in designing, developing, and deploying complex, data-intensive web applications from the ground up. Proven ability to architect and implement scalable solutions using the Laravel framework and modern frontend technologies. Successfully delivered the National Pest Surveillance System, demonstrating expertise in database design, business logic implementation, and data visualization.
+
+---
+
+**TECHNICAL SKILLS**
+
+*   **Backend:**         PHP, Laravel, RESTful APIs
+*   **Frontend:**        Livewire, JavaScript, Tailwind CSS, HTML5, CSS3
+*   **Databases:**       SQL (MySQL/PostgreSQL), SQLite
+*   **Key Libraries:**   Larapex Charts, Maatwebsite/Excel, Laravel Sanctum
+*   **Dev Tools:**       Git, Composer, Vite, VS Code
+*   **Core Concepts:**   Object-Oriented Programming (OOP), MVC Architecture, Role-Based Access Control (RBAC), Database Design, Data Visualization, UI/UX
+
+---
+
+**PROFESSIONAL EXPERIENCE**
+
+**Lead Full-Stack Developer**
+*National Pest Surveillance System (NPSS)*
+[Start Date] – [End Date]
+
+Spearheaded the complete, end-to-end development of a critical agricultural data platform for the Sri Lankan government, designed to monitor and analyze pest data for rice cultivation.
+
+*Key Achievements:*
+
+*   **Architected and built the entire application** using Laravel for the backend and Livewire for a dynamic, responsive frontend, creating a seamless single-page application experience.
+*   **Designed and implemented a complex database schema** to manage hierarchical geographical data and time-series pest information, ensuring data integrity and efficient querying.
+*   **Engineered the core business logic** for an algorithm that automatically calculates and codes pest infestation levels from raw field data, providing standardized metrics for analysis.
+*   **Developed a powerful data visualization dashboard** using Larapex Charts, enabling stakeholders to analyze trends by region, season, and other key filters.
+*   **Built a robust reporting module** to generate and export official documents, including bi-weekly pest memos, in both PDF and Excel formats.
+*   **Implemented a secure, invitation-only user management system** with Role-Based Access Control (RBAC) and Two-Factor Authentication (2FA) to ensure data security and proper user permissions.
+*   **Crafted an intuitive user interface** with Tailwind CSS, focusing on a clean user experience for non-technical field officers, including dynamic forms that simplified data entry.
+
+---
+
+**EDUCATION**
+
+**[Your Degree or Certification]**
+[Name of Institution], [City, Country]
+[Year of Completion]
+
+---

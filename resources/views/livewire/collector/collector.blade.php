@@ -111,29 +111,47 @@
 
                         <!-- Action Buttons -->
                         <td class="px-4 py-2 space-x-1 text-white bg-gray-800 whitespace-nowrap">
+
+                            {{-- Common Data Edit --}}
                             <a href="{{ route('admin.collector.edit', $collector->id) }}"
-                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-orange-500 hover:bg-orange-600">
-                                C Edit
-                            </a>
-                            <a href="{{ route('admin.users.edit', ['user' => $collector->user->id]) }}"
-                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-green-600 hover:bg-green-800">
-                                U Edit
-                            </a>
-                            <a href="{{ route('chart.ai.show', [$collector->id, 'yes']) }}"
-                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded bg-blue-600 hover:bg-blue-800">
-                                Pest Data
+                                class="text-white inline-block px-2 py-1 text-[10px] font-semibold rounded bg-orange-500 hover:bg-orange-600 transition">
+                                Collector Edit
                             </a>
 
+                            {{-- User Edit --}}
+                            <a href="{{ route('admin.users.edit', ['user' => $collector->user->id]) }}"
+                                class="text-white inline-block px-2 py-1 text-[10px] font-semibold rounded bg-green-600 hover:bg-green-800 transition">
+                                User Edit
+                            </a>
+
+                            {{-- Pest Data --}}
+                            @php
+                                $hasCommonData = $collector->commonDataCollect->count() > 0;
+                            @endphp
+
+                            <a href="{{ $hasCommonData ? route('chart.ai.show', [$collector->id, 'yes']) : 'javascript:void(0);' }}"
+                                class="inline-block px-2 py-1 text-[10px] font-semibold rounded transition 
+                                 {{ $hasCommonData
+                                     ? 'bg-blue-600 hover:bg-blue-800 text-white'
+                                     : 'bg-gray-500 text-white cursor-not-allowed pointer-events-none' }}"
+                                title="{{ $hasCommonData ? 'View Pest Data' : 'Common Data Required' }}"
+                                aria-disabled="{{ $hasCommonData ? 'false' : 'true' }}">
+                                {{ $hasCommonData ? 'Pest Data' : 'No Pest Data' }}
+                            </a>
+
+                            {{-- Delete --}}
                             <form action="{{ route('admin.collector.destroy', $collector->id) }}" method="POST"
                                 class="inline-block" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-red-600 hover:bg-red-800">
+                                    class="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-red-600 hover:bg-red-800 transition">
                                     Delete
                                 </button>
                             </form>
+
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

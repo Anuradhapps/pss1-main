@@ -2,10 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-    Auth\LoginController, Auth\RegisterController, Auth\ForgotPasswordController, Auth\ResetPasswordController, 
-    Auth\JoinController, Auth\TwoFaController,
-    CollectorController, CommonDataCollectController, PestDataCollectController, PestController,
-    ExportController, ReportController, UserController, ChartController
+    Auth\LoginController,
+    Auth\RegisterController,
+    Auth\ForgotPasswordController,
+    Auth\ResetPasswordController,
+    Auth\JoinController,
+    Auth\TwoFaController,
+    CollectorController,
+    CommonDataCollectController,
+    PestDataCollectController,
+    PestController,
+    ExportController,
+    ReportController,
+    UserController,
+    ChartController
 };
 use App\Exports\UsersExport;
 use App\Http\Livewire\{
@@ -29,19 +39,20 @@ use App\Http\Livewire\{
 | Guest Routes
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
-    
+
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
-    
+
     Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/reset/{token}', [ResetPasswordController::class, 'reset'])->name('password.reset.update');
-    
+
     Route::get('/join/{token}', [JoinController::class, 'index'])->name('join');
     Route::put('/join/{id}', [JoinController::class, 'update'])->name('join.update');
 });

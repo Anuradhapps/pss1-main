@@ -12,7 +12,7 @@ class ConductedPrograms extends Component
 
     use WithPagination;
 
-    public $program_id, $program_name, $district, $conducted_date, $start_time, $end_time, $participants_count, $other_details, $districts, $users;
+    public $program_id, $fullProgram, $program_name, $district, $conducted_date, $start_time, $end_time, $participants_count, $other_details, $districts, $users;
     public $isModalOpen = false;
 
     public function render()
@@ -52,6 +52,8 @@ class ConductedPrograms extends Component
     public function viewUsers($id)
     {
         $program = ConductedProgram::findOrFail($id);
+        $this->fullProgram = ConductedProgram::findOrFail($id);
+
 
         // Define datetime range
         $startDateTime = \Carbon\Carbon::parse("{$program->conducted_date} {$program->start_time}");

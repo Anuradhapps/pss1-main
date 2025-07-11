@@ -179,8 +179,11 @@ class CollectorController extends Controller
         $as_centers = As_center::all();
         $ai_ranges = AiRange::all();
         $collector->date_establish = Carbon::createFromFormat('Y-m-d', $collector->date_establish)->format('d-m-Y');
-
-        return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
+        if (has_role('admin')) {
+            return view('livewire.collector.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
+        } else {
+            return view('collectors.edit', compact('collector',  'provinces', 'districts', 'as_centers', 'ai_ranges', 'season'));
+        }
     }
     /**
      * Update the specified resource in storage.
