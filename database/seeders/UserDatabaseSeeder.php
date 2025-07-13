@@ -76,7 +76,10 @@ class UserDatabaseSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'edit_data', 'label' => 'Edit Data', 'module' => 'Data']);
 
         $this->makeUser('admin');
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         // $this->makeUser('deputyDirector');
         //create developer uncomment to use when seeding
 

@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             UserDatabaseSeeder::class,
 
             //comment when actual database is ready
-            // DummySeeder::class
+            DummySeeder::class
 
         ]);
     }
