@@ -17,8 +17,9 @@ class ConductedPrograms extends Component
 
     public function render()
     {
+
         $this->districts = district::orderBy('name')->get(); // Adjust 'name' if different
-        $programs = ConductedProgram::latest()->paginate(10);
+        $programs = ConductedProgram::orderBy('conducted_date', 'desc')->paginate(10); // asc or 'desc'
         return view('livewire.admin.programs.conducted-programs', ['programs' => $programs]);
     }
 

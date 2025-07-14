@@ -31,7 +31,9 @@ use App\Http\Livewire\{
     Admin\Users\ShowUser,
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
-    Welcome
+    DeputyDirector\DeputyDashboard,
+    Welcome,
+
 };
 
 /*
@@ -157,4 +159,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
         Route::put('/{id}', [PestDataCollectController::class, 'update'])->name('pestdata.update');
         Route::delete('/{id}', [PestDataCollectController::class, 'destroy'])->name('pestdata.destroy');
     });
+});
+
+
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
+    Route::get('/', DeputyDashboard::class)->name('deputy.dashboard');
 });

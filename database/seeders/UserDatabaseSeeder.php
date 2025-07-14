@@ -76,11 +76,26 @@ class UserDatabaseSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'edit_data', 'label' => 'Edit Data', 'module' => 'Data']);
 
         $this->makeUser('admin');
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-        // $this->makeUser('deputyDirector');
+        // Create deputy director accounts for each district
+        $deputyDirectorRole = Role::where('name', 'deputyDirector')->first();
+        foreach (\App\Models\district::all() as $district) {
+            $districtNameNoSpace = preg_replace('/\s+/', '', $district->name);
+            $email = strtolower($districtNameNoSpace) . 'DD@domain.com';
+            $password = strtolower($districtNameNoSpace) . 'dd@2025';
+            $user = User::firstOrCreate([
+                'email' => $email
+            ], [
+                'name'                 => $district->name . ' Deputy Director',
+                'slug'                 => strtolower($districtNameNoSpace) . '-deputy-director',
+                'password'             => bcrypt($password),
+                'is_active'            => 1,
+                'is_office_login_only' => 0
+            ]);
+            // Assign role if not already assigned
+            if (!$user->roles->contains($deputyDirectorRole)) {
+                $user->roles()->attach($deputyDirectorRole->id);
+            }
+        }
         //create developer uncomment to use when seeding
 
         // $admin = User::firstOrCreate([

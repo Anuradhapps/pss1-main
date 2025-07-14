@@ -110,14 +110,14 @@
                 👥 Participants for the program : {{ $fullProgram->participants_count }}
             </h1>
             <h1 class="text-sm font-semibold text-white flex items-center gap-2 bg-green-700 p-2 rounded-md">
-                👥 Rejister to the app : {{ $users->count() }}
+                👥 Register to the app : {{ $users->count() }}
             </h1>
 
         </div>
         <h1 class="border-b border-t text-center p-1  text-base text text-white mb-2">Regestered officers <span
                 class="text-sm">🢃</span> </h1>
         <ul
-            class="grid sm:grid-cols-3 gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 pr-2">
+            class="grid sm:grid-cols-2 gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-700 pr-2">
             @forelse ($users as $index => $user)
                 <li
                     class="flex items-center justify-between px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition">
@@ -130,7 +130,7 @@
                         <!-- Name and Email -->
                         <div>
                             <p class="p-0 text-white font-medium">{{ $user->name }}</p>
-                            <p class="p-0 text-sm text-gray-300">{{ $user->email }}</p>
+                            <p class="p-0 text-sm text-gray-300 ">{{ $user->email }}</p>
                         </div>
                     </div>
                     <a href="{{ route('admin.users.show', $user->id) }}"
