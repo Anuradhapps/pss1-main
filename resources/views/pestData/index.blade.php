@@ -59,7 +59,7 @@
             <tbody class="divide-y divide-gray-700">
                 @if (!empty($CommonData) && $CommonData->count())
                     @foreach ($CommonData as $row)
-                        <tr class="transition duration-200 hover:bg-gray-400 ">
+                        <tr class="transition duration-200 hover:bg-gray-600">
                             <td class="px-4 py-3 ">{{ $row->created_at }}</td>
                             <td class="px-4 py-3">{{ $row->c_date }}</td>
                             <td class="px-4 py-3">

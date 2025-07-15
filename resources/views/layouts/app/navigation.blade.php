@@ -20,16 +20,32 @@
 
     <!-- Navigation Links -->
     <div class="space-y-2">
-        <x-nav.link route="admin" icon="fas fa-home" class="text-purple-300 hover:bg-purple-800">Dashboard</x-nav.link>
+        <x-nav.link route="admin" icon="fas fa-home"
+            class="transition-all duration-[50ms] ease-in-out 
+          ">Dashboard</x-nav.link>
 
+        @if (has_role('deputyDirector'))
+            <x-nav.link route="deputy.dashboard" icon="fas fa-clipboard"
+                class="transition-all duration-[50ms] ease-in-out 
+          ">View Data</x-nav.link>
+        @endif
         @if (has_role('collector'))
             <x-nav.link route="collector.create" icon="fas fa-user-tie"
-                class="text-purple-300 hover:bg-purple-800">Collector</x-nav.link>
+                class="transition-all duration-[50ms] ease-in-out 
+          ">
+                <div>Rice Pest</div>
+                <div class="text-xs">Data Collector</div>
+
+            </x-nav.link>
         @endif
 
         @if (can('view_users'))
             <x-nav.link route="admin.users.index" icon="fas fa-users"
-                class="text-purple-300 hover:bg-purple-800">Users</x-nav.link>
+                class="transition-all duration-[50ms] ease-in-out 
+          ">Users</x-nav.link>
+            <x-nav.link route="admin.collector.records" icon="fa-solid fa-chalkboard-user"
+                class="transition-all duration-[50ms] ease-in-out 
+          ">Collectors</x-nav.link>
         @endif
 
         {{-- @if (can('view_pests'))
@@ -37,21 +53,20 @@
                 class="text-purple-300 hover:bg-purple-800">Pest</x-nav.link>
         @endif --}}
 
-        @if (can('view_collectors'))
-            <x-nav.link route="admin.collector.records" icon="fas fa-user-tie"
-                class="text-purple-300 hover:bg-purple-800">Collectors</x-nav.link>
-        @endif
-
         @if (can('view_reports'))
             <x-nav.link route="report.index" icon="fas fa-file-alt"
-                class="text-purple-300 hover:bg-purple-800">Reports</x-nav.link>
+                class="transition-all duration-[50ms] ease-in-out 
+         ">Reports</x-nav.link>
         @endif
 
         @if (can('view_data_charts'))
             <x-nav.link route="chart.index" icon="fas fa-chart-bar"
-                class="text-purple-300 hover:bg-purple-800">Data/Charts</x-nav.link>
+                class="transition-all duration-[50ms] ease-in-out 
+        ">Data/Charts</x-nav.link>
+
             <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check"
-                class="text-purple-300 hover:bg-purple-800">
+                class="transition-all duration-[50ms] ease-in-out 
+          ">
                 Conducted Programs
             </x-nav.link>
         @endif
@@ -59,14 +74,11 @@
         <!-- Settings Section -->
         @if (can('view_audit_trails') || can('view_sent_emails'))
             <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs"
-                class="text-purple-300 hover:bg-purple-800">
+                class="transition-all duration-[50ms] ease-in-out 
+          ">
                 @if (can('view_audit_trails'))
                     <x-nav.group-item route="admin.settings.audit-trails.index" icon="far fa-circle">Audit
                         Trails</x-nav.group-item>
-                @endif
-                @if (can('view_sent_emails'))
-                    <x-nav.group-item route="admin.settings.sent-emails" icon="far fa-circle">Sent
-                        Emails</x-nav.group-item>
                 @endif
                 @if (is_admin())
                     <x-nav.group-item route="admin.settings" icon="far fa-circle">System Settings</x-nav.group-item>

@@ -93,18 +93,20 @@
                                 @php
                                     $hasCollector = $user->collector();
                                 @endphp
-
-                                @if ($hasCollector->count() > 0)
-                                    <a href="{{ route('admin.collectors.view', $user->id) }}"
-                                        class="px-3 py-1 text-xs text-black bg-green-400 rounded hover:bg-green-700 group-hover:text-white">
-                                        View Collectors
-                                    </a>
-                                @else
-                                    <div
-                                        class="px-3 py-1 text-xs text-white bg-yellow-600 rounded group-hover:text-white">
-                                        No Collector Data
-                                    </div>
+                                @if (has_role('collector'))
+                                    @if ($hasCollector->count() > 0)
+                                        <a href="{{ route('admin.collectors.view', $user->id) }}"
+                                            class="px-3 py-1 text-xs text-black bg-green-400 rounded hover:bg-green-700 group-hover:text-white">
+                                            View Collectors
+                                        </a>
+                                    @else
+                                        <div
+                                            class="px-3 py-1 text-xs text-white bg-yellow-600 rounded group-hover:text-white">
+                                            No Collector Data
+                                        </div>
+                                    @endif
                                 @endif
+
 
 
 

@@ -47,7 +47,7 @@
         <div class="flex flex-1">
             @auth
                 <!-- Desktop Sidebar -->
-                <aside class="hidden w-64 bg-green-900 shadow-lg md:block">
+                <aside class="hidden w-auto px-[10px] bg-green-900 shadow-lg md:block">
                     <div class="m-1">
                         @include('layouts.app.navigation')
                     </div>
@@ -72,6 +72,9 @@
                 @auth
                     <!-- Topbar -->
                     <header class="flex items-center justify-between px-2 py-1 bg-teal-800 shadow-sm">
+
+
+
                         <!-- Mobile menu toggle -->
                         <button @click="sidebarOpen = !sidebarOpen" class="text-white md:hidden">
                             <i class="text-xl fas fa-bars"></i>
@@ -87,7 +90,7 @@
                 @endauth
 
                 <!-- Slot Content -->
-                <main class="p-2 text-black bg-gray-400 content">
+                <main class=" content">
                     {{ $slot ?? '' }}
                 </main>
 

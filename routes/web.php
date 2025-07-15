@@ -33,7 +33,6 @@ use App\Http\Livewire\{
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
     Welcome,
-
 };
 
 /*
@@ -42,6 +41,7 @@ use App\Http\Livewire\{
 |--------------------------------------------------------------------------
 */
 
+Route::get('/app', Dashboard::class);
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -139,6 +139,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('collector')->group(function () {
+    Route::get('/', Dashboard::class)->name('admin');
     // Dashboard & Profile
     Route::get('/', [CollectorController::class, 'index'])->name('collector.index');
     Route::get('/create', [CollectorController::class, 'create'])->name('collector.create');

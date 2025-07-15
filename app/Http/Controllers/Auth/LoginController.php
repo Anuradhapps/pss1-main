@@ -17,7 +17,7 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected string $redirectTo = '/admin';
+    protected string $redirectTo = '/';
 
     public function __construct()
     {

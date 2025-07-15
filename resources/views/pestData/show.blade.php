@@ -19,26 +19,31 @@
         </div>
 
         <!-- Meta Information -->
-        <div class="grid grid-cols-1 gap-4 mt-5 text-sm text-white sm:grid-cols-2 md:grid-cols-3">
-            <div class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300">
+        <div class="grid grid-cols-1 gap-4 mt-5 text-sm text-white sm:grid-cols-2 md:grid-cols-5">
+            <div
+                class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300 flex flex-row justify-between sm:flex-col">
                 <strong>📅 Created At:</strong>
-                <div class="mt-1 text-gray-200">{{ $commonData->created_at }}</div>
+                <div class="sm:mt-1 text-gray-200">{{ $commonData->created_at }}</div>
             </div>
-            <div class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300">
+            <div
+                class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300 flex flex-row justify-between sm:flex-col">
                 <strong>🗓️ Collected Date:</strong>
-                <div class="mt-1 text-gray-200">{{ $commonData->c_date }}</div>
+                <div class="sm:mt-1 text-gray-200">{{ $commonData->c_date }}</div>
             </div>
-            <div class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300">
+            <div
+                class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300 flex flex-row justify-between sm:flex-col">
                 <strong>🌡️ Temperature:</strong>
-                <div class="mt-1 text-gray-200">{{ $commonData->temperature }} °C</div>
+                <div class="sm:mt-1 text-gray-200">{{ $commonData->temperature }} °C</div>
             </div>
-            <div class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300">
+            <div
+                class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300 flex flex-row justify-between sm:flex-col">
                 <strong>🌧️ Rainy Days:</strong>
-                <div class="mt-1 text-gray-200">{{ $commonData->numbrer_r_day }}</div>
+                <div class="sm:mt-1 text-gray-200">{{ $commonData->numbrer_r_day }}</div>
             </div>
-            <div class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300">
+            <div
+                class="px-4 py-3 bg-gray-800 rounded-lg hover:scale-[1.05] transition-transform duration-300 flex flex-row justify-between sm:flex-col">
                 <strong>🌱 Growth Stage Code:</strong>
-                <div class="mt-1 text-gray-200">{{ $commonData->growth_s_c }}</div>
+                <div class="sm:mt-1 text-gray-200">{{ $commonData->growth_s_c }}</div>
             </div>
         </div>
 
@@ -57,7 +62,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-700">
                     @foreach ($pestsData as $pestData)
-                        <tr class="transition hover:bg-gray-100">
+                        <tr class="transition hover:bg-gray-600">
                             <td class="px-4 py-3">{{ $pestData->pest_name }}</td>
                             @for ($i = 1; $i <= 10; $i++)
                                 <td class="hidden px-4 py-3 text-center sm:table-cell">

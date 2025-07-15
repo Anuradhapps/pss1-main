@@ -1,45 +1,40 @@
-<div>
+<!-- Form -->
+<x-form wire:submit.prevent="update" method="put" class="space-y-6">
 
-    <div class="card">
+    <!-- Grid Inputs -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
-        <h3 class="mb-4">Application Settings</h3>
+        <!-- Site Name -->
+        <x-form.input wire:model="siteName" name="siteName" label="Site Name"
+            class="bg-gray-800 border-gray-700 text-white" />
 
-        <x-form wire:submit.prevent="update" method="put">
-
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-
-                <x-form.input wire:model="siteName" name="siteName" label="Site Name" />
-
-                <fieldset>
-
-                    <div class="mt-1 -space-y-px text-gray-200 bg-gray-500 rounded-md shadow-sm">
-
-                        <div class="relative flex p-4 border border-gray-200 rounded-tl-md rounded-tr-md">
-                            <div class="flex items-center h-5">
-                                <input wire:model="isForced2Fa" id="isForced2Fa" type="checkbox"
-                                    class="w-4 h-4 border-gray-300 cursor-pointer text-light-blue-600 focus:ring-light-blue-500">
-                            </div>
-                            <label for="isOfficeLoginOnly" class="flex flex-col ml-3 cursor-pointer">
-                                <span class="block text-sm font-medium text-gray-300">
-                                    Enforce 2Fa
-                                </span>
-                                <span class="block text-sm text-gray-200">
-                                    Force 2 factor authentication for all users on login.
-                                    Users can only login at pre-approved IP addresses.
+        <!-- Enforce 2FA Toggle -->
+        {{-- <fieldset class="col-span-1">
+                    <div class="bg-gray-800 border border-gray-700 rounded-md p-4 space-y-2">
+                        <div class="flex items-start gap-3">
+                            <input wire:model="isForced2Fa" id="isForced2Fa" type="checkbox"
+                                class="mt-1 h-5 w-5 text-indigo-500 bg-gray-900 border-gray-600 focus:ring-indigo-400 rounded">
+                            <label for="isForced2Fa" class="cursor-pointer select-none">
+                                <span class="block text-sm font-semibold text-white">Enforce 2FA</span>
+                                <span class="text-sm text-gray-400">
+                                    Require all users to use two-factor authentication.<br>
+                                    Only allow login from pre-approved IP addresses.
                                 </span>
                             </label>
                         </div>
-
                     </div>
-                </fieldset>
-
-            </div>
-
-            <x-button>Update Application Settings</x-button>
-
-        </x-form>
-
-        @include('errors.messages')
+                </fieldset> --}}
 
     </div>
-</div>
+
+    <!-- Submit Button -->
+    <div>
+        <x-button class="bg-indigo-600 hover:bg-indigo-500 text-white">
+            Update Application Settings
+        </x-button>
+    </div>
+
+</x-form>
+
+<!-- Error Messages -->
+@include('errors.messages')
