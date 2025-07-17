@@ -79,13 +79,14 @@
             <div id="main" class="flex flex-col w-full">
                 @auth
                     <!-- Topbar -->
-                    <header class="flex items-center justify-between px-2 py-1 bg-teal-800 shadow-sm">
+                    <header class="sticky top-0 z-40 flex items-center justify-between px-4 py-2 bg-teal-900 shadow-lg">
 
 
 
-                        <!-- Mobile menu toggle -->
-                        <button @click="sidebarOpen = !sidebarOpen" class="text-white md:hidden">
-                            <i class="text-xl fas fa-bars"></i>
+                        <!-- Mobile Sidebar Toggle -->
+                        <button @click="sidebarOpen = !sidebarOpen"
+                            class="text-white md:hidden hover:text-teal-400 focus:outline-none">
+                            <i class="fas fa-bars text-2xl"></i>
                         </button>
 
                         <!-- Topbar right controls -->

@@ -8,7 +8,7 @@
                 {{-- @if (storage_exists(user()->image))
                     <img src="{{ storage_url(user()->image) }}" alt="Profile" class="object-cover w-8 h-8 rounded">
                 @else --}}
-                <span class="text-sm font-bold text-white">
+                <span class="text-sm px-3 font-bold text-white">
                     {{-- {{ strtoupper(substr(user()->name, 0, 1)) }} --}}
                     {{ user()->name }}
                 </span>

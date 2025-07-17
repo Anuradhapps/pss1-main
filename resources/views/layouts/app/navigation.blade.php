@@ -1,4 +1,4 @@
-<div class="min-h-screen max-w-64 w-full text-white">
+<div class="min-h-screen max-w-64 w-full  sticky top-0 text-white">
 
     <!-- Logo Section -->
     <div class="flex items-center border-l-4 border-green-500 justify-center mb-6 space-x-2 px-2 py-1">

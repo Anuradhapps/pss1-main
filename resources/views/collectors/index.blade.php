@@ -5,7 +5,7 @@
             🎉 {{ session('success') }}
         </div>
     @endif
-
+    <x-headings.topHeading title="Dashboard" icon="fas fa-home" class="bg-green-700" />
     <div class="container mx-auto">
         <!-- Page Header -->
         <div

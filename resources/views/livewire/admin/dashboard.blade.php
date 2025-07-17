@@ -4,21 +4,21 @@
 <x-headings.topHeading title="Dashboard" icon="fas fa-home" class="bg-green-700" />
 
 {{-- Description Card --}}
-<div class="m-2  p-6 bg-gray-950 border border-gray-800  shadow-xl text-white space-y-5">
-    <h2 class="border-b-2 text-2xl sm:text-2xl font-bold tracking-wide text-green-300 flex items-center gap-2">
+<div class="m-2  p-3 bg-gray-950 border border-gray-800  shadow-xl text-white space-y-5">
+    <h2 class="border-b-2 text-base sm:text-2xl font-bold tracking-wide text-green-300 flex gap-2 justify-center">
         🌿 Pest Surveillance Programme
     </h2>
 
-    <div class=" text-base sm:text-lg leading-relaxed space-y-3">
-        <p class="text-gray-200 font-semibold  ">Objectives:</p>
+    <div class=" text-base leading-relaxed space-y-2">
+        <p class="text-gray-200 font-semibold  ">Objectives :</p>
         <p class="text-gray-400">
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star text-white me-1"></i>
             The system provides an understanding of the
             Plant Protection Service's requirements for creating a new smartphone web app to collect data on pest
             surveillance purposes.
         </p>
         <p class="text-gray-400">
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star text-white me-1"></i>
             The main purpose of the pest surveillance data collection web application is to record the density of
             target pests and damage intensity in the selected location throughout the cropping season on a regular basis
             (Weekly).
@@ -27,7 +27,7 @@
 </div>
 
 {{-- Count Cards Grid --}}
-<div class="max-w-7xl mx-auto px-4 py-6">
+<div class="max-w-7xl mx-auto px-2 py-2">
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-700 to-purple-500'" />
         <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-user-check'" :color="'from-green-700 to-green-500'" />
