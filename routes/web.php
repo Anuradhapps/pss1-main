@@ -41,7 +41,8 @@ use App\Http\Livewire\{
 |--------------------------------------------------------------------------
 */
 
-Route::get('/app', Dashboard::class);
+Route::get('/DashBoard', Dashboard::class)->name('DashBoard');
+
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -82,7 +83,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->group(fun
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/', Dashboard::class)->name('admin');
 
     // Settings
     Route::get('/settings/system-settings', Settings::class)->name('admin.settings');

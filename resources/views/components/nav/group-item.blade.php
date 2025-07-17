@@ -4,14 +4,15 @@
 ])
 
 <a href="{{ route($route) }}"
-    class="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200
+    class="flex items-center gap-2 px-4 py-2  transition-all duration-200
           {{ url()->current() == route($route)
-              ? 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-white'
-              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white' }}
-          focus:outline-none">
+              ? 'bg-gradient-to-r from-green-700 to-green-800 text-white'
+              : 'text-gray-300 hover:bg-white hover:text-green-900' }}
+          ">
 
     @if ($icon)
-        <i class="{{ $icon }} text-lg"></i>
+        <i
+            class="{{ $icon }} w-6 text-lg {{ url()->current() == route($route) ? ' text-white' : 'text-gray-500' }}"></i>
     @endif
 
     <span class="text-sm font-medium">{{ $slot }}</span>

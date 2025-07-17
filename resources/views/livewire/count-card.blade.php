@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div class="flex items-center justify-between p-3 rounded-lg shadow-md text-white bg-gradient-to-r {{ $color }} hover:scale-[1.1] transition-transform duration-300"
+    <div class="flex items-center justify-between p-2 text-white bg-gradient-to-r {{ $color }} hover:scale-[1.01] transition-transform duration-300"
         wire:key="{{ $cardName }}">
 
         <div class="flex items-center space-x-3">

@@ -19,7 +19,7 @@
 
         <div class="py-1">
             <x-dropdown-link href="https://doa.gov.lk/pps-home-sinhala/" target="_blank">
-                🌐 Go to DOA Site
+                🌐 Go to NPPS Site
             </x-dropdown-link>
         </div>
     </div>

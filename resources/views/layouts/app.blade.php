@@ -42,33 +42,41 @@
     </style>
 </head>
 
-<body class="antialiased text-white bg-gray-900">
+<body class="antialiased text-white">
     <div x-data="{ sidebarOpen: false }" x-cloak class="main-container">
-        <div class="flex flex-1">
+        <div class="flex flex-1 ">
             @auth
                 <!-- Desktop Sidebar -->
-                <aside class="hidden w-auto px-[10px] bg-green-900 shadow-lg md:block">
-                    <div class="m-1">
-                        @include('layouts.app.navigation')
-                    </div>
+                <aside class="hidden w-auto md:block bg-teal-950">
+                    @include('layouts.app.navigation')
                 </aside>
 
                 <!-- Mobile Sidebar -->
-                <aside x-show="sidebarOpen"
-                    class="fixed inset-0 z-50 w-64 transition-all duration-300 bg-green-900 shadow-xl md:hidden">
-                    <div class="flex justify-end pr-4">
-                        <button @click="sidebarOpen = false" class="text-xl text-white">
-                            <i class="fas fa-times"></i>
+                <aside x-show="sidebarOpen" x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 -translate-x-full"
+                    x-transition:enter-end="opacity-100 translate-x-0" x-transition:leave="transition ease-in duration-300"
+                    x-transition:leave-start="opacity-100 translate-x-0"
+                    x-transition:leave-end="opacity-0 -translate-x-full"
+                    class="fixed inset-0 z-50 w-64 shadow-xl md:hidden transform bg-gradient-to-r from-teal-900 to-teal-700">
+                    <div class="flex justify-end p-1">
+                        <button @click="sidebarOpen = false"
+                            class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out 
+               px-3 py-1.5 shadow-md hover:shadow-lg focus:outline-none"
+                            aria-label="Close sidebar">
+                            <i class="fas fa-times text-lg"></i>
                         </button>
                     </div>
+
                     <div class="px-1">
                         @include('layouts.app.navigation')
                     </div>
+
+
                 </aside>
             @endauth
 
             <!-- Main Content Area -->
-            <div id="main" class="flex flex-col w-full bg-gray-800">
+            <div id="main" class="flex flex-col w-full">
                 @auth
                     <!-- Topbar -->
                     <header class="flex items-center justify-between px-2 py-1 bg-teal-800 shadow-sm">
@@ -90,7 +98,7 @@
                 @endauth
 
                 <!-- Slot Content -->
-                <main class=" content">
+                <main class="content bg-gray-900">
                     {{ $slot ?? '' }}
                 </main>
 

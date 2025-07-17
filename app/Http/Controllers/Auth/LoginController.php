@@ -17,7 +17,7 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected string $redirectTo = '/';
+    protected string $redirectTo = '/DashBoard';
 
     public function __construct()
     {

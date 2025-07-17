@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Http\Livewire;
 
 use App\Models\Collector;
+use App\Models\ConductedProgram;
 use App\Models\Pest;
 use App\Models\User;
 use Livewire\Component;
@@ -17,31 +19,33 @@ class CountCard extends Component
     // Triggered when the component is mounted (loaded)
     public function mount()
     {
-        if($this->cardName == 'Users'){
+        if ($this->cardName == 'Users') {
             $this->targetCount = User::count();
         }
-        if($this->cardName == 'Pests'){
+        if ($this->cardName == 'Pests') {
             $this->targetCount = Pest::count();
         }
-        if($this->cardName == 'Collectors'){
+        if ($this->cardName == 'Collectors') {
             $this->targetCount = Collector::count();
         }
-        if($this->cardName == 'Districts'){
+        if ($this->cardName == 'Districts') {
             $this->targetCount = Collector::pluck('district')->unique()->count();
         }
-        if($this->cardName == 'Provinces'){
+        if ($this->cardName == 'Provinces') {
             $this->targetCount = Collector::pluck('province')->unique()->count();
         }
-        if($this->cardName == 'ASC'){
+        if ($this->cardName == 'ASC') {
             $this->targetCount = Collector::pluck('asc')->unique()->count();
         }
-        if($this->cardName == 'AiRanges'){
+        if ($this->cardName == 'AiRanges') {
             $this->targetCount = Collector::pluck('ai_range')->unique()->count();
         }
-        
-        
-        $this->userCount = 0;
+        if ($this->cardName == 'ConductedPrograms') {
+            $this->targetCount = ConductedProgram::count();
+        }
 
+
+        $this->userCount = 0;
     }
 
     // Render the Livewire component

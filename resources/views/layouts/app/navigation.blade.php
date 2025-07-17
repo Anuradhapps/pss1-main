@@ -1,91 +1,56 @@
-<div class="px-0">
+<div class="min-h-screen max-w-64 w-full text-white">
 
-    <!-- Sidebar Logo -->
-    <div class="flex items-center justify-center mb-2 rounded-lg shadow-sm ">
-        <a href="{{ route('admin') }}" class="flex items-center space-x-3">
+    <!-- Logo Section -->
+    <div class="flex items-center border-l-4 border-green-500 justify-center mb-6 space-x-2 px-2 py-1">
+        <a href="{{ route('DashBoard') }}" class="flex items-center space-x-2 w-full">
+            <!-- Icon -->
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-16 object-contain" />
 
-            <div class="max-w-sm bg-gray-900 rounded-lg shadow-md">
-                <p class="p-1 text-lg font-semibold text-center text-white">{{ config('app.name') }}</P>
-
-                <!-- Example 2: Responsive using wrapper -->
-                {{-- <div class="w-60">
-                    <x-logo-dark class="w-full h-auto" />
-                </div> --}}
-            </div>
-
-
+            <!-- App Name -->
+            <p class=" text-white font-mono font-bold">
+                {{ config('app.name') }}
+            </p>
         </a>
     </div>
 
 
     <!-- Navigation Links -->
-    <div class="space-y-2">
-        <x-nav.link route="admin" icon="fas fa-home"
-            class="transition-all duration-[50ms] ease-in-out 
-          ">Dashboard</x-nav.link>
+    <nav class="space-y-1 text-sm px-1">
+
+        <x-nav.link route="DashBoard" icon="fas fa-home">Dashboard</x-nav.link>
 
         @if (has_role('deputyDirector'))
-            <x-nav.link route="deputy.dashboard" icon="fas fa-clipboard"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">View Data</x-nav.link>
+            <x-nav.link route="deputy.dashboard" icon="fas fa-clipboard">View Data</x-nav.link>
         @endif
+
         @if (has_role('collector'))
-            <x-nav.link route="collector.create" icon="fas fa-user-tie"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">
+            <x-nav.link route="collector.create" icon="fas fa-user-tie">
                 <div>Rice Pest</div>
-                <div class="text-xs">Data Collector</div>
-
+                <div class="text-xs opacity-70">Data Collector</div>
             </x-nav.link>
         @endif
 
-        @if (can('view_users'))
-            <x-nav.link route="admin.users.index" icon="fas fa-users"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">Users</x-nav.link>
-            <x-nav.link route="admin.collector.records" icon="fa-solid fa-chalkboard-user"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">Collectors</x-nav.link>
-        @endif
+        @if (is_admin())
+            <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
+            <x-nav.link route="admin.collector.records" icon="fa-solid fa-chalkboard-user">Collectors</x-nav.link>
+            <x-nav.link route="report.index" icon="fas fa-file-alt">Reports</x-nav.link>
+            <x-nav.link route="chart.index" icon="fas fa-chart-bar">Data/Charts</x-nav.link>
+            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check">Conducted Programs</x-nav.link>
 
-        {{-- @if (can('view_pests'))
-            <x-nav.link route="pest.index" icon="fas fa-bug"
-                class="text-purple-300 hover:bg-purple-800">Pest</x-nav.link>
-        @endif --}}
+            <!-- Settings Dropdown -->
+            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
+                <x-nav.group-item route="admin.settings.audit-trails.index" icon="fas fa-clipboard-list">Audit
+                    Trails</x-nav.group-item>
 
-        @if (can('view_reports'))
-            <x-nav.link route="report.index" icon="fas fa-file-alt"
-                class="transition-all duration-[50ms] ease-in-out 
-         ">Reports</x-nav.link>
-        @endif
+                <x-nav.group-item route="admin.settings" icon="fas fa-sliders-h">System Settings</x-nav.group-item>
 
-        @if (can('view_data_charts'))
-            <x-nav.link route="chart.index" icon="fas fa-chart-bar"
-                class="transition-all duration-[50ms] ease-in-out 
-        ">Data/Charts</x-nav.link>
 
-            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">
-                Conducted Programs
-            </x-nav.link>
-        @endif
+                <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item>
 
-        <!-- Settings Section -->
-        @if (can('view_audit_trails') || can('view_sent_emails'))
-            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs"
-                class="transition-all duration-[50ms] ease-in-out 
-          ">
-                @if (can('view_audit_trails'))
-                    <x-nav.group-item route="admin.settings.audit-trails.index" icon="far fa-circle">Audit
-                        Trails</x-nav.group-item>
-                @endif
-                @if (is_admin())
-                    <x-nav.group-item route="admin.settings" icon="far fa-circle">System Settings</x-nav.group-item>
-                    <x-nav.group-item route="admin.settings.roles.index" icon="far fa-circle">Roles</x-nav.group-item>
-                @endif
             </x-nav.group>
         @endif
-    </div>
 
+
+
+    </nav>
 </div>

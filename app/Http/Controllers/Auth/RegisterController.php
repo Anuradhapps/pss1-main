@@ -73,6 +73,6 @@ class RegisterController extends Controller
 
         Auth::loginUsingId($user->id);
 
-        return redirect('admin');
+        return redirect('DashBoard');
     }
 }
