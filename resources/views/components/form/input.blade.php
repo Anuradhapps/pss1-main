@@ -1,6 +1,6 @@
 @props([
     'required' => false,
-    'type' => 'text',
+    'type' => '',
     'name' => '',
     'label' => '',
     'value' => '',
@@ -13,9 +13,9 @@
     }
 @endphp
 
-<div class="w-full p-2 bg-gray-700 shadow-sm rounded-xl">
+<div class="w-full">
     @if ($label !== 'none')
-        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-gray-100">
+        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-white">
             {{ $label }}
             @if ($required)
                 <span class="text-red-500">*</span>
@@ -24,23 +24,25 @@
     @endif
 
     <div class="relative">
-        <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" value="{{ $slot }}"
-            placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
+        <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" {{-- {{ $type === 'tel' ? 'pattern="[\d\s\+\-]{10,15}"" maxlength="10"' : '' }} --}}
+            value="{{ old($name, $slot ?: $value) }}" placeholder="{{ $placeholder }}" {{ $required ? 'required' : '' }}
             {{ $attributes->merge([
                 'class' =>
-                    'block w-full px-4 py-2 text-sm bg-gray-900 text-white placeholder-gray-400 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-            ]) }}>
+                    'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white border border-gray-600  shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out',
+            ]) }} />
 
+        {{-- Password Toggle --}}
         @if ($type === 'password')
             <button type="button" aria-label="Toggle password visibility"
                 onclick="togglePassword('{{ $name }}')"
-                class="absolute inset-y-0 flex items-center text-gray-400 right-3 hover:text-white focus:outline-none">
-                <i id="icon-{{ $name }}" class="text-sm fas fa-eye"></i>
+                class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white focus:outline-none">
+                <i id="icon-{{ $name }}" class="fas fa-eye text-sm"></i>
             </button>
         @endif
 
+        {{-- Error --}}
         @error($name)
-            <p class="mt-2 text-sm text-red-400 rounded-xl">{{ $message }}</p>
+            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
         @enderror
     </div>
 </div>

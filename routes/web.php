@@ -32,7 +32,6 @@ use App\Http\Livewire\{
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
-    Welcome,
 };
 
 /*

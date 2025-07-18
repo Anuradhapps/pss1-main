@@ -21,7 +21,7 @@
     );
 @endphp
 
-<div class="w-full p-2 bg-gray-700 shadow-sm rounded-xl">
+<div class="w-full">
     @if ($label !== 'none')
         <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-gray-100">
             {{ $label }}
@@ -36,7 +36,7 @@
             type="text" value="{{ $slot }}" placeholder="dd-mm-yyyy" {{ $required ? 'required' : '' }}
             {{ $attributes->merge([
                 'class' =>
-                    'block w-full px-4 py-2 text-sm bg-gray-900 text-white border border-gray-600 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white border border-gray-600  shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out',
             ]) }} />
 
         @error($name)

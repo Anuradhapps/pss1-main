@@ -1,55 +1,40 @@
 @section('title', 'Add My Info')
 
 <x-app-layout>
-    <div class="max-w-4xl mx-auto">
+    <div class="">
         <!-- Header -->
-        <div
-            class="flex flex-col items-start justify-between p-6 mb-8 space-y-4 shadow-lg bg-gradient-to-r from-green-700 to-green-800 rounded-xl md:flex-row md:items-center md:space-y-0">
-
-            <div class="flex justify-between">
-                <div class="font-extrabold text-7xl">
-                    🌾
-                </div>
-                <div>
-                    <h3 class="text-3xl font-extrabold tracking-wide text-white">
-                        Collector Create
-                    </h3>
-                    <h5 class="text-lg italic text-white">{{ $season }} Season</h5>
-                </div>
-
-            </div>
-            <div class="flex justify-end w-full sm:w-auto">
-                <a href="{{ route('collector.create') }}"
-                    class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
-                    <i class="mr-2 fas fa-arrow-left"></i> Back
-                </a>
-            </div>
-        </div>
+        <x-headings.topHeading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
+            buttonText="Back" buttonAction="{{ route('collector.create') }}" buttonIcon="fas fa-arrow-left"
+            buttonColor="red" class="bg-cyan-700" />
 
         <!-- Error Messages -->
         <x-error-massage />
 
         <!-- Form -->
-        <x-form action="{{ route('collector.store') }}" method="POST" class="space-y-6">
+        <x-form action="{{ route('collector.store') }}" method="POST" class="space-y-6 p-2">
             @csrf
 
             <!-- Phone Number -->
-            <x-form.input placeholder="Enter your phone number" name="phone_no" label="📞 Phone Number:" class="mb-4">
+            <x-form.input placeholder="Enter your phone number" type="tel" name="phone_no" label="Phone Number:"
+                class="mb-4">
                 {{ old('phone_no') }}
             </x-form.input>
 
             <!-- Region Selection -->
-            <x-form.select name="region" label="🌍 Region:" id="region" placeholder="Select Region">
+            <x-form.select name="region" label="Region:" id="region" placeholder="Select Region">
                 <option value="1" {{ old('region') == 1 ? 'selected' : '' }}>Provincial</option>
                 <option value="2" {{ old('region') == 2 ? 'selected' : '' }}>Inter Provincial</option>
                 <option value="3" {{ old('region') == 3 ? 'selected' : '' }}>Mahaweli</option>
             </x-form.select>
 
             <!-- Location Selection Component -->
-            <livewire:location-select />
+            <div class=" border border-green-300 ">
+                <livewire:location-select />
+            </div>
+
 
             <!-- Village Field -->
-            <x-form.input placeholder="Enter your village" name="village" label="🏘️ Village:" class="mb-4">
+            <x-form.input placeholder="Enter your village" name="village" label="Village:" class="mb-4">
                 {{ old('village') }}
             </x-form.input>
 
@@ -57,19 +42,19 @@
             <x-gpsFill />
 
             <!-- Rice Variety & Date Established -->
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <x-form.input placeholder="Enter your rice variety" name="rice_variety" label="🌾 Rice Variety:"
+            <div class="flex gap-4 justify-between">
+                <x-form.input placeholder="Enter your rice variety" name="rice_variety" label="Rice Variety:"
                     class="mb-4">
                     {{ old('rice_variety') }}
                 </x-form.input>
 
-                <x-form.date name="date_establish" label="📅 Date Established:" class="mb-4">
+                <x-form.date name="date_establish" label="Date Established:" class="mb-4">
                     {{ old('date_establish') }}
                 </x-form.date>
             </div>
 
             <!-- Established Method Field -->
-            <x-form.select name="established_method" label="🛠️ Established Method:" id="established_method"
+            <x-form.select name="established_method" label="Established Method:" id="established_method"
                 placeholder="Select Established Method">
 
                 <option value="Broadcast" {{ old('established_method') == 'Broadcast' ? 'selected' : '' }}>Broadcast
@@ -83,10 +68,11 @@
             </x-form.select>
 
             <!-- Save Button -->
-            <x-form.submit
-                class="w-full px-6 py-3 font-bold text-white transition duration-300 bg-green-600 rounded-xl hover:bg-green-700">
-                ✅ Save Information
-            </x-form.submit>
+
+            <x-buttons.button-1 type="submit" color="blue" href="" icon="fas fa-save" class="w-full">
+                Save
+                </x-button>
+
         </x-form>
     </div>
 

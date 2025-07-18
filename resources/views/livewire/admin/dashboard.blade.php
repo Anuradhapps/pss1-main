@@ -5,7 +5,7 @@
 
 {{-- Description Card --}}
 <div class="m-2  p-3 bg-gray-950 border border-gray-800  shadow-xl text-white space-y-5">
-    <h2 class="border-b-2 text-base sm:text-2xl font-bold tracking-wide text-green-300 flex gap-2 justify-center">
+    <h2 class="border-b-[1px]  text-base sm:text-2xl font-bold tracking-wide text-green-300 flex gap-2 justify-center">
         🌿 Pest Surveillance Programme
     </h2>
 

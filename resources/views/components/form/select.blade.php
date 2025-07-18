@@ -20,7 +20,7 @@
     @endphp
 @endif
 
-<div class="w-full p-2 mb-5 bg-gray-700 shadow-sm rounded-xl">
+<div class="w-full mb-5">
     @if ($label != 'none')
         <label for='{{ $name }}' class='block mb-2 ml-1 text-sm font-medium text-gray-100'>{{ $label }}
             @if ($required != '')
@@ -29,7 +29,7 @@
         </label>
     @endif
     <select name='{{ $name }}' id='{{ $name }}' {{ $required }}
-        {{ $attributes->merge(['class' => 'border border-gray-300 bg-gray-900 text-gray-200 pl-2  py-2 text-sm w-full rounded-xl']) }}>
+        {{ $attributes->merge(['class' => 'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white placeholder-transparent border border-gray-600  shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out']) }}>
         @if ($placeholder != '')
             <option value=''>{{ $placeholder }}</option>
         @endif

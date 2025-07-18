@@ -54,7 +54,7 @@ class CollectorController extends Controller
             $collectors = Collector::where('user_id', $id)
                 ->orderBy('rice_season_id', 'desc')
                 ->get();
-            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
+            return view('collectors.index', ['collectors' => $collectors]);
         }
     }
 
@@ -138,7 +138,8 @@ class CollectorController extends Controller
         if (has_role('collector')) {
             $id = Auth::user()->id;
             $collectors  = Collector::where('user_id', $id)->get();
-            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector Created successfully!']);
+            session()->flash('success', 'Collector Created successfully!');
+            return view('collectors.index', ['collectors' => $collectors]);
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
             return redirect(route('admin.collector.records'))->with('success', 'Collector updated successfully.');

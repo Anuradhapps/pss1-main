@@ -1,30 +1,32 @@
 <x-app-layout>
-    @if (session('success'))
-        <div class="p-4 mb-6 text-sm font-medium text-white rounded-lg shadow-lg bg-emerald-600 animate-fade-in-down"
-            role="alert">
-            🎉 {{ session('success') }}
-        </div>
-    @endif
-    <x-headings.topHeading title="Dashboard" icon="fas fa-home" class="bg-green-700" />
+
+
+
+
     <div class="container mx-auto">
         <!-- Page Header -->
-        <div
-            class="flex flex-col items-start justify-between p-4 mb-8 space-y-4 shadow-xl rounded-xl bg-gradient-to-r from-sky-900 to-sky-700 md:flex-row md:items-center md:space-y-0">
-            <h1 class="text-3xl font-extrabold tracking-wide text-white">📄 My Records</h1>
-            <div class="flex justify-end w-full sm:w-auto">
-                <a href="{{ route('collector.newCollector') }}"
-                    class="inline-flex items-center px-5 py-2 text-sm font-semibold text-white transition duration-300 bg-green-700 rounded-full shadow-md hover:bg-teal-950 hover:shadow-lg">
-                    ➕ Add Collector
-                </a>
+        <x-headings.topHeading title="My Records" subtitle="" icon="fas fa-folder-open" buttonText="Create Collector"
+            buttonAction="{{ route('collector.newCollector') }}" buttonIcon="fas fa-plus" buttonColor="blue"
+            class="bg-green-700" />
+        @if (session('success'))
+            <div class="alert-success flex items-start gap-3 p-4 mb-6 text-sm font-medium text-white border border-emerald-500 bg-emerald-600 rounded-md shadow-md"
+                role="alert">
+                <i class="fas fa-check-circle mt-1 text-white text-lg"></i>
+                <div class="flex-1">
+                    {{ session('success') }}
+                </div>
+                <button onclick="this.parentElement.remove()"
+                    class="ml-auto text-white hover:text-emerald-300 transition">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+        @endif
 
-        </div>
 
         <!-- Collector Cards -->
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 p-2">
             @foreach ($collectors as $collector)
-                <div
-                    class="p-5 transition duration-300 bg-gradient-to-br from-slate-800 via-slate-900 to-gray-900 rounded-2xl shadow-sm hover:shadow-3xl hover:scale-[1.01]">
+                <div class="p-2 transition duration-300 bg-emerald-900">
                     <div class="flex items-center justify-between mb-2">
                         <!-- Arrow Tag -->
                         <span class="inline-flex items-center">
@@ -63,34 +65,39 @@
                     </p>
 
                     <!-- Metadata -->
-                    <div class="mb-4 space-y-1 text-xs leading-snug text-slate-400">
-                        <div><span class="font-semibold text-slate-300">Created at:</span> {{ $collector->created_at }}
+                    <div class="mb-4 text-xs leading-snug text-slate-100">
+                        <div class="grid grid-cols-[auto,1fr] gap-x-2 gap-y-1">
+                            <div class="font-semibold text-slate-300">Created at:</div>
+                            <div>{{ $collector->created_at }}</div>
+
+                            <div class="font-semibold text-slate-300">Updated at:</div>
+                            <div>{{ $collector->updated_at }}</div>
+
+                            <div class="font-semibold text-slate-300">Rice Variety:</div>
+                            <div>{{ $collector->rice_variety }}</div>
+
+                            <div class="font-semibold text-slate-300">Rice Established Date:</div>
+                            <div>{{ $collector->date_establish }}</div>
+
+                            <div class="font-semibold text-slate-300">Established Method:</div>
+                            <div>{{ $collector->established_method ?? 'N/A' }}</div>
+
+                            <div class="font-semibold text-slate-300">Pest Dataset Count:</div>
+                            <div>{{ $collector->commonDataCollect->count() }}</div>
                         </div>
-                        <div><span class="font-semibold text-slate-300">Updated at:</span> {{ $collector->updated_at }}
-                        </div>
-                        <div><span class="font-semibold text-slate-300">Rice Varity:</span>
-                            {{ $collector->rice_variety }}
-                        </div>
-                        <div><span class="font-semibold text-slate-300">Rice Established Date:</span>
-                            {{ $collector->date_establish }}
-                        </div>
-                        <div><span class="font-semibold text-slate-300">Established Method:</span>
-                            {{ $collector->established_method ? $collector->established_method : 'N/A' }}
-                        </div>
-                        <div><span class="font-semibold text-slate-300">Pest Dataset Count:</span>
-                            {{ $collector->commonDataCollect->count() }}</div>
                     </div>
+
 
                     <!-- Action Buttons -->
                     <div class="grid grid-cols-2 gap-3">
-                        <a href="{{ route('collector.edit', $collector->id) }}"
-                            class="w-full px-4 py-2 text-sm font-bold text-white transition duration-200 rounded-full shadow-md bg-rose-700 hover:bg-rose-900 hover:shadow-lg">
-                            ✏️ Edit Collector
-                        </a>
-                        <a href="{{ route('pestdata.view', $collector->id) }}"
-                            class="w-full px-4 py-2 text-sm font-bold text-white transition duration-200 bg-indigo-700 rounded-full shadow-md hover:bg-indigo-900 hover:shadow-lg">
-                            🐛Pest Data
-                        </a>
+                        <x-buttons.button-1 color="red" href="{{ route('collector.edit', $collector->id) }}"
+                            icon="fas fa-edit">
+                            Edit Collector
+                            </x-button>
+                            <x-buttons.button-1 color="green" href="{{ route('pestdata.view', $collector->id) }}"
+                                icon="fas fa-bug">
+                                Pest Data
+                                </x-button>
                     </div>
                 </div>
             @endforeach
@@ -113,3 +120,11 @@
         }
     </script>
 </x-app-layout>
+<script>
+    setTimeout(() => {
+        const successMessage = document.querySelector('.alert-success');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 5000);
+</script>
