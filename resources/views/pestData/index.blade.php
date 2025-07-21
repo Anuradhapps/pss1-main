@@ -1,97 +1,86 @@
 <x-app-layout>
     <!-- Header -->
-    <div
-        class="flex flex-col items-start justify-between p-5 mb-6 shadow-lg sm:flex-row rounded-xl bg-gradient-to-r from-green-800 to-green-600">
-        <h1 class="w-full text-3xl font-extrabold tracking-wide text-center text-white sm:text-start">🐛 Pest Data
-            Overview</h1>
-        <div class="flex justify-between w-full mt-5 sm:gap-3 sm:justify-end sm:mt-0">
-
-            <a href="{{ route('pestdata.create', $collectorId) }}"
-                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 rounded-full shadow-md bg-emerald-700 hover:bg-emerald-800">
-                ➕ Add Pest Data
-            </a>
-            <a href="{{ route('collector.create') }}"
-                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full hover:bg-red-800">
-                <i class="mr-2 fas fa-arrow-left"></i> Back
-            </a>
+    <div class="p-4 bg-green-700 shadow">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-bug text-2xl text-white"></i>
+                <h1 class="text-2xl font-bold text-white">Pest Data Overview</h1>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <a href="{{ route('pestdata.create', $collectorId) }}"
+                    class="inline-flex items-center px-4 py-2 bg-blue-700 hover:bg-blue-900 text-sm font-medium text-white rounded shadow">
+                    <i class="fas fa-plus mr-2"></i> Add Pest Data
+                </a>
+                <a href="{{ route('pestdata.create', $collectorId) }}"
+                    class="inline-flex items-center px-4 py-2 bg-red-700 hover:bg-red-900 text-sm font-medium text-white rounded shadow">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </a>
+            </div>
         </div>
     </div>
 
-    <x-success-massage />
-    <x-error-massage />
+    <div class="p-2">
+        <x-success-massage />
+        <x-error-massage />
 
-    <!-- Collector Info Table  -->
-    <div class="mt-4 overflow-hidden bg-gray-900 rounded-lg shadow">
-        <table class="w-full text-sm text-left text-white">
-            <thead>
-                <tr class="text-gray-400 bg-gray-800">
-                    <th class="px-4 py-3">Field</th>
-                    <th class="px-4 py-3">Details</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-700">
-                <tr>
-                    <td class="px-4 py-1"> <span class="mr-1 text-lg">👤</span> Collector Name</td>
-                    <td class="px-4 py-1">{{ $collector->user->name }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-1"><span class="mr-1 text-lg">📌</span> Location</td>
-                    <td class="px-4 py-1">{{ $collector->getAiRange->name }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-1"><span class="mr-1 text-lg">🌾</span> Rice Variety</td>
-                    <td class="px-4 py-1">{{ $collector->rice_variety }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- Collector Info -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-white mb-6 ">
+            @foreach ([['fas fa-user', 'Collector Name', $collector->user->name], ['fas fa-map-marker-alt', 'Location', $collector->getAiRange->name], ['fas fa-seedling', 'Rice Variety', $collector->rice_variety]] as [$icon, $label, $value])
+                <div class="flex items-center gap-2 bg-orange-600 p-2 rounded">
+                    <div class="flex items-center justify-center w-10 h-10 bg-green-700 rounded-full">
+                        <i class="{{ $icon }} text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-300 p-0">{{ $label }}</p>
+                        <p class="text-base font-semibold text-white p-0">{{ $value }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="flex flex-col">
+            <!-- Pest Data Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse ($CommonData as $row)
+                    <div
+                        class="bg-gray-800 border border-gray-800 text-white p-4 rounded-lg shadow hover:shadow-xl transition">
+                        <div class="flex items-center gap-2 mb-2 text-gray-400 text-sm">
+                            <i class="fas fa-calendar-alt text-yellow-400"></i>
+                            <span>Created: {{ $row->created_at }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-gray-400 text-sm">
+                            <i class="fas fa-calendar-day text-green-400"></i>
+                            <span>Collected: {{ $row->c_date }}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="{{ route('pestdata.show', $row->id) }}"
+                                class="inline-flex items-center gap-1 px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 rounded">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            <form action="{{ route('pestdata.destroy', $row->id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this?')" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="inline-flex items-center gap-1 px-3 py-1 text-sm bg-red-600 hover:bg-red-700 rounded">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full bg-gray-800 text-gray-400 text-center p-6 rounded">
+                        <i class="fas fa-exclamation-circle text-yellow-400"></i> No pest data available.
+                    </div>
+                @endforelse
+            </div>
+
+            <!-- Chart -->
+            <div class="mt-6">
+                <x-charts.collector-pest-chart title="Pest Data This Week" :labels="['Pest A', 'Pest B', 'Pest C', 'PEST D']" :data="[10, 5, 8, 9]"
+                    icon="fas fa-chart-bar" id="weeklyPestChart" />
+            </div>
+        </div>
+
     </div>
-
-    <!-- Pest Data Table -->
-    <div class="mt-6 overflow-x-auto bg-gray-900 rounded-lg shadow">
-        <table class="w-full text-sm text-white">
-            <thead class="text-xs text-gray-400 bg-gray-800 sm:text-sm">
-                <tr>
-                    <th class="px-4 py-3">📅 Created At</th>
-                    <th class="px-4 py-3">🗓️ Collected Date</th>
-                    <th class="px-4 py-3">🔍 More Info</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-700">
-                @if (!empty($CommonData) && $CommonData->count())
-                    @foreach ($CommonData as $row)
-                        <tr class="transition duration-200 hover:bg-gray-600">
-                            <td class="px-4 py-3 ">{{ $row->created_at }}</td>
-                            <td class="px-4 py-3">{{ $row->c_date }}</td>
-                            <td class="px-4 py-3">
-                                <a href="{{ route('pestdata.show', $row->id) }}"
-                                    class="inline-block px-4 py-1 text-xs font-bold text-white transition duration-200 bg-blue-600 rounded-full hover:bg-blue-700">
-                                    View
-                                </a>
-                                <form action="{{ route('pestdata.destroy', $row->id) }}" method="POST"
-                                    class="inline-block ml-2" onsubmit="return confirmDelete()">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="px-4 py-1 text-xs font-bold text-white transition duration-200 bg-red-600 rounded-full hover:bg-red-700">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="3" class="px-4 py-6 text-center text-gray-400">🚫 No pest data available.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Confirm Delete Script -->
-    <script>
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this data? This action cannot be undone.');
-        }
-    </script>
 </x-app-layout>

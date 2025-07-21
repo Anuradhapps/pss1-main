@@ -8,7 +8,7 @@
 
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" href="{{ asset('images/LOGO.ico') }}">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -60,7 +60,7 @@
                     class="fixed inset-0 z-50 w-64 shadow-xl md:hidden transform bg-gradient-to-r from-teal-900 to-teal-700">
                     <div class="flex justify-end p-1">
                         <button @click="sidebarOpen = false"
-                            class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out 
+                            class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out
                px-3 py-1.5 shadow-md hover:shadow-lg focus:outline-none"
                             aria-label="Close sidebar">
                             <i class="fas fa-times text-lg"></i>
@@ -114,6 +114,7 @@
     </div>
 
     <script src="//unpkg.com/alpinejs" defer></script>
+
 
     @livewireScripts
     @stack('scripts')
