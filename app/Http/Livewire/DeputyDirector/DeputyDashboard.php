@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\AuditTrail;
 use App\Models\ConductedProgram;
+use App\Models\RiceSeason;
 
 class DeputyDashboard extends Component
 {
     public $district;
+    public $seasons;
+    public $selectedSeason = '';
     public $collectors;
     public $search = '';
     public $selectedAiRange = '';
@@ -32,7 +35,7 @@ class DeputyDashboard extends Component
         $this->district = District::where('name', $districtName)->firstOrFail();
 
         $this->aiRanges = AiRange::all();
-
+        $this->seasons = RiceSeason::all();
         $this->pestSummary = $this->getPestSummary();
         $this->pestChartData = $this->getPestChartData();
         $this->activeUsers = $this->getActiveUsers();
@@ -44,10 +47,11 @@ class DeputyDashboard extends Component
 
     public function getFilteredCollectorsProperty()
     {
-        return Collector::with(['user', 'getAiRange'])
+        return Collector::with(['user', 'getAiRange', 'riceSeason'])
             ->where('district', $this->district->id)
             ->when($this->search, fn($q) => $q->whereHas('user', fn($uq) => $uq->where('name', 'like', "%{$this->search}%")))
             ->when($this->selectedAiRange, fn($q) => $q->where('ai_range', $this->selectedAiRange))
+            ->when($this->selectedSeason, fn($q) => $q->where('rice_season_id', $this->selectedSeason))
             ->get();
     }
 

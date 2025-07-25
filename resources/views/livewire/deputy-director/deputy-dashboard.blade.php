@@ -35,11 +35,19 @@
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <input type="text" wire:model.debounce.300ms="search" placeholder="🔍 Search by name"
                     class="w-full sm:w-64 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500" />
+
                 <select wire:model="selectedAiRange"
                     class="w-full sm:w-48 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring focus:ring-blue-500">
                     <option value="">All AI Ranges</option>
                     @foreach ($aiRanges as $ai)
                         <option value="{{ $ai->id }}">{{ $ai->name }}</option>
+                    @endforeach
+                </select>
+                <select wire:model="selectedSeason"
+                    class="w-full sm:w-48 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring focus:ring-blue-500">
+                    <option value="">All Seasons</option>
+                    @foreach ($seasons as $season)
+                        <option value="{{ $season->id }}">{{ $season->name }}</option>
                     @endforeach
                 </select>
             </div>
