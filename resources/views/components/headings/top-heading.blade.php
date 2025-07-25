@@ -24,16 +24,22 @@
 
 <div class="p-2 {{ $class }}">
     <div class="flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-            @if ($icon)
-                <i class="{{ $icon }} text-2xl"></i>
+        <div>
+            <div class="flex items-center gap-3">
+                @if ($icon)
+                    <i class="{{ $icon }} text-2xl"></i>
+                @endif
+                <h1 class="text-2xl font-bold text-white">{{ $title }}</h1>
+            </div>
+            @if ($subtitle)
+                <p class="text-sm text-gray-300">{{ $subtitle }}</p>
             @endif
-            <h1 class="text-2xl font-bold text-white">{{ $title }}</h1>
         </div>
+
 
         @if ($buttonText)
             <a href="{{ $buttonAction }}"
-                class="inline-flex items-center px-3 py-2 text-sm font-semibold text-white {{ $buttonColorClasses }} transition">
+                class="inline-flex items-center px-4 py-2 font-semibold text-white {{ $buttonColorClasses }} transition">
                 @if ($buttonIcon)
                     <i class="{{ $buttonIcon }} mr-1"></i>
                 @endif
@@ -42,7 +48,5 @@
         @endif
     </div>
 
-    @if ($subtitle)
-        <p class="text-sm text-gray-300">{{ $subtitle }}</p>
-    @endif
+
 </div>

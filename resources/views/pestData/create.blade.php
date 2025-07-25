@@ -1,18 +1,12 @@
 <x-app-layout>
-    <div class="flex justify-between p-5 mb-6 shadow-lg rounded-xl bg-gradient-to-r from-green-800 to-green-600">
-        <h1 class="w-full text-2xl font-extrabold tracking-wide text-white sm:text-3xl text-start">🐛➕
-            Create Pest
-            Data</h1>
-        <a href="{{ route('pestdata.view', $collectorId) }}"
-            class="inline-flex items-center px-3 py-2 text-sm font-semibold text-white transition duration-300 bg-red-700 rounded-full sm:px-4 :py-2 hover:bg-red-800">
-            <i class="mr-2 fas fa-arrow-left"></i> Back
-        </a>
-    </div>
+    <x-headings.topHeading title="Create Pest Data" icon="fas fa-bug " buttonText="Back"
+        buttonAction="{{ route('pestdata.view', $collectorId) }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
+        class="bg-green-700" />
 
 
-    <x-form method="GET" action="{{ route('pestdata.store', $collectorId) }}">
+    <x-form method="GET" action="{{ route('pestdata.store', $collectorId) }}" class="m-2">
         @csrf
-        <div class="grid grid-cols-2 gap-2 mb-3">
+        <div class="grid grid-cols-2 gap-2">
             <div class="col-span-2 sm:col-span-1">
                 <x-form.date name="date_collected"
                     label="Data Collecting Date : ">{{ old('date_collected') }}</x-form.date>
@@ -56,18 +50,19 @@
 
         </div>
 
-        <div class="p-2 mb-3 transition transform border-2 border-gray-900 shadow-lg rounded-xl hover:shadow-xl">
-            <h5 class="mb-2 italic text-red-600">If you have identified the pest, Please select and enter the value.
+        <div class="p-2  transition transform border-2 border-gray-900 shadow-lg hover:shadow-xl">
+            <h5 class="mb-2 italic text-red-400">If you have identified the pest, Please click on the pest and enter the
+                value.
             </h5>
-            <span class="text-sm italic text-red-600">* SP - Sample point</span>
+            <span class="text-sm italic text-red-400">* SP - Sample point</span>
         </div>
 
         <div class="mt-2">
             <div class="mb-2">
                 <h2
-                    class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
+                    class="p-2 text-base font-bold text-white transition bg-gray-900 border border-green-400 cursor-pointer toggleButton hover:bg-gray-700">
                     Number Of Tillers</h2>
-                <div class="hidden p-4 bg-gray-300 border border-black rounded-md toggleDiv">
+                <div class="hidden p-4 border border-black rounded-md toggleDiv">
                     <input type="text" hidden name="Number_Of_Tillers" value="Number_Of_Tillers">
                     <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10">
                         @for ($i = 1; $i <= 10; $i++)
@@ -84,9 +79,9 @@
                 @if ($pest->name == 'Thrips')
                     <div class="mb-2">
                         <h2
-                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
+                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-green-400 cursor-pointer toggleButton hover:bg-gray-700">
                             {{ $pest->name }}</h2>
-                        <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
+                        <div class="hidden p-4 border border-black toggleDiv bg-gray-450">
                             <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
                             <div class="">
                                 <div class="">
@@ -117,25 +112,10 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="mb-2">
-                        <h2
-                            class="p-2 text-base font-bold text-white transition bg-gray-600 border border-gray-100 rounded-lg cursor-pointer toggleButton hover:bg-gray-500">
-                            {{ $pest->name }}</h2>
-                        <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
-                            <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">
-                            <div
-                                class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-10">
-                                <div class="col-span-1">
-                                    <x-form.input type="number" name="{{ $pest->id }}all_location" label="Code:"
-                                        min=0>{{ old($pest->id . 'all_location') }}</x-form.input>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                 @else
                     <div class="mb-2">
                         <h2
-                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-gray-100 cursor-pointer rounded-xl toggleButton hover:bg-gray-700">
+                            class="p-2 text-base font-bold text-white transition bg-gray-900 border border-green-400 cursor-pointer  toggleButton hover:bg-gray-700">
                             {{ $pest->name }}</h2>
                         <div class="hidden p-4 border border-black rounded-md toggleDiv bg-gray-450">
                             <input type="text" hidden name="{{ $pest->name }}" value="{{ $pest->name }}">

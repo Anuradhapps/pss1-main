@@ -216,6 +216,14 @@ class PestDataCollectController extends Controller
         $pestsData = PestDataCollect::where('common_data_collectors_id', '=', $Id)->get();
         return view('pestData.show', ['pestsData' => $pestsData, 'commonData' => $commonData, 'pests' => $pests]);
     }
+    public function showModal($id)
+    {
+        $commonData = CommonDataCollect::findOrFail($id);
+        $pestsData = PestDataCollect::where('common_data_collectors_id', $id)->get();
+
+        // Return only the modal content as a partial view without full layout
+        return view('pestdata.partials.modal-content', compact('commonData', 'pestsData'));
+    }
 
     public function edit($Id)
     {

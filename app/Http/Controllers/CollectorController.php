@@ -33,7 +33,46 @@ class CollectorController extends Controller
 
     public function index()
     {
-        return view('collectors.index');
+        $userId = Auth::id();
+
+        // Check if a collector exists for the current season
+        $latestSeasonCollector = Collector::where('user_id', $userId)
+            ->where('rice_season_id', $this->thisSeasonId)
+            ->latest()
+            ->first();
+
+        if (!$latestSeasonCollector) {
+            $season = $this->thisSeason['seasonName'];
+            return view('collectors.create', ['season' => $season]);
+        }
+
+        // Build query with filters
+        $query = Collector::with(['riceSeason', 'getDistrict', 'getAsCenter', 'getAiRange', 'commonDataCollect'])
+            ->where('user_id', $userId);
+
+        if (request('season')) {
+            $query->whereHas('riceSeason', fn($q) => $q->where('name', request('season')));
+        }
+
+        if (request('district')) {
+            $query->whereHas('getDistrict', fn($q) => $q->where('name', request('district')));
+        }
+
+        if (request('established')) {
+            $query->whereDate('date_establish', request('established'));
+        }
+
+        if (request('created')) {
+            $query->whereDate('created_at', request('created'));
+        }
+
+        $collectors = $query->orderByDesc('rice_season_id')->get();
+
+        return view('collectors.index', [
+            'collectors' => $collectors,
+            'seasons' => RiceSeason::all(),
+            'districts' => District::all(),
+        ]);
     }
 
     /**
@@ -51,10 +90,7 @@ class CollectorController extends Controller
             $season = $this->thisSeason['seasonName'];
             return view('collectors.create', ['season' => $season]);
         } else {
-            $collectors = Collector::where('user_id', $id)
-                ->orderBy('rice_season_id', 'desc')
-                ->get();
-            return view('collectors.index', ['collectors' => $collectors]);
+            return redirect(route('collector.index'));
         }
     }
 
@@ -136,10 +172,8 @@ class CollectorController extends Controller
 
         $collector->save();
         if (has_role('collector')) {
-            $id = Auth::user()->id;
-            $collectors  = Collector::where('user_id', $id)->get();
             session()->flash('success', 'Collector Created successfully!');
-            return view('collectors.index', ['collectors' => $collectors]);
+            return redirect(route('collector.index'));
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
             return redirect(route('admin.collector.records'))->with('success', 'Collector updated successfully.');
@@ -230,11 +264,8 @@ class CollectorController extends Controller
         $collector->established_method = $request->established_method;
         $collector->save();
         if (has_role('collector')) {
-            $id = Auth::user()->id;
-            $collectors  = Collector::where('user_id', $id)->get();
-            return view('collectors.index', ['collectors' => $collectors, 'success' => 'Collector updated successfully.']);
-
-            // return redirect()->route('collector.index', ['collectors' => $collectors])->with('success', 'Collector updated successfully.');
+            session()->flash('success', 'Collector Updated successfully!');
+            return redirect(route('collector.index'));
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
             return redirect()->route('admin.collector.records');

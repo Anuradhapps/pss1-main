@@ -22,7 +22,7 @@
 
 <div class="w-full mb-5">
     @if ($label != 'none')
-        <label for='{{ $name }}' class='block mb-2 ml-1 text-sm font-medium text-gray-100'>{{ $label }}
+        <label for='{{ $name }}' class='block mb-1 ml-1 text-sm font-medium text-gray-100'>{{ $label }}
             @if ($required != '')
                 <span class="text-red-600">*</span>
             @endif
@@ -36,7 +36,8 @@
         {{ $slot }}
     </select>
 
+    {{-- Error --}}
     @error($name)
-        <p class="p-2 mt-2 text-lg text-white bg-red-700 rounded-xl">{{ $message }}</p>
+        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
     @enderror
 </div>

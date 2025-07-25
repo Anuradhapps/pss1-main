@@ -39,6 +39,7 @@ class DeputyDashboard extends Component
         $this->newReports = $this->getNewReports();
         $this->recentActivities = $this->getRecentActivities();
         $this->recentPrograms = $this->getRecentPrograms();
+        $this->collectors;
     }
 
     public function getFilteredCollectorsProperty()
@@ -83,7 +84,9 @@ class DeputyDashboard extends Component
     public function getActiveUsers()
     {
         return Collector::where('district', $this->district->id)
-            ->whereHas('user', function($q) { $q->where('is_active', 1); })
+            ->whereHas('user', function ($q) {
+                $q->where('is_active', 1);
+            })
             ->count();
     }
 
@@ -99,7 +102,7 @@ class DeputyDashboard extends Component
     public function getRecentActivities()
     {
         // Get recent audit trails for users in this district
-        return AuditTrail::whereHas('user.collector', function($q) {
+        return AuditTrail::whereHas('user.collector', function ($q) {
             $q->where('district', $this->district->id);
         })->latest()->limit(10)->get();
     }

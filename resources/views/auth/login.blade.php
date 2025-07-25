@@ -1,105 +1,98 @@
 <x-guest-layout>
     @section('title', 'Login')
 
-    <x-auth-card class="max-w-md p-6 mx-auto text-white bg-gray-900 rounded-lg shadow-xl">
-        <!-- Top Links -->
-        <div class="flex flex-col justify-between mb-6 space-y-3 sm:flex-row sm:items-center sm:space-y-0">
-            <p class="text-sm italic text-gray-300">Don’t have an account?</p>
+    <x-auth-card class="max-w-md mx-auto p-6 sm:p-8 bg-gray-900 text-white rounded-2xl shadow-2xl space-y-6">
 
+        <!-- Header -->
+        <div class="flex items-center justify-between gap-2">
+            <p class="text-sm text-gray-400">Don't have an account?</p>
             @if (Route::has('register'))
                 <a href="{{ route('register') }}"
-                    class="inline-block px-4 py-2 text-sm font-semibold text-white transition duration-300 bg-green-600 rounded-md hover:bg-green-700 hover:shadow-md">
+                    class="px-4 py-2 text-sm font-medium rounded-lg bg-green-600 hover:bg-green-700 transition duration-300 shadow">
                     Register
                 </a>
             @endif
         </div>
 
-        <!-- Login Form -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-6" novalidate>
+        <!-- Title -->
+        <div class="text-center">
+            <h2 class="text-2xl font-bold">Welcome Back</h2>
+            <p class="text-sm text-gray-400">Log in to your account</p>
+        </div>
+
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="p-4 text-sm text-red-200 bg-red-800 border border-red-500 rounded-md animate-pulse">
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Form -->
+        <form method="POST" action="{{ route('login') }}" class="space-y-5" novalidate>
             @csrf
-
-            <p class="text-sm text-gray-300">Welcome back! Please log in to your account.</p>
-
-            @include('errors.messages')
 
             <!-- Email -->
             <div>
-                <label for="email" class="block mb-1 text-sm font-semibold text-gray-300">Email Address</label>
-                <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
-                    autocomplete="username"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="you@example.com" />
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
+                        autocomplete="username"
+                        class="w-full pl-10 pr-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="you@example.com" />
+                </div>
             </div>
 
-            <!-- Password with show/hide -->
+            <!-- Password -->
             <div>
-                <label for="password" class="block mb-1 text-sm font-semibold text-gray-300">Password</label>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
                 <div class="relative">
+                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                     <input id="password" name="password" type="password" required autocomplete="current-password"
-                        class="w-full px-4 py-2 pr-10 text-white bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your password" />
+                        class="w-full pl-10 pr-10 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="••••••••" />
                     <button type="button" id="toggle-password"
-                        class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white focus:outline-none"
-                        tabindex="-1" aria-label="Toggle password visibility">
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                        aria-label="Toggle password visibility">
                         <i class="fas fa-eye" id="toggle-password-icon"></i>
                     </button>
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="p-4 text-sm text-red-300 bg-red-800 border border-red-600 rounded-md">
-                    <ul class="list-disc list-inside">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
-
-            <!-- Remember Me and Forgot Password -->
-            <div class="flex items-center justify-between text-sm text-gray-300">
-                <label class="inline-flex items-center">
-                    <input type="checkbox" name="remember"
-                        class="text-blue-500 bg-gray-800 border-gray-600 rounded focus:ring-blue-500">
-                    <span class="ml-2">Remember me</span>
-                </label>
-
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="underline hover:text-blue-300">
-                        Forgot Password?
-                    </a>
-                @endif
+            <!-- Help -->
+            <div class="text-right text-sm text-gray-400">
+                <a href="{{ route('loginhelp') }}" class="underline hover:text-blue-400">
+                    Need help logging in ❓
+                </a>
             </div>
 
-            <!-- Submit Button -->
+            <!-- Submit -->
             <button type="submit"
-                class="w-full px-5 py-3 mt-4 text-sm font-semibold text-white transition duration-300 bg-blue-600 rounded-md hover:bg-blue-700 hover:shadow-md">
+                class="w-full py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
                 Login
             </button>
         </form>
     </x-auth-card>
 
-    <!-- FontAwesome CDN -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- Show/Hide Password Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             const toggleBtn = document.getElementById('toggle-password');
             const passwordInput = document.getElementById('password');
             const icon = document.getElementById('toggle-password-icon');
 
-            toggleBtn.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-
-                if (type === 'text') {
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
             });
         });
     </script>

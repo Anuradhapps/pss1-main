@@ -37,12 +37,12 @@
                 <label for="email" class="block mb-1 text-sm font-medium text-gray-300">Email Address</label>
                 <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus
                     placeholder="you@example.com"
-                    class="w-full px-4 py-2 text-white placeholder-gray-500 bg-gray-800 border border-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full px-4 py-2 text-white placeholder-gray-500 bg-gray-800 border border-gray-700  focus:ring-blue-500 focus:border-blue-500">
             </div>
 
             <!-- Submit Button -->
             <button type="submit"
-                class="w-full px-5 py-3 text-sm font-semibold text-white transition duration-300 bg-blue-600 rounded-md hover:bg-blue-700 hover:shadow-md">
+                class="w-full px-5 py-3 text-sm font-semibold text-white transition duration-300 bg-blue-600  hover:bg-blue-700 hover:shadow-md">
                 Send Reset Email
             </button>
 

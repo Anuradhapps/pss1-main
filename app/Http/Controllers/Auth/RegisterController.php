@@ -27,13 +27,11 @@ class RegisterController extends Controller
             'email'           => 'required|email|unique:users,email',
             'password'        => [
                 'required',
-                Password::min(3)
-                    ->uncompromised()
+                Password::min(5)
             ],
             'confirmPassword' => 'required|same:password'
         ], [
             'password.required'        => 'Password is required',
-            'password.uncompromised'   => 'The given new password has appeared in a data leak by https://haveibeenpwned.com please choose a different new password. ',
             'confirmPassword.required' => 'Confirm password is required',
             'confirmPassword.same'     => 'Confirm password and new password must match',
         ]);
@@ -73,6 +71,6 @@ class RegisterController extends Controller
 
         Auth::loginUsingId($user->id);
 
-        return redirect('DashBoard');
+        return redirect('dashboard');
     }
 }

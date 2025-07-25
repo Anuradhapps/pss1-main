@@ -3,13 +3,14 @@
 
 
 
-    <div class="container mx-auto">
+    <div>
         <!-- Page Header -->
         <x-headings.topHeading title="My Records" subtitle="" icon="fas fa-folder-open" buttonText="Create Collector"
             buttonAction="{{ route('collector.newCollector') }}" buttonIcon="fas fa-plus" buttonColor="blue"
             class="bg-green-700" />
+
         @if (session('success'))
-            <div class="alert-success flex items-start gap-3 p-4 mb-6 text-sm font-medium text-white border border-emerald-500 bg-emerald-600 rounded-md shadow-md"
+            <div class="alert-success flex items-start gap-3 p-4 my-3 text-sm font-medium text-white border border-emerald-500 bg-emerald-600  shadow-md"
                 role="alert">
                 <i class="fas fa-check-circle mt-1 text-white text-lg"></i>
                 <div class="flex-1">
@@ -22,9 +23,80 @@
             </div>
         @endif
 
+        <!-- Button to Show/Hide Filters -->
+        <div x-data="{ showFilters: false }" class="mb-4">
+            <button @click="showFilters = !showFilters"
+                class="bg-emerald-800 hover:bg-emerald-900 text-white font-semibold px-4 py-2 transition w-full sm:w-auto">
+                <i class="fas fa-filter mr-2"></i> Toggle Filters
+            </button>
+
+            <!-- Filter Form -->
+            <div x-show="showFilters" x-transition class="mt-4 bg-emerald-900 text-white p-4">
+                <form method="GET" action="{{ route('collector.index') }}"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+
+                    <!-- Rice Season -->
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Rice Season</label>
+                        <select name="season"
+                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                            <option value="">All</option>
+                            @foreach ($seasons as $season)
+                                <option value="{{ $season->name }}"
+                                    {{ request('season') == $season->name ? 'selected' : '' }}>
+                                    {{ $season->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- District -->
+                    <div>
+                        <label class="block text-sm font-medium mb-1">District</label>
+                        <select name="district"
+                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                            <option value="">All</option>
+                            @foreach ($districts as $district)
+                                <option value="{{ $district->name }}"
+                                    {{ request('district') == $district->name ? 'selected' : '' }}>
+                                    {{ $district->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Established Date -->
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Established Date</label>
+                        <input type="date" name="established" value="{{ request('established') }}"
+                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                    </div>
+
+                    <!-- Created At -->
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Created At</label>
+                        <input type="date" name="created" value="{{ request('created') }}"
+                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col gap-2 justify-end">
+                        <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 transition">
+                            Apply Filters
+                        </button>
+                        <a href="{{ route('collector.index') }}"
+                            class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 text-center transition">
+                            Reset
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 
         <!-- Collector Cards -->
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 p-2">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 p-2">
             @foreach ($collectors as $collector)
                 <div class="p-2 transition duration-300 bg-emerald-900">
                     <div class="flex items-center justify-between mb-2">

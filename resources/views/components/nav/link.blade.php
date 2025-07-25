@@ -10,8 +10,8 @@
         : 'text-gray-300 hover:bg-white hover:text-green-900';
 @endphp
 
-<a href="{{ route($route) }}" @class([
-    'flex items-center w-full px-4 py-2 text-md font-medium transition-all duration-200',
+<a href="{{ route($route) }}" @click="sidebarOpen = false" @class([
+    'flex items-center w-full px-4 py-2 text-lg sm:text-base font-medium transition-all duration-200',
     $isActive,
     $class, // Merge externally passed classes
 ])>

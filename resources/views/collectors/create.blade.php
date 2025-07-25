@@ -4,8 +4,8 @@
     <div class="">
         <!-- Header -->
         <x-headings.topHeading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
-            buttonText="Back" buttonAction="{{ route('collector.create') }}" buttonIcon="fas fa-arrow-left"
-            buttonColor="red" class="bg-cyan-700" />
+            buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
+            class="bg-cyan-700" />
 
         <!-- Error Messages -->
         <x-error-massage />
@@ -48,7 +48,7 @@
                     {{ old('rice_variety') }}
                 </x-form.input>
 
-                <x-form.date name="date_establish" label="Date Established:" class="mb-4">
+                <x-form.date name="date_establish" label="Field Establishment Date:" class="mb-4">
                     {{ old('date_establish') }}
                 </x-form.date>
             </div>

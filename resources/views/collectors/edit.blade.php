@@ -4,7 +4,7 @@
     <div class="">
         <!-- Header -->
         <x-headings.topHeading title="Collector Edit" subtitle="{{ $collector->riceSeason->name }} Season"
-            icon="fas fa-wheat-awn" buttonText="Back" buttonAction="{{ route('collector.create') }}"
+            icon="fas fa-wheat-awn" buttonText="Back" buttonAction="{{ route('collector.index') }}"
             buttonIcon="fas fa-arrow-left" buttonColor="red" class="bg-cyan-700" />
 
         <!-- Form -->

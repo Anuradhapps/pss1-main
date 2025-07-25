@@ -40,7 +40,7 @@ use App\Http\Livewire\{
 |--------------------------------------------------------------------------
 */
 
-Route::get('/DashBoard', Dashboard::class)->name('DashBoard');
+Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
 Route::middleware(['web', 'guest'])->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
@@ -57,6 +57,10 @@ Route::middleware(['web', 'guest'])->group(function () {
 
     Route::get('/join/{token}', [JoinController::class, 'index'])->name('join');
     Route::put('/join/{id}', [JoinController::class, 'update'])->name('join.update');
+
+    Route::get('/help', function () {
+        return view('help.index');
+    })->name('loginhelp');
 });
 
 /*
@@ -82,6 +86,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->group(fun
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
+
 
     // Settings
     Route::get('/settings/system-settings', Settings::class)->name('admin.settings');
@@ -138,7 +143,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('collector')->group(function () {
-    Route::get('/', Dashboard::class)->name('admin');
+
     // Dashboard & Profile
     Route::get('/', [CollectorController::class, 'index'])->name('collector.index');
     Route::get('/create', [CollectorController::class, 'create'])->name('collector.create');
@@ -159,7 +164,12 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
         Route::put('/{id}', [PestDataCollectController::class, 'update'])->name('pestdata.update');
         Route::delete('/{id}', [PestDataCollectController::class, 'destroy'])->name('pestdata.destroy');
     });
+
+    Route::get('/help', function () {
+        return view('help.index');
+    })->name('help');
 });
+
 
 
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
