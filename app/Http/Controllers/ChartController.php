@@ -94,7 +94,7 @@ class ChartController extends Controller
             if ($ascCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                $pestData = $this->avarageCalculate($ascCollectors);
+                $pestData = $this->PestDataCollectController->avarageCalculate($ascCollectors);
                 $pestData['as_center'] = $request->as_center;
                 $pestData['season'] = $request->season;
                 return view('chart.showASC', ['chart' => $chartASC->build($pestData)]);
@@ -104,7 +104,7 @@ class ChartController extends Controller
             if ($districtCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                $pestData = $this->avarageCalculate($districtCollectors);
+                $pestData = $this->PestDataCollectController->avarageCalculate($districtCollectors);
                 $pestData['district'] = $request->district;
                 $pestData['season'] = $request->season;
 
@@ -116,7 +116,7 @@ class ChartController extends Controller
             if ($provinceCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                $pestData = $this->avarageCalculate($provinceCollectors);
+                $pestData = $this->PestDataCollectController->avarageCalculate($provinceCollectors);
                 $pestData['province'] = $request->province;
                 $pestData['season'] = $request->season;
                 return view('chart.showProvince', ['chart' => $chartProvince->build($pestData)]);
@@ -127,7 +127,7 @@ class ChartController extends Controller
             if ($seasonCollectors->count() == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             } else {
-                $pestData = $this->avarageCalculate($seasonCollectors);
+                $pestData = $this->PestDataCollectController->avarageCalculate($seasonCollectors);
                 $pestData['season'] = $request->season;
                 return view('chart.showSeason', ['chart' => $chartSeason->build($pestData)]);
             }
@@ -151,7 +151,7 @@ class ChartController extends Controller
                 $collectors = Collector::where('rice_season_id', '=', $season->id)->get();
                 if (!$collectors->count() == 0) {
                     $collectorCount += $collectors->count();
-                    $pestData = $this->avarageCalculate($collectors);
+                    $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
@@ -169,7 +169,7 @@ class ChartController extends Controller
                 $collectors = Collector::where('rice_season_id', '=', $season->id)->where('province', '=', $province->id)->get();
                 if (!$collectors->count() == 0) {
                     $collectorCount += $collectors->count();
-                    $pestData = $this->avarageCalculate($collectors);
+                    $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
@@ -189,7 +189,7 @@ class ChartController extends Controller
                 $collectors = Collector::where('rice_season_id', '=', $season->id)->where('district', '=', $district->id)->get();
                 if (!$collectors->count() == 0) {
                     $collectorCount += $collectors->count();
-                    $pestData = $this->avarageCalculate($collectors);
+                    $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
@@ -205,88 +205,6 @@ class ChartController extends Controller
     }
 
 
-    public function avarageCalculate($collectors)
-    {
-
-        if ($collectors->count() == 0) {
-            return redirect()->route('chart.index')->with('error', 'No collectors found');
-        }
-        $noOfTillers = 0;
-        $thrips = 0;
-        $gallMidge = 0;
-        $leaffolder = 0;
-        $yellowStemBorer = 0;
-        $bphWbph = 0;
-        $paddyBug = 0;
-
-        $thripscount = 0;
-
-        foreach ($collectors as $collector) {
-
-            foreach ($collector->commonDataCollect as $commonData) {
-                foreach ($commonData->pestDataCollect as $pestData) {
-
-                    if ($pestData->pest_name == 'Number_Of_Tillers') {
-                        $noOfTillers += $pestData->total;
-                    } elseif ($pestData->pest_name == 'Thrips') {
-                        $thripscount++;
-                        $thrips += $pestData->code;
-                    } elseif ($pestData->pest_name == 'Gall Midge') {
-                        $gallMidge += $pestData->total;
-                    } elseif ($pestData->pest_name == 'Leaffolder') {
-                        $leaffolder += $pestData->total;
-                    } elseif ($pestData->pest_name == 'Yellow Stem Borer') {
-                        $yellowStemBorer += $pestData->total;
-                    } elseif ($pestData->pest_name == 'BPH+WBPH') {
-                        $bphWbph += $pestData->total;
-                    } elseif ($pestData->pest_name == 'Paddy Bug') {
-                        $paddyBug += $pestData->total;
-                    }
-                }
-            }
-        }
-        $possibleCodes = [0, 1, 3, 5, 7, 9];
-        $thripsC = 0;
-        if ($thripscount == 0) {
-            $thripsC = 0;
-        } else {
-            $thripsC = $thrips / $thripscount;
-        }
-
-
-        $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
-        $gallMidgeCode = 0;
-        $leaffolderCode = 0;
-        $yellowStemBorerCode = 0;
-        $bphWbphCode = 0;
-        $paddyBugCode = 0;
-        if ($noOfTillers != 0) {
-            $gallMidgeCode = $this->PestDataCollectController->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
-            $leaffolderCode = $this->PestDataCollectController->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
-            $yellowStemBorerCode = $this->PestDataCollectController->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
-            $bphWbphCode = $this->PestDataCollectController->getBphWbphCode($noOfTillers, $bphWbph)['code'];
-            $paddyBugCode = $this->PestDataCollectController->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
-        }
-
-        return [
-            "pests" => [
-                "thrips" => $thripsCode,
-                "gallMidge" => $gallMidgeCode,
-                "leaffolder" => $leaffolderCode,
-                "yellowStemBorer" => $yellowStemBorerCode,
-                "bphWbph" => $bphWbphCode,
-                "paddyBug" => $paddyBugCode
-            ]
-        ];
-    }
-
-    // Function to find the nearest number
-    function getNearestCode($value, $possibleCodes)
-    {
-        return array_reduce($possibleCodes, function ($carry, $item) use ($value) {
-            return (abs($item - $value) < abs($carry - $value)) ? $item : $carry;
-        }, $possibleCodes[0]);
-    }
 
     function chartAiShow($id, ChartAi $chartAi)
     {

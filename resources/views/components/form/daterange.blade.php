@@ -22,9 +22,9 @@
     );
 @endphp
 
-<div class="w-full mb-5">
+<div class="w-full">
     @if ($label !== 'none')
-        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-gray-100">
+        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-white">
             {{ $label }}
             @if ($required)
                 <span class="text-red-500">*</span>
@@ -34,15 +34,15 @@
 
     <div class="relative">
         <input x-data x-init="flatpickr($refs.input, {{ json_encode((object) $options) }})" x-ref="input" type="text" id="{{ $name }}"
-            name="{{ $name }}" value="{{ $slot }}" {{ $required ? 'required' : '' }}
+            name="{{ $name }}" value="{{ old($name, $value ?: $slot) }}" placeholder="Select date range"
+            {{ $required ? 'required' : '' }}
             {{ $attributes->merge([
-                'class' => 'w-full px-4 py-2 text-sm bg-gray-700 border border-gray-600 rounded-lg
-                                text-white placeholder-gray-300 focus:outline-none focus:ring-2
-                                focus:ring-purple-500 focus:border-purple-500',
+                'class' =>
+                    'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white border border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out',
             ]) }} />
 
         @error($name)
-            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
         @enderror
     </div>
 </div>

@@ -9,7 +9,7 @@
 ])
 
 <div class="bg-gray-900 border border-gray-700 shadow-lg p-6 w-full max-w-4xl mx-auto text-white">
-    <h2 class="text-xl font-semibold flex items-center gap-3 mb-4 text-white">
+    <h2 class="text-xl font-semibold flex items-center gap-3 mb-4">
         <i class="{{ $icon }} text-blue-400 text-2xl"></i> {{ $title }}
     </h2>
 
@@ -22,7 +22,11 @@
             const canvas = document.getElementById('{{ $id }}');
             const ctx = canvas.getContext('2d');
 
-            // Prevent growing chart bug
+            const labels = {!! json_encode($labels) !!};
+            const data = {!! json_encode($data) !!};
+            const maxY = Math.max(...data) + 1;
+
+            // Destroy previous chart instance if it exists
             if (canvas.chartInstance) {
                 canvas.chartInstance.destroy();
             }
@@ -30,10 +34,10 @@
             canvas.chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: {!! json_encode($labels) !!},
+                    labels: labels,
                     datasets: [{
-                        label: 'Pest Count',
-                        data: {!! json_encode($data) !!},
+                        label: 'Pest Code',
+                        data: data,
                         backgroundColor: '{{ $bgColor }}',
                         borderColor: '{{ $borderColor }}',
                         borderWidth: 1,
@@ -47,8 +51,10 @@
                     scales: {
                         y: {
                             beginAtZero: true,
+                            max: maxY,
                             ticks: {
-                                color: '#d1d5db' // Tailwind gray-300
+                                color: '#d1d5db',
+                                stepSize: 1
                             },
                             grid: {
                                 color: 'rgba(255,255,255,0.1)'
@@ -66,11 +72,11 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#e5e7eb' // Tailwind gray-200
+                                color: '#e5e7eb'
                             }
                         },
                         tooltip: {
-                            backgroundColor: '#1f2937', // Tailwind gray-800
+                            backgroundColor: '#1f2937',
                             titleColor: '#fff',
                             bodyColor: '#d1d5db'
                         }

@@ -28,7 +28,7 @@
         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
         x-transition:leave-end="opacity-0 scale-95 translate-y-4" style="display: none;">
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden {{ $height }} max-w-full"
+        <div class="bg-white dark:bg-gray-800  shadow-xl overflow-hidden {{ $height }} max-w-full"
             @click.away="on = false">
 
             <div class="flex flex-col h-full">

@@ -7,8 +7,8 @@ namespace App\Http\Livewire\Admin\Users;
 use App\Http\Livewire\Base;
 use App\Mail\Users\SendInviteMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\WithPagination;
 
@@ -19,28 +19,56 @@ use function view;
 class Users extends Base
 {
     use WithPagination;
+    protected $paginationTheme = 'tailwind';
+    public $paginate;
+    public $checked = [];
+    public $name = '';
+    public $email = '';
+    public $joined = '';
+    public $sortField = 'name';
+    public $sortAsc = true;
+    public $openFilter = false;
+    public $sentEmail = false;
 
-    public    $paginate   = '';
-    public    $checked    = [];
-    public    $name       = '';
-    public    $email      = '';
-    public    $joined     = '';
-    public    $sortField  = 'name';
-    public    $sortAsc    = true;
-    public    $openFilter = false;
-    public    $sentEmail  = false;
-    protected $listeners  = ['refreshUsers' => '$refresh'];
+    protected $listeners = ['refreshUsers' => '$refresh'];
+
+    public function mount(): void
+    {
+        $this->paginate = 12;
+    }
 
     public function render(): View
     {
         abort_if_cannot('view_users');
 
-        return view('livewire.admin.users.index');
-    }
+        $users = User::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
 
-    public function builder()
-    {
-        return User::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+        if ($this->name) {
+            $users->where('name', 'like', '%' . $this->name . '%');
+        }
+
+        if ($this->email) {
+            $this->openFilter = true;
+            $users->where('email', 'like', '%' . $this->email . '%');
+        }
+
+        if ($this->joined) {
+            $this->openFilter = true;
+            $parts = explode(' to ', $this->joined);
+            if (count($parts) === 2) {
+                try {
+                    $from = Carbon::parse($parts[0])->startOfDay();
+                    $to   = Carbon::parse($parts[1])->endOfDay();
+                    $users->whereBetween('created_at', [$from, $to]);
+                } catch (\Exception $e) {
+                    // invalid date range
+                }
+            }
+        }
+
+        return view('livewire.admin.users.index', [
+            'users' => $users->paginate($this->paginate),
+        ]);
     }
 
     public function sortBy(string $field): void
@@ -54,55 +82,26 @@ class Users extends Base
         $this->sortField = $field;
     }
 
-    public function users()
-    {
-        $query = $this->builder();
-
-        if ($this->name) {
-            $query->where('name', 'like', '%'.$this->name.'%');
-        }
-
-        if ($this->email) {
-            $this->openFilter = true;
-            $query->where('email', 'like', '%'.$this->email.'%');
-        }
-
-        if ($this->joined) {
-            $this->openFilter = true;
-            $parts            = explode(' to ', $this->joined);
-            if (isset($parts[1])) {
-                $from = Carbon::parse($parts[0])->format('Y-m-d');
-                $to   = Carbon::parse($parts[1])->format('Y-m-d');
-                $query->whereBetween('created_at', [$from, $to]);
-            }
-        }
-
-        return $query->paginate($this->paginate);
-    }
-
     public function resetFilters(): void
     {
         $this->reset();
+        $this->paginate = 10; // Restore default
     }
 
     public function deleteUser($id): void
     {
-        // abort_if_cannot('delete_user');
-            
         $user = User::findOrFail($id);
 
-        // Check if the user is deleted
         if ($user->forceDelete()) {
             $this->dispatchBrowserEvent('close-modal');
         } else {
-            dd('Delete operation failed'); // Debugging line
+            dd('Delete operation failed');
         }
     }
-    
 
     public function resendInvite($id): void
     {
-        $user = $this->builder()->findOrFail($id);
+        $user = User::findOrFail($id);
         Mail::send(new SendInviteMail($user));
 
         $user->invited_at = now();
