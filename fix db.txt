@@ -1,0 +1,4 @@
+php artisan migrate --path=/database/migrations/2025_07_07_132719_create_conducted_programss_table.php 
+php artisan migrate --path=/database/migrations/2025_07_29_152229_add_established_method_to_collectors_table.php
+php artisan db:seed --class=DeputyDirectorSeeder
+
