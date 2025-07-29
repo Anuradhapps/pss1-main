@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('gps_long')->nullable(true);
             $table->string('rice_variety')->nullable(true);
             $table->date('date_establish')->nullable(true);
-            $table->string('established_method')->nullable(true);
             $table->timestamps();
         });
     }

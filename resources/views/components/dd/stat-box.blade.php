@@ -10,7 +10,7 @@
     };
 @endphp
 
-<div class="bg-gray-800 p-4 rounded-md text-center shadow">
-    <div class="text-xl font-bold {{ $colorClass }}">{{ $value }}</div>
+<div class="bg-gray-800 p-2 rounded-md text-center shadow">
+    <div class="text-2xl font-bold {{ $colorClass }}">{{ $value }}</div>
     <div class="text-gray-300">{{ $title }}</div>
 </div>

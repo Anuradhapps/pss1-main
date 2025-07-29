@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\DeputyDirector;
 
+use App\Http\Controllers\PestDataCollectController;
 use App\Http\Controllers\RiceSeasonController;
 use App\Models\AiRange;
 use App\Models\As_center;
@@ -19,22 +20,41 @@ use Livewire\WithPagination;
 class DeputyDashboard extends Component
 {
     use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
     public $district;
     public $seasons;
+
+
+    // Advance Search------------------
     public $selectedSeason = '';
-    public $collectors;
     public $search = '';
     public $selectedAiRange = '';
+    public $searchNumber = null;
+    //---------------------------------
+
+    public $selectedCollector = null;  // Will hold the collector data
+    public $showModal = false;         // Control modal visibility
+
+
+    public $pestData = [];
+
     public $aiRanges = [];
     public $as_centers = [];
     public $pestChartData = [];
     public $totalUsersCount = 0;
     public $seasonUserCount = 0;
-    public $newReports = 0;
     public $recentActivities = [];
     public $recentPrograms = [];
 
-    protected $queryString = ['search', 'selectedAiRange', 'selectedSeason'];
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'selectedAiRange' => ['except' => ''],
+        'selectedSeason' => ['except' => ''],
+        'searchNumber' => ['except' => null],
+    ];
+
 
     public function mount()
     {
@@ -45,8 +65,8 @@ class DeputyDashboard extends Component
         $this->aiRanges = AiRange::whereIn('as_center_id', $this->as_centers)->get();
         $this->seasons = RiceSeason::all();
 
-        $season = new RiceSeasonController;
-        $currentSeason = $season->getSeasson()['seasonId'] ?? null;
+        $seasonController = new RiceSeasonController;
+        $currentSeason = $seasonController->getSeasson()['seasonId'] ?? null;
 
         if ($currentSeason) {
             $this->seasonUserCount = $this->getSeasonUserCount($currentSeason)->count();
@@ -54,11 +74,32 @@ class DeputyDashboard extends Component
 
         $this->pestChartData = $this->getPestChartData();
         $this->totalUsersCount = $this->getTotalUsers()->count();
-        $this->newReports = $this->getNewReports();
         $this->recentActivities = $this->getRecentActivities();
         $this->recentPrograms = $this->getRecentPrograms();
     }
+    public function resetFilters()
+    {
+        $this->reset(['search', 'selectedAiRange', 'selectedSeason', 'searchNumber']);
+        $this->resetPage(); // reset pagination to page 1 if using pagination
+    }
 
+    // Load collector details by ID and show modal
+    public function viewCollector($collectorId)
+    {
+        $this->selectedCollector = Collector::with(['user', 'getAiRange', 'riceSeason', 'commonDataCollect', 'region'])->find($collectorId);
+        $this->showModal = true;
+        // Call average calculation (assuming it accepts a single collector model or ID)
+        $this->pestData = app(PestDataCollectController::class)->avarageCalculate(collect([$this->selectedCollector]));
+    }
+    // Close modal
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->selectedCollector = null;
+    }
+
+
+    // Computed property for filtered collectors
     public function getFilteredCollectorsProperty()
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason'])
@@ -68,7 +109,8 @@ class DeputyDashboard extends Component
             })
             ->when($this->selectedAiRange, fn($q) => $q->where('ai_range', $this->selectedAiRange))
             ->when($this->selectedSeason, fn($q) => $q->where('rice_season_id', $this->selectedSeason))
-            ->get();
+            ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
+            ->paginate(5);
     }
 
     public function getPestChartData()
@@ -100,7 +142,7 @@ class DeputyDashboard extends Component
             ->get();
     }
 
-    public function getNewReports()
+    public function getNewReportsProperty()
     {
         return PestDataCollect::join('common_data_collects', 'pest_data_collects.common_data_collectors_id', '=', 'common_data_collects.id')
             ->join('collectors', 'common_data_collects.collector_id', '=', 'collectors.id')
@@ -122,6 +164,26 @@ class DeputyDashboard extends Component
             ->orderByDesc('conducted_date')
             ->limit(5)
             ->get();
+    }
+
+    // Reset pagination when filters update
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+    public function updatedSearchNumber()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSelectedAiRange()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSelectedSeason()
+    {
+        $this->resetPage();
     }
 
     public function render()
