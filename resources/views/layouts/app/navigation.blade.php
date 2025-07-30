@@ -22,6 +22,9 @@
         @if (has_role('deputyDirector'))
             <x-nav.link route="deputy.dashboard" icon="fas fa-clipboard">View Data</x-nav.link>
         @endif
+        @if (has_role('extensionAndTrainingDirector'))
+            <x-nav.link route="extensionAndTrainingDirector.dashboard" icon="fas fa-clipboard">View Data</x-nav.link>
+        @endif
 
         @if (has_role('collector'))
             <x-nav.link route="collector.index" icon="fas fa-user-tie">

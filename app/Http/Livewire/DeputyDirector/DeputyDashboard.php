@@ -176,7 +176,7 @@ class DeputyDashboard extends Component
         $this->resetPage();
     }
 
-    public function updatedSelectedAiRange()
+    public function updatedSelectedDistrict()
     {
         $this->resetPage();
     }

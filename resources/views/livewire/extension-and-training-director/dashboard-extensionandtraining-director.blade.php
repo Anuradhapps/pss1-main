@@ -1,55 +1,67 @@
-@section('title', 'DD-Dashboard')
+@section('title', 'Extension And Training Director - Dashboard')
 
 <div>
-    <x-headings.topHeading title="{{ $district->name }} District Dashboard" icon="fas fa-clipboard"
+    <x-headings.topHeading title="Inter-Provincial Dashboard" icon="fas fa-clipboard"
         class="bg-gradient-to-r from-green-900 to-green-900 shadow-md" />
 
     <div class="p-2 space-y-2 bg-gray-900 text-white min-h-screen text-sm">
-
         <!-- Quick Stats -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
-            <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
-            <x-dd.stat-box color="red" title="Urgent Alerts" value="-" />
-            <x-dd.stat-box color="blue" title="New Reports" :value="$newReports" />
-        </div>
+            <x-dd.stat-box color="yellow" title="This Season Collectors" :value="$seasonUserCount" />
 
+            @if ($selectedSeason || $selectedDistrict)
+                <div
+                    class="bg-gray-800 text-white  p-4 flex items-center justify-between max-w-full sm:max-w-none sm:w-auto rounded-md">
+                    <div class="text-sm font-semibold uppercase tracking-wide text-gray-300">
+                        {{ \App\Models\District::find($selectedDistrict)?->name ?? '' }}
+
+                        {{ $selectedSeasonName }} Collectors
+                    </div>
+                    <div
+                        class="ml-4 inline-flex items-center justify-center w-10 h-10 rounded-full  text-red-100 font-bold text-2xl ">
+                        {{ $selectedSeasonUserCount }}
+                    </div>
+                </div>
+            @endif
+
+        </div>
         <!-- Filter + User Table -->
         <div class="bg-gray-800 p-2 shadow-md">
-            <div class="flex flex-col  justify-between items-center gap-2">
-                <h2 class="text-xl font-semibold text-white m-0 p-0 w-full"><i
-                        class="fa-solid fa-users text-green-500 me-2"></i>Users
-                    in
-                    {{ $district->name }} District</h2>
+            <div class="flex flex-col justify-between items-center gap-2">
 
-                <div class="flex flex-wrap sm:justify-end gap-3 w-full sm:w-auto">
+                <div class="flex flex-wrap sm:justify-end gap-3 w-full sm:w-auto items-center">
                     <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name"
-                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400" />
+                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
                     <input type="number" wire:model.debounce.500ms="searchNumber" placeholder="Search by Phone Number"
-                        class="w-full sm:w-[31ch] px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400" />
+                        class="w-full sm:w-[31ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
 
-                    <select wire:model="selectedAiRange"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600  text-white">
-                        <option value="">All AI Ranges</option>
-                        @foreach ($aiRanges as $ai)
-                            <option value="{{ $ai->id }}">{{ $ai->name }}</option>
+                    <select wire:model="selectedDistrict"
+                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
+                        <option value="">All Districts</option>
+                        @foreach ($districts as $district)
+                            <option value="{{ $district->id }}">{{ $district->name }}</option>
                         @endforeach
                     </select>
 
                     <select wire:model="selectedSeason"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600  text-white">
+                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
                         <option value="">All Seasons</option>
                         @foreach ($seasons as $season)
                             <option value="{{ $season->id }}">{{ $season->name }}</option>
                         @endforeach
                     </select>
+
                     <!-- Reset button -->
                     <button wire:click="resetFilters"
-                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white ">Reset</button>
+                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white whitespace-nowrap">Reset</button>
+
+
                 </div>
 
-
             </div>
+
+
 
 
             <!-- Table for desktop (sm and up) -->
@@ -124,7 +136,7 @@
             </div>
 
 
-            @include('livewire.deputy-director.collectorModel')
+            @include('livewire.extension-and-training-director.collectorModel')
 
 
             <!-- Cards for mobile (below sm) -->
@@ -174,7 +186,6 @@
 
 
         </div>
-
         <!-- Charts and Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-dd.card title="📝 Recent Activities">
@@ -189,74 +200,35 @@
                 </ul>
             </x-dd.card>
 
-            <x-dd.card title="🐛 Pest Counts by Type">
-                <div class="h-64">
-                    <canvas id="pestChart" class="w-full h-full"></canvas>
-                </div>
+            <x-dd.card title="📌Locations marked on the map represent where collectors gathered data">
+                <div id="map" style="height: 500px; width: 100%;"></div>
 
-                <script>
-                    Livewire.on('refreshChart', () => {
-                        const ctx = document.getElementById('pestChart').getContext('2d');
-                        new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: @json($pestChartData->pluck('name')),
-                                datasets: [{
-                                    label: 'Total Pests Counted',
-                                    data: @json($pestChartData->pluck('total_count')),
-                                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
-                                    borderColor: 'rgba(59, 130, 246, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    });
-                </script>
-            </x-dd.card>
-
-            <x-dd.card title="Recent Conducted Programs">
-                <ul class="space-y-2 text-gray-300 text-sm">
-                    @forelse ($recentPrograms as $program)
-                        <li>
-                            <strong class="text-white">{{ $program->program_name }}</strong> –
-                            <span class="text-gray-500">{{ $program->conducted_date }}</span>
-                            <span class="ml-2">Participants: {{ $program->participants_count }}</span>
-                        </li>
-                    @empty
-                        <li>No recent programs found.</li>
-                    @endforelse
-                </ul>
-            </x-dd.card>
-
-            <x-dd.card title="System Logs">
-                <ul class="text-gray-400 space-y-1 text-xs font-mono">
-                    @forelse ($recentActivities as $log)
-                        <li>[{{ $log->created_at }}] - {{ $log->title }}: {{ $log->user->name ?? 'N/A' }}</li>
-                    @empty
-                        <li>No logs found.</li>
-                    @endforelse
-                </ul>
             </x-dd.card>
         </div>
 
-        <!-- Actions -->
-        <div class="flex flex-wrap gap-3 pt-4">
-            <a href="#" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white ">⚙️ Manage
-                Users</a>
-            <a href="#" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white ">📑 View
-                Reports</a>
-            <a href="#" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white ">📚 View Logs</a>
-            <a href="#" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white ">➕ Add Report</a>
-        </div>
+
+
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
-</div>
+
+            const collectors = @json($this->collectorsLocation);
+
+            // Default center (Sri Lanka)
+            const map = L.map('map').setView([7.8731, 80.7718], 8);
+
+            // Add OpenStreetMap tile layer (free & no API key)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add markers
+            collectors.forEach(collector => {
+                const marker = L.marker([collector.lat, collector.lng]).addTo(map);
+                marker.bindPopup(
+                    `<strong>${collector.user_name}</strong><br>AI Range: ${collector.ai_range}<br>Rice Variety: ${collector.rice_variety}`
+                );
+            });
+        });
+    </script>

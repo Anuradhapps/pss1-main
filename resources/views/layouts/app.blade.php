@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('styles')
     @livewireStyles
@@ -209,7 +209,7 @@
     <script>
         AOS.init();
     </script>
-
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     @livewireScripts
     @stack('scripts')
 </body>

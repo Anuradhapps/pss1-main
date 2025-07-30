@@ -9,10 +9,8 @@ use App\Http\Controllers\{
     Auth\JoinController,
     Auth\TwoFaController,
     CollectorController,
-    CommonDataCollectController,
     PestDataCollectController,
     PestController,
-    ExportController,
     ReportController,
     UserController,
     ChartController
@@ -32,6 +30,7 @@ use App\Http\Livewire\{
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
+    extensionAndTrainingDirector\DashboardExtensionandtrainingDirector,
 };
 
 /*
@@ -174,4 +173,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
     Route::get('/', DeputyDashboard::class)->name('deputy.dashboard');
+});
+
+
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector'])->prefix('extensionAndTrainingDirector')->group(function () {
+    Route::get('/', DashboardExtensionandtrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });

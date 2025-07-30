@@ -18,7 +18,7 @@ class DeputyDirectorSeeder extends Seeder
             ['name' => 'deputyDirector'],
             ['label' => 'Deputy Director']
         );
-        // Create deputy director accounts for each district
+
         $deputyDirectorRole = Role::where('name', 'deputyDirector')->first();
         foreach (\App\Models\district::all() as $district) {
             $districtNameNoSpace = preg_replace('/\s+/', '', $district->name);
