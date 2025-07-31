@@ -10,7 +10,10 @@
     };
 @endphp
 
-<div class="bg-gray-800 p-2 rounded-md text-center shadow">
-    <div class="text-2xl font-bold {{ $colorClass }}">{{ $value }}</div>
-    <div class="text-gray-300">{{ $title }}</div>
+<div
+    {{ $attributes->merge(['class' => 'bg-gray-900 p-3 rounded-md text-center shadow-sm border border-gray-700 hover:shadow-md transition duration-300 ease-in-out cursor-default select-none']) }}>
+    <div class="text-3xl font-extrabold {{ $colorClass }} leading-tight">{{ $value }}</div>
+    <div class="mt-2 text-sm text-gray-400 font-semibold uppercase tracking-wide">
+        {{ $title }}
+    </div>
 </div>

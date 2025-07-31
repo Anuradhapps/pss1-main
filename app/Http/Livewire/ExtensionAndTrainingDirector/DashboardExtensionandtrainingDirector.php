@@ -61,6 +61,7 @@ class DashboardExtensionAndTrainingDirector extends Component
         $this->districts = $this->getDistricts();
 
 
+
         $this->totalUsersCount = $this->getTotalUsers()->count();
         $this->updatedSelectedSeason($this->selectedSeason);
     }
@@ -133,27 +134,13 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
             ->paginate(5);
     }
-    public function getCollectorsLocationProperty()
+    public function getCollectorsProperty()
     {
-        $collectors = Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
+        return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
             ->where('region_id', $this->regionId)
-            ->when($this->search, fn($q) => $q->whereHas('user', fn($q2) => $q2->where('name', 'like', "%{$this->search}%")))
-            ->when($this->selectedDistrict, fn($q) => $q->where('district', $this->selectedDistrict))
-            ->when($this->selectedSeason, fn($q) => $q->where('rice_season_id', $this->selectedSeason))
-            ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
             ->get();
-
-        // Return only GPS latitude, longitude, user name, and AI range name
-        return $collectors->map(function ($collector) {
-            return [
-                'lat' => $collector->gps_lati,
-                'lng' => $collector->gps_long,
-                'user_name' => $collector->user->name,
-                'ai_range' => $collector->getAiRange->name,
-                'rice_veriety' => $collector->rice_veriety,
-            ];
-        });
     }
+
 
 
     public function getFilteredCollectorsCount()

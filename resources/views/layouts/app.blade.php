@@ -13,6 +13,11 @@
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Add inside your HTML head or before the map script -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('styles')
     @livewireStyles
@@ -192,17 +197,26 @@
 
     <script>
         const loader = document.getElementById('fullScreenLoader');
+        const mapContainer = document.getElementById('map-container');
 
+        // Listen when page is unloading (show loader, hide map)
         window.addEventListener('beforeunload', () => {
             loader.classList.remove('hidden');
+            mapContainer.classList.add('hidden');
         });
 
+        // When page is loaded
         window.addEventListener('load', () => {
             setTimeout(() => {
                 loader.classList.add('hidden');
+                mapContainer.classList.remove('hidden');
+
+                // ✅ Only initialize map AFTER it's visible
+                initMap();
             }, 300);
         });
     </script>
+
 
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>

@@ -238,13 +238,7 @@
             </x-dd.card>
 
             <x-dd.card title="System Logs">
-                <ul class="text-gray-400 space-y-1 text-xs font-mono">
-                    @forelse ($recentActivities as $log)
-                        <li>[{{ $log->created_at }}] - {{ $log->title }}: {{ $log->user->name ?? 'N/A' }}</li>
-                    @empty
-                        <li>No logs found.</li>
-                    @endforelse
-                </ul>
+                <livewire:map-view :collectors="$this->collectors" />
             </x-dd.card>
         </div>
 

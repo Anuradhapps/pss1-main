@@ -455,7 +455,16 @@ class PestDataCollectController extends Controller
     {
 
         if ($collectors->count() == 0) {
-            return redirect()->route('chart.index')->with('error', 'No collectors found');
+            return [
+                "pests" => [
+                    "thrips" => 0,
+                    "gallMidge" => 0,
+                    "leaffolder" => 0,
+                    "yellowStemBorer" => 0,
+                    "bphWbph" => 0,
+                    "paddy88Bug" => 0
+                ]
+            ];
         }
         $noOfTillers = 0;
         $thrips = 0;

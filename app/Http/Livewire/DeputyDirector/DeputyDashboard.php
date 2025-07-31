@@ -97,6 +97,12 @@ class DeputyDashboard extends Component
         $this->showModal = false;
         $this->selectedCollector = null;
     }
+    public function getCollectorsProperty()
+    {
+        return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
+            ->where('district', $this->district->id)
+            ->get();
+    }
 
 
     // Computed property for filtered collectors

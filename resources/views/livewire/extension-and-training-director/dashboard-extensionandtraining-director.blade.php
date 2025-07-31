@@ -6,38 +6,41 @@
 
     <div class="p-2 space-y-2 bg-gray-900 text-white min-h-screen text-sm">
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-            <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
-            <x-dd.stat-box color="yellow" title="This Season Collectors" :value="$seasonUserCount" />
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
+            <x-dd.stat-box color="green" title="Total Users" :value="$totalUsersCount" class="rounded-none" />
+            <x-dd.stat-box color="yellow" title="This Season" :value="$seasonUserCount" class="rounded-none" />
 
             @if ($selectedSeason || $selectedDistrict)
                 <div
-                    class="bg-gray-800 text-white  p-4 flex items-center justify-between max-w-full sm:max-w-none sm:w-auto rounded-md">
-                    <div class="text-sm font-semibold uppercase tracking-wide text-gray-300">
-                        {{ \App\Models\District::find($selectedDistrict)?->name ?? '' }}
-
-                        {{ $selectedSeasonName }} Collectors
+                    class="col-span-2 lg:col-span-1 bg-gray-800 p-3 flex items-center justify-between border border-gray-700">
+                    <div class="flex flex-col text-xs sm:text-sm text-gray-300 font-medium leading-tight">
+                        <span class="truncate max-w-[120px] sm:max-w-none">
+                            {{ \App\Models\District::find($selectedDistrict)?->name ?? '' }}
+                        </span>
+                        <span class="truncate text-gray-400">
+                            {{ $selectedSeasonName }} Collectors
+                        </span>
                     </div>
                     <div
-                        class="ml-4 inline-flex items-center justify-center w-10 h-10 rounded-full  text-red-100 font-bold text-2xl ">
+                        class="ml-3 bg-green-600 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-white text-sm sm:text-base font-bold border border-green-700">
                         {{ $selectedSeasonUserCount }}
                     </div>
                 </div>
             @endif
-
         </div>
-        <!-- Filter + User Table -->
-        <div class="bg-gray-800 p-2 shadow-md">
-            <div class="flex flex-col justify-between items-center gap-2">
 
+        <!-- Filter + User Table -->
+        <div>
+            <div class="flex flex-col justify-between items-center gap-2">
                 <div class="flex flex-wrap sm:justify-end gap-3 w-full sm:w-auto items-center">
                     <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name"
-                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
+                        class="rounded-none px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-600 transition" />
+
                     <input type="number" wire:model.debounce.500ms="searchNumber" placeholder="Search by Phone Number"
-                        class="w-full sm:w-[31ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
+                        class="rounded-none px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 placeholder-gray-500 focus:ring-2 focus:ring-blue-600 transition" />
 
                     <select wire:model="selectedDistrict"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
+                        class="rounded-none px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 focus:ring-2 focus:ring-blue-600 transition">
                         <option value="">All Districts</option>
                         @foreach ($districts as $district)
                             <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -45,92 +48,67 @@
                     </select>
 
                     <select wire:model="selectedSeason"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
+                        class="rounded-none px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 focus:ring-2 focus:ring-blue-600 transition">
                         <option value="">All Seasons</option>
                         @foreach ($seasons as $season)
                             <option value="{{ $season->id }}">{{ $season->name }}</option>
                         @endforeach
                     </select>
 
-                    <!-- Reset button -->
                     <button wire:click="resetFilters"
-                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white whitespace-nowrap">Reset</button>
-
-
+                        class="rounded-none px-4 py-2 bg-red-700 hover:bg-red-800 text-white shadow transition transform hover:scale-105">
+                        Reset
+                    </button>
                 </div>
-
             </div>
 
-
-
-
             <!-- Table for desktop (sm and up) -->
-
-            <div class="hidden sm:block overflow-x-auto mt-2">
-                <table class="min-w-full  text-sm">
-                    <thead class="bg-gray-900 text-gray-200 uppercase text-xs font-semibold tracking-wider">
+            <div class="hidden sm:block overflow-x-auto mt-3">
+                <table class="min-w-full bg-gray-950 border border-green-900 rounded-sm shadow-sm">
+                    <thead
+                        class="bg-green-950 text-green-200 text-xs font-semibold tracking-wider uppercase border-b border-green-800">
                         <tr>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Name</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">AI Range</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Season</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Phone Number</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Action</th>
+                            <th class="px-4 py-3 text-left">Name</th>
+                            <th class="px-4 py-3 text-left">AI Range</th>
+                            <th class="px-4 py-3 text-left">Season</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-left">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-                        @foreach ($filteredCollectors as $collector)
-                            <tr class="hover:bg-teal-800 transition-colors duration-150 bg-cyan-900">
-
-                                <td class="px-2 py-1 whitespace-nowrap ">
-                                    {{ $collector->user->name ?? 'N/A' }}
-                                </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
-                                    {{ $collector->getAiRange->name ?? 'N/A' }}
-                                </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
-                                    {{ $collector->riceSeason->name ?? 'N/A' }}
-                                </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
-                                    {{ $collector->phone_no ?? 'N/A' }}
-                                </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
-                                    <!-- View Button -->
+                    <tbody class="text-sm text-green-100">
+                        @forelse ($filteredCollectors as $collector)
+                            <tr
+                                class="border-b border-green-900 hover:bg-green-950 transition duration-200 ease-in-out cursor-pointer">
+                                <td class="px-4 py-2 font-medium whitespace-nowrap">
+                                    {{ $collector->user->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $collector->getAiRange->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $collector->riceSeason->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $collector->phone_no ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 text-right">
                                     <button wire:click="viewCollector({{ $collector->id }})"
-                                        class="flex items-center gap-2 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold  transition duration-200 ease-in-out transform hover:scale-105">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
+                                        class="inline-flex items-center px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold rounded transition transform hover:scale-105">
                                         View
                                     </button>
                                 </td>
                             </tr>
-                        @endforeach
-
+                        @empty
+                            <tr>
+                                <td colspan="5" class="py-6 text-center text-red-500 italic">
+                                    <div class="flex items-center justify-center gap-2 animate-fade-in">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
+                                        </svg>
+                                        No collectors found.
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
-                @if ($filteredCollectors->count() === 0)
-                    <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 500)"
-                        :class="show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'"
-                        class="text-center text-red-400 italic py-4  duration-700 ease-in-out transform transition-transform flex items-center justify-center gap-2"
-                        role="alert" aria-live="polite">
-                        <!-- Icon: Exclamation Circle -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0 text-red-400"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
-                        </svg>
-                        <span>No collectors found.</span>
-                    </div>
-                @endif
 
-
-                <div class="mt-2">
+                <div class="mt-3">
                     {{ $filteredCollectors->links() }}
                 </div>
             </div>
@@ -138,97 +116,52 @@
 
             @include('livewire.extension-and-training-director.collectorModel')
 
-
-            <!-- Cards for mobile (below sm) -->
-            <div class="sm:hidden space-y-4 mt-4">
+            <!-- Ultra-Compact Cards for mobile (below sm) -->
+            <div class="sm:hidden space-y-1 mt-2">
                 @foreach ($filteredCollectors as $collector)
-                    <div
-                        class="bg-gradient-to-r from-teal-900 to-sky-900 shadow-lg  p-4 text-white flex flex-col justify-between h-full min-h-[180px] transform transition duration-300  hover:shadow-2xl cursor-pointer">
-
-                        <!-- Card content -->
-                        <div>
-                            <h3 class="font-bold text-xl mb-0 truncate text-white">{{ $collector->user->name }}</h3>
-                            <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">AI Range :</span>
-                                {{ $collector->getAiRange->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">Season :</span> {{ $collector->riceSeason->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sky-200">
-                                <span class="font-semibold">Phone :</span> {{ $collector->phone_no ?? 'N/A' }}
-                            </p>
+                    <div wire:click="viewCollector({{ $collector->id }})"
+                        class="bg-gray-900 border border-gray-700 px-3 py-2 text-white text-sm flex items-center justify-between cursor-pointer hover:bg-gray-800 transition duration-150 ease-in-out">
+                        <div class="flex-1 min-w-0">
+                            <div class="font-semibold truncate">{{ $collector->user->name }}</div>
+                            <div class="truncate text-gray-400 text-xs">
+                                {{ $collector->getAiRange->name ?? 'N/A' }} |
+                                {{ $collector->riceSeason->name ?? 'N/A' }}
+                            </div>
                         </div>
-
-                        <!--  view Button -->
-                        <div class="flex justify-end mt-0">
-                            <button wire:click="viewCollector({{ $collector->id }})"
-                                class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow-md transition duration-200 ease-in-out transform hover:scale-105">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                View Collector
-                            </button>
-                        </div>
-
-
+                        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
                     </div>
                 @endforeach
 
-                <div>
+                <div class="pt-2 text-xs">
                     {{ $filteredCollectors->links() }}
                 </div>
             </div>
-
-
         </div>
+
         <!-- Charts and Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <x-dd.card title="📝 Recent Activities">
-                <ul class="space-y-2 text-gray-300 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <x-dd.card title="📝 Recent Activities" class="bg-gray-800 text-gray-300 border border-gray-700">
+                <ul class="space-y-2 text-sm">
                     @forelse ($recentActivities as $activity)
-                        <li>🕒 <strong class="text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
-                            {{ $activity->title }} – <span
-                                class="text-gray-500">{{ $activity->created_at->diffForHumans() }}</span></li>
+                        <li>
+                            🕒 <strong class="text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
+                            {{ $activity->title }} –
+                            <span class="text-gray-500">{{ $activity->created_at->diffForHumans() }}</span>
+                        </li>
                     @empty
                         <li>No recent activities found.</li>
                     @endforelse
                 </ul>
             </x-dd.card>
 
-            <x-dd.card title="📌Locations marked on the map represent where collectors gathered data">
-                <div id="map" style="height: 500px; width: 100%;"></div>
-
+            <x-dd.card title="📌 Collector Locations" class="bg-gray-800 text-white border border-gray-700">
+                <livewire:map-view :collectors="$this->collectors" />
             </x-dd.card>
         </div>
-
-
+        {{-- <livewire:graph.weekly-pest-graph /> --}}
 
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-
-            const collectors = @json($this->collectorsLocation);
-
-            // Default center (Sri Lanka)
-            const map = L.map('map').setView([7.8731, 80.7718], 8);
-
-            // Add OpenStreetMap tile layer (free & no API key)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-
-            // Add markers
-            collectors.forEach(collector => {
-                const marker = L.marker([collector.lat, collector.lng]).addTo(map);
-                marker.bindPopup(
-                    `<strong>${collector.user_name}</strong><br>AI Range: ${collector.ai_range}<br>Rice Variety: ${collector.rice_variety}`
-                );
-            });
-        });
-    </script>
+</div>
