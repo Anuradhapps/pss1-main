@@ -17,6 +17,7 @@ class DashboardExtensionAndTrainingDirector extends Component
     protected $paginationTheme = 'tailwind';
 
     // Filters and Search
+    public $sortDirection = 'desc'; // or 'desc'
     public $selectedSeason = '';
     public $selectedSeasonName = null;
     public $selectedDistrict = '';
@@ -78,23 +79,32 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->unique('id')         // filter unique by district ID
             ->values();            // reset keys
     }
+    public function toggleSortDirection()
+    {
+        $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+    }
 
+    public function updated($propertyName)
+    {
+        if (in_array($propertyName, ['searchNumber', 'search', 'selectedDistrict', 'selectedSeason'])) {
+
+            $this->selectedSeasonUserCount = $this->getFilteredCollectorsCount();
+        }
+    }
 
 
     public function updatedSelectedSeason($value)
     {
         $season = RiceSeason::find((int) $value);
         $this->selectedSeasonName = $season->name ?? null;
-        $this->selectedSeasonUserCount = $this->getFilteredCollectorsCount();
     }
+
 
     public function updatedselectedDistrict($value)
     {
         if ($this->selectedSeasonName == null) {
             $this->selectedSeasonName = 'All Season';
         }
-
-        $this->selectedSeasonUserCount = $this->getFilteredCollectorsCount();
     }
 
 
@@ -134,6 +144,20 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
             ->paginate(5);
     }
+    public function getFilteredCollectorsByProperty()
+    {
+        return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
+            ->withCount('commonDataCollect')
+            ->where('region_id', $this->regionId)
+            ->when($this->search, fn($q) => $q->whereHas('user', fn($q2) => $q2->where('name', 'like', "%{$this->search}%")))
+            ->when($this->selectedDistrict, fn($q) => $q->where('district', $this->selectedDistrict))
+            ->when($this->selectedSeason, fn($q) => $q->where('rice_season_id', $this->selectedSeason))
+            ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
+            ->having('common_data_collect_count', '>', 0)    // Only those with count > 0
+            ->orderBy('common_data_collect_count', $this->sortDirection)
+            ->take(10)   // Limit to top 5
+            ->get();
+    }
     public function getCollectorsProperty()
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
@@ -152,6 +176,7 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
             ->count();
     }
+
 
     public function getSeasonUserCount($seasonId)
     {
@@ -177,6 +202,7 @@ class DashboardExtensionAndTrainingDirector extends Component
     {
         return view('livewire.extension-and-training-director.dashboard-extensionandtraining-director', [
             'filteredCollectors' => $this->filteredCollectors,
+            'filteredCollectorsBy' => $this->filteredCollectorsBy,
             'totalUsersCount' => $this->totalUsersCount,
             'seasonUserCount' => $this->seasonUserCount,
             'recentActivities' => $this->recentActivities,
