@@ -158,6 +158,7 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->take(10)   // Limit to top 5
             ->get();
     }
+
     public function getCollectorsProperty()
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])

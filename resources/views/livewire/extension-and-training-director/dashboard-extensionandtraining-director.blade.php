@@ -148,7 +148,7 @@
         </div>
 
         <!-- Charts and Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6">
 
             <x-dd.card title="🏆 Top Collectors" class="bg-gray-800 text-white border border-gray-700">
                 <h2 class="text-lg font-semibold text-green-400 mb-4 flex items-center justify-between">
@@ -220,14 +220,7 @@
                 </ul>
             </x-dd.card>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
-            <div class="mt-6 bg-gray-800 text-white rounded-lg shadow-lg p-4">
-
-            </div>
-
-
-        </div>
         {{-- <livewire:graph.weekly-pest-graph /> --}}
 
     </div>

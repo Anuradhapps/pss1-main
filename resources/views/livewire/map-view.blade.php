@@ -1,4 +1,4 @@
- <div id="map" style="height: 800px; width: 100%;z-index: 10;"></div>
+ <div id="map" style="height: 500px; width: 100%;z-index: 10;"></div>
  <script>
      document.addEventListener('livewire:load', function() {
          let map;
