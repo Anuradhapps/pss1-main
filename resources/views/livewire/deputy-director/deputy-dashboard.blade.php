@@ -10,8 +10,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
             <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
-            <x-dd.stat-box color="red" title="Urgent Alerts" value="-" />
-            <x-dd.stat-box color="blue" title="New Reports" :value="$newReports" />
         </div>
 
         <!-- Filter + User Table -->
@@ -177,6 +175,41 @@
 
         <!-- Charts and Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <x-dd.card title="🏆 Top Collectors" class="bg-gray-800 text-white border border-gray-700">
+                <h2 class="text-lg font-semibold text-green-400 mb-4 flex items-center justify-between">
+                    <div>
+                        By Data Count > 0
+
+                        <div class="text-sm text-gray-300 mt-1">
+
+                            <span class="font-semibold text-white">{{ $district->name }}</span>
+
+                        </div>
+                    </div>
+
+                </h2>
+
+                <ul class="divide-y divide-gray-700 text-sm">
+                    @forelse ($filteredCollectorsBy as $collector)
+                        <li class="py-2 flex justify-between items-center">
+                            <span class="truncate">
+                                {{ $collector->user->name ?? 'Unnamed Collector' }} -
+                                {{ $collector->getAiRange->name ?? 'Unnamed Ai' }}
+                            </span>
+                            <span class="bg-orange-700 text-white px-3 py-1 rounded text-xs font-medium">
+                                {{ $collector->common_data_collect_count ?? 0 }} entries
+                            </span>
+                        </li>
+                    @empty
+                        <li class="text-red-400 py-2">No data found.</li>
+                    @endforelse
+                </ul>
+            </x-dd.card>
+            <x-dd.card title="📌 All Collectors in {{ $district->name }}">
+                <livewire:map-view :collectors="$this->collectors" />
+            </x-dd.card>
+
             <x-dd.card title="📝 Recent Activities">
                 <ul class="space-y-2 text-gray-300 text-sm">
                     @forelse ($recentActivities as $activity)
@@ -189,68 +222,9 @@
                 </ul>
             </x-dd.card>
 
-            <x-dd.card title="🐛 Pest Counts by Type">
-                <div class="h-64">
-                    <canvas id="pestChart" class="w-full h-full"></canvas>
-                </div>
-
-                <script>
-                    Livewire.on('refreshChart', () => {
-                        const ctx = document.getElementById('pestChart').getContext('2d');
-                        new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: @json($pestChartData->pluck('name')),
-                                datasets: [{
-                                    label: 'Total Pests Counted',
-                                    data: @json($pestChartData->pluck('total_count')),
-                                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
-                                    borderColor: 'rgba(59, 130, 246, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    });
-                </script>
-            </x-dd.card>
-
-            <x-dd.card title="Recent Conducted Programs">
-                <ul class="space-y-2 text-gray-300 text-sm">
-                    @forelse ($recentPrograms as $program)
-                        <li>
-                            <strong class="text-white">{{ $program->program_name }}</strong> –
-                            <span class="text-gray-500">{{ $program->conducted_date }}</span>
-                            <span class="ml-2">Participants: {{ $program->participants_count }}</span>
-                        </li>
-                    @empty
-                        <li>No recent programs found.</li>
-                    @endforelse
-                </ul>
-            </x-dd.card>
-
-            <x-dd.card title="System Logs">
-                <livewire:map-view :collectors="$this->collectors" />
-            </x-dd.card>
         </div>
 
-        <!-- Actions -->
-        <div class="flex flex-wrap gap-3 pt-4">
-            <a href="#" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white ">⚙️ Manage
-                Users</a>
-            <a href="#" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white ">📑 View
-                Reports</a>
-            <a href="#" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white ">📚 View Logs</a>
-            <a href="#" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white ">➕ Add Report</a>
-        </div>
+
     </div>
 
 </div>

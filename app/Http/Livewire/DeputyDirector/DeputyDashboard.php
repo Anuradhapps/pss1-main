@@ -103,7 +103,16 @@ class DeputyDashboard extends Component
             ->where('district', $this->district->id)
             ->get();
     }
-
+    public function getFilteredCollectorsByProperty()
+    {
+        return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
+            ->withCount('commonDataCollect')
+            ->where('district', $this->district->id)
+            ->having('common_data_collect_count', '>', 0)    // Only those with count > 0
+            ->orderBy('common_data_collect_count', 'desc')
+            ->take(10)   // Limit to top 5
+            ->get();
+    }
 
     // Computed property for filtered collectors
     public function getFilteredCollectorsProperty()
@@ -195,6 +204,7 @@ class DeputyDashboard extends Component
     public function render()
     {
         return view('livewire.deputy-director.deputy-dashboard', [
+            'filteredCollectorsBy' => $this->filteredCollectorsBy,
             'filteredCollectors' => $this->filteredCollectors,
             'pestChartData' => $this->pestChartData,
             'totalUsersCount' => $this->totalUsersCount,

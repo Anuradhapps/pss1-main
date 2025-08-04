@@ -109,14 +109,24 @@
 
         <script>
             const loader = document.getElementById('modernPageLoader');
+            const exportRoutes = [
+                '/admin/report'
+            ];
 
+            function isExportRoute(url) {
+                return exportRoutes.some(route => url.includes(route));
+            }
             // Show loader on page unload (navigation)
             window.addEventListener('beforeunload', () => {
-                loader.classList.remove('opacity-0', 'pointer-events-none');
+                if (!isExportRoute(window.location.pathname)) {
+                    loader.classList.remove('opacity-0', 'pointer-events-none');
+                }
+
             });
 
             // Hide loader on page load
             window.addEventListener('load', () => {
+
                 setTimeout(() => {
                     loader.classList.add('opacity-0', 'pointer-events-none');
                 }, 400);
@@ -195,10 +205,10 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
+        alert('Download starting...');
         const loader = document.getElementById('fullScreenLoader');
         const mapContainer = document.getElementById('map-container');
-
         // Listen when page is unloading (show loader, hide map)
         window.addEventListener('beforeunload', () => {
             loader.classList.remove('hidden');
@@ -215,7 +225,7 @@
                 initMap();
             }, 300);
         });
-    </script>
+    </script> --}}
 
 
     <script src="//unpkg.com/alpinejs" defer></script>
