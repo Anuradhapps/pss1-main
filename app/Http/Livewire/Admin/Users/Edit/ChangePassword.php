@@ -1,25 +1,23 @@
 <?php
 
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire\Admin\Users\Edit;
 
 use App\Http\Livewire\Base;
 use App\Models\User;
+use App\Models\UserLog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
-
-use function add_user_log;
-use function flash;
-use function view;
 
 class ChangePassword extends Base
 {
     public User $user;
-    public      $newPassword     = '';
-    public      $confirmPassword = '';
+    public string $newPassword = '';
+    public string $confirmPassword = '';
+    public string $message = '';
 
     public function render(): View
     {
@@ -29,50 +27,44 @@ class ChangePassword extends Base
     protected function rules(): array
     {
         return [
-            'newPassword'     => [
+            'newPassword' => [
                 'required',
                 Password::min(8)
                     ->mixedCase()
                     ->letters()
-                    ->numbers()
-                    ->uncompromised()
+                    ->numbers(),
             ],
             'confirmPassword' => 'required|same:newPassword',
         ];
     }
 
     protected array $messages = [
-        'newPassword.required'      => 'New password is required',
-        'newPassword.uncompromised' => 'The given new password has appeared in a data leak by https://haveibeenpwned.com please choose a different new password. ',
-        'confirmPassword.required'  => 'Confirm password is required',
-        'confirmPassword.same'      => 'Confirm password and new password must match',
+        'newPassword.required'     => 'New password is required',
+        'confirmPassword.required' => 'Confirm password is required',
+        'confirmPassword.same'     => 'Passwords do not match',
     ];
 
-    /**
-     * @throws ValidationException
-     */
-    public function updated($propertyName): void
+    public function updated($property): void
     {
-        $this->validateOnly($propertyName);
+        $this->validateOnly($property);
     }
 
     public function update(): void
     {
         $this->validate();
-        
+
         $this->user->password = Hash::make($this->newPassword);
         $this->user->save();
 
         add_user_log([
-            'title'        => "updated ".$this->user->name."'s password",
+            'title'        => "Updated {$this->user->name}'s password",
             'reference_id' => $this->user->id,
             'link'         => route('admin.users.edit', ['user' => $this->user->id]),
             'section'      => 'Users',
-            'type'         => 'Update'
+            'type'         => 'Update',
         ]);
-
         $this->reset(['newPassword', 'confirmPassword']);
 
-        flash('Password Updated!')->success();
+        $this->message = "Password updated successfully.";
     }
 }

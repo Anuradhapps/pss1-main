@@ -4,12 +4,13 @@
 
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <h1 class="text-3xl font-bold text-white">🛡️ Roles</h1>
+        <h1 class="text-3xl font-bold text-white"><i class="fas fa-shield-alt text-indigo-400"></i> Roles
+        </h1>
         <livewire:admin.roles.create />
     </div>
 
     <!-- Info banner -->
-    <div class="bg-indigo-900 text-indigo-200 px-4 py-3 rounded-md shadow-sm max-w-4xl">
+    <div class="bg-indigo-900 text-indigo-200 px-4 py-3  max-w-4xl">
         By default, only <b>Admin</b> roles have permissions. Additional roles will need permissions assigned by editing
         below.
     </div>
@@ -25,10 +26,10 @@
     </div>
 
     <!-- Roles Table -->
-    <div class="overflow-x-auto rounded-lg bg-gray-900 shadow max-w-4xl">
+    <div class="overflow-x-auto bg-gray-900 shadow max-w-4xl">
         <table class="min-w-full divide-y divide-gray-700 text-sm">
             <thead class="bg-gray-800 text-gray-300 uppercase tracking-wide">
-                <tr>
+                <tr class="">
                     <th class="px-6 py-3 text-left cursor-pointer select-none hover:text-indigo-400"
                         wire:click.prevent="sortBy('name')">Name</th>
                     <th class="px-6 py-3 text-left">Actions</th>

@@ -49,7 +49,7 @@
                 <x-nav.group-item route="admin.settings" icon="fas fa-sliders-h">System Settings</x-nav.group-item>
 
 
-                <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item>
+                {{-- <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item> --}}
                 <x-nav.group-item route="location.settings" icon="fas fa-location-dot">
                     Location Settings
                 </x-nav.group-item>

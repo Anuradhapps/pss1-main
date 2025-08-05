@@ -2,7 +2,7 @@
 
 {{-- Top Heading --}}
 <x-headings.topHeading title="Dashboard" icon="fas fa-home"
-    class="bg-gradient-to-r from-green-700 to-green-500 shadow-md" />
+    class="bg-gradient-to-r from-green-800 to-green-600 shadow-md" />
 
 {{-- Description Card --}}
 <div class="m-4 p-6 rounded-xl bg-gray-900 border border-gray-800 shadow-2xl text-white space-y-5 " data-aos="fade-up">

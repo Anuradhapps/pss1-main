@@ -3,27 +3,43 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\district;
+use App\Models\District;
 use App\Models\As_center;
 use App\Models\AiRange;
 
 class LocationManager extends Component
 {
     public $districts, $selectedDistrict;
-    public $asCenters = [], $newAsCenterName;
+    public $asCenters = [], $newAsCenterName, $searchAsCenter = '';
     public $editingAsCenterId = null, $editingAsCenterName = '';
     public $aiRanges = [], $editingAiRangeId = null, $editingAiRangeName = '', $newAiRangeName = '';
 
     public function mount()
     {
-        $this->districts = district::all();
+        $this->districts = District::all();
     }
 
     public function updatedSelectedDistrict()
     {
-        $this->asCenters = As_center::where('district_id', $this->selectedDistrict)->get();
+        $this->loadAsCenters();
         $this->editingAsCenterId = null;
         $this->aiRanges = [];
+    }
+
+    public function updatedSearchAsCenter()
+    {
+        $this->loadAsCenters();
+    }
+
+    protected function loadAsCenters()
+    {
+        $query = As_center::where('district_id', $this->selectedDistrict);
+
+        if ($this->searchAsCenter) {
+            $query->where('name', 'like', '%' . $this->searchAsCenter . '%');
+        }
+
+        $this->asCenters = $query->get();
     }
 
     public function addAsCenter()
@@ -34,7 +50,7 @@ class LocationManager extends Component
             'name' => $this->newAsCenterName,
         ]);
         $this->newAsCenterName = '';
-        $this->updatedSelectedDistrict();
+        $this->loadAsCenters();
     }
 
     public function deleteAsCenter($id)
@@ -44,7 +60,7 @@ class LocationManager extends Component
             $this->editingAsCenterId = null;
             $this->aiRanges = [];
         }
-        $this->updatedSelectedDistrict();
+        $this->loadAsCenters();
     }
 
     public function startEditAsCenter($id, $name)
@@ -64,7 +80,7 @@ class LocationManager extends Component
         ]);
         $this->editingAsCenterId = null;
         $this->editingAsCenterName = '';
-        $this->updatedSelectedDistrict();
+        $this->loadAsCenters();
     }
 
     public function addAiRange()

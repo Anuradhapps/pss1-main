@@ -3,89 +3,91 @@
 <div class="bg-gray-900 min-h-screen text-gray-100">
     @if (empty($users))
         <!-- Programs List View -->
-        <div class=" p-4 mx-auto bg-gray-800 border border-gray-700 shadow-lg">
+        <div>
             <!-- Header -->
 
-            <div class="flex flex-col justify-between mb-6 sm:flex-row sm:items-center border-b border-gray-700 pb-4">
+            <div class="flex justify-between bg-green-700 p-2">
                 <div class="flex items-center space-x-3">
-                    <i class="fa-solid fa-list text-green-400"></i>
-                    <h1 class="text-xl font-bold">Conducted Programs</h1>
+                    <i class="fas fa-calendar-check text-green-100"></i>
+                    <h1 class="text-2xl text-white font-bold">Conducted Programs</h1>
                 </div>
                 <button wire:click="create"
                     class="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors sm:mt-0">
                     <i class="fa-solid fa-plus mr-2"></i> Create New Program
                 </button>
             </div>
+            <div class="p-2">
+                <!-- Flash Message -->
+                @if (session()->has('message'))
+                    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition
+                        class="px-4 py-3 mb-4 text-sm text-green-100 bg-green-800 border border-green-700 flex items-center">
+                        <i class="fa-solid fa-check-circle mr-2"></i> {{ session('message') }}
+                    </div>
+                @endif
 
-            <!-- Flash Message -->
-            @if (session()->has('message'))
-                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show" x-transition
-                    class="px-4 py-3 mb-4 text-sm text-green-100 bg-green-800 border border-green-700 flex items-center">
-                    <i class="fa-solid fa-check-circle mr-2"></i> {{ session('message') }}
+                <!-- Modal -->
+                @if ($isModalOpen)
+                    @include('livewire.admin.programs.create-modal')
+                @endif
+
+                <!-- Table -->
+                <div class="overflow-x-auto border border-gray-700">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-800">
+                            <tr class="text-xs text-gray-300 uppercase tracking-wider">
+                                <th class="px-6 py-3 bg-gray-800 text-left">Program Name</th>
+                                <th class="px-6 py-3 bg-gray-800 text-left">Location</th>
+                                <th class="px-6 py-3 bg-gray-800 text-left">Participants</th>
+                                <th class="px-6 py-3 bg-gray-800 text-left">Date</th>
+                                <th class="px-6 py-3 bg-gray-800 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 bg-gray-950">
+                            @forelse ($programs as $program)
+                                <tr class="hover:bg-gray-800 transition-colors bg-emerald-900">
+                                    <td class="px-6 py-4 font-medium ">{{ $program->program_name }}</td>
+                                    <td class="px-6 py-4 text-blue-300">{{ $program->district }}</td>
+                                    <td class="px-6 py-4">{{ $program->participants_count }}</td>
+                                    <td class="px-6 py-4 text-gray-400">
+                                        {{ \Carbon\Carbon::parse($program->conducted_date)->format('M d, Y') }}
+                                    </td>
+                                    <td class="px-6 py-4 space-x-2 text-right">
+                                        <button wire:click="edit({{ $program->id }})"
+                                            class="px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                                            <i class="fa-solid fa-pen mr-1"></i> Edit
+                                        </button>
+                                        <button wire:click="viewUsers({{ $program->id }})"
+                                            class="px-3 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+                                            <i class="fa-solid fa-eye mr-1"></i> View
+                                        </button>
+                                        <button x-data
+                                            @click="if (confirm('Are you sure you want to delete this program?')) $wire.delete({{ $program->id }})"
+                                            class="px-3 py-1 text-xs font-medium text-white bg-red-600 hover:bg-red-700 transition-colors">
+                                            <i class="fa-solid fa-trash mr-1"></i> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center text-gray-400">
+                                        <i class="fa-solid fa-exclamation-circle mr-2"></i> No programs found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            @endif
 
-            <!-- Modal -->
-            @if ($isModalOpen)
-                @include('livewire.admin.programs.create-modal')
-            @endif
-
-            <!-- Table -->
-            <div class="overflow-x-auto border border-gray-700">
-                <table class="min-w-full divide-y divide-gray-700">
-                    <thead class="bg-gray-800">
-                        <tr class="text-xs text-gray-300 uppercase tracking-wider">
-                            <th class="px-6 py-3 text-left">Program Name</th>
-                            <th class="px-6 py-3 text-left">Location</th>
-                            <th class="px-6 py-3 text-left">Participants</th>
-                            <th class="px-6 py-3 text-left">Date</th>
-                            <th class="px-6 py-3 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-700 bg-gray-900">
-                        @forelse ($programs as $program)
-                            <tr class="hover:bg-gray-800 transition-colors">
-                                <td class="px-6 py-4 font-medium">{{ $program->program_name }}</td>
-                                <td class="px-6 py-4 text-blue-300">{{ $program->district }}</td>
-                                <td class="px-6 py-4">{{ $program->participants_count }}</td>
-                                <td class="px-6 py-4 text-gray-400">
-                                    {{ \Carbon\Carbon::parse($program->conducted_date)->format('M d, Y') }}
-                                </td>
-                                <td class="px-6 py-4 space-x-2 text-right">
-                                    <button wire:click="edit({{ $program->id }})"
-                                        class="px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
-                                        <i class="fa-solid fa-pen mr-1"></i> Edit
-                                    </button>
-                                    <button wire:click="viewUsers({{ $program->id }})"
-                                        class="px-3 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
-                                        <i class="fa-solid fa-eye mr-1"></i> View
-                                    </button>
-                                    <button x-data
-                                        @click="if (confirm('Are you sure you want to delete this program?')) $wire.delete({{ $program->id }})"
-                                        class="px-3 py-1 text-xs font-medium text-white bg-red-600 hover:bg-red-700 transition-colors">
-                                        <i class="fa-solid fa-trash mr-1"></i> Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 text-center text-gray-400">
-                                    <i class="fa-solid fa-exclamation-circle mr-2"></i> No programs found
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                <!-- Pagination -->
+                <div class="mt-4 border-t border-gray-700 pt-4">
+                    {{ $programs->links('vendor.pagination.tailwind') }}
+                </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="mt-4 border-t border-gray-700 pt-4">
-                {{ $programs->links('vendor.pagination.tailwind') }}
-            </div>
         </div>
     @else
         <!-- Participants Detail View -->
-        <div class="max-w-6xl p-4 mx-auto bg-gray-800 border border-gray-700 shadow-lg">
+        <div class=" p-4 mx-auto bg-gray-800 border border-gray-700 shadow-lg">
             <!-- Header -->
             <div class="flex flex-col justify-between mb-4 sm:flex-row sm:items-center border-b border-gray-700 pb-4">
                 <div>

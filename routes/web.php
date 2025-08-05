@@ -31,6 +31,7 @@ use App\Http\Livewire\{
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
     extensionAndTrainingDirector\DashboardExtensionandtrainingDirector,
+    LocationManager,
 };
 
 /*
@@ -135,9 +136,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     // Conducted Programs
     Route::get('conducted-programs', ConductedPrograms::class)->name('admin.conducted-programs');
 
-    Route::get('/location-settings', function () {
-        return view('location-settings');
-    })->name('location.settings');
+
+
+    Route::get('/location-settings', LocationManager::class)->name('location.settings');
 });
 
 /*

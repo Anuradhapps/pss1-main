@@ -1,55 +1,114 @@
-<div>
-    <x-2col>
-        <x-slot name="left">
-            <h3 class="mb-4 text-2xl font-semibold text-white">Change Password</h3>
-            <p class="max-w-md mb-3 leading-relaxed text-gray-300">
-                Ensure your account is using a long, random password to stay secure.
-            </p>
-            <p class="max-w-md text-sm leading-relaxed text-gray-400">
-                Use a password manager. We recommend
-                <a href="https://1password.com/password-generator/" target="_blank" rel="noopener"
-                    class="break-words text-emerald-400 hover:underline">
-                    1Password’s password generator
-                </a>
-                for creating and storing passwords.
-            </p>
-        </x-slot>
+<div class="font-sans">
+    <div class="mb-8">
+        <h3 class="text-2xl font-bold text-white mb-2">
+            <i class="fas fa-lock mr-2"></i>Change Password
+        </h3>
+        <p class="text-gray-400 max-w-lg">
+            Secure your account with a strong, unique password. We recommend using a password manager.
+        </p>
+    </div>
 
-        <x-slot name="right">
-            <div class="w-full max-w-md p-6 bg-gray-800 shadow-lg rounded-xl">
-
-                <x-form wire:submit.prevent="update" method="put" class="space-y-6">
-
-                    <div
-                        class="p-4 text-sm leading-relaxed border rounded-md bg-emerald-600 bg-opacity-30 border-emerald-500 text-emerald-100">
-                        <p class="font-semibold text-white">New password must meet these requirements:</p>
-                        <ul class="mt-2 ml-6 space-y-1 list-disc">
-                            <li>At least 8 characters in length</li>
-                            <li>At least one lowercase letter</li>
-                            <li>At least one uppercase letter</li>
-                            <li>At least one digit</li>
-                        </ul>
-                    </div>
-                    <div class="p-2 space-y-2 bg-gray-500 rounded-lg">
-                        <x-form.input wire:model.defer="newPassword" type="password" label="New Password"
-                            name="newPassword" required autocomplete="new-password"
-                            class="text-gray-200 bg-gray-900 border-gray-700 focus:border-emerald-500 focus:ring-emerald-400" />
-
-                        <x-form.input wire:model.defer="confirmPassword" type="password" label="Confirm Password"
-                            name="confirmPassword" required autocomplete="new-password"
-                            class="text-gray-200 bg-gray-900 border-gray-700 focus:border-emerald-500 focus:ring-emerald-400" />
-
-                        <x-button
-                            class="w-full py-2 font-semibold text-white rounded-lg shadow-md bg-emerald-600 hover:bg-emerald-700">
-                            Change Password
-                        </x-button>
-                    </div>
-
-
-                    @include('errors.messages')
-
-                </x-form>
+    <div class="w-full max-w-md bg-gray-800 border border-gray-700 shadow-xl">
+        @if ($message)
+            <div class="p-4 bg-green-800/50 border-b border-green-700 text-green-100 flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                {{ $message }}
             </div>
-        </x-slot>
-    </x-2col>
+        @endif
+
+        <form wire:submit.prevent="update" class="p-6">
+            <div class="mb-6 p-4 bg-gray-700/50 border border-gray-600">
+                <h4 class="font-medium text-white mb-3 flex items-center">
+                    <i class="fas fa-shield-alt mr-2 text-emerald-400"></i>
+                    Password Requirements
+                </h4>
+                <ul class="text-gray-300 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-xs text-emerald-400 mr-2"></i>
+                        Minimum 8 characters
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-xs text-emerald-400 mr-2"></i>
+                        At least one uppercase letter
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-xs text-emerald-400 mr-2"></i>
+                        At least one lowercase letter
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-xs text-emerald-400 mr-2"></i>
+                        At least one number
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-y-5">
+                <div>
+                    <label class="text-sm font-medium text-gray-300 mb-1 flex items-center">
+                        <i class="fas fa-key mr-2 text-gray-400"></i>
+                        New Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" wire:model="newPassword"
+                            class="w-full px-4 py-2.5 bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50"
+                            required autocomplete="new-password">
+                        <i
+                            class="fas fa-eye-slash absolute right-3 top-3 text-gray-500 cursor-pointer hover:text-gray-400"></i>
+                    </div>
+                    @error('newPassword')
+                        <p class="mt-1 text-sm text-red-400 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class=" text-sm font-medium text-gray-300 mb-1 flex items-center">
+                        <i class="fas fa-key mr-2 text-gray-400"></i>
+                        Confirm Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" wire:model="confirmPassword"
+                            class="w-full px-4 py-2.5 bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50"
+                            required autocomplete="new-password">
+                        <i
+                            class="fas fa-eye-slash absolute right-3 top-3 text-gray-500 cursor-pointer hover:text-gray-400"></i>
+                    </div>
+                    @error('confirmPassword')
+                        <p class="mt-1 text-sm text-red-400 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+                <button type="submit"
+                    class="w-full py-3 font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition-colors duration-200 flex items-center justify-center">
+                    <i class="fas fa-save mr-2"></i>
+                    Update Password
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            document.querySelectorAll('.fa-eye-slash').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        this.classList.replace('fa-eye-slash', 'fa-eye');
+                    } else {
+                        input.type = 'password';
+                        this.classList.replace('fa-eye', 'fa-eye-slash');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

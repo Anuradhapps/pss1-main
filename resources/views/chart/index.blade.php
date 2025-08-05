@@ -1,7 +1,7 @@
 <x-app-layout>
     <!-- Page Header -->
     <x-headings.topHeading title="Data Analytics" icon="fas fa-chart-bar"
-        class="bg-gradient-to-r from-green-700 to-green-500 shadow" />
+        class="bg-gradient-to-r from-green-800 to-green-600 shadow" />
 
     <!-- Error Message -->
     <x-error-massage />
@@ -10,7 +10,7 @@
     <div class="grid gap-2 m-2 md:grid-cols-2">
         <!-- Chart by Each Season -->
         <div class="p-4 bg-gray-900 border border-gray-700">
-            <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-green-700 border-b-2 border-green-600">
+            <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-gray-700 border-b-2 border-green-600">
                 <i class="mr-2 fas fa-calendar-alt"></i>SEASONAL ANALYTICS
             </div>
 
@@ -28,14 +28,14 @@
                 @csrf
                 @livewire('season-select')
                 <x-form.submit class="w-full mt-4 bg-green-600 hover:bg-green-700 border-0">
-                    <i class="mr-2 fas fa-chart-line"></i>Generate Seasonal Report
+                    <i class="mr-2 fas fa-chart-line"></i>Generate Chart
                 </x-form.submit>
             </x-form>
         </div>
 
         <!-- Chart by All Seasons -->
         <div class="p-4 bg-gray-900 border border-gray-700">
-            <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-green-700 border-b-2 border-green-600">
+            <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-gray-700 border-b-2 border-green-600">
                 <i class="mr-2 fas fa-chart-pie"></i>COMPREHENSIVE ANALYTICS
             </div>
 
@@ -45,7 +45,7 @@
                     <i class="mr-2 fas fa-globe"></i>Nationwide:
                 </div>
                 <a href="{{ route('chart.show.allSeason', ['sort_by' => 'allIsland']) }}"
-                    class="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 hover:bg-blue-700 border-b-2 border-blue-500 flex items-center">
+                    class="px-4 py-2 text-sm font-medium text-white transition bg-blue-700 hover:bg-blue-800 border-b-2 border-blue-500 flex items-center">
                     <i class="mr-2 fas fa-file-alt"></i>National Report
                 </a>
             </div>
@@ -59,7 +59,7 @@
                     @foreach ($allProvinces as $province)
                         <a href="{{ route('chart.show.allSeason', ['sort_by' => 'province', 'province' => $province]) }}"
                             class="px-3 py-2 text-xs font-semibold text-white text-center transition flex items-center justify-center
-                                {{ in_array($province, $dataHaveProvinces) ? 'bg-blue-600 hover:bg-blue-700 border-b-2 border-blue-500' : 'bg-gray-700 text-gray-500 cursor-not-allowed border-b-2 border-gray-600' }}">
+                                {{ in_array($province, $dataHaveProvinces) ? 'bg-blue-700 hover:bg-blue-800 border-b-2 border-blue-500' : 'bg-gray-700 text-gray-500 cursor-not-allowed border-b-2 border-gray-600' }}">
                             <i
                                 class="mr-1 fas {{ in_array($province, $dataHaveProvinces) ? 'fa-map-marker-alt' : 'fa-map-marker' }}"></i>
                             {{ $province }}
@@ -76,8 +76,8 @@
                 <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
                     @foreach ($allDistricts as $district)
                         <a href="{{ route('chart.show.allSeason', ['sort_by' => 'district', 'district' => $district]) }}"
-                            class="px-3 py-2 text-xs font-semibold text-white text-center transition flex items-center justify-center
-                                {{ in_array($district, $dataHaveDistricts) ? 'bg-blue-600 hover:bg-blue-700 border-b-2 border-blue-500' : 'bg-gray-700 text-gray-500 cursor-not-allowed border-b-2 border-gray-600' }}">
+                            class="px-3 py-2 text-sm font-semibold text-white text-center transition flex items-center justify-center
+                                {{ in_array($district, $dataHaveDistricts) ? 'bg-blue-700 hover:bg-blue-800 border-b-2 border-blue-500' : 'bg-gray-700 text-gray-500 cursor-not-allowed border-b-2 border-gray-600' }}">
                             <i
                                 class="mr-1 fas {{ in_array($district, $dataHaveDistricts) ? 'fa-location-dot' : 'fa-location-pin' }}"></i>
                             {{ $district }}
