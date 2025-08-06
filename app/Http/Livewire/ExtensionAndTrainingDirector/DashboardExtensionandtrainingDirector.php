@@ -149,15 +149,26 @@ class DashboardExtensionAndTrainingDirector extends Component
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
             ->withCount('commonDataCollect')
             ->where('region_id', $this->regionId)
-            ->when($this->search, fn($q) => $q->whereHas('user', fn($q2) => $q2->where('name', 'like', "%{$this->search}%")))
-            ->when($this->selectedDistrict, fn($q) => $q->where('district', $this->selectedDistrict))
-            ->when($this->selectedSeason, fn($q) => $q->where('rice_season_id', $this->selectedSeason))
-            ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
-            ->having('common_data_collect_count', '>', 0)    // Only those with count > 0
+            ->whereHas('commonDataCollect') // Ensures only collectors with at least one related commonDataCollect
+            ->when($this->search, function ($q) {
+                $q->whereHas('user', function ($q2) {
+                    $q2->where('name', 'like', "%{$this->search}%");
+                });
+            })
+            ->when($this->selectedDistrict, function ($q) {
+                $q->where('district', $this->selectedDistrict);
+            })
+            ->when($this->selectedSeason, function ($q) {
+                $q->where('rice_season_id', $this->selectedSeason);
+            })
+            ->when($this->searchNumber, function ($q) {
+                $q->where('phone_no', 'like', "%{$this->searchNumber}%");
+            })
             ->orderBy('common_data_collect_count', $this->sortDirection)
-            ->take(10)   // Limit to top 5
+            ->take(10)
             ->get();
     }
+
 
     public function getCollectorsProperty()
     {

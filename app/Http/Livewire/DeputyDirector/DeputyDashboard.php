@@ -108,11 +108,12 @@ class DeputyDashboard extends Component
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
             ->withCount('commonDataCollect')
             ->where('district', $this->district->id)
-            ->having('common_data_collect_count', '>', 0)    // Only those with count > 0
+            ->whereHas('commonDataCollect') // Replaces having > 0
             ->orderBy('common_data_collect_count', 'desc')
-            ->take(10)   // Limit to top 5
+            ->take(10)
             ->get();
     }
+
 
     // Computed property for filtered collectors
     public function getFilteredCollectorsProperty()
