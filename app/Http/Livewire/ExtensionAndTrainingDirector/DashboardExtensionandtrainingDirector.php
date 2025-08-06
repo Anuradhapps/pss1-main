@@ -144,6 +144,7 @@ class DashboardExtensionAndTrainingDirector extends Component
             ->when($this->searchNumber, fn($q) => $q->where('phone_no', 'like', "%{$this->searchNumber}%"))
             ->paginate(5);
     }
+
     public function getFilteredCollectorsByProperty()
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
