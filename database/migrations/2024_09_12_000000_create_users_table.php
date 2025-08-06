@@ -31,12 +31,12 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
 
-        if (env('APP_ENV') !== 'testing') {
-            // Add FULLTEXT index only if the database is MySQL
-            if (DB::getDriverName() === 'mysql') {
-                DB::statement('ALTER TABLE users ADD FULLTEXT(name, email)');
-            }
-        }
+        // if (env('APP_ENV') !== 'testing') {
+
+        //     if (DB::getDriverName() === 'mysql') {
+        //         DB::statement('ALTER TABLE users ADD FULLTEXT(name, email)');
+        //     }
+        // }
     }
 
     public function down()

@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             SentEmailsDatabaseSeeder::class,
             UserDatabaseSeeder::class,
             DeputyDirectorSeeder::class,
+            ExtensionAndTrainingDirectorSeeder::class,
             //comment when actual database is ready
             // DummySeeder::class
 
