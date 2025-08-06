@@ -34,7 +34,7 @@
                     $lighterColor = isset($matches[2]) ? $matches[1] . ((int) $matches[2] + 200) : $iconColor;
                 @endphp
 
-                <div class="flex items-center gap-2 p-2 sm:p-4 pe-8 {{ $lighterColor }}">
+                <div class="flex items-center gap-2 p-2 sm:p-4 pe-8 ">
                     <div class="flex items-center justify-center w-10 h-10 {{ $iconColor }} rounded-full">
                         <i class="{{ $icon }} text-white text-lg"></i>
                     </div>

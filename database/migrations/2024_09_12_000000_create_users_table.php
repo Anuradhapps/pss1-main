@@ -32,7 +32,10 @@ class CreateUsersTable extends Migration
         });
 
         if (env('APP_ENV') !== 'testing') {
-            DB::statement('ALTER TABLE users ADD FULLTEXT (name, email)');
+            // Add FULLTEXT index only if the database is MySQL
+            if (DB::getDriverName() === 'mysql') {
+                DB::statement('ALTER TABLE users ADD FULLTEXT(name, email)');
+            }
         }
     }
 

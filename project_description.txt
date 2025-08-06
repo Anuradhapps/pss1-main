@@ -1,0 +1,157 @@
+
+Project: Pest Surveillance System (PSS)
+
+Description:
+
+The Pest Surveillance System (PSS) is a comprehensive, role-based web application developed to modernize and streamline the process of agricultural pest surveillance. Built with Laravel, this data-driven platform digitalizes the entire data collection, management, and reporting workflow, replacing a manual, paper-based system. The PSS is designed to serve various stakeholders in the agricultural sector, including data collectors, administrators, and directors, by providing them with the tools and insights needed for effective pest management.
+
+Key Features:
+
+* Role-Based Access Control (RBAC): The application implements a robust RBAC system, providing distinct interfaces and functionalities for different user roles:
+    * Administrators: Have full control over the system, including user management, settings configuration, and access to all data and reports. They can manage user accounts, define roles and permissions, and oversee the entire data collection process.
+    * Data Collectors: Are responsible for submitting pest-related data from the field. They have a dedicated interface for creating, editing, and managing their data entries, ensuring accurate and timely data collection.
+    * Directors: Have access to high-level dashboards and reports, providing them with a comprehensive overview of the pest situation. This enables them to make informed decisions and strategic plans for pest control.
+
+* Data Management: The PSS provides a centralized platform for managing all pest-related data. This includes:
+    * Data Collection: A user-friendly interface for submitting data on various pests, including their location, severity, and other relevant details.
+    * Data Validation: The system includes validation rules to ensure the accuracy and integrity of the collected data.
+    * Data Reporting: The application generates a variety of reports, including PDF and Excel exports, to provide insights into the pest situation. These reports can be customized to meet the specific needs of different users.
+
+* Data Visualization: The PSS uses Larapex Charts to provide interactive and insightful data visualizations. This includes:
+    * Dashboards: Each user role has a dedicated dashboard that provides a quick overview of the most important data and metrics.
+    * Charts and Graphs: The application generates a variety of charts and graphs to visualize pest trends, distribution, and other key indicators.
+
+* System Administration: The PSS includes a comprehensive set of tools for system administration, including:
+    * Audit Trails: The application keeps a detailed log of all user activities, ensuring accountability and transparency.
+    * Email Notifications: The system sends out email notifications for important events, such as new user registrations and data submissions.
+    * Settings Management: Administrators can configure various system settings, such as email templates and user roles.
+
+Technologies Used:
+
+* Backend: Laravel 9, PHP 8
+* Frontend: Livewire, Blade, JavaScript, HTML, CSS
+* Database: MySQL
+* Libraries: Larapex Charts, Maatwebsite/excel, barryvdh/laravel-dompdf, Livewire
+
+
+**G. B. Darsha Anuradha**
+No. 42/23, Railway Station Road, Katugastota
+071 893 1240 | [darsha.anuradha2020@gmail.com](mailto:darsha.anuradha2020@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/darsha-anuradha) | [Portfolio](https://anuradha-s-portfolio.onrender.com)
+
+---
+
+### **Career Objective**
+
+Motivated and results-oriented Technical Officer and Web Developer with a strong foundation in software development, databases, and system analysis. Proven experience designing, developing, and deploying production-ready applications, including a live pest surveillance system for the Department of Agriculture. Eager to contribute to dynamic teams and grow in the areas of full-stack development and modern web technologies.
+
+---
+
+### **Education**
+
+**Bachelor of Technology in Software and Intelligent Systems** *(Ongoing)*
+
+**NVQ Level 5 in Information & Communication Technology (ICT)** — VTA, 2022
+*Key Areas: Software Development, Databases, System Requirements & Analysis*
+
+**NVQ Level 4 in Computer Hardware Technician** — VTA, 2020
+
+**G.C.E. Advanced Level (A/L)** — 2015
+*Stream: Mathematics*
+
+**G.C.E. Ordinary Level (O/L)** — 2012
+*A: Sinhala, Science, Mathematics, Buddhism, Health, Commerce*
+*B: English, History | C: Art*
+
+---
+
+### **Professional Experience**
+
+**Technical Officer**
+*Department of Agriculture, National Plant Protection Service*
+**2024 – Present**
+
+* Designed and developed the **Pest Surveillance System (PSS)** using Laravel and MySQL.
+* Conducted user training and implemented feedback-based system improvements.
+* Performed system analysis, optimized database design, and improved user interface.
+* Led deployment, maintenance, and versioning of the live production system.
+
+**Computer Hardware Technician**
+eHome Computers
+**2020 – 2021**
+
+* Diagnosed and repaired PC hardware issues.
+* Built custom PC solutions based on client requirements.
+
+**Cashier**
+Sporting Star
+**2017 – 2018**
+
+* Handled daily transactions and maintained accurate cash records.
+
+**SLASSCOM Future Career Bridge Program**
+**2023**
+
+* Ranked as a top performer on the program leaderboard.
+* Completed an Agile workshop on project management and teamwork.
+
+---
+
+### **Technical Skills**
+
+* **Languages:** PHP, JavaScript, Java
+* **Frameworks:** Laravel, Livewire, Angular (learning)
+* **Frontend:** HTML, CSS, Bootstrap, Tailwind CSS
+* **Databases:** MySQL
+* **Tools:** Git, GitHub, Postman, VS Code, WAMP, ChatGPT, Cursor
+* **Other Skills:** Technical troubleshooting, Full-Stack Development
+
+---
+
+### **Key Projects**
+
+**Pest Surveillance System (PSS)** — Laravel, Livewire, MySQL
+
+* Developed a role-based, modular, and scalable National pest surveillance system for the Department of Agriculture.
+* Architected using MVC with modular Laravel packages (`nwidart/laravel-modules`).
+* Implemented Livewire for dynamic UIs, and used Larapex Charts for data visualization.
+* Integrated PDF/Excel export with `dompdf` and `maatwebsite/excel`.
+* Features include: role-based access control, dashboards, data collection/validation, audit trails, email notifications, and 2FA.
+
+**Student Management System** — Java
+
+* Created a student information system for registration, performance tracking, and grading.
+
+**Mobile Phone Shop Web Application** — PHP, MySQL, CSS
+
+* Built a web application for product showcasing with cart and user authentication.
+
+---
+
+### **Certifications** *(University of Moratuwa - Open Learning Platform)*
+
+* Python Programming (Beginner & Intermediate)
+* Web Development (HTML, CSS, Front-End, Server-Side)
+* Professional Practice in Software Development:
+
+  * Soft Skills
+  * Technical Skills
+  * Capstone Project: Web-based School Information System
+
+---
+
+### **Soft Skills**
+
+* Problem Solving
+* Independent Project Management
+* Communication & Teamwork
+* Adaptability
+* Quick Learner
+
+---
+
+### **Interests**
+
+* Exploring new web technologies
+* Participating in coding challenges
+
