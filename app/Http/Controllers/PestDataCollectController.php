@@ -534,6 +534,89 @@ class PestDataCollectController extends Controller
             ]
         ];
     }
+    public function avarageCalculateByCommonData($commonDatas)
+    {
+
+        if ($commonDatas->count() == 0) {
+            return [
+                "pests" => [
+                    "thrips" => 0,
+                    "gallMidge" => 0,
+                    "leaffolder" => 0,
+                    "yellowStemBorer" => 0,
+                    "bphWbph" => 0,
+                    "paddyBug" => 0
+                ]
+            ];
+        }
+        $noOfTillers = 0;
+        $thrips = 0;
+        $gallMidge = 0;
+        $leaffolder = 0;
+        $yellowStemBorer = 0;
+        $bphWbph = 0;
+        $paddyBug = 0;
+
+        $thripscount = 0;
+
+
+
+        foreach ($commonDatas as $commonData) {
+            foreach ($commonData->pestDataCollect as $pestData) {
+
+                if ($pestData->pest_name == 'Number_Of_Tillers') {
+                    $noOfTillers += $pestData->total;
+                } elseif ($pestData->pest_name == 'Thrips') {
+                    $thripscount++;
+                    $thrips += $pestData->code;
+                } elseif ($pestData->pest_name == 'Gall Midge') {
+                    $gallMidge += $pestData->total;
+                } elseif ($pestData->pest_name == 'Leaffolder') {
+                    $leaffolder += $pestData->total;
+                } elseif ($pestData->pest_name == 'Yellow Stem Borer') {
+                    $yellowStemBorer += $pestData->total;
+                } elseif ($pestData->pest_name == 'BPH+WBPH') {
+                    $bphWbph += $pestData->total;
+                } elseif ($pestData->pest_name == 'Paddy Bug') {
+                    $paddyBug += $pestData->total;
+                }
+            }
+        }
+
+        $possibleCodes = [0, 1, 3, 5, 7, 9];
+        $thripsC = 0;
+        if ($thripscount == 0) {
+            $thripsC = 0;
+        } else {
+            $thripsC = $thrips / $thripscount;
+        }
+
+
+        $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
+        $gallMidgeCode = 0;
+        $leaffolderCode = 0;
+        $yellowStemBorerCode = 0;
+        $bphWbphCode = 0;
+        $paddyBugCode = 0;
+        if ($noOfTillers != 0) {
+            $gallMidgeCode = $this->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
+            $leaffolderCode = $this->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
+            $yellowStemBorerCode = $this->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
+            $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
+            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+        }
+
+        return [
+            "pests" => [
+                "thrips" => $thripsCode,
+                "gallMidge" => $gallMidgeCode,
+                "leaffolder" => $leaffolderCode,
+                "yellowStemBorer" => $yellowStemBorerCode,
+                "bphWbph" => $bphWbphCode,
+                "paddyBug" => $paddyBugCode
+            ]
+        ];
+    }
     // Function to find the nearest number
     function getNearestCode($value, $possibleCodes)
     {
