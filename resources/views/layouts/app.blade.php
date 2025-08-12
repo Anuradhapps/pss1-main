@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('styles')
     @livewireStyles

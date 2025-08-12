@@ -4,9 +4,10 @@ namespace App\Http\Livewire\Graph;
 
 use App\Http\Controllers\PestDataCollectController;
 use App\Models\CommonDataCollect;
+use App\Models\District;
 use App\Models\RiceSeason;
 use Carbon\Carbon;
-use DateTime;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class Chart extends Component
@@ -15,19 +16,47 @@ class Chart extends Component
     public $pestData = [];
     public $seasons;
     public $selectedSeason = 0;
+    public $districtId = 0;
+    public $districts;
     public $isLoading = false;
+
 
     protected $listeners = ['refreshData'];
 
+    // Constants for cache keys and configuration
+    const CACHE_TTL = 3600; // 1 hour
+    const PEST_NAMES = [
+        'thrips',
+        'gallMidge',
+        'leaffolder',
+        'yellowStemBorer',
+        'bphWbph',
+        'paddyBug',
+    ];
+
     public function mount()
     {
-        $this->seasons = RiceSeason::orderBy('start_date', 'desc')->get();
+        $this->loadInitialData();
+    }
+
+    protected function loadInitialData()
+    {
+        $this->seasons = Cache::remember('rice-seasons-list', self::CACHE_TTL, function () {
+            return RiceSeason::orderBy('start_date', 'desc')->get();
+        });
+
+        $this->districts = Cache::remember('districts-list', self::CACHE_TTL, function () {
+            return District::orderBy('name')->get();
+        });
+
         $this->generateData();
     }
 
-    public function updatedSelectedSeason()
+    public function updated($propertyName)
     {
-        $this->refreshData();
+        if (in_array($propertyName, ['selectedSeason', 'districtId'])) {
+            $this->refreshData();
+        }
     }
 
     public function generateData()
@@ -35,79 +64,107 @@ class Chart extends Component
         $this->isLoading = true;
 
         try {
-            // Determine date range based on season selection
-            if ($this->selectedSeason == 0) {
-                $firstDate = RiceSeason::min('start_date');
-                $lastDate = RiceSeason::max('end_date');
-            } else {
-                $season = RiceSeason::find($this->selectedSeason);
-                if (!$season) {
-                    $this->dates = [];
-                    $this->pestData = [];
-                    return;
-                }
-                $firstDate = $season->start_date;
-                $lastDate = $season->end_date;
+            $cacheKey = $this->getCacheKey();
+            $cachedData = Cache::get($cacheKey);
+
+            if ($cachedData) {
+                $this->dates = $cachedData['dates'];
+                $this->pestData = $cachedData['pestData'];
+                return;
             }
 
-            $this->dates = $this->getWeeksInRange($firstDate, $lastDate);
+            $dateRange = $this->getDateRange();
+            $this->dates = $this->getWeeksInRange($dateRange['start'], $dateRange['end']);
 
-            // Preload all common data for the date range to reduce database queries
-            $commonData = CommonDataCollect::whereBetween('c_date', [
-                Carbon::parse($firstDate)->startOfDay(),
-                Carbon::parse($lastDate)->endOfDay()
-            ])->get()->groupBy(function ($item) {
-                return Carbon::parse($item->c_date)->format('Y-m-d');
-            });
+            $commonData = $this->getCommonData($dateRange);
+            $this->processPestData($commonData);
 
-            $pestNames = [
-                'thrips',
-                'gallMidge',
-                'leaffolder',
-                'yellowStemBorer',
-                'bphWbph',
-                'paddyBug',
-            ];
-
-            $this->pestData = [];
-
-            $pestDataController = new PestDataCollectController();
-
-            foreach ($pestNames as $pest) {
-                $this->pestData[$pest] = array_map(function ($date) use ($commonData, $pest, $pestDataController) {
-                    $startDate = Carbon::parse($date);
-                    $endDate = $startDate->copy()->addDays(7);
-
-                    // Filter from preloaded data instead of querying
-                    $weeklyData = $commonData->filter(function ($items, $itemDate) use ($startDate, $endDate) {
-                        $date = Carbon::parse($itemDate);
-                        return $date >= $startDate && $date <= $endDate;
-                    })->flatten();
-
-                    if ($weeklyData->isEmpty()) {
-                        return 0;
-                    }
-
-                    $pestDataCodes = $pestDataController->avarageCalculateByCommonData($weeklyData);
-                    return $pestDataCodes['pests'][$pest] ?? 0;
-                }, $this->dates);
-            }
+            Cache::put($cacheKey, [
+                'dates' => $this->dates,
+                'pestData' => $this->pestData
+            ], self::CACHE_TTL);
         } finally {
             $this->isLoading = false;
         }
     }
 
-    private function getWeeksInRange(string $startDate, string $endDate): array
+    protected function getCacheKey()
     {
-        $start = new DateTime($startDate);
-        $end = new DateTime($endDate);
-        $end->setTime(23, 59, 59);
+        return sprintf('pest-data-%s-%s', $this->selectedSeason, $this->districtId);
+    }
+
+    protected function getDateRange()
+    {
+        if ($this->selectedSeason == 0) {
+            return [
+                'start' => RiceSeason::min('start_date'),
+                'end' => RiceSeason::max('end_date')
+            ];
+        }
+
+        $season = RiceSeason::find($this->selectedSeason);
+        return $season ? [
+            'start' => $season->start_date,
+            'end' => $season->end_date
+        ] : ['start' => now(), 'end' => now()];
+    }
+
+    protected function getCommonData(array $dateRange)
+    {
+        $query = CommonDataCollect::with('collector')
+            ->whereBetween('c_date', [
+                Carbon::parse($dateRange['start'])->startOfDay(),
+                Carbon::parse($dateRange['end'])->endOfDay()
+            ]);
+
+        if ($this->districtId != 0) {
+            $query->whereHas('collector', function ($q) {
+                $q->where('district', $this->districtId);
+            });
+        }
+
+        return $query->get()
+            ->groupBy(function ($item) {
+                return Carbon::parse($item->c_date)->format('Y-m-d');
+            });
+    }
+
+    protected function processPestData($commonData)
+    {
+        $pestDataController = new PestDataCollectController();
+        $this->pestData = [];
+
+        foreach (self::PEST_NAMES as $pest) {
+            $this->pestData[$pest] = array_map(function ($date) use ($commonData, $pest, $pestDataController) {
+                $startDate = Carbon::parse($date);
+                $endDate = $startDate->copy()->addDays(7);
+
+                $weeklyData = $commonData->filter(function ($items, $itemDate) use ($startDate, $endDate) {
+                    $date = Carbon::parse($itemDate);
+                    return $date->between($startDate, $endDate);
+                })->flatten();
+
+                if ($weeklyData->isEmpty()) {
+                    return 0;
+                }
+
+                $pestDataCodes = $pestDataController->avarageCalculateByCommonData($weeklyData);
+                return $pestDataCodes['pests'][$pest] ?? 0;
+            }, $this->dates);
+        }
+    }
+
+    protected function getWeeksInRange($startDate, $endDate)
+    {
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endDate)->endOfDay();
 
         $weeks = [];
         while ($start <= $end) {
             $weeks[] = $start->format('Y-m-d');
-            $start->modify('+7 days');
+            $start->addWeek();
         }
+
         return $weeks;
     }
 
