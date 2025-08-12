@@ -1,7 +1,7 @@
-<div class="mx-auto p-4 md:p-6 bg-white ">
+<div class="mx-auto p-4 md:p-3 bg-white ">
     <!-- Header & Filters -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 gap-4">
-        <div class="space-y-1">
+        <div>
             <h1 class="text-xl md:text-3xl font-bold text-gray-900">Pest Monitoring Dashboard</h1>
             <p class="text-sm md:text-base text-gray-600">Track and analyze pest activity patterns in rice fields</p>
         </div>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <!-- Season Selector - Modern Pill Tabs -->
-    <div class="w-full sm:w-auto mb-2">
+    <div class="w-full sm:w- mb-4">
         <div class="relative">
             <div
                 class="flex justify-center flex-wrap gap-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -50,7 +50,7 @@
         </div>
     </div>
     <!-- Metrics Dashboard - Modern Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <!-- Time Period Card -->
         <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-4 shadow-sm border border-indigo-100">
             <div class="flex items-center space-x-4">
