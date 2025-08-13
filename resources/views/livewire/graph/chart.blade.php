@@ -1,61 +1,53 @@
-<div class="mx-auto p-4 md:p-3 bg-white ">
+<div class="mx-auto p-4 md:p-3 bg-white">
     <!-- Header & Filters -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 gap-4">
-        <div>
-            <h1 class="text-xl md:text-3xl font-bold text-gray-900">Pest Monitoring Dashboard</h1>
-            <p class="text-sm md:text-base text-gray-600">Track and analyze pest activity patterns in rice fields</p>
-        </div>
-
-        <!-- District Selector - Modern Dropdown -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2 gap-4">
+        <!-- District Selector -->
         <div class="relative w-full sm:w-56">
-            <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">District</label>
-            <div class="relative">
-                <select wire:model="districtId" id="districtSelect"
-                    class="text-black block w-full pl-4 pr-10 py-2.5 text-base border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 appearance-none">
-                    <option value="0">All Districts</option>
-                    @foreach ($districts as $district)
-                        <option value="{{ $district->id }}">{{ $district->name }}</option>
-                    @endforeach
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
+            <select wire:model="districtId" id="districtSelect"
+                class="text-black block w-full p-2 text-base border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 appearance-none pr-8">
+                <option value="0">All Districts</option>
+                @foreach ($districts as $district)
+                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                @endforeach
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" />
+                </svg>
             </div>
         </div>
-    </div>
-    <!-- Season Selector - Modern Pill Tabs -->
-    <div class="w-full sm:w- mb-4">
-        <div class="relative">
+
+        <!-- Season Selector -->
+        <div class="w-full sm:flex-1">
             <div
-                class="flex justify-center flex-wrap gap-1 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                class="flex justify-center lg:justify-start items-center flex-wrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 <button type="button" wire:click="$set('selectedSeason', '0')"
                     class="px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-200
-                            @if ($selectedSeason == '0') bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
+                    @if ($selectedSeason == '0') bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
                     All Seasons
                 </button>
 
                 @foreach ($seasons as $season)
                     <button type="button" wire:click="$set('selectedSeason', '{{ $season->id }}')"
                         class="px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-200
-                                @if ($selectedSeason == $season->id) bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
+                        @if ($selectedSeason == $season->id) bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
                         {{ $season->name }}
                     </button>
                 @endforeach
             </div>
         </div>
     </div>
-    <!-- Metrics Dashboard - Modern Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+    <!-- Metrics Dashboard - Compact Modern Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
         <!-- Time Period Card -->
-        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-4 shadow-sm border border-indigo-100">
-            <div class="flex items-center space-x-4">
-                <div class="p-2.5 rounded-lg bg-white shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none"
+        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-3 shadow-sm border border-indigo-100">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 rounded-md bg-white shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -63,7 +55,7 @@
                 </div>
                 <div>
                     <p class="text-xs font-medium text-indigo-800 uppercase tracking-wider">Time Period</p>
-                    <p class="text-sm font-semibold text-gray-900 mt-0.5">
+                    <p class="text-sm font-semibold text-gray-900">
                         @if (count($dates) > 0)
                             {{ \Carbon\Carbon::parse($dates[0])->format('M d, Y') }} -
                             {{ \Carbon\Carbon::parse(end($dates))->addDays(7)->format('M d, Y') }}
@@ -76,10 +68,10 @@
         </div>
 
         <!-- Data Points Card -->
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 shadow-sm border border-green-100">
-            <div class="flex items-center space-x-4">
-                <div class="p-2.5 rounded-lg bg-white shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 shadow-sm border border-green-100">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 rounded-md bg-white shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -95,10 +87,10 @@
         </div>
 
         <!-- Pests Tracked Card -->
-        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 shadow-sm border border-purple-100">
-            <div class="flex items-center space-x-4">
-                <div class="p-2.5 rounded-lg bg-white shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none"
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 shadow-sm border border-purple-100">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 rounded-md bg-white shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -113,6 +105,8 @@
             </div>
         </div>
     </div>
+    <!-- Pest Damage Risk Guide - Modern Accordion -->
+    <x-pest-damage-risk-guide />
 
     <!-- Loading State with Animation -->
     @if ($isLoading)
@@ -153,15 +147,14 @@
         <div class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div class="flex items-center space-x-2 text-xs text-gray-600">
                 <button type="button" onclick="toggleChartHelp()"
-                    class="p-1.5 rounded-full hover:bg-gray-100 transition" title="Chart Help">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                    class="p-1.5 rounded-full hover:bg-gray-300 transition" title="Chart Help">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-900" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </button>
-                <span class="hidden sm:inline">Hover for details • Click legend to toggle • Ctrl+Scroll to zoom •
-                    Shift+Drag to pan</span>
+                <span class="hidden sm:inline">Hover for details • Click legend to toggle • Ctrl+Scroll to zoom</span>
             </div>
 
             <div class="flex space-x-2">
@@ -187,61 +180,7 @@
             </div>
         </div>
 
-        <!-- Pest Damage Risk Guide - Modern Accordion -->
-        <div class="mt-6 bg-indigo-50/50 rounded-xl border border-indigo-200 overflow-hidden">
-            <div class="flex items-center justify-between p-3 cursor-pointer" onclick="toggleRiskGuide()">
-                <h3 class="text-sm font-semibold text-indigo-800 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 mr-2 text-indigo-600 transition-transform duration-200" id="riskGuideIcon"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                    Pest Damage Risk Level Guide
-                </h3>
-                <span class="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">Click to
-                    expand</span>
-            </div>
 
-            <div class="px-4 pb-3 pt-0 border-t border-indigo-100" id="riskGuideContent" style="display: none;">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-2">
-                    <div class="bg-white p-3 rounded-lg border border-green-200 shadow-xs">
-                        <div class="flex items-center space-x-2">
-                            <span
-                                class="flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold text-sm">0-1</span>
-                            <span class="text-sm font-medium text-gray-900">No damage risk</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mt-1">Normal pest population, no action needed</p>
-                    </div>
-
-                    <div class="bg-white p-3 rounded-lg border border-yellow-200 shadow-xs">
-                        <div class="flex items-center space-x-2">
-                            <span
-                                class="flex items-center justify-center h-6 w-6 rounded-full bg-yellow-100 text-yellow-800 font-bold text-sm">3</span>
-                            <span class="text-sm font-medium text-gray-900">Alert level</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mt-1">Close observation recommended</p>
-                    </div>
-
-                    <div class="bg-white p-3 rounded-lg border border-orange-200 shadow-xs">
-                        <div class="flex items-center space-x-2">
-                            <span
-                                class="flex items-center justify-center h-6 w-6 rounded-full bg-orange-100 text-orange-800 font-bold text-sm">5</span>
-                            <span class="text-sm font-medium text-gray-900">Economic threshold</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mt-1">Pest control suggested</p>
-                    </div>
-
-                    <div class="bg-white p-3 rounded-lg border border-red-200 shadow-xs">
-                        <div class="flex items-center space-x-2">
-                            <span
-                                class="flex items-center justify-center h-6 w-6 rounded-full bg-red-100 text-red-800 font-bold text-sm">7-9</span>
-                            <span class="text-sm font-medium text-gray-900">Critical level</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mt-1">Immediate action required</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -321,8 +260,7 @@
                         pointHoverBackgroundColor: '#fff',
                         pointHoverBorderColor: colors[colorIndex].hover,
                         tension: 0.3,
-                        fill: true,
-                        borderDash: i > 3 ? [4, 4] : [], // Add dashes to lines after 4th dataset
+                        fill: true, // Add dashes to lines after 4th dataset
                     };
                 });
 
@@ -366,13 +304,7 @@
                                         return `${label}: ${value}${riskLevel}`;
                                     },
                                     title: ctx => `Week of ${ctx[0].label}`,
-                                    footer: ctx => {
-                                        const value = ctx[0].parsed.y;
-                                        if (value >= 7) return 'Action: Immediate treatment required';
-                                        if (value >= 5) return 'Action: Consider pest control measures';
-                                        if (value >= 3) return 'Action: Monitor closely';
-                                        return 'Action: No treatment needed';
-                                    }
+
                                 },
                                 footerFontStyle: 'normal',
                                 footerMarginTop: 10,
@@ -415,7 +347,7 @@
                             zoom: {
                                 pan: {
                                     enabled: true,
-                                    mode: 'x',
+                                    mode: 'xy',
                                     modifierKey: 'shift',
                                 },
                                 zoom: {
@@ -444,7 +376,8 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                max: 9,
+
+                                max: 10,
                                 grid: {
                                     drawBorder: false,
                                     color: 'rgba(229, 231, 235, 0.5)',
