@@ -9,28 +9,34 @@
     <!-- Grid Wrapper -->
     <div class="grid gap-2 m-2 md:grid-cols-2">
         <!-- Chart by Each Season -->
-        <div class="p-4 bg-gray-900 border border-gray-700">
-            <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-gray-700 border-b-2 border-green-600">
-                <i class="mr-2 fas fa-calendar-alt"></i>SEASONAL ANALYTICS
+        <div>
+            <div class="p-4 bg-gray-900 border border-gray-700">
+                <div class="px-4 py-3 mb-4 text-sm font-semibold text-white bg-gray-700 border-b-2 border-green-600">
+                    <i class="mr-2 fas fa-calendar-alt"></i>SEASONAL ANALYTICS
+                </div>
+
+                @php
+                    $CollectorCount = \App\Models\Collector::count();
+                @endphp
+
+                <div class="flex items-center mb-4 text-gray-300">
+                    <i class="w-4 h-4 mr-2 text-green-400 fas fa-check-circle"></i>
+                    <span class="text-sm"><strong>Collectors Registered:</strong></span>
+                    <span class="ml-1 text-sm font-semibold text-green-400">{{ $CollectorCount }}</span>
+                </div>
+
+                <x-form action="{{ route('chart.show') }}">
+                    @csrf
+                    @livewire('season-select')
+                    <x-form.submit class="w-full mt-4 bg-green-600 hover:bg-green-700 border-0">
+                        <i class="mr-2 fas fa-chart-line"></i>Generate Chart
+                    </x-form.submit>
+                </x-form>
+            </div>
+            <div>
+                <x-weekly-pest-risk-index-card />
             </div>
 
-            @php
-                $CollectorCount = \App\Models\Collector::count();
-            @endphp
-
-            <div class="flex items-center mb-4 text-gray-300">
-                <i class="w-4 h-4 mr-2 text-green-400 fas fa-check-circle"></i>
-                <span class="text-sm"><strong>Collectors Registered:</strong></span>
-                <span class="ml-1 text-sm font-semibold text-green-400">{{ $CollectorCount }}</span>
-            </div>
-
-            <x-form action="{{ route('chart.show') }}">
-                @csrf
-                @livewire('season-select')
-                <x-form.submit class="w-full mt-4 bg-green-600 hover:bg-green-700 border-0">
-                    <i class="mr-2 fas fa-chart-line"></i>Generate Chart
-                </x-form.submit>
-            </x-form>
         </div>
 
         <!-- Chart by All Seasons -->

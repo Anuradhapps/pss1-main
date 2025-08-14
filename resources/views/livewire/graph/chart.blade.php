@@ -1,42 +1,124 @@
-<div class="mx-auto p-4 md:p-3 bg-white">
-    <!-- Header & Filters -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2 gap-4">
-        <!-- District Selector -->
-        <div class="relative w-full sm:w-56">
-            <select wire:model="districtId" id="districtSelect"
-                class="text-black block w-full p-2 text-base border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 appearance-none pr-8">
-                <option value="0">All Districts</option>
-                @foreach ($districts as $district)
-                    <option value="{{ $district->id }}">{{ $district->name }}</option>
-                @endforeach
-            </select>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd" />
-                </svg>
+<div class="mx-auto p-2 bg-white">
+    <div class="mx-auto">
+        <!-- Main Title Container -->
+        <div class="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            <!-- Gradient Header Bar -->
+            <div class="bg-gradient-to-r from-indigo-600 to-emerald-600 py-2 px-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <!-- Main Title -->
+                    <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+                        Weekly Pest Risk Index
+                    </h1>
+
+                    <!-- Subtitle Badge -->
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-sm font-semibold text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Damage Severity Coded / Rapid update
+                        </span>
+
+                        <a href="{{ url('/') }}"
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors duration-200 text-sm font-semibold text-white">
+                            <i class="fas fa-home mr-2"></i> Home
+                        </a>
+                    </div>
+                </div>
             </div>
+
+            <!-- Description Box -->
+            <div class="px-4  bg-gray-50 border-t border-gray-100">
+                <div class="prose prose-indigo max-w-none">
+                    <p class="text-gray-700 text-sm italic">
+                        Visualized weekly averages of pest damage intensity using a coded risk index (0-9 scale)
+                        for field assessment.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Metrics Ribbon -->
+            <!-- Pest Damage Risk Guide - Modern Accordion -->
+            <div class="px-2">
+                <x-pest-damage-risk-guide />
+            </div>
+
+        </div>
+    </div>
+    <!-- Header & Filters -->
+    <div x-data="{ open: true }" class="bg-white rounded-xl shadow-sm border border-gray-200 my-2">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-4 border-b mb-2" @click="open = !open">
+            <h2 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2H3V4zM4 9h16l-1.5 11h-13L4 9z" />
+                </svg>
+                Filters
+            </h2>
+
+            <!-- Toggle Button -->
+            <button
+                class="flex items-center gap-1 text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full  hover:text-indigo-600 transition">
+                <span x-show="open">Hide</span>
+                <span x-show="!open">Show</span>
+                <svg :class="{ 'rotate-180': !open }" class="w-4 h-4 transform transition-transform" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
         </div>
 
-        <!-- Season Selector -->
-        <div class="w-full sm:flex-1">
-            <div
-                class="flex justify-center lg:justify-start items-center flex-wrap gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                <button type="button" wire:click="$set('selectedSeason', '0')"
-                    class="px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-200
-                    @if ($selectedSeason == '0') bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
-                    All Seasons
-                </button>
+        <!-- Filter Content -->
+        <div x-show="open" x-collapse>
+            <div class="p-4 space-y-4">
+                <!-- District Selector -->
+                <div>
+                    <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">
+                        District
+                    </label>
+                    <select wire:model="districtId" id="districtSelect"
+                        class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                           sm:text-sm bg-white text-gray-800 shadow-sm">
+                        <option value="0">All Districts</option>
+                        @foreach ($districts as $district)
+                            <option value="{{ $district->id }}">{{ $district->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                @foreach ($seasons as $season)
-                    <button type="button" wire:click="$set('selectedSeason', '{{ $season->id }}')"
-                        class="px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-all duration-200
-                        @if ($selectedSeason == $season->id) bg-indigo-600 text-white shadow-md @else bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 @endif">
-                        {{ $season->name }}
-                    </button>
-                @endforeach
+                <!-- Season Selector -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Season
+                    </label>
+                    <div
+                        class="flex gap-2 overflow-x-auto flex-wrap pb-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                        <button type="button" wire:click="$set('selectedSeason', '0')"
+                            class="px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap border
+                               transition-all duration-200
+                               {{ $selectedSeason == '0'
+                                   ? 'bg-indigo-600 text-white border-indigo-600 shadow'
+                                   : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300' }}">
+                            All
+                        </button>
+                        @foreach ($seasons as $season)
+                            <button type="button" wire:click="$set('selectedSeason', '{{ $season->id }}')"
+                                class="px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap border
+                                   transition-all duration-200
+                                   {{ $selectedSeason == $season->id
+                                       ? 'bg-indigo-600 text-white border-indigo-600 shadow'
+                                       : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300' }}">
+                                {{ $season->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -105,14 +187,14 @@
             </div>
         </div>
     </div>
-    <!-- Pest Damage Risk Guide - Modern Accordion -->
-    <x-pest-damage-risk-guide />
+
 
     <!-- Loading State with Animation -->
     @if ($isLoading)
         <div class="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl border border-gray-200">
             <div class="relative w-12 h-12 mb-4">
-                <div class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin">
+                <div
+                    class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin">
                 </div>
                 <div
                     class="absolute inset-1 rounded-full border-4 border-indigo-300 border-b-transparent animate-spin animation-delay-150">
@@ -496,18 +578,7 @@
                 });
             }
 
-            // UI Functions
-            window.toggleRiskGuide = function() {
-                const content = document.getElementById('riskGuideContent');
-                const icon = document.getElementById('riskGuideIcon');
-                if (content.style.display === 'none') {
-                    content.style.display = 'block';
-                    icon.style.transform = 'rotate(90deg)';
-                } else {
-                    content.style.display = 'none';
-                    icon.style.transform = 'rotate(0deg)';
-                }
-            };
+
 
             window.toggleChartHelp = function() {
                 const overlay = document.getElementById('chartOverlay');

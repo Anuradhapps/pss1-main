@@ -185,25 +185,6 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:exten
     Route::get('/', DashboardExtensionandtrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
-Route::get('/pest-data', function (Request $request) {
-    return response()->json([
-        "labels" => ["2025-03-25", "2025-04-02", "2025-04-09", "2025-04-16", "2025-04-23", "2025-04-29"],
-        "datasets" => [
-            [
-                "label" => "Pest Count 1",
-                "data" => [5, 10, 8, 15, 14, 15]
-            ],
-            [
-                "label" => "Pest Count 2",
-                "data" => [3, 6, 4, 10, 20, 9]
-            ],
-            [
-                "label" => "Pest Count 3",
-                "data" => [12, 7, 3, 8, 25, 1]
-            ]
-        ]
-    ]);
-});
+Route::get('/weeklyPestRiskIndex', function () {
+    return view('chart.Weekly-Pest-Risk-Index');
+})->name('weekly-pest-risk.index');

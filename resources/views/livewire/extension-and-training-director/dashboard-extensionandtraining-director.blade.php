@@ -219,6 +219,8 @@
                     @endforelse
                 </ul>
             </x-dd.card>
+
+            <x-weekly-pest-risk-index-card />
         </div>
 
         {{-- <livewire:graph.weekly-pest-graph /> --}}

@@ -180,6 +180,7 @@ class Chart extends Component
 
     public function render()
     {
+
         return view('livewire.graph.chart');
     }
 }

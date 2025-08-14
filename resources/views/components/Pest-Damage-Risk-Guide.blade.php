@@ -36,7 +36,7 @@
                  <div class="flex items-center space-x-2">
                      <span
                          class="flex items-center justify-center h-6 w-6 rounded-full bg-orange-100 text-orange-800 font-bold text-sm">5</span>
-                     <span class="text-sm font-medium text-gray-900">Economic threshold</span>
+                     <span class="text-sm font-medium text-gray-900">Threshold</span>
                  </div>
                  <p class="text-xs text-gray-600 mt-1">Pest control suggested</p>
              </div>
@@ -52,3 +52,17 @@
          </div>
      </div>
  </div>
+ <script>
+     // UI Functions
+     window.toggleRiskGuide = function() {
+         const content = document.getElementById('riskGuideContent');
+         const icon = document.getElementById('riskGuideIcon');
+         if (content.style.display === 'none') {
+             content.style.display = 'block';
+             icon.style.transform = 'rotate(90deg)';
+         } else {
+             content.style.display = 'none';
+             icon.style.transform = 'rotate(0deg)';
+         }
+     };
+ </script>
