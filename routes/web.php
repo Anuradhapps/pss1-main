@@ -190,6 +190,6 @@ Route::get('/weeklyPestRiskIndex', function () {
 })->name('weekly-pest-risk.index');
 
 
-Route::get('/test', function () {
+Route::get('test', function () {
     return view('test');
 });

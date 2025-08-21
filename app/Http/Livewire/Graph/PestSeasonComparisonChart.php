@@ -36,38 +36,49 @@ class PestSeasonComparisonChart extends Component
     public function mount()
     {
         $this->loadInitialData();
-        $this->selectedPest = array_key_last($this->pests) ?? '';
+        $this->selectedPest = array_key_first($this->pests) ?? '';
         $this->fetchChartData();
     }
 
     protected function loadInitialData()
     {
-        $this->seasons = Cache::remember('rice-seasons-list', self::CACHE_TTL, fn() => RiceSeason::orderByDesc('start_date')->get());
-        $this->districts = Cache::remember('districts-list', self::CACHE_TTL, fn() => District::orderBy('name')->get());
+        $this->seasons = Cache::remember(
+            'rice-seasons-list',
+            self::CACHE_TTL,
+            fn() => RiceSeason::orderByDesc('start_date')->get()
+        );
+        $this->districts = Cache::remember(
+            'districts-list',
+            self::CACHE_TTL,
+            fn() => District::orderBy('name')->get()
+        );
         $this->pests = self::PEST_NAMES;
     }
 
     public function updated($propertyName)
     {
-
         if (in_array($propertyName, ['selectedPest', 'districtId'])) {
-
             $this->fetchChartData();
         }
     }
 
     public function fetchChartData()
     {
-
         $this->isLoading = true;
         $this->pestData = $this->getPestData();
         $this->isLoading = false;
+
+        // Always fresh chart update
         $this->dispatchBrowserEvent('chartUpdated', ['pestData' => $this->pestData]);
     }
 
     protected function getPestData(): array
     {
-        $cacheKey = sprintf('pest-season-comparison-%s-%s', $this->selectedPest, $this->districtId);
+        $cacheKey = sprintf(
+            'pest-season-comparison-%s-%s',
+            $this->selectedPest,
+            $this->districtId
+        );
 
         return Cache::remember($cacheKey, self::CACHE_TTL, function () {
             $pestData = [];
@@ -80,15 +91,17 @@ class PestSeasonComparisonChart extends Component
                 $seasonData = [];
                 foreach ($weeks as $weekStart) {
                     $weekEnd = Carbon::parse($weekStart)->copy()->addDays(6);
-                    $weeklyData = $commonData->filter(fn($items, $date) => Carbon::parse($date)->between($weekStart, $weekEnd))->flatten();
+
+                    $weeklyData = $commonData
+                        ->filter(fn($items, $date) => Carbon::parse($date)->between($weekStart, $weekEnd))
+                        ->flatten();
 
                     if ($weeklyData->isEmpty()) {
                         $seasonData[] = 0;
-                        continue;
+                    } else {
+                        $weeklyPests = $controller->avarageCalculateByCommonData($weeklyData);
+                        $seasonData[] = $weeklyPests['pests'][$this->selectedPest] ?? 0;
                     }
-
-                    $weeklyPests = $controller->avarageCalculateByCommonData($weeklyData);
-                    $seasonData[] = $weeklyPests['pests'][$this->selectedPest] ?? 0;
                 }
 
                 $pestData[$season->id] = [
@@ -96,6 +109,7 @@ class PestSeasonComparisonChart extends Component
                     'data' => $seasonData
                 ];
             }
+
             return $pestData;
         });
     }

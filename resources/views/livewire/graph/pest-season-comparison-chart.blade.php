@@ -10,7 +10,7 @@
             <!-- Pest Selector -->
             <div class="relative w-full sm:w-56">
                 <label for="pestSelect" class="block text-sm font-medium text-gray-700 mb-1">Select Pest</label>
-                <select wire:model.live="selectedPest" id="pestSelect"
+                <select wire:model="selectedPest" id="pestSelect"
                     class="text-gray-800 block w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-white
                     focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200">
                     @foreach ($pests as $key => $pest)
@@ -22,7 +22,7 @@
             <!-- District Selector -->
             <div class="relative w-full sm:w-56">
                 <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">Select District</label>
-                <select wire:model.live="districtId" id="districtSelect"
+                <select wire:model="districtId" id="districtSelect"
                     class="text-gray-800 block w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-white
                     focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200">
                     <option value="0">All Districts</option>
@@ -57,41 +57,55 @@
             const ctx = document.getElementById('pestComparisonChart');
             let chart = null;
 
-            // Modern color palette
             const colors = [
-                '#4F46E5', // indigo
-                '#DC2626', // red
-                '#059669', // emerald
-                '#D97706', // amber
-                '#7C3AED', // purple
-                '#DB2777', // pink
-                '#0D9488', // teal
-                '#EA580C' // orange
+                '#4F46E5', '#DC2626', '#059669', '#D97706',
+                '#7C3AED', '#DB2777', '#0D9488', '#EA580C'
             ];
 
+            function prepareChartData(pestData) {
+                const seasonEntries = Object.values(pestData || {});
+                const maxWeeks = Math.max(...seasonEntries.map(s => s.data.length), 0);
+                const labels = Array.from({
+                    length: maxWeeks
+                }, (_, i) => `Week ${i + 1}`);
+
+                const datasets = seasonEntries.map((season, index) => ({
+                    label: season.name,
+                    data: season.data,
+                    borderColor: colors[index % colors.length],
+                    backgroundColor: colors[index % colors.length] + '20',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: colors[index % colors.length],
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.3
+                }));
+
+                return {
+                    labels,
+                    datasets
+                };
+            }
+
             function initChart(pestData) {
-                if (chart) {
-                    // Update existing chart instead of destroying
-                    const {
-                        datasets,
-                        labels
-                    } = prepareChartData(pestData);
-                    chart.data.labels = labels;
-                    chart.data.datasets = datasets;
-                    chart.update();
-                    return;
+                // Destroy old chart if exists
+                if (chart !== null) {
+                    chart.destroy();
                 }
 
                 const {
-                    datasets,
-                    labels
+                    labels,
+                    datasets
                 } = prepareChartData(pestData);
 
                 chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
-                        datasets: datasets
+                        labels,
+                        datasets
                     },
                     options: {
                         responsive: true,
@@ -104,7 +118,6 @@
                                         family: 'Inter',
                                         size: 13
                                     },
-                                    padding: 20,
                                     usePointStyle: true,
                                     pointStyle: 'circle'
                                 }
@@ -112,47 +125,8 @@
                             tooltip: {
                                 mode: 'index',
                                 intersect: false,
-                                backgroundColor: 'rgba(17, 24, 39, 0.97)',
-                                titleFont: {
-                                    size: 13,
-                                    weight: '600',
-                                    family: 'Inter'
-                                },
-                                bodyFont: {
-                                    size: 13,
-                                    family: 'Inter'
-                                },
-                                padding: 12,
-                                cornerRadius: 10,
-                                usePointStyle: true,
-                                boxPadding: 6,
                                 callbacks: {
-                                    label: function(context) {
-                                        return context.dataset.label + ': ' + context.parsed.y.toFixed(
-                                            2);
-                                    }
-                                }
-                            },
-                            zoom: {
-                                zoom: {
-                                    wheel: {
-                                        enabled: true,
-                                        modifierKey: 'ctrl'
-                                    },
-                                    pinch: {
-                                        enabled: true
-                                    },
-                                    mode: 'x',
-                                },
-                                pan: {
-                                    enabled: true,
-                                    mode: 'x',
-                                    modifierKey: 'shift'
-                                },
-                                limits: {
-                                    x: {
-                                        minRange: 5
-                                    }
+                                    label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`
                                 }
                             }
                         },
@@ -160,133 +134,40 @@
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Weeks of Season',
-                                    font: {
-                                        size: 13,
-                                        weight: '600',
-                                        family: 'Inter'
-                                    },
-                                    color: '#374151',
-                                    padding: {
-                                        top: 10,
-                                        bottom: 0
-                                    }
-                                },
-                                grid: {
-                                    display: false,
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 12,
-                                        family: 'Inter'
-                                    },
-                                    color: '#6B7280',
-                                    maxRotation: 45,
-                                    minRotation: 0
+                                    text: 'Weeks of Season'
                                 }
                             },
                             y: {
                                 beginAtZero: true,
+                                max: 10, // Fixed maximum value
+                                min: 0, // Fixed minimum value
+                                ticks: {
+                                    stepSize: 1, // Show integer values only
+                                    callback: function(value) {
+                                        // Only show integer values on Y-axis
+                                        if (value % 1 === 0) {
+                                            return value;
+                                        }
+                                    }
+                                },
                                 title: {
                                     display: true,
-                                    text: 'Pest Count / Incidence',
-                                    font: {
-                                        size: 13,
-                                        weight: '600',
-                                        family: 'Inter'
-                                    },
-                                    color: '#374151',
-                                    padding: {
-                                        top: 0,
-                                        bottom: 15
-                                    }
-                                },
-                                grid: {
-                                    drawBorder: false,
-                                    color: 'rgba(229, 231, 235, 0.5)',
-                                    drawTicks: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 12,
-                                        family: 'Inter'
-                                    },
-                                    color: '#6B7280',
-                                    padding: 10,
-                                    callback: function(value) {
-                                        return value.toFixed(1);
-                                    }
+                                    text: 'Pest Code'
                                 }
-                            }
-                        },
-                        interaction: {
-                            mode: 'nearest',
-                            axis: 'x',
-                            intersect: false
-                        },
-                        elements: {
-                            line: {
-                                borderWidth: 2.5,
-                                tension: 0.3,
-                            },
-                            point: {
-                                radius: 4,
-                                hoverRadius: 6,
-                                hoverBorderWidth: 3,
                             }
                         }
                     }
                 });
             }
 
-            function prepareChartData(pestData) {
-                const seasonEntries = Object.values(pestData);
-                const maxWeeks = Math.max(...seasonEntries.map(season => season.data.length));
-                const labels = Array.from({
-                    length: maxWeeks
-                }, (_, i) => `Week ${i + 1}`);
-
-                const datasets = seasonEntries.map((season, index) => ({
-                    label: season.name,
-                    data: season.data,
-                    borderColor: colors[index % colors.length],
-                    backgroundColor: colors[index % colors.length] + '20', // Add opacity
-                    borderWidth: 2.5,
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: colors[index % colors.length],
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointHoverBorderWidth: 3,
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: colors[index % colors.length],
-                    tension: 0.3,
-                    fill: true
-                }));
-
-                return {
-                    datasets,
-                    labels
-                };
-            }
-
-            // Initialize chart with initial data
+            // Initial
             initChart(@json($pestData));
 
-            // Listen for Livewire updates
-            Livewire.on('updateChart', (pestData) => {
-                initChart(pestData);
-            });
+            // Update from Livewire
+            Livewire.on('chartUpdated', pestData => initChart(pestData));
 
-            // Handle Livewire model updates
-            document.addEventListener('livewire:init', () => {
-                Livewire.on('selectedPestUpdated', (pestData) => {
-                    initChart(pestData);
-                });
-                Livewire.on('districtIdUpdated', (pestData) => {
-                    initChart(pestData);
-                });
+            document.addEventListener('chartUpdated', e => {
+                initChart(e.detail.pestData);
             });
         });
     </script>
