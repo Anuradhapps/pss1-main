@@ -4,7 +4,7 @@
         class="bg-green-700" />
 
 
-    <x-form method="GET" action="{{ route('pestdata.store', $collectorId) }}" class="m-2">
+    <x-form method="POST" action="{{ route('pestdata.store', $collectorId) }}" class="m-2">
         @csrf
         <div class="grid grid-cols-2 gap-2">
             <div class="col-span-2 sm:col-span-1">

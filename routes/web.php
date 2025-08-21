@@ -162,7 +162,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
         Route::get('/', [PestDataCollectController::class, 'index'])->name('pestdata.index');
         Route::get('/view/{id}', [PestDataCollectController::class, 'view'])->name('pestdata.view');
         Route::get('/create/{id}', [PestDataCollectController::class, 'create'])->name('pestdata.create');
-        Route::get('/store/{id}', [PestDataCollectController::class, 'store'])->name('pestdata.store');
+        Route::post('/store/{id}', [PestDataCollectController::class, 'store'])->name('pestdata.store');
         Route::get('/{id}', [PestDataCollectController::class, 'show'])->name('pestdata.show');
         Route::get('/{id}/edit', [PestDataCollectController::class, 'edit'])->name('pestdata.edit');
         Route::put('/{id}', [PestDataCollectController::class, 'update'])->name('pestdata.update');
@@ -188,3 +188,8 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:exten
 Route::get('/weeklyPestRiskIndex', function () {
     return view('chart.Weekly-Pest-Risk-Index');
 })->name('weekly-pest-risk.index');
+
+
+Route::get('/test', function () {
+    return view('test');
+});

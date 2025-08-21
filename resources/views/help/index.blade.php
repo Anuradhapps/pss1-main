@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="p-6 max-w-5xl mx-auto text-white space-y-8">
+    <div class="p-6 max-w-6xl mx-auto text-white space-y-8">
 
         <div class="text-center">
             <h1 class="text-3xl md:text-4xl font-extrabold text-green-400">📘 National Pest Surveillance System (NPSS)
@@ -155,7 +155,7 @@
         <section class="text-sm text-gray-400 space-y-2">
             <h3 class="text-lg text-white font-bold">Prepared By:</h3>
             <p>Dhammika Sarathchandra – Agriculture Instructor</p>
-            <p>Darsha Anuradha – <strong>Lead Developer & Technical Assistant</strong>, AFACI Project / National Plant
+            <p>Darsha Anuradha – Lead Developer & Technical Assistant, AFACI Project / National Plant
                 Protection Service</p>
 
             <h3 class="text-lg text-white font-bold">Directed By:</h3>

@@ -5,7 +5,7 @@
 
     <div>
         <!-- Page Header -->
-        <x-headings.topHeading title="My Records" subtitle="" icon="fas fa-folder-open" buttonText="Create Collector"
+        <x-headings.topHeading title="My Records" subtitle="" icon="fas fa-folder-open" buttonText="New Collector"
             buttonAction="{{ route('collector.newCollector') }}" buttonIcon="fas fa-plus" buttonColor="blue"
             class="bg-green-700" />
 

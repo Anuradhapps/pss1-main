@@ -130,6 +130,7 @@ class PestDataCollectController extends Controller
             'date_collected' => 'required|date_format:d-m-Y',
             'growth_s_c' => 'required',
             'numbrer_r_day' => 'required|numeric',
+            'temperature' => 'required',
             // Validate tiller locations as numeric
             'Number_Of_Tillers_location_1' => 'required|numeric',
             'Number_Of_Tillers_location_2' => 'required|numeric',

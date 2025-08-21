@@ -42,7 +42,7 @@
 
                     <select wire:model="selectedDistrict"
                         class="rounded-none px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 focus:ring-2 focus:ring-blue-600 transition">
-                        <option value="">All Districts</option>
+                        <option value="">All IP</option>
                         @foreach ($districts as $district)
                             <option value="{{ $district->id }}">{{ $district->name }}</option>
                         @endforeach
@@ -171,7 +171,7 @@
                                     </span>
                                 @endif
                             @else
-                                <span class="font-semibold text-white">All Island</span>
+                                <span class="font-semibold text-white">All Inter Provinces</span>
                             @endif
                         </div>
                     </div>

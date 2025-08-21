@@ -94,7 +94,8 @@
 
             <!-- Chart Section -->
             <div class="w-full lg:w-1/3">
-                <x-charts.collector-pest-chart title="My Data in {{ $collector->riceSeason->name }} Season"
+                <x-charts.collector-pest-chart
+                    title="{{ $collector->getAiRange->name }} - {{ $collector->riceSeason->name }} Season"
                     :labels="$pestLabels" :data="$pestCode" icon="fas fa-chart-bar" id="weeklyPestChart" />
             </div>
         </div>

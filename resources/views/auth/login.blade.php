@@ -9,15 +9,15 @@
             @if (Route::has('register'))
                 <a href="{{ route('register') }}"
                     class="px-4 py-2 text-sm font-medium rounded-lg bg-green-600 hover:bg-green-700 transition duration-300 shadow">
-                    Register
+                    New Registration
                 </a>
             @endif
         </div>
 
         <!-- Title -->
         <div class="text-center">
-            <h2 class="text-2xl font-bold">Welcome Back</h2>
-            <p class="text-sm text-gray-400">Log in to your account</p>
+
+            <h3 class="text-lg font-bold text-gray-400">Log in to your account</h3>
         </div>
 
         <!-- Error Messages -->

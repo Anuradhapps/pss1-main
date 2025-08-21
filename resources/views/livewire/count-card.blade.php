@@ -4,7 +4,8 @@
 
         <div class="flex items-center space-x-3">
             <i class="{{ $iconName }} text-xl"></i>
-            <span class="text-sm font-semibold sm:text-base">{{ $cardName }}</span>
+            <span class="text-sm font-semibold sm:text-base">{{ preg_replace('/(?<!\ )[A-Z]/', ' $0', $cardName) }}
+            </span>
         </div>
 
         <span id="cardCount_{{ Str::slug($cardName) }}" class="text-lg font-bold">{{ $userCount }}</span>
