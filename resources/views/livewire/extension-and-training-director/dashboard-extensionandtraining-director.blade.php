@@ -223,7 +223,149 @@
             <x-weekly-pest-risk-index-card />
         </div>
 
-        {{-- <livewire:graph.weekly-pest-graph /> --}}
-
     </div>
 </div>
+{{-- @section('title', 'Extension And Training Director - Dashboard')
+
+<div class="min-h-screen bg-gray-900 text-white px-4 py-6 space-y-6">
+
+    <!-- Top Heading -->
+    <x-headings.topHeading title="Inter-Provincial Dashboard" icon="fas fa-clipboard"
+        class="bg-gradient-to-r from-green-800 to-green-900 shadow-lg rounded-2xl text-white p-4" />
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <x-dd.stat-box color="green" title="Total Users" :value="$totalUsersCount"
+            class="rounded-2xl shadow-md hover:shadow-lg transition" />
+        <x-dd.stat-box color="yellow" title="This Season" :value="$seasonUserCount"
+            class="rounded-2xl shadow-md hover:shadow-lg transition" />
+        @if ($selectedSeason || $selectedDistrict || $searchNumber)
+            <div
+                class="col-span-2 lg:col-span-1 bg-gray-800/90 backdrop-blur-sm border border-gray-700 p-4 rounded-2xl flex items-center justify-between shadow hover:shadow-lg transition">
+                <div class="flex flex-col text-xs sm:text-sm text-gray-300 font-medium truncate">
+                    <span>{{ \App\Models\District::find($selectedDistrict)?->name ?? 'All Districts' }}</span>
+                    <span class="text-gray-400">{{ $selectedSeasonName }} Collectors</span>
+                </div>
+                <div
+                    class="ml-3 bg-green-600 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center text-white font-bold text-lg rounded-xl border border-green-700">
+                    {{ $selectedSeasonUserCount }}
+                </div>
+            </div>
+        @endif
+    </div>
+
+    <!-- Filters -->
+    <div
+        class="bg-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 shadow-md flex flex-wrap gap-3 items-center">
+        <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name"
+            class="rounded-2xl px-4 py-2 bg-gray-900 border border-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-600 transition w-full sm:w-auto" />
+
+        <input type="number" wire:model.debounce.500ms="searchNumber" placeholder="Search by Phone Number"
+            class="rounded-2xl px-4 py-2 bg-gray-900 border border-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-600 transition w-full sm:w-auto" />
+
+        <select wire:model="selectedDistrict"
+            class="rounded-2xl px-4 py-2 bg-gray-900 border border-gray-700 focus:ring-2 focus:ring-blue-600 transition">
+            <option value="">All IP</option>
+            @foreach ($districts as $district)
+                <option value="{{ $district->id }}">{{ $district->name }}</option>
+            @endforeach
+        </select>
+
+        <select wire:model="selectedSeason"
+            class="rounded-2xl px-4 py-2 bg-gray-900 border border-gray-700 focus:ring-2 focus:ring-blue-600 transition">
+            <option value="">All Seasons</option>
+            @foreach ($seasons as $season)
+                <option value="{{ $season->id }}">{{ $season->name }}</option>
+            @endforeach
+        </select>
+
+        <button wire:click="resetFilters"
+            class="rounded-2xl px-4 py-2 bg-red-700 hover:bg-red-800 shadow transition transform hover:scale-105">
+            Reset
+        </button>
+    </div>
+
+    <!-- User Table -->
+    <div class="overflow-x-auto rounded-2xl shadow-md border border-gray-700 bg-gray-800/80 backdrop-blur-sm">
+        @if ($filteredCollectors->isEmpty())
+            <div class="flex items-center justify-center p-4 text-red-400 text-sm font-medium gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
+                </svg>
+                No collectors found. Try adjusting your filters.
+            </div>
+        @else
+            <table class="min-w-full bg-gray-950 text-sm text-green-100">
+                <thead class="bg-green-950 text-green-200 uppercase text-xs font-semibold border-b border-green-800">
+                    <tr>
+                        <th class="px-4 py-3 text-left">Name</th>
+                        <th class="px-4 py-3 text-left">AI Range</th>
+                        <th class="px-4 py-3 text-left">Season</th>
+                        <th class="px-4 py-3 text-left">Phone</th>
+                        <th class="px-4 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    @foreach ($filteredCollectors as $collector)
+                        <tr class="hover:bg-green-950 transition cursor-pointer">
+                            <td class="px-4 py-2 font-medium">{{ $collector->user->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">{{ $collector->getAiRange->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">{{ $collector->riceSeason->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">{{ $collector->phone_no ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 text-right">
+                                <button wire:click="viewCollector({{ $collector->id }})"
+                                    class="px-3 py-1.5 bg-green-600 hover:bg-green-700 rounded-2xl text-xs font-semibold shadow transition transform hover:scale-105">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="mt-3 px-4">{{ $filteredCollectors->links() }}</div>
+        @endif
+    </div>
+
+    <!-- Dashboard Cards + Charts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <x-dd.card title="🏆 Top Collectors"
+            class="bg-gray-800/90 border border-gray-700 rounded-2xl shadow-md hover:shadow-lg">
+            <ul class="space-y-2 text-sm">
+                @forelse ($filteredCollectorsBy as $collector)
+                    <li class="flex justify-between items-center">
+                        <span>{{ $collector->user->name ?? 'Unnamed Collector' }} -
+                            {{ $collector->getAiRange->name ?? 'N/A' }}</span>
+                        <span
+                            class="bg-orange-700 text-white px-3 py-1 rounded-2xl text-xs font-medium">{{ $collector->common_data_collect_count ?? 0 }}
+                            entries</span>
+                    </li>
+                @empty
+                    <li class="text-red-400">No data found.</li>
+                @endforelse
+            </ul>
+        </x-dd.card>
+
+        <x-dd.card title="📌 All Collector Locations"
+            class="bg-gray-800/90 border border-gray-700 rounded-2xl shadow-md hover:shadow-lg">
+            <livewire:map-view :collectors="$this->collectors" />
+        </x-dd.card>
+
+        <x-dd.card title="📝 Recent Activities"
+            class="bg-gray-800/90 border border-gray-700 rounded-2xl shadow-md hover:shadow-lg">
+            <ul class="space-y-2 text-sm text-gray-300">
+                @forelse ($recentActivities as $activity)
+                    <li>🕒 <strong class="text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
+                        {{ $activity->title }} – <span
+                            class="text-gray-500">{{ $activity->created_at->diffForHumans() }}</span></li>
+                @empty
+                    <li>No recent activities found.</li>
+                @endforelse
+            </ul>
+        </x-dd.card>
+
+        <x-weekly-pest-risk-index-card />
+    </div>
+
+</div> --}}

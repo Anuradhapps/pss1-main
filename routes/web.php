@@ -188,6 +188,10 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:exten
 Route::get('/weeklyPestRiskIndex', function () {
     return view('chart.Weekly-Pest-Risk-Index');
 })->name('weekly-pest-risk.index');
+Route::get('/pestseasoncomparison', function () {
+    return view('chart.pest-season-comparison');
+})->name('pest-season-comparison');
+
 
 
 Route::get('test', function () {

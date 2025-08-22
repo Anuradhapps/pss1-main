@@ -1,10 +1,53 @@
-<div class="mx-auto p-4 md:p-6 bg-white rounded-xl shadow-lg">
-    <!-- Header & Filters -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-800">📊 Pest Season Comparison</h2>
-            <p class="text-sm text-gray-500 mt-1">Compare pest incidence across different seasons</p>
+<div class="m-2">
+    <!-- Main Title Container -->
+    <div class="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+        <!-- Gradient Header Bar -->
+        <div class="bg-gradient-to-r from-pink-600 to-emerald-600 py-2 px-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <!-- Main Title -->
+                <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+                    Pest Season Comparison
+                </h1>
+
+                <!-- Subtitle Badge -->
+                <div class="flex items-center gap-2">
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-sm font-semibold text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Damage Severity Coded / Rapid update
+                    </span>
+
+                    <a href="{{ url('/') }}"
+                        class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors duration-200 text-sm font-semibold text-white">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                </div>
+            </div>
         </div>
+
+        <!-- Description Box -->
+        <div class="px-4  bg-gray-50 border-t border-gray-100">
+            <div class="prose prose-indigo max-w-none">
+                <p class="text-gray-700 text-sm italic">
+                    Visualize the weekly averages of each pest’s damage intensity using a coded risk index (0–9 scale)
+                    to enable comparison between seasons
+                </p>
+            </div>
+        </div>
+
+        <!-- Key Metrics Ribbon -->
+        <!-- Pest Damage Risk Guide - Modern Accordion -->
+        <div class="px-2">
+            <x-pest-damage-risk-guide />
+        </div>
+
+    </div>
+    <!-- Header & Filters -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between m-3 gap-4">
 
         <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <!-- Pest Selector -->
