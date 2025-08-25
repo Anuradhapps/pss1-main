@@ -124,7 +124,7 @@
     </div>
 </div>
 
-<!-- Confirm delete script -->
+<!-- Confirm delete script ssd-->
 <script>
     function confirmDelete(event) {
         if (!confirm('Are you sure you want to delete this collector?')) {
