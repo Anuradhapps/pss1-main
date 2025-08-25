@@ -230,6 +230,7 @@ class CollectorController extends Controller
     public function update(Request $request, $collectorId)
     {
 
+
         $collector = Collector::findorfail($collectorId);
         $request->validate([
             'phone_no' => 'required',

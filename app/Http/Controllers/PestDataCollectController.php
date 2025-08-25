@@ -557,12 +557,20 @@ class PestDataCollectController extends Controller
         $yellowStemBorer = 0;
         $bphWbph = 0;
         $paddyBug = 0;
+        $temperature = 0;
+        $tempCount = 0;
+
 
         $thripscount = 0;
 
 
 
         foreach ($commonDatas as $commonData) {
+            if ($commonData->temperature != null || 0) {
+                $tempCount++;
+                $temperature += $commonData->temperature;
+            }
+
             foreach ($commonData->pestDataCollect as $pestData) {
 
                 if ($pestData->pest_name == 'Number_Of_Tillers') {
@@ -606,7 +614,6 @@ class PestDataCollectController extends Controller
             $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
             $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
         }
-
         return [
             "pests" => [
                 "thrips" => $thripsCode,
@@ -615,7 +622,8 @@ class PestDataCollectController extends Controller
                 "yellowStemBorer" => $yellowStemBorerCode,
                 "bphWbph" => $bphWbphCode,
                 "paddyBug" => $paddyBugCode
-            ]
+            ],
+            "temperature" => $temperature / $tempCount,
         ];
     }
     // Function to find the nearest number

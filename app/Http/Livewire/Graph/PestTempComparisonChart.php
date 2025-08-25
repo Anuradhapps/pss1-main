@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
-class PestSeasonComparisonChart extends Component
+class PestTempComparisonChart extends Component
 {
     public Collection $seasons;
     public Collection $districts;
@@ -143,6 +143,6 @@ class PestSeasonComparisonChart extends Component
 
     public function render()
     {
-        return view('livewire.graph.pest-season-comparison-chart');
+        return view('livewire.graph.pest-temp-comparison-chart');
     }
 }
