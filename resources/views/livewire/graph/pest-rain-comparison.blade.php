@@ -1,37 +1,44 @@
-<div class="m-2 space-y-3">
+<div class="m-3 space-y-5">
 
-    <!-- Title & Info -->
-    <div class="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-md overflow-hidden">
+    <!-- Title Card -->
+    <div class="bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
+        <!-- Gradient Header -->
         <div
-            class="bg-gradient-to-r from-blue-600 to-green-600 py-1 px-5 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                Pest, Temperature & Rainy Days Comparison
+            class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+                Pest, Temperature & Rainy Days
             </h1>
             <a href="{{ url('/') }}"
-                class="px-4 py-2 text-sm rounded-full bg-red-500 hover:bg-red-600 text-white font-medium shadow-sm transition">
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-red-500 hover:bg-red-600 text-white font-medium shadow-md transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m-4-4h8" />
+                </svg>
                 Home
             </a>
         </div>
-        <div class="px-5 py-0 bg-gray-50 border-t">
+        <div class="px-6 py-3 bg-gray-50 border-t">
             <p class="text-gray-700 text-sm italic">
-                Visualize pest severity (0–9), average weekly temperature, and rainy days for selected filters. Compare
-                multiple seasons easily.
+                Compare pest severity (0–9), weekly average temperature, and rainy days across multiple seasons.
             </p>
         </div>
-        <div class="px-4 py-0">
+        <div class="px-6 py-2">
             <x-pest-damage-risk-guide />
         </div>
     </div>
 
-    <!-- Filters -->
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-md p-4 md:p-5">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+    <!-- Filter Panel -->
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-md p-4 space-y-2">
+        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-1">Filters</h2>
 
-            <!-- Pest Selector -->
-            <div class="flex flex-col">
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Select Pest</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <!-- Pest -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Pest</label>
                 <select wire:model="selectedPest"
-                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 shadow-sm transition">
+                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
                     <option value="">-- Choose Pest --</option>
                     @foreach ($pests as $key => $pest)
                         <option value="{{ $key }}">{{ $pest }}</option>
@@ -39,11 +46,11 @@
                 </select>
             </div>
 
-            <!-- District Selector -->
-            <div class="flex flex-col">
+            <!-- District -->
+            <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">District</label>
                 <select wire:model="districtId"
-                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 shadow-sm transition">
+                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
                     <option value="0">All Districts</option>
                     @foreach ($districts as $district)
                         <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -51,63 +58,56 @@
                 </select>
             </div>
 
-            <!-- Season Selector -->
-            <div class="col-span-2 flex flex-col">
+            <!-- Seasons -->
+            <div class="col-span-2">
                 <label class="block text-xs font-semibold text-gray-600 mb-2">Seasons</label>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($seasons as $season)
                         <label
-                            class="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-indigo-100 cursor-pointer transition font-medium bg-gray-50">
+                            class="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border border-gray-300 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition font-medium bg-gray-50 text-gray-700">
                             <input type="checkbox" wire:model="selectedSeasons" value="{{ $season->id }}"
-                                class="rounded border-gray-300 focus:ring-2 focus:ring-indigo-400">
+                                class="rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500">
                             <span>
                                 @php
-                                    // Shorten year format
                                     $shortName = preg_replace_callback(
                                         '/(\d{4})(?:\/(\d{4}))?/',
-                                        function ($matches) {
-                                            $start = substr($matches[1], 2); // last 2 digits of first year
-                                            $end = isset($matches[2]) ? '/' . substr($matches[2], 2) : '';
-                                            return $start . $end;
-                                        },
+                                        fn($m) => substr($m[1], 2) . (isset($m[2]) ? '/' . substr($m[2], 2) : ''),
                                         $season->name,
                                     );
                                 @endphp
                                 {{ $shortName }}
                             </span>
-
                         </label>
                     @endforeach
                 </div>
             </div>
-
         </div>
 
-        <!-- Reset Filters -->
-        <div class="mt-3 flex justify-end flex-wrap gap-2">
+        <!-- Reset Buttons -->
+        <div class="flex justify-end gap-2 flex-wrap">
             <button wire:click="$set('selectedPest', '')"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition shadow-sm">
+                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
                 Reset Pest
             </button>
             <button wire:click="$set('selectedSeasons', [])"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition shadow-sm">
+                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
                 Reset Seasons
             </button>
             <button wire:click="$set('districtId', 0)"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition shadow-sm">
+                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
                 Reset District
             </button>
         </div>
     </div>
 
-
     <!-- Chart -->
-    <div class="bg-white border rounded-2xl shadow-md p-5">
+    <div class="bg-white border rounded-2xl shadow-lg p-5">
         <div class="relative h-[500px]">
             <canvas id="pestTempRainChart"></canvas>
         </div>
     </div>
 </div>
+
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

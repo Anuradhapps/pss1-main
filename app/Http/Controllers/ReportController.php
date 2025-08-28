@@ -213,25 +213,51 @@ class ReportController extends Controller
 
     public function collectorsList()
     {
+        // Eager load all related models to prevent N+1
+        $collectors = Collector::with([
+            'user',
+            'getAsCenter',
+            'getAiRange',
+            'commonDataCollect',
+            'riceSeason',
+            'getDistrict'
+        ])
+            ->whereHas('user', fn($q) => $q->where('name', '!=', 'npssoldata'))
+            ->get()
+            ->groupBy(fn($collector) => $collector->district); // 'district' is district_id
+
         $result = [];
-        $collectors = Collector::all()->groupBy('district');
-        foreach ($collectors as $key => $collectorGroup) {
-            $disrict = district::find($key);
-            $subresult = ['district' => $disrict->name, 'collectors' => []];
+
+        foreach ($collectors as $districtId => $collectorGroup) {
+            $district = District::find($districtId);
+            $subresult = [
+                'district' => $district ? $district->name : 'Unknown',
+                'collectors' => []
+            ];
+
             foreach ($collectorGroup as $collector) {
-                if ($collector->user->name != "npssoldata") {
-                    $asc = As_center::find($collector->asc);
-                    $aiRange = AiRange::find($collector->ai_range);
-                    $subresult['collectors'][] = [$collector->user->name, $asc->name, $aiRange->name, $collector->phone_no, $collector->date_establish, $collector->user->email];
-                }
+                $subresult['collectors'][] = [
+                    $collector->user->name ?? '',
+                    $collector->getAsCenter->name ?? '',
+                    $collector->getAiRange->name ?? '',
+                    $collector->phone_no ?? '',
+                    $collector->date_establish ?? '',
+                    $collector->user->email ?? '',
+                    $collector->commonDataCollect->count() ?? 0,
+                    $collector->riceSeason->name ?? '',
+                ];
             }
+
             $result[] = $subresult;
         }
-        // return view('report.collectorsList', ['data' => $result]);
-        // dd($result);
-        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result])->setPaper('a4', 'landscape');
+
+        // Generate PDF
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result])
+            ->setPaper('a4', 'landscape');
+
         return $pdf->download("collectorsList.pdf");
     }
+
     public function reportOfOtherInfo()
     {
         $commonDataCollects = CommonDataCollect::whereHas('collector', function ($query) {
