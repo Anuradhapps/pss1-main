@@ -558,7 +558,9 @@ class PestDataCollectController extends Controller
         $bphWbph = 0;
         $paddyBug = 0;
         $temperature = 0;
+        $rainnyDays = 0;
         $tempCount = 0;
+        $rainCount = 0;
 
 
         $thripscount = 0;
@@ -569,6 +571,10 @@ class PestDataCollectController extends Controller
             if ($commonData->temperature != null || 0) {
                 $tempCount++;
                 $temperature += $commonData->temperature;
+            }
+            if ($commonData->numbrer_r_day != null || 0) {
+                $rainCount++;
+                $rainnyDays += $commonData->numbrer_r_day;
             }
 
             foreach ($commonData->pestDataCollect as $pestData) {
@@ -624,6 +630,8 @@ class PestDataCollectController extends Controller
                 "paddyBug" => $paddyBugCode
             ],
             "temperature" => $temperature / $tempCount,
+            "rainnyDays" => round($rainnyDays / $rainCount),
+
         ];
     }
     // Function to find the nearest number

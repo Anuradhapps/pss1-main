@@ -1,7 +1,5 @@
 <x-minimal>
     <div class="md:px-20">
-        {{-- @livewire('graph.chart') --}}
         <livewire:graph.pest-rain-comparison />
-        {{-- <livewire:test-livewire /> --}}
     </div>
 </x-minimal>

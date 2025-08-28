@@ -42,40 +42,51 @@
     </div>
 
     <!-- Header & Filters -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between m-3 gap-4">
-        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <!-- Pest Selector -->
-            <div class="relative w-full sm:w-56">
-                <label for="pestSelect" class="block text-sm font-medium text-gray-700 mb-1">Select Pest</label>
-                <select wire:model="selectedPest" id="pestSelect"
-                    class="text-gray-800 block w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-white
-                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200">
-                    @foreach ($pests as $key => $pest)
-                        <option value="{{ $key }}">{{ $pest }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <div class="m-3">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Pest Selector -->
+                <div>
+                    <label for="pestSelect" class="block text-xs font-medium text-gray-600 mb-1">
+                        Select Pest
+                    </label>
+                    <select wire:model="selectedPest" id="pestSelect"
+                        class="w-full rounded-lg border-gray-300 text-gray-800 text-sm p-2.5
+                           focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        @foreach ($pests as $key => $pest)
+                            <option value="{{ $key }}">{{ $pest }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <!-- District Selector -->
-            <div class="relative w-full sm:w-56">
-                <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">Select District</label>
-                <select wire:model="districtId" id="districtSelect"
-                    class="text-gray-800 block w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-white
-                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200">
-                    <option value="0">All Districts</option>
-                    @foreach ($districts as $district)
-                        <option value="{{ $district->id }}">{{ $district->name }}</option>
-                    @endforeach
-                </select>
+                <!-- District Selector -->
+                <div>
+                    <label for="districtSelect" class="block text-xs font-medium text-gray-600 mb-1">
+                        Select District
+                    </label>
+                    <select wire:model="districtId" id="districtSelect"
+                        class="w-full rounded-lg border-gray-300 text-gray-800 text-sm p-2.5
+                           focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <option value="0">All Districts</option>
+                        @foreach ($districts as $district)
+                            <option value="{{ $district->id }}">{{ $district->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Temperature Toggle -->
+                <div class="flex items-end">
+                    <button id="toggleAllTemp"
+                        class="w-full px-3 py-2 text-sm font-medium rounded-lg
+                           bg-gradient-to-r from-gray-700 to-gray-800 text-white
+                           hover:from-gray-800 hover:to-black shadow-sm transition">
+                        Toggle All Temperature
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Temperature Toggles -->
-    <div class="flex flex-wrap gap-2 m-3">
-        <button id="toggleAllTemp" class="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-800">
-            Toggle All Temperature
-        </button>
-    </div>
+
 
     <!-- Loading State -->
     @if ($isLoading)
@@ -133,7 +144,7 @@
                             data: season.temperature,
                             borderColor: '#000000', // black line
                             backgroundColor: '#00000055', // semi-transparent black fill
-                            borderWidth: 1,
+                            borderWidth: 0.4,
                             borderDash: [6, 6],
                             pointStyle: 'cross',
                             tension: 0.,

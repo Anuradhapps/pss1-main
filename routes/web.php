@@ -191,6 +191,12 @@ Route::get('/weeklyPestRiskIndex', function () {
 Route::get('/pestseasoncomparison', function () {
     return view('chart.pest-season-comparison');
 })->name('pest-season-comparison');
+Route::get('/pesttempcomparison', function () {
+    return view('chart.pest-temp-comparison');
+})->name('pest-temp-comparison');
+Route::get('/pestraincomparison', function () {
+    return view('chart.pest-rain-comparison');
+})->name('pest-rain-comparison');
 
 
 
