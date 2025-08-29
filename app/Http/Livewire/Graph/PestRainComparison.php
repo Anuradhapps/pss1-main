@@ -24,8 +24,6 @@ class PestRainComparison extends Component
     public array $pestData = [];
 
     protected $listeners = ['refreshData'];
-
-    const CACHE_TTL = 3600;
     const PEST_NAMES = [
         'thrips' => 'Thrips',
         'gallMidge' => 'Gall Midge',
@@ -45,16 +43,8 @@ class PestRainComparison extends Component
 
     protected function loadInitialData()
     {
-        $this->seasons = Cache::remember(
-            'rice-seasons-list',
-            self::CACHE_TTL,
-            fn() => RiceSeason::orderByDesc('start_date')->get()
-        );
-        $this->districts = Cache::remember(
-            'districts-list',
-            self::CACHE_TTL,
-            fn() => District::orderBy('name')->get()
-        );
+        $this->seasons = RiceSeason::orderByDesc('start_date')->get();
+        $this->districts = District::orderBy('name')->get();
         $this->pests = self::PEST_NAMES;
     }
 
