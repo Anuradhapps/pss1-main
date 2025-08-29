@@ -36,19 +36,14 @@ class Chart extends Component
 
     public function mount()
     {
+
         $this->loadInitialData();
     }
 
     protected function loadInitialData()
     {
-        $this->seasons = Cache::remember('rice-seasons-list', self::CACHE_TTL, function () {
-            return RiceSeason::orderBy('start_date', 'desc')->get();
-        });
-
-        $this->districts = Cache::remember('districts-list', self::CACHE_TTL, function () {
-            return District::orderBy('name')->get();
-        });
-
+        $this->seasons = RiceSeason::orderBy('start_date', 'desc')->get();
+        $this->districts =  District::orderBy('name')->get();
         $this->generateData();
     }
 
@@ -64,33 +59,15 @@ class Chart extends Component
         $this->isLoading = true;
 
         try {
-            $cacheKey = $this->getCacheKey();
-            $cachedData = Cache::get($cacheKey);
-
-            if ($cachedData) {
-                $this->dates = $cachedData['dates'];
-                $this->pestData = $cachedData['pestData'];
-                return;
-            }
 
             $dateRange = $this->getDateRange();
             $this->dates = $this->getWeeksInRange($dateRange['start'], $dateRange['end']);
 
             $commonData = $this->getCommonData($dateRange);
             $this->processPestData($commonData);
-
-            Cache::put($cacheKey, [
-                'dates' => $this->dates,
-                'pestData' => $this->pestData
-            ], self::CACHE_TTL);
         } finally {
             $this->isLoading = false;
         }
-    }
-
-    protected function getCacheKey()
-    {
-        return sprintf('pest-data-%s-%s', $this->selectedSeason, $this->districtId);
     }
 
     protected function getDateRange()

@@ -183,7 +183,8 @@
 
                         <div class="text-sm text-gray-300 mt-1">
 
-                            <span class="font-semibold text-white">{{ $district->name }}</span>
+                            <span class="font-semibold text-white">{{ $collector->riceSeason->name }} |
+                                {{ $district->name }}</span>
 
                         </div>
                     </div>
@@ -221,7 +222,9 @@
                     @endforelse
                 </ul>
             </x-dd.card>
-            <x-weekly-pest-risk-index-card />
+            <x-dd.card title="Pest Data Comparisons" class="bg-gray-800 text-gray-300 border border-gray-700">
+                <x-weekly-pest-risk-index-card />
+            </x-dd.card>
         </div>
 
 

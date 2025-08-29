@@ -197,6 +197,9 @@ Route::get('/pesttempcomparison', function () {
 Route::get('/pestraincomparison', function () {
     return view('chart.pest-rain-comparison');
 })->name('pest-rain-comparison');
+Route::get('/pestricecomparison', function () {
+    return view('chart.pest-rice-variety-comparison');
+})->name('pest-rice-variety-comparison');
 
 
 

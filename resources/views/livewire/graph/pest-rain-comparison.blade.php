@@ -9,13 +9,8 @@
                 Pest, Temperature & Rainy Days
             </h1>
             <a href="{{ url('/') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-red-500 hover:bg-red-600 text-white font-medium shadow-md transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m-4-4h8" />
-                </svg>
-                Home
+                class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors duration-200 text-sm font-semibold text-white">
+                <i class="fas fa-home mr-2"></i> Home
             </a>
         </div>
         <div class="px-6 py-3 bg-gray-50 border-t">

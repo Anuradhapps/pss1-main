@@ -22,10 +22,11 @@ class WeeklyPestGraph extends Component
 
     public function mount()
     {
+        dd('hi');
 
         // Use a historical range for testing (e.g., May 6, 2025 to July 1, 2025)
-        $this->endDate = Carbon::parse('2024-12-30')->endOfWeek()->format('Y-m-d H:i:s');
-        $this->startDate = Carbon::parse('2024-12-01')->subWeeks(8)->startOfWeek()->format('Y-m-d H:i:s');
+        // $this->endDate = Carbon::parse('2024-12-30')->endOfWeek()->format('Y-m-d H:i:s');
+        // $this->startDate = Carbon::parse('2024-12-01')->subWeeks(8)->startOfWeek()->format('Y-m-d H:i:s');
         $this->loadData();
     }
 
@@ -56,9 +57,11 @@ class WeeklyPestGraph extends Component
 
         if ($this->districtId) {
             $query->where('district', $this->districtId);
-        } elseif ($this->provinceId) {
+        }
+        if ($this->provinceId) {
             $query->where('province', $this->provinceId);
-        } elseif ($this->regionId) {
+        }
+        if ($this->regionId) {
             $query->where('region_id', $this->regionId);
         }
 
