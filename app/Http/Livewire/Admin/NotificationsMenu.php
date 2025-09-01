@@ -1,40 +1,49 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Livewire\Admin;
 
-use App\Http\Livewire\Base;
+use Livewire\Component;
 use App\Models\Notification;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
-use function auth;
-use function now;
-use function view;
-
-class NotificationsMenu extends Base
+class NotificationsMenu extends Component
 {
     public $notifications;
     public $unseenCount = 0;
 
+    protected $listeners = ['refreshNotifications' => '$refresh'];
+
     public function mount(): void
     {
-        parent::mount();
-
-        $this->notifications = Notification::where('assigned_to_user_id', auth()->id())->take(20)->get();
-        $this->unseenCount   = Notification::where('assigned_to_user_id', auth()->id())->where('viewed', 0)->count();
+        $this->loadNotifications();
     }
 
-    public function render(): View
+    public function loadNotifications(): void
+    {
+        $this->notifications = Notification::where('assigned_to_user_id', Auth::id())
+            ->latest()
+            ->take(20)
+            ->get();
+
+        $this->unseenCount = Notification::where('assigned_to_user_id', Auth::id())
+            ->where('viewed', false)
+            ->count();
+    }
+
+    public function markAsRead(): void
+    {
+        Notification::where('assigned_to_user_id', Auth::id())
+            ->where('viewed', false)
+            ->update([
+                'viewed' => true,
+                'viewed_at' => now(),
+            ]);
+
+        $this->loadNotifications();
+    }
+
+    public function render()
     {
         return view('livewire.admin.notifications-menu');
-    }
-
-    public function open(): void
-    {
-        Notification::where('assigned_to_user_id', auth()->id())->where('viewed', 0)->update([
-            'viewed'    => 1,
-            'viewed_at' => now()
-        ]);
     }
 }

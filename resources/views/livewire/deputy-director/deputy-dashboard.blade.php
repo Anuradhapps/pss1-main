@@ -4,6 +4,28 @@
     <x-headings.topHeading title="{{ $district->name }} District Dashboard" icon="fas fa-clipboard"
         class="bg-gradient-to-r from-green-900 to-green-900 shadow-md" />
 
+
+    <div class="mt-3 space-y-3">
+
+        <div class="m-2 p-2 bg-gray-800/90 rounded-md shadow-lg backdrop-blur-sm border border-gray-700">
+            <!-- Header -->
+            <div class="flex items-center mb-4">
+                <div
+                    class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
+                    <i class="fas fa-bug text-lg"></i>
+                </div>
+                <h2 class="text-lg font-semibold text-gray-100">
+                    Pest Density in {{ $district->name }} for This Week
+                </h2>
+            </div>
+
+            <!-- Nested Livewire Component -->
+            <livewire:pest-memo-card :districtId="$district->id" :days="7" :key="'pest-' . $district->id" />
+        </div>
+    </div>
+
+
+
     <div class="p-2 space-y-2 bg-gray-900 text-white min-h-screen text-sm">
 
         <!-- Quick Stats -->
@@ -133,13 +155,15 @@
 
                         <!-- Card content -->
                         <div>
-                            <h3 class="font-bold text-xl mb-0 truncate text-white">{{ $collector->user->name }}</h3>
+                            <h3 class="font-bold text-xl mb-0 truncate text-white">{{ $collector->user->name }}
+                            </h3>
                             <p class="text-sky-200 mb-1">
                                 <span class="font-semibold">AI Range :</span>
                                 {{ $collector->getAiRange->name ?? 'N/A' }}
                             </p>
                             <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">Season :</span> {{ $collector->riceSeason->name ?? 'N/A' }}
+                                <span class="font-semibold">Season :</span>
+                                {{ $collector->riceSeason->name ?? 'N/A' }}
                             </p>
                             <p class="text-sky-200">
                                 <span class="font-semibold">Phone :</span> {{ $collector->phone_no ?? 'N/A' }}
@@ -182,13 +206,16 @@
                         By Data Count > 0
 
                         <div class="text-sm text-gray-300 mt-1">
-
-                            <span class="font-semibold text-white">{{ $collector->riceSeason->name }} |
-                                {{ $district->name }}</span>
-
+                            @if ($filteredCollectorsBy->isNotEmpty())
+                                <span class="font-semibold text-white">
+                                    {{ $filteredCollectorsBy->first()->riceSeason->name ?? 'N/A' }} |
+                                    {{ $district->name ?? 'N/A' }}
+                                </span>
+                            @else
+                                <span class="font-semibold text-white">No collectors available</span>
+                            @endif
                         </div>
                     </div>
-
                 </h2>
 
                 <ul class="divide-y divide-gray-700 text-sm">
@@ -207,6 +234,7 @@
                     @endforelse
                 </ul>
             </x-dd.card>
+
             <x-dd.card title="📌 All Collectors in {{ $district->name }}">
                 <livewire:map-view :collectors="$this->collectors" />
             </x-dd.card>

@@ -13,7 +13,8 @@ use App\Http\Controllers\{
     PestController,
     ReportController,
     UserController,
-    ChartController
+    ChartController,
+    TestController
 };
 use App\Exports\UsersExport;
 use App\Http\Livewire\{
@@ -205,4 +206,5 @@ Route::get('/pestricecomparison', function () {
 
 Route::get('test', function () {
     return view('test');
-});
+})->name('test.t');
+Route::get('testcontroller', [TestController::class, 'index']);
