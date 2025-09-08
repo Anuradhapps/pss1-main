@@ -6,15 +6,20 @@ use App\Http\Controllers\PestDataCollectController;
 use App\Http\Controllers\RiceSeasonController;
 use App\Models\AuditTrail;
 use App\Models\Collector;
+use App\Models\Region;
 use App\Models\RiceSeason;
+use App\Services\toPDFService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class DashboardExtensionAndTrainingDirector extends Component
 {
     use WithPagination;
 
     protected $paginationTheme = 'tailwind';
+
 
     // Filters and Search
     public $sortDirection = 'desc'; // or 'desc'
@@ -113,7 +118,25 @@ class DashboardExtensionAndTrainingDirector extends Component
         $this->reset(['search', 'selectedDistrict', 'selectedSeason', 'searchNumber', 'selectedSeasonName', 'selectedSeasonUserCount']);
         $this->resetPage();
     }
+    public function downloadCollectorsList(toPDFService $pdfService)
+    {
+        $currentseason = new RiceSeasonController;
+        $season =  $currentseason->getSeasson();
 
+        $result = $pdfService->collectorsList(null, $this->regionId);
+        $region = Region::find($this->regionId);
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'region' => $region->name, 'seasonName' => $season['seasonName']])
+            ->setPaper('a4', 'landscape');
+
+        // Stream download response compatible with Livewire
+        $regionName = isset($region->name) ? Str::slug($region->name) : 'Region';
+        $timestamp = now()->format('Y-m-d_H-i-s'); // e.g., 2025-09-08_10-30-15
+
+        return response()->streamDownload(
+            fn() => print($pdf->output()),
+            "Collectors_List_{$regionName}_{$timestamp}.pdf"
+        );
+    }
     public function viewCollector($collectorId)
     {
         $this->selectedCollector = Collector::with([

@@ -66,6 +66,11 @@
                     <!-- Reset button -->
                     <button wire:click="resetFilters"
                         class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white ">Reset</button>
+                    <button wire:click="downloadCollectorsList"
+                        class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
+                        <i class="fas fa-download"></i>
+                        Download Collector List
+                    </button>
                 </div>
 
 

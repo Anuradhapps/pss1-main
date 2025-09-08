@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\AuditTrail;
 use App\Models\ConductedProgram;
+use App\Models\Region;
 use App\Models\RiceSeason;
+use App\Services\toPDFService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class DeputyDashboard extends Component
 {
@@ -214,5 +218,25 @@ class DeputyDashboard extends Component
             'recentActivities' => $this->recentActivities,
             'recentPrograms' => $this->recentPrograms,
         ]);
+    }
+
+    public function downloadCollectorsList(toPDFService $pdfService)
+    {
+        $currentseason = new RiceSeasonController;
+        $season =  $currentseason->getSeasson();
+
+        $result = $pdfService->collectorsList($this->district->id);
+
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'district' => $this->district->name, 'seasonName' => $season['seasonName']])
+            ->setPaper('a4', 'landscape');
+
+        // Stream download response compatible with Livewire
+        $districtName = isset($this->district->name) ? Str::slug($this->district->name) : 'Region';
+        $timestamp = now()->format('Y-m-d_H-i-s'); // e.g., 2025-09-08_10-30-15
+
+        return response()->streamDownload(
+            fn() => print($pdf->output()),
+            "Collectors_List_{$districtName}_{$timestamp}.pdf"
+        );
     }
 }

@@ -24,6 +24,7 @@ class PestMemoCard extends Component
 
     public function mount(?int $districtId = null, ?int $days = null)
     {
+
         $this->districtId = $districtId;
         $this->days = $days;
         $this->refreshCard();

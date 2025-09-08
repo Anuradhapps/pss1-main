@@ -197,6 +197,7 @@ class ChartController extends Controller
                     $collectorCount += $collectors->count();
                     $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
+
                     $pestCodes = array_values($pestData['pests']);
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
                 }

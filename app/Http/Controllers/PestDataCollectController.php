@@ -463,7 +463,7 @@ class PestDataCollectController extends Controller
                     "leaffolder" => 0,
                     "yellowStemBorer" => 0,
                     "bphWbph" => 0,
-                    "paddy88Bug" => 0
+                    "paddyBug" => 0
                 ]
             ];
         }

@@ -27,7 +27,7 @@
                             <i class="fas fa-bug text-lg"></i>
                         </div>
                         <h2 class="text-lg font-semibold text-gray-100">
-                            Pest Density in {{ $district->name }} for This Week
+                            Pest Density in <span class="text-orange-600">{{ $district->name }}</span> for This Week
                         </h2>
                     </div>
 
@@ -91,6 +91,15 @@
                 class="rounded-none px-4 py-2 bg-red-700 hover:bg-red-800 text-white shadow transition transform hover:scale-105">
                 Reset
             </button>
+            <button wire:click="downloadCollectorsList"
+                class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
+                <i class="fas fa-download"></i>
+                Current Season Collectors
+            </button>
+
+
+
+
         </div>
     </div>
 

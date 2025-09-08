@@ -95,7 +95,8 @@
             <div
                 class="bg-white rounded-xl shadow p-4 border border-gray-100 hover:shadow-lg transition-all duration-200">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-sm font-semibold text-gray-800 tracking-wide">{{ $variety }}</h3>
+                    <h3 class="text-sm font-semibold text-gray-800 tracking-wide bg-yellow-300 px-2 rounded-xl">
+                        {{ $variety }}</h3>
                     <span
                         class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">{{ $collectorsCount[$variety] }}
                         collector(s)</span>

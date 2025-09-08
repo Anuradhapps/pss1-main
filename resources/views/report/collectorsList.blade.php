@@ -8,13 +8,11 @@
         @page {
             size: A4 portrait;
             margin: 10mm;
-            /* reduced margin for compact layout */
         }
 
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 10px;
-            /* slightly smaller for compact table */
             margin: 0;
             padding: 0;
             background-color: #fff;
@@ -29,7 +27,7 @@
         h2 {
             font-size: 16px;
             text-align: center;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             font-weight: bold;
         }
 
@@ -38,6 +36,13 @@
             font-size: 11px;
             margin-bottom: 10px;
             font-style: italic;
+        }
+
+        .region-district {
+            text-align: center;
+            font-size: 11px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         table {
@@ -50,20 +55,17 @@
         th,
         td {
             border: 1px solid #444;
-            padding: 4px 6px;
-            /* tighter padding for compact layout */
+            padding: 5px 6px;
             text-align: left;
         }
 
         th {
             background-color: #d4f0d4;
-            /* subtle color for headers */
             font-weight: bold;
         }
 
         .district-row {
             background-color: #c6e0f5;
-            /* soft color for district rows */
             font-weight: bold;
             font-size: 10.5px;
             text-transform: uppercase;
@@ -75,17 +77,16 @@
 
         .collector-row:hover td {
             background-color: #e0f7fa;
-            /* subtle hover highlight for readability */
         }
 
         .footer-note {
             text-align: center;
             font-size: 9px;
-            margin-top: 20px;
+            margin-top: 15px;
             color: #555;
+            font-style: italic;
         }
 
-        /* Responsive for PDF printing */
         @media print {
             body {
                 font-size: 10px;
@@ -101,7 +102,15 @@
 
 <body>
     <div class="report-container">
-        <h2>Name List of NPSS Data Collectors</h2>
+        <h2>NPSS Data Collectors List</h2>
+
+        @if (isset($region) && $region != null)
+            <div class="region-district">Region: {{ $region }}</div>
+        @endif
+        @if (isset($seasonName) && $seasonName != null)
+            <div class="region-district">Season: {{ $seasonName }}</div>
+        @endif
+
         <div class="subtitle">National Plant Protection Service, Gannoruwa</div>
 
         <table>
@@ -109,7 +118,7 @@
                 <tr>
                     <th style="width: 25%;">Name</th>
                     <th style="width: 15%;">AI Range</th>
-                    <th style="width: 15%;">Phone Number</th>
+                    <th style="width: 15%;">Phone</th>
                     <th style="width: 20%;">Email</th>
                     <th style="width: 12%;">Season</th>
                     <th style="width: 13%;">Data Count</th>
@@ -119,8 +128,7 @@
                 @forelse ($data as $districtData)
                     <tr class="district-row">
                         <td colspan="6">
-                            {{ $districtData['district'] }} &nbsp;&mdash;&nbsp;
-                            Collectors: {{ count($districtData['collectors']) }}
+                            {{ $districtData['district'] }} &mdash; Collectors: {{ count($districtData['collectors']) }}
                         </td>
                     </tr>
 
