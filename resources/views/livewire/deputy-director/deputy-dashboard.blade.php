@@ -255,9 +255,9 @@
                     @endforelse
                 </ul>
             </x-dd.card>
-            <x-dd.card title="Pest Data Comparisons" class="bg-gray-800 text-gray-300 border border-gray-700">
+            {{-- <x-dd.card title="Pest Data Comparisons" class="bg-gray-800 text-gray-300 border border-gray-700">
                 <x-weekly-pest-risk-index-card />
-            </x-dd.card>
+            </x-dd.card> --}}
         </div>
 
 
