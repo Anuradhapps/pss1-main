@@ -15,6 +15,7 @@ use App\Models\Province;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
 
 use function Pest\Laravel\get;
 
@@ -27,6 +28,9 @@ class ReportController extends Controller
         $season = new RiceSeasonController;
         $this->thisSeason = $season->getSeasson();
         $this->thisSeasonId = $season->getSeasson()['seasonId'];
+
+        // Set the default font for all PDF views
+        View::share('fontFamily', 'IskoolaPota');
     }
 
 
@@ -264,26 +268,33 @@ class ReportController extends Controller
             $query->where('rice_season_id', $this->thisSeasonId);
         })
             ->join('collectors', 'common_data_collects.collector_id', '=', 'collectors.id')
-            ->join('districts', 'collectors.district', '=', 'districts.id') // Join with districts table
-            ->join('as_centers', 'collectors.asc', '=', 'as_centers.id') // Join with as_centers table
-            ->join('ai_ranges', 'collectors.ai_range', '=', 'ai_ranges.id') // Join with as_centers table
+            ->join('districts', 'collectors.district', '=', 'districts.id')
+            ->join('as_centers', 'collectors.asc', '=', 'as_centers.id')
+            ->join('ai_ranges', 'collectors.ai_range', '=', 'ai_ranges.id')
             ->select(
-                'districts.name as district_name', // Get district name from districts table
-                'as_centers.name as asc_name', // Get asc name from as_centers table
-                'ai_ranges.name as ai_range_name', // Get ai_range name from ai_ranges table
+                'districts.name as district_name',
+                'as_centers.name as asc_name',
+                'ai_ranges.name as ai_range_name',
                 'common_data_collects.otherinfo',
                 'common_data_collects.c_date'
             )
             ->orderBy('common_data_collects.c_date', 'desc')
             ->get();
 
-
-
-        // return view('report.reportOfOtherInfo', ['records' => 'Totalresult']);
-
-        // dd($commonDataCollects);
         $seasonName = $this->thisSeason['seasonName'];
-        $pdf = Pdf::loadView('report.reportOfOtherInfo', ['records' => $commonDataCollects, 'season' => $seasonName])->setPaper('a4', 'landscape');
+
+        // ✅ Use array instead of Options object
+        $pdf = Pdf::loadView('report.reportOfOtherInfo', [
+            'records' => $commonDataCollects,
+            'season' => $seasonName
+        ])
+            ->setPaper('a4', 'landscape')
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'defaultFont' => 'IskoolaPota', // Sinhala font
+                'isRemoteEnabled' => true,
+            ]);
+
         return $pdf->download("reportOfOtherInfo.pdf");
     }
 }

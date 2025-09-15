@@ -11,7 +11,7 @@
         }
 
         body {
-            font-family: DejaVu Sans, Arial, sans-serif;
+            font-family: {{$fontFamily}}, sans-serif;
             font-size: 11px;
             margin: 0;
             padding: 0;

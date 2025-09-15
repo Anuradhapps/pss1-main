@@ -31,10 +31,10 @@ class ChartAi
             ->pluck('pest_name')
             ->map(function ($name) {
                 return match ($name) {
-                    'BPH+WBPH' => 'Brown Planthopper / WBPH',
+                    'BPH+WBPH' => 'BPH / WBPH',
                     'Gall Midge' => 'Gall Midge',
                     'Leaffolder' => 'Leaf Folder',
-                    'Yellow Stem Borer' => 'YSB',
+                    'Yellow Stem Borer' => 'Yellow Stem Borer',
                     default => $name,
                 };
             })

@@ -205,6 +205,22 @@ class ChartController extends Controller
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             }
+            // Mapping array
+            $pestNameMap = [
+                'thrips'          => 'Trips',
+                'gallMidge'       => 'Gall Midge',
+                'leaffolder'      => 'Leaffolder',
+                'yellowStemBorer' => 'Yellow Stem Borer',
+                'bphWbph'         => 'BPH / WBPH',
+                'paddyBug'        => 'Paddy Bug',
+            ];
+
+            // Convert values
+            $result['pestNames'] = array_map(
+                fn($name) => $pestNameMap[$name] ?? $name,
+                $result['pestNames']
+            );
+
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } elseif ($sortBy == 'province') {
             $provinceName = $request->get('province');
@@ -223,7 +239,21 @@ class ChartController extends Controller
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             }
+            // Mapping array
+            $pestNameMap = [
+                'thrips'          => 'Trips',
+                'gallMidge'       => 'Gall Midge',
+                'leaffolder'      => 'Leaffolder',
+                'yellowStemBorer' => 'Yellow Stem Borer',
+                'bphWbph'         => 'BPH / WBPH',
+                'paddyBug'        => 'Paddy Bug',
+            ];
 
+            // Convert values
+            $result['pestNames'] = array_map(
+                fn($name) => $pestNameMap[$name] ?? $name,
+                $result['pestNames']
+            );
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } elseif ($sortBy == 'district') {
             $districtName = $request->get('district');
@@ -243,7 +273,21 @@ class ChartController extends Controller
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             }
+            // Mapping array
+            $pestNameMap = [
+                'thrips'          => 'Trips',
+                'gallMidge'       => 'Gall Midge',
+                'leaffolder'      => 'Leaffolder',
+                'yellowStemBorer' => 'Yellow Stem Borer',
+                'bphWbph'         => 'BPH / WBPH',
+                'paddyBug'        => 'Paddy Bug',
+            ];
 
+            // Convert values
+            $result['pestNames'] = array_map(
+                fn($name) => $pestNameMap[$name] ?? $name,
+                $result['pestNames']
+            );
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } else {
         }

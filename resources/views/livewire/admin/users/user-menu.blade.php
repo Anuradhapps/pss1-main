@@ -25,10 +25,10 @@
             x-transition:leave-end="opacity-0 scale-95"
             class="absolute right-0 z-50 w-48 mt-2 origin-top-right bg-gray-900 border border-gray-700 shadow-lg">
 
-            <div class="py-2 text-sm text-gray-200">
+            <div class="py-2 text-sm text-gray-200 m-1">
                 @if (can('view_users_profiles'))
                     <x-dropdown-link :href="route('admin.users.show', ['user' => user()->id])">
-                        <i class="fas fa-user mr-2"></i> View Profile
+                        <i class="fas fa-user mr-2 "></i> View Profile
                     </x-dropdown-link>
                 @endif
 

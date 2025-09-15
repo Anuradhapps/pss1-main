@@ -56,7 +56,12 @@ return [
          * Note: This directory must exist and be writable by the webserver process.
          */
         'font_cache' => storage_path('fonts'),
-
+        'font_family' => [
+            'IskoolaPota' => [
+                'R' => storage_path('fonts/IskoolaPota-Regular.ttf'),
+            ],
+            'default_font' => 'IskoolaPota',
+        ],
         /**
          * The location of a temporary directory.
          *
@@ -109,7 +114,7 @@ return [
         /**
          * Whether to enable font subsetting or not.
          */
-        'enable_font_subsetting' => false,
+        'enable_font_subsetting' => true,
 
         /**
          * The PDF rendering backend to use
@@ -178,7 +183,7 @@ return [
          *
          * @var string
          */
-        'default_font' => 'serif',
+        'default_font' => 'IskoolaPota',
 
         /**
          * Image DPI setting
