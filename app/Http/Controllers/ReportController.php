@@ -15,7 +15,6 @@ use App\Models\Province;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\View;
 
 use function Pest\Laravel\get;
 
@@ -28,10 +27,8 @@ class ReportController extends Controller
         $season = new RiceSeasonController;
         $this->thisSeason = $season->getSeasson();
         $this->thisSeasonId = $season->getSeasson()['seasonId'];
-
-        // Set the default font for all PDF views
-        View::share('fontFamily', 'IskoolaPota');
     }
+
 
 
 
