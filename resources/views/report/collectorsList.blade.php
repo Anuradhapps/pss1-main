@@ -11,7 +11,7 @@
         }
 
         body {
-            font-family: {{ $fontFamily }}, sans-serif;
+            font-family: 'IskoolaPota', sans-serif;
             font-size: 10px;
             margin: 0;
             padding: 0;
