@@ -225,7 +225,7 @@ class DeputyDashboard extends Component
         $currentseason = new RiceSeasonController;
         $season =  $currentseason->getSeasson();
 
-        $result = $pdfService->collectorsList($this->district->id);
+        $result = $pdfService->collectorsList($this->district->id, 2); // 1 - provincial, 2 - inter-provincial, 3 - mahaweli
 
         $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'district' => $this->district->name, 'seasonName' => $season['seasonName']])
             ->setPaper('a4', 'landscape');
