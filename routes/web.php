@@ -31,7 +31,7 @@ use App\Http\Livewire\{
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
-    extensionAndTrainingDirector\DashboardExtensionandtrainingDirector,
+    ExtensionAndTrainingDirector\DashboardExtensionAndTrainingDirector,
     LocationManager,
 };
 
@@ -183,7 +183,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deput
 
 
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector'])->prefix('extensionAndTrainingDirector')->group(function () {
-    Route::get('/', DashboardExtensionandtrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
+    Route::get('/', DashboardExtensionAndTrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });
 
 Route::get('/weeklyPestRiskIndex', function () {

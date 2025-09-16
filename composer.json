@@ -33,6 +33,7 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.11",
         "pestphp/pest": "^1.18",
         "pestphp/pest-plugin-faker": "^1.0",
         "pestphp/pest-plugin-global-assertions": "^1.0",
