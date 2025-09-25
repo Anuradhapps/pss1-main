@@ -124,6 +124,28 @@
     </div>
 </div>
 
+
+@php
+    $Collectors = \App\Models\Collector::with(['user', 'getAiRange'])->get();
+
+@endphp
+<div class="m-4 flex flex-col items-center justify-center">
+    <!-- Card container -->
+    <div class="w-full max-w-6xl bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+        <!-- Header -->
+        <div class="p-4 bg-green-600 text-white text-center font-semibold text-lg">
+            Collectors Locations
+        </div>
+
+        <!-- Map -->
+        <div class="p-4">
+            <livewire:map-view :collectors="$Collectors" height="100vh" width="100%" />
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Confirm delete script ssd-->
 <script>
     function confirmDelete(event) {

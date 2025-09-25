@@ -1,63 +1,51 @@
- <div id="map" style="height: 500px; width: 100%;z-index: 10;"></div>
- <script>
-     document.addEventListener('livewire:load', function() {
-         let map;
+<div id="map" style="height: {{ $height }}; width: {{ $width }}; z-index: 10;"></div>
 
-         function initMap() {
-             // Get full collector data from Livewire
-             const collectors = @json($collectors);
-             //  if (collectors.filter(c => c.gps_lati && c.gps_long).length === 0) {
-             //      alert("No collectors with valid GPS data available.");
-             //  }
-             if (map) {
-                 map.off();
-                 map.remove();
-             }
+<script>
+    document.addEventListener('livewire:load', function() {
+        let map;
 
-             // Initialize map centered on Sri Lanka
-             map = L.map('map').setView([7.8731, 80.7718], 8);
+        function initMap() {
+            const collectors = @json($collectors);
 
-             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                 attribution: '&copy; OpenStreetMap contributors'
-             }).addTo(map);
+            if (map) {
+                map.off();
+                map.remove();
+            }
 
-             // 🔄 Extract only needed properties
-             collectors.forEach(collector => {
-                 const lat = parseFloat(collector.gps_lati);
-                 const lng = parseFloat(collector.gps_long);
+            map = L.map('map').setView([7.8731, 80.7718], 8);
 
-                 if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
-                     console.warn('Collector skipped due to missing GPS:', collector);
-                     return;
-                 }
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
 
-                 const userName = collector.user?.name || 'Unknown';
-                 const aiRange = collector.get_ai_range?.name || 'N/A';
-                 const riceVariety = collector.rice_veriety || 'Not specified';
+            collectors.forEach(c => {
+                const lat = parseFloat(c.gps_lati);
+                const lng = parseFloat(c.gps_long);
 
-                 const marker = L.marker([lat, lng]).addTo(map);
-                 marker.bindPopup(`
-        <div class="text-sm leading-snug">
-            <strong class="text-green-600">${userName}</strong><br>
-            <span class="text-gray-700">AI Range:</span> ${aiRange}<br>
-            <span class="text-gray-700">Rice Variety:</span> ${riceVariety}
-        </div>
-    `);
-             });
+                if (isNaN(lat) || isNaN(lng)) return;
 
+                const userName = c.user?.name ?? 'Unknown';
+                const aiRange = c.get_ai_range?.name ?? 'N/A';
+                const riceVariety = c.rice_variety ?? 'Not specified'; // corrected field name
 
-             // ✅ Fix rendering bug (some tiles not visible unless resized)
-             setTimeout(() => {
-                 map.invalidateSize();
-             }, 100);
-         }
+                L.marker([lat, lng])
+                    .addTo(map)
+                    .bindPopup(`
+                <div class="text-sm leading-snug">
+                    <strong class="text-green-600">${userName}</strong><br>
+                    <span class="text-gray-700">AI Range:</span> ${aiRange}<br>
+                    <span class="text-gray-700">Rice Variety:</span> ${riceVariety}
+                </div>
+             `);
+            });
 
-         // First load
-         initMap();
+            setTimeout(() => map.invalidateSize(), 100);
+        }
 
-         // Re-run map after Livewire update (like region change)
-         Livewire.hook('message.processed', () => {
-             initMap();
-         });
-     });
- </script>
+        initMap();
+
+        Livewire.hook('message.processed', () => {
+            initMap();
+        });
+    });
+</script>
