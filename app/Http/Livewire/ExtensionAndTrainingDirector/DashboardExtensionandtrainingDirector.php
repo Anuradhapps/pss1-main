@@ -120,12 +120,16 @@ class DashboardExtensionAndTrainingDirector extends Component
     }
     public function downloadCollectorsList(toPDFService $pdfService)
     {
-        $currentseason = new RiceSeasonController;
-        $season =  $currentseason->getSeasson();
+        $season = RiceSeason::find($this->selectedSeason);
+        if ($season == null) {
+            $season = 'All Season';
+        } else {
+            $season = $season->name;
+        }
 
-        $result = $pdfService->collectorsList(null, $this->regionId);
+        $result = $pdfService->collectorsList(null, $this->regionId, $this->selectedSeason);
         $region = Region::find($this->regionId);
-        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'region' => $region->name, 'seasonName' => $season['seasonName']])
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'region' => $region->name, 'seasonName' => $season])
             ->setPaper('a4', 'landscape');
 
         // Stream download response compatible with Livewire

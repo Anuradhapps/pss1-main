@@ -51,7 +51,9 @@ class DeputyDashboard extends Component
     public $seasonUserCount = 0;
     public $recentActivities = [];
     public $recentPrograms = [];
-    // public $regionId = 1;
+
+    public $regionId = 1; // 1 - provincial, 2 - inter-provincial, 3 - mahaweli
+
     protected $queryString = [
         'search' => ['except' => ''],
         'selectedAiRange' => ['except' => ''],
@@ -62,6 +64,7 @@ class DeputyDashboard extends Component
 
     public function mount()
     {
+
         $districtName = str_replace('DD@domain.com', '', auth()->user()->email);
         $this->district = District::where('name', $districtName)->firstOrFail();
 
@@ -105,18 +108,29 @@ class DeputyDashboard extends Component
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
             ->where('district', $this->district->id)
+            ->where('region_id', $this->regionId)
             ->get();
     }
     public function getFilteredCollectorsByProperty()
     {
-        return Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
+        // Start query with relationships and count
+        $query = Collector::with(['user', 'getAiRange', 'riceSeason', 'region'])
             ->withCount('commonDataCollect')
             ->where('district', $this->district->id)
-            ->whereHas('commonDataCollect') // Replaces having > 0
-            ->orderBy('common_data_collect_count', 'desc')
+            ->where('region_id', $this->regionId)
+            ->whereHas('commonDataCollect'); // Ensure at least one related record exists
+
+        // Apply season filter if selected
+        if (!empty($this->selectedSeason)) {
+            $query->where('rice_season_id', $this->selectedSeason);
+        }
+
+        // Order and limit
+        return $query->orderByDesc('common_data_collect_count')
             ->take(10)
             ->get();
     }
+
 
 
     // Computed property for filtered collectors
@@ -124,6 +138,7 @@ class DeputyDashboard extends Component
     {
         return Collector::with(['user', 'getAiRange', 'riceSeason'])
             ->where('district', $this->district->id)
+            ->where('region_id', $this->regionId)
             ->when($this->search, function ($query) {
                 $query->whereHas('user', fn($q) => $q->where('name', 'like', "%{$this->search}%"));
             })
@@ -150,6 +165,7 @@ class DeputyDashboard extends Component
     public function getTotalUsers()
     {
         return Collector::where('district', $this->district->id)
+            ->where('region_id', $this->regionId)
             ->whereHas('user', fn($q) => $q->where('is_active', 1))
             ->get();
     }
@@ -157,6 +173,7 @@ class DeputyDashboard extends Component
     public function getSeasonUserCount($season)
     {
         return Collector::where('district', $this->district->id)
+            ->where('region_id', $this->regionId)
             ->where('rice_season_id', $season)
             ->whereHas('user', fn($q) => $q->where('is_active', 1))
             ->get();
@@ -167,6 +184,7 @@ class DeputyDashboard extends Component
         return PestDataCollect::join('common_data_collects', 'pest_data_collects.common_data_collectors_id', '=', 'common_data_collects.id')
             ->join('collectors', 'common_data_collects.collector_id', '=', 'collectors.id')
             ->where('collectors.district', $this->district->id)
+            ->where('collectors.region_id', $this->regionId)
             ->count();
     }
 
@@ -222,12 +240,15 @@ class DeputyDashboard extends Component
 
     public function downloadCollectorsList(toPDFService $pdfService)
     {
-        $currentseason = new RiceSeasonController;
-        $season =  $currentseason->getSeasson();
+        $season = RiceSeason::find($this->selectedSeason);
+        if ($season == null) {
+            $season = 'All Season';
+        } else {
+            $season = $season->name;
+        }
+        $result = $pdfService->collectorsList($this->district->id, $this->regionId, $this->selectedSeason); // 1 - provincial, 2 - inter-provincial, 3 - mahaweli
 
-        $result = $pdfService->collectorsList($this->district->id, 2); // 1 - provincial, 2 - inter-provincial, 3 - mahaweli
-
-        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'district' => $this->district->name, 'seasonName' => $season['seasonName']])
+        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'district' => $this->district->name, 'seasonName' => $season])
             ->setPaper('a4', 'landscape');
 
         // Stream download response compatible with Livewire

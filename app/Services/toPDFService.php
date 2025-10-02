@@ -10,11 +10,10 @@ class toPDFService
 {
 
 
-    public function collectorsList(?int $district = null, ?int $region = null)
+    public function collectorsList(?int $district = null, ?int $region = null, ?String $seasonid = null)
     {
 
-        $currentseason = new RiceSeasonController;
-        $season =  $currentseason->getSeasson();
+
         // Build query with eager loading
         $query = Collector::with([
             'user',
@@ -24,11 +23,12 @@ class toPDFService
             'riceSeason',
             'getDistrict'
         ])->whereHas('user', fn($q) => $q->where('name', '!=', 'npssoldata'));
-
-        $query->where(
-            'rice_season_id',
-            $season['seasonId']
-        );
+        if ($seasonid) {
+            $query->where(
+                'rice_season_id',
+                $seasonid
+            );
+        }
         // Apply filters only if provided
         if ($district) {
             $query->where('district', $district);

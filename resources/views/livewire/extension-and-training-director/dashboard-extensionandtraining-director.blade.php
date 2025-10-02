@@ -48,7 +48,7 @@
                 class="col-span-2 lg:col-span-1 bg-gray-800 p-3 flex items-center justify-between border border-gray-700">
                 <div class="flex flex-col text-xs sm:text-sm text-gray-300 font-medium leading-tight">
                     <span class="truncate max-w-[120px] sm:max-w-none">
-                        {{ \App\Models\District::find($selectedDistrict)?->name ?? '' }}
+                        {{ \App\Models\district::find($selectedDistrict)?->name ?? '' }}
                     </span>
                     <span class="truncate text-gray-400">
                         {{ $selectedSeasonName }} Collectors
@@ -94,7 +94,7 @@
             <button wire:click="downloadCollectorsList"
                 class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
                 <i class="fas fa-download"></i>
-                Current Season Collectors
+                Collector List
             </button>
 
 
