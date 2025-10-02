@@ -1,6 +1,6 @@
 <x-app-layout>
     <!-- Page Header -->
-    <x-headings.topHeading title="Data Analytics" icon="fas fa-chart-bar"
+    <x-headings.top-heading title="Data Analytics" icon="fas fa-chart-bar"
         class="bg-gradient-to-r from-green-700 to-green-500 shadow-lg text-white" />
 
     <!-- Error Message -->

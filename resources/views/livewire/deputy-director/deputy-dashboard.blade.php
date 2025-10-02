@@ -1,7 +1,7 @@
 @section('title', 'DD-Dashboard')
 
 <div>
-    <x-headings.topHeading title="{{ $district->name }} District Dashboard" icon="fas fa-clipboard"
+    <x-headings.top-heading title="{{ $district->name }} District Dashboard" icon="fas fa-clipboard"
         class="bg-gradient-to-r from-green-900 to-green-900 shadow-md" />
 
 

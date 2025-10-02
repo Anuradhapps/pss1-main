@@ -51,7 +51,7 @@ class DeputyDashboard extends Component
     public $seasonUserCount = 0;
     public $recentActivities = [];
     public $recentPrograms = [];
-
+    // public $regionId = 1;
     protected $queryString = [
         'search' => ['except' => ''],
         'selectedAiRange' => ['except' => ''],

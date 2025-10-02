@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-headings.topHeading title="Create Pest Data" icon="fas fa-bug " buttonText="Back"
+    <x-headings.top-heading title="Create Pest Data" icon="fas fa-bug " buttonText="Back"
         buttonAction="{{ route('pestdata.view', $collectorId) }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
         class="bg-green-700" />
 

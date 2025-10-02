@@ -1,7 +1,7 @@
 <x-app-layout>
     <div>
         <!-- Header -->
-        <x-headings.topHeading title="Pest Data" subtitle="" icon="fas fa-folder-open" buttonText="Back"
+        <x-headings.top-heading title="Pest Data" subtitle="" icon="fas fa-folder-open" buttonText="Back"
             :buttonAction="has_role('collector')
                 ? route('pestdata.view', $commonData->collector_id)
                 : route('pestdata.index')" buttonIcon="fas fa-arrow-left" buttonColor="red" class="bg-green-700" />

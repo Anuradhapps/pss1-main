@@ -1,7 +1,7 @@
 @section('title', 'Dashboard')
 
 {{-- Top Heading --}}
-<x-headings.topHeading title="Dashboard" icon="fas fa-home"
+<x-headings.top-heading title="Dashboard" icon="fas fa-home"
     class="bg-gradient-to-r from-green-800 to-green-600 shadow-md" />
 
 {{-- Description Card --}}

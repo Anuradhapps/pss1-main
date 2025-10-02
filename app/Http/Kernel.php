@@ -24,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+
     ];
 
     /**
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'activeUser' => ActiveUser::class,
         'role' => Role::class,
         'IpCheckMiddleware' => IpCheckMiddleware::class,
+        'no.cache' => \App\Http\Middleware\NoCache::class,
     ];
 }

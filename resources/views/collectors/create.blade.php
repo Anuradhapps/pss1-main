@@ -3,7 +3,7 @@
 <x-app-layout>
     <div class="">
         <!-- Header -->
-        <x-headings.topHeading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
+        <x-headings.top-heading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
             buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
             class="bg-cyan-700" />
 

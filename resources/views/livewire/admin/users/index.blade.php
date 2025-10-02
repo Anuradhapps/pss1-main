@@ -1,7 +1,7 @@
 @section('title', 'Users')
 
 <div class=" text-white">
-    <x-headings.topHeading title="Users" icon="fas fa-user"
+    <x-headings.top-heading title="Users" icon="fas fa-user"
         class="bg-gradient-to-r from-green-800 to-green-600 shadow-md" />
 
     <!-- Filter -->

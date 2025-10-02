@@ -1,12 +1,12 @@
 @php
     $cards = [
-        [
-            'title' => 'Weekly Pest Risk Index',
-            'icon' => 'fas fa-calendar-week',
-            'iconColor' => 'text-green-400',
-            'borderColor' => 'border-green-400',
-            'route' => route('weekly-pest-risk.index'),
-        ],
+        // [
+        //     'title' => 'Weekly Pest Risk Index',
+        //     'icon' => 'fas fa-calendar-week',
+        //     'iconColor' => 'text-green-400',
+        //     'borderColor' => 'border-green-400',
+        //     'route' => route('weekly-pest-risk.index'),
+        // ],
         [
             'title' => 'Pest & Season Comparison',
             'icon' => 'fas fa-random',
@@ -14,13 +14,13 @@
             'borderColor' => 'border-pink-400',
             'route' => route('pest-season-comparison'),
         ],
-        [
-            'title' => 'Pest & Temperature Comparison',
-            'icon' => 'fas fa-thermometer-half',
-            'iconColor' => 'text-yellow-400',
-            'borderColor' => 'border-yellow-400',
-            'route' => route('pest-temp-comparison'),
-        ],
+        // [
+        //     'title' => 'Pest & Temperature Comparison',
+        //     'icon' => 'fas fa-thermometer-half',
+        //     'iconColor' => 'text-yellow-400',
+        //     'borderColor' => 'border-yellow-400',
+        //     'route' => route('pest-temp-comparison'),
+        // ],
         [
             'title' => 'Pest, Rain & Temperature Comparison',
             'icon' => 'fas fa-cloud-rain',

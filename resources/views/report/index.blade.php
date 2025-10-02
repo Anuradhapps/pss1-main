@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="space-y-4">
         {{-- Header --}}
-        <x-headings.topHeading title="Reports Dashboard" icon="fas fa-chart-line"
+        <x-headings.top-heading title="Reports Dashboard" icon="fas fa-chart-line"
             class="bg-gradient-to-r from-green-800 to-green-600 shadow" />
 
         {{-- Cards Grid --}}

@@ -1,6 +1,6 @@
 <x-app-layout>
     <!-- Header -->
-    <x-headings.topHeading title="AI Chart" subtitle="" icon="fas fa-chart-line" buttonText="Back"
+    <x-headings.top-heading title="AI Chart" subtitle="" icon="fas fa-chart-line" buttonText="Back"
         buttonAction="{{ has_role('collector') ? route('chart.index') : route('admin.collector.records') }}"
         buttonIcon="	fas fa-arrow-left" buttonColor="red" class="bg-green-700" />
 

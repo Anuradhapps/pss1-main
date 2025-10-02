@@ -3,7 +3,7 @@
 
 <div class="min-h-screen bg-gray-900 text-white p-2 space-y-2">
     <!-- Top Heading -->
-    <x-headings.topHeading title="Inter-Provincial Dashboard" icon="fas fa-clipboard"
+    <x-headings.top-heading title="Inter-Provincial Dashboard" icon="fas fa-clipboard"
         class="bg-gradient-to-r from-green-900 to-green-900  text-white p-0" />
 
     <!-- Inter Provinces Pest Damage Level (Collapsible) -->
@@ -184,6 +184,22 @@
     <!-- Dashboard Cards + Charts -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6">
         <x-dd.card title="🏆 Top Collectors" class="bg-gray-800 text-white border border-gray-700">
+            <h2 class="text-lg font-semibold text-green-400 mb-4 flex items-center justify-between">
+                <div>
+                    By Data Count > 0
+
+                    <div class="text-sm text-gray-300 mt-1">
+                        @if ($filteredCollectorsBy->isNotEmpty())
+                            <span class="font-semibold text-white text-sm sm:text-base">
+                                {{ $selectedSeasonName ?? 'All Seasons' }} |
+                                {{ \App\Models\district::find($selectedDistrict)?->name ?? 'All IP' }}
+                            </span>
+                        @else
+                            <span class="font-semibold text-white">No collectors available</span>
+                        @endif
+                    </div>
+                </div>
+            </h2>
             <ul class="divide-y divide-gray-700 text-sm">
                 @forelse ($filteredCollectorsBy as $collector)
                     <li class="py-2 flex justify-between items-center">

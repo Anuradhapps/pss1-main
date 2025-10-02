@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\District;
+use App\Models\district;
 use App\Models\As_center;
 use App\Models\AiRange;
 
@@ -16,7 +16,7 @@ class LocationManager extends Component
 
     public function mount()
     {
-        $this->districts = District::all();
+        $this->districts = district::all();
     }
 
     public function updatedSelectedDistrict()

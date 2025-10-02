@@ -2,7 +2,7 @@
 
 <div class="">
     <!-- Header -->
-    <x-headings.topHeading title="Collectors" icon="fa-solid fa-chalkboard-user"
+    <x-headings.top-heading title="Collectors" icon="fa-solid fa-chalkboard-user"
         class="bg-gradient-to-r from-green-800 to-green-600 shadow-md" />
     <div class="m-2 space-y-2">
         <!-- Search -->

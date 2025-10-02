@@ -103,18 +103,32 @@ class PestDataCollectController extends Controller
             ->with('error', 'Please create a Collector first.');
     }
 
-
     public function create($id)
     {
-        // Retrieve all pest records to display in the form
+        $latestCommonData = Collector::find($id)
+            ->commonDataCollect()
+            ->latest('created_at')
+            ->first();
+
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek   = Carbon::now()->endOfWeek();
+
+        // Check if user is NOT 'npssoldata'
+        if (Auth::user()->name != 'npssoldata') {
+            if ($latestCommonData && Carbon::parse($latestCommonData->created_at)->between($startOfWeek, $endOfWeek)) {
+                // Already submitted this week
+                return redirect()->back()->with('error', 'You have already submitted data for this week. Please add new data next week.');
+            }
+        }
+
         $pests = Pest::all();
 
-        // Return the pest data creation view with the pest list and collector ID
         return view('pestData.create', [
             'pests' => $pests,
             'collectorId' => $id,
         ]);
     }
+
 
 
     public function store($id, Request $request)
