@@ -15,17 +15,16 @@
                     </h5>
                 </div>
                 <div class="p-4">
-                    <x-form class="space-y-3" id="export-form" action="{{ route('export.allpestdata') }}"
-                        method="post">
+                    <x-form class="space-y-3" action="{{ route('export.allpestdata') }}" method="post">
                         @csrf
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-400">Start Date</label>
-                            <input type="date" name="start_date"
+                            <input type="date" name="start_date" required
                                 class="w-full px-3 py-2 text-white bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500">
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-400">End Date</label>
-                            <input type="date" name="end_date"
+                            <input type="date" name="end_date" required
                                 class="w-full px-3 py-2 text-white bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500">
                         </div>
                         <button type="submit"

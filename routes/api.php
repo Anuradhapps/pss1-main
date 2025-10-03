@@ -22,9 +22,9 @@ use App\Http\Controllers\CommonDataCollectController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('updateLocation', [CommonDataCollectController::class, 'updateLocation'])->middleware('auth:sanctum');
+// Route::post('updateLocation', [CommonDataCollectController::class, 'updateLocation'])->middleware('auth:sanctum');
 //Route::apiREsource('post',CollectorController::class)->middleware('auth:sanctum');
-Route::post('store', [DataController::class, 'store'])->middleware('auth:sanctum');
+// Route::post('store', [DataController::class, 'store'])->middleware('auth:sanctum');
 Route::post('register', [UserController::class, 'register']);
 Route::post('usercreate', [UserController::class, 'createUser']);
 Route::post('login', [UserController::class, 'loginUser']);

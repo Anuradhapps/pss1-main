@@ -43,7 +43,7 @@ use App\Http\Livewire\{
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-Route::middleware(['web', 'guest', 'no.cache'])->group(function () {
+Route::middleware(['web', 'guest'])->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
@@ -69,7 +69,7 @@ Route::middleware(['web', 'guest', 'no.cache'])->group(function () {
 | Shared Authenticated Routes (Admin & Collector)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'no.cache'])->group(function () {
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware'])->group(function () {
     // Two-Factor Authentication
     Route::prefix('admin')->group(function () {
         Route::get('/2fa', [TwoFaController::class, 'index'])->name('2fa');
@@ -86,7 +86,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'no.cache']
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin', 'no.cache'])->prefix('admin')->group(function () {
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin'])->prefix('admin')->group(function () {
 
 
     // Settings
@@ -131,6 +131,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/chart/show/allSeason', [ChartController::class, 'allSeasonChart'])->name('chart.show.allSeason');
 
     // Export
+
     Route::post('/export-allpestdata', [UserController::class, 'allpestdata'])->name('export.allpestdata');
     Route::post('/export', [UsersExport::class, 'export'])->name('export');
 
@@ -147,7 +148,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 | Collector Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector', 'no.cache'])->prefix('collector')->group(function () {
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:collector'])->prefix('collector')->group(function () {
 
     // Dashboard & Profile
     Route::get('/', [CollectorController::class, 'index'])->name('collector.index');
@@ -177,12 +178,12 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 
 
 
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector', 'no.cache'])->prefix('deputy')->group(function () {
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
     Route::get('/', DeputyDashboard::class)->name('deputy.dashboard');
 });
 
 
-Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector', 'no.cache'])->prefix('extensionAndTrainingDirector')->group(function () {
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector'])->prefix('extensionAndTrainingDirector')->group(function () {
     Route::get('/', DashboardExtensionAndTrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });
 

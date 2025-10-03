@@ -7,7 +7,18 @@ use App\Models\CommonDataCollect;
 use Carbon\Carbon;
 
 class PestInfoService
-{    //Pest code generate---------------------------------------------------------------------------------------------
+{
+    protected $textService;
+
+    public function __construct(TextCorrectionService $textService)
+    {
+        $this->textService = $textService;
+    }
+
+
+    //Pest code generate---------------------------------------------------------------------------------------------
+
+
     private function calculatePestCode(string $pestName, int $totalTillers, int $totalPests): array
     {
         switch ($pestName) {
@@ -207,6 +218,7 @@ class PestInfoService
 
         $thripscount = 0;
 
+        $otherInfo = [];
         foreach ($collectors as $collector) {
 
             foreach ($collector->commonDataCollect as $commonData) {
@@ -228,6 +240,13 @@ class PestInfoService
                     } elseif ($pestData->pest_name == 'Paddy Bug') {
                         $paddyBug += $pestData->total;
                     }
+                }
+
+
+                if (!empty($commonData->otherinfo)) {
+                    $aiRange = $this->textService->correctText($collector->getAiRange->name);
+                    $otherinfo = $this->textService->correctText($commonData->otherinfo);
+                    $otherInfo[] = $aiRange . ' --> ' . $otherinfo;
                 }
             }
         }
@@ -253,7 +272,6 @@ class PestInfoService
             $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
             $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
         }
-
         return [
             "pests" => [
                 "thrips" => $thripsCode,
@@ -262,7 +280,8 @@ class PestInfoService
                 "yellowStemBorer" => $yellowStemBorerCode,
                 "bphWbph" => $bphWbphCode,
                 "paddyBug" => $paddyBugCode
-            ]
+            ],
+            "OtherInfo" => $otherInfo
         ];
     }
     public function avarageCalculateByCommonData($commonDatas)

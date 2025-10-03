@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 // In your controller (e.g., UserController.php)
 use App\Exports\UsersExport;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -23,13 +24,20 @@ class UserController extends Controller
 {
     public function allpestdata(Request $request)
     {
-        // Validate the date inputs
-        $validated = $request->validate([
+        // Validate the request
+        $data = $request->validate([
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'end_date'   => 'required|date|after_or_equal:start_date',
         ]);
-        // Pass the dates to the export class
-        return Excel::download(new UsersExport($validated['start_date'], $validated['end_date']), 'users.xlsx');
+
+        $startDate = $data['start_date'];
+        $endDate = $data['end_date'];
+        $now = Carbon::now()->format('Y-m-d_H-i-s'); // e.g., 2025-10-03_10-55-00
+
+        $fileName = "pest_data_{$startDate}_to_{$endDate}_downloaded_at_{$now}.xlsx";
+
+
+        return Excel::download(new UsersExport($startDate, $endDate), $fileName);
     }
 
 

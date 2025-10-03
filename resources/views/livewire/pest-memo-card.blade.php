@@ -1,5 +1,6 @@
 <div x-data="{
     pests: {{ json_encode($average['pests'] ?? []) }},
+    otherInfo: {{ json_encode($average['OtherInfo'] ?? []) }},
     get pestEntries() { return Object.entries(this.pests); },
     getPestLevel(count) {
         if (count <= 1) return { level: 'No risk', color: 'green', icon: 'check-circle' };
@@ -16,20 +17,20 @@
         };
         return colors[color] || colors.green;
     }
-}" class="w-full  mx-auto p-2 space-y-3">
+}" class="w-full mx-auto p-4 space-y-6">
 
     <!-- Pest Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 ">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         <template x-for="([pest, count], index) in pestEntries" :key="pest">
             <div :class="`${getColorClasses(getPestLevel(count).color).bgLight} ${getColorClasses(getPestLevel(count).color).border}`"
-                class="p-2 rounded-lg border flex flex-col justify-between transition transform hover:scale-105 hover:shadow-lg duration-300 group">
+                class="p-3 rounded-lg border flex flex-col justify-between transition transform hover:scale-105 hover:shadow-lg duration-300 group">
 
-                <div class="flex justify-between items-start mb-1">
+                <div class="flex justify-between items-start mb-2">
                     <div class="pr-1">
                         <h3 class="font-medium text-gray-100 capitalize text-xs sm:text-sm truncate"
                             x-text="pest.replace(/_/g,' ')"></h3>
                         <span
-                            class="inline-flex items-center text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-gray-800 mt-1"
+                            class="inline-flex items-center text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-gray-800 mt-1"
                             :class="getColorClasses(getPestLevel(count).color).text">
                             <i :class="`fas fa-${getPestLevel(count).icon} mr-1 text-[8px] sm:text-xs`"></i>
                             <span x-text="getPestLevel(count).level"></span>
@@ -48,7 +49,7 @@
                 </div>
 
                 <!-- Progress Bar -->
-                <div class="w-full bg-gray-800 rounded-full h-1.5 mt-1">
+                <div class="w-full bg-gray-800 rounded-full h-1.5 mt-2">
                     <div :class="getColorClasses(getPestLevel(count).color).bg"
                         class="h-1.5 rounded-full transition-all duration-700 ease-out"
                         :style="`width: ${Math.min(count*10,100)}%`"></div>
@@ -57,4 +58,23 @@
             </div>
         </template>
     </div>
+    <!-- Other Info Section -->
+    <div x-show="otherInfo.length > 0" class="mt-6 p-3 bg-gray-900 rounded-lg border border-gray-700" x-cloak>
+        <h2 class="text-gray-100 font-semibold text-sm sm:text-base mb-2 flex items-center space-x-2">
+            <i class="fas fa-info-circle text-yellow-400"></i>
+            <span>Other Info</span>
+        </h2>
+        <div class="flex flex-wrap gap-2">
+            <template x-for="info in otherInfo" :key="info">
+                <span
+                    class="flex items-center text-xs sm:text-sm px-2 py-1 bg-gray-800 text-gray-200 rounded-full hover:bg-gray-700 transition">
+                    <i class="fas fa-map-marker-alt text-red-400 mr-1"></i>
+                    <span x-text="info"></span>
+                </span>
+            </template>
+        </div>
+    </div>
+
+
+
 </div>

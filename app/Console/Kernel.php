@@ -24,8 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('warnings:check')->dailyAt('08:00');
-        $schedule->command('warnings:check')->everyMinute();
+        // Run every Friday at 10:00 AM (adjust time as needed)
+        // $schedule->command('run:everyfriday')->fridays()->at('10:00');
+        // $schedule->command('run:everyfriday')->weeklyOn(5, '11:34');
     }
 
     /**
