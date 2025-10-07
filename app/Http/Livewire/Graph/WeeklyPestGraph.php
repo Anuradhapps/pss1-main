@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Graph;
 use App\Models\Collector;
 use App\Models\Region;
 use App\Models\Province;
-use App\Models\District;
+use App\Models\district;
 use Livewire\Component;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +22,7 @@ class WeeklyPestGraph extends Component
 
     public function mount()
     {
-        dd('hi');
+
 
         // Use a historical range for testing (e.g., May 6, 2025 to July 1, 2025)
         // $this->endDate = Carbon::parse('2024-12-30')->endOfWeek()->format('Y-m-d H:i:s');
@@ -225,7 +225,7 @@ class WeeklyPestGraph extends Component
         }) : [];
 
         $districts = $this->provinceId ? Cache::remember("districts_province_{$this->provinceId}", now()->addHours(1), function () {
-            return District::whereIn('id', Collector::where('province', $this->provinceId)
+            return district::whereIn('id', Collector::where('province', $this->provinceId)
                 ->distinct()
                 ->pluck('district'))
                 ->select('id', 'name')

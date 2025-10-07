@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Graph;
 
 use App\Http\Controllers\PestDataCollectController;
 use App\Models\CommonDataCollect;
-use App\Models\District;
+use App\Models\district;
 use App\Models\RiceSeason;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -50,7 +50,7 @@ class PestSeasonComparisonChart extends Component
         $this->districts = Cache::remember(
             'districts-list',
             self::CACHE_TTL,
-            fn() => District::orderBy('name')->get()
+            fn() => district::orderBy('name')->get()
         );
         $this->pests = self::PEST_NAMES;
     }

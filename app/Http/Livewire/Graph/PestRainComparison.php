@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Graph;
 
 use App\Http\Controllers\PestDataCollectController;
 use App\Models\CommonDataCollect;
-use App\Models\District;
+use App\Models\district;
 use App\Models\RiceSeason;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -44,7 +44,7 @@ class PestRainComparison extends Component
     protected function loadInitialData()
     {
         $this->seasons = RiceSeason::orderByDesc('start_date')->get();
-        $this->districts = District::orderBy('name')->get();
+        $this->districts = district::orderBy('name')->get();
         $this->pests = self::PEST_NAMES;
     }
 

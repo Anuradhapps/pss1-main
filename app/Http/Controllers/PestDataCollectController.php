@@ -435,7 +435,7 @@ class PestDataCollectController extends Controller
         ];
     }
 
-    public function getPaddyBugCode($tillerTotal, $pestTotal)
+    public function getPaddyBugCode($tillerTotal, $pestTotal, $collectorCount = 0)
     {
         // Since mean is pestTotal / 10, check if pestTotal is numeric and > 0
         if ($pestTotal === 0) {
@@ -444,6 +444,10 @@ class PestDataCollectController extends Controller
 
         $mean = $pestTotal / 10;
         $code = 0;
+
+        if (!$collectorCount == 0) {
+            $mean = $mean / $collectorCount;
+        }
 
         if ($mean == 0) {
             $code = 0;
@@ -468,6 +472,7 @@ class PestDataCollectController extends Controller
     //when input collector
     public function avarageCalculate($collectors)
     {
+
 
         if ($collectors->count() == 0) {
             return [
@@ -510,11 +515,13 @@ class PestDataCollectController extends Controller
                     } elseif ($pestData->pest_name == 'BPH+WBPH') {
                         $bphWbph += $pestData->total;
                     } elseif ($pestData->pest_name == 'Paddy Bug') {
+
                         $paddyBug += $pestData->total;
                     }
                 }
             }
         }
+
         $possibleCodes = [0, 1, 3, 5, 7, 9];
         $thripsC = 0;
         if ($thripscount == 0) {
@@ -535,7 +542,7 @@ class PestDataCollectController extends Controller
             $leaffolderCode = $this->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
             $yellowStemBorerCode = $this->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
             $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
-            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug, $collectors->count())['code'];
         }
 
         return [

@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Graph;
 
 use App\Http\Controllers\PestDataCollectController;
 use App\Models\CommonDataCollect;
-use App\Models\District;
+use App\Models\district;
 use App\Models\RiceSeason;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -43,7 +43,7 @@ class Chart extends Component
     protected function loadInitialData()
     {
         $this->seasons = RiceSeason::orderBy('start_date', 'desc')->get();
-        $this->districts =  District::orderBy('name')->get();
+        $this->districts =  district::orderBy('name')->get();
         $this->generateData();
     }
 

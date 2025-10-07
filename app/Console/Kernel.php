@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\RunEveryFriday::class,
     ];
 
     /**
@@ -24,9 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Run every Friday at 10:00 AM (adjust time as needed)
-        // $schedule->command('run:everyfriday')->fridays()->at('10:00');
-        // $schedule->command('run:everyfriday')->weeklyOn(5, '11:34');
+        // Run every minute
+        $schedule->command(\App\Console\Commands\RunEveryFriday::class)->everyMinute();
     }
 
     /**

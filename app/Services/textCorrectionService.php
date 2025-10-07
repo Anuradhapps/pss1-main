@@ -4,7 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 
-class TextCorrectionService
+class textCorrectionService
 {
     /**
      * Correct text: spacing, capitalization, grammar

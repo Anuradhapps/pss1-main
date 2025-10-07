@@ -7,7 +7,7 @@ use App\Http\Controllers\RiceSeasonController;
 use App\Models\AiRange;
 use App\Models\As_center;
 use App\Models\Collector;
-use App\Models\District;
+use App\Models\district;
 use Livewire\Component;
 use App\Models\PestDataCollect;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +66,7 @@ class DeputyDashboard extends Component
     {
 
         $districtName = str_replace('DD@domain.com', '', auth()->user()->email);
-        $this->district = District::where('name', $districtName)->firstOrFail();
+        $this->district = district::where('name', $districtName)->firstOrFail();
 
         $this->as_centers = As_center::where('district_id', $this->district->id)->pluck('id');
         $this->aiRanges = AiRange::whereIn('as_center_id', $this->as_centers)->get();

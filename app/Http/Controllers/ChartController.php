@@ -179,7 +179,7 @@ class ChartController extends Controller
         $collectors = null;
         $pestData = null;
         $result = ['location' => null, 'pestNames' => null, 'data' => []];
-        $collectorCount = 0;
+
         if ($sortBy == 'allIsland') {
             $result['location'] = 'All Island';
             foreach ($seasons as $season) {
@@ -194,6 +194,7 @@ class ChartController extends Controller
                     'commonDataCollect'
                 ])->where('rice_season_id', '=', $season->id)->get();
                 if (!$collectors->count() == 0) {
+
                     $collectorCount += $collectors->count();
                     $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
@@ -224,11 +225,15 @@ class ChartController extends Controller
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } elseif ($sortBy == 'province') {
             $provinceName = $request->get('province');
+
             $province = Province::where('name', '=', $provinceName)->get()->first();
+
             $result['location'] = $provinceName;
             foreach ($seasons as $season) {
+
                 $collectors = Collector::where('rice_season_id', '=', $season->id)->where('province', '=', $province->id)->get();
                 if (!$collectors->count() == 0) {
+
                     $collectorCount += $collectors->count();
                     $pestData = $this->PestDataCollectController->avarageCalculate($collectors);
                     $result['pestNames'] = array_keys($pestData['pests']);
@@ -236,6 +241,7 @@ class ChartController extends Controller
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
                 }
             }
+
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             }
@@ -254,6 +260,7 @@ class ChartController extends Controller
                 fn($name) => $pestNameMap[$name] ?? $name,
                 $result['pestNames']
             );
+
             return view('chart.AllSeasonChart', ['chart' => $allSeasonChart->build($result)]);
         } elseif ($sortBy == 'district') {
             $districtName = $request->get('district');
@@ -270,6 +277,7 @@ class ChartController extends Controller
                     array_push($result['data'], ['seasonName' => $season->name, 'pestCodes' => $pestCodes, 'collectorCount' => $collectors->count()]);
                 }
             }
+
             if ($collectorCount == 0) {
                 return redirect()->route('chart.index')->with('error', 'No data found');
             }

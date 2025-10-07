@@ -10,7 +10,7 @@ class PestInfoService
 {
     protected $textService;
 
-    public function __construct(TextCorrectionService $textService)
+    public function __construct(textCorrectionService $textService)
     {
         $this->textService = $textService;
     }
@@ -162,7 +162,7 @@ class PestInfoService
         ];
     }
 
-    public function getPaddyBugCode($tillerTotal, $pestTotal)
+    public function getPaddyBugCode($tillerTotal, $pestTotal, $collectorsCount = 0)
     {
         // Since mean is pestTotal / 10, check if pestTotal is numeric and > 0
         if ($pestTotal === 0) {
@@ -171,7 +171,9 @@ class PestInfoService
 
         $mean = $pestTotal / 10;
         $code = 0;
-
+        if (!$collectorsCount == 0) {
+            $mean = $mean / $collectorsCount;
+        }
         if ($mean == 0) {
             $code = 0;
         } elseif ($mean > 0 && $mean < 2) {
@@ -270,7 +272,7 @@ class PestInfoService
             $leaffolderCode = $this->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
             $yellowStemBorerCode = $this->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
             $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
-            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug)['code'];
+            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug, $collectors->count())['code'];
         }
         return [
             "pests" => [
