@@ -28,7 +28,7 @@ class RunEveryFriday extends Command
         $districts = district::all();
 
         foreach ($districts as $district) {
-            // Calculate pest codes for the last 100 days
+            // Calculate pest codes for the last ___ days
             $data = $this->pestInfoService->avaragePestCodeByDistrictAndDuration($district->id, 60);
 
             foreach ($data['pests'] as $pestName => $code) {
