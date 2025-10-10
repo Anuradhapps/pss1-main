@@ -214,7 +214,7 @@ class ReportController extends Controller
 
     public function collectorsList()
     {
-        // Eager load all related models to prevent N+1
+        // Eager load related models
         $collectors = Collector::with([
             'user',
             'getAsCenter',
@@ -225,12 +225,32 @@ class ReportController extends Controller
         ])
             ->whereHas('user', fn($q) => $q->where('name', '!=', 'npssoldata'))
             ->get()
-            ->groupBy(fn($collector) => $collector->district); // 'district' is district_id
+            ->groupBy(fn($collector) => $collector->district);
 
         $result = [];
+        $summary = []; // ✅ summary data for each district
 
         foreach ($collectors as $districtId => $collectorGroup) {
             $district = District::find($districtId);
+
+            $countGE4 = 0;
+            $countLT4 = 0;
+
+            foreach ($collectorGroup as $collector) {
+                $dataCount = $collector->commonDataCollect->count();
+                if ($dataCount >= 4) {
+                    $countGE4++;
+                } else {
+                    $countLT4++;
+                }
+            }
+
+            $summary[] = [
+                'district' => $district ? $district->name : 'Unknown',
+                'countGE4' => $countGE4,
+                'countLT4' => $countLT4,
+            ];
+
             $subresult = [
                 'district' => $district ? $district->name : 'Unknown',
                 'collectors' => []
@@ -253,11 +273,14 @@ class ReportController extends Controller
         }
 
         // Generate PDF
-        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result])
-            ->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('report.collectorsList', [
+            'data' => $result,
+            'summary' => $summary, // ✅ pass summary
+        ])->setPaper('a4', 'landscape');
 
         return $pdf->download("collectorsList.pdf");
     }
+
 
     public function reportOfOtherInfo()
     {

@@ -2,10 +2,10 @@
     <img src="{{ asset('images/LOGO.png') }}" alt="Logo" class="h-20 w-20 object-contain drop-shadow-md" />
 
     <div class="flex flex-col leading-tight">
-        <h1 class="text-2xl font-semibold text-gray-800 dark:text-white">
+        <h1 class="text-2xl font-semibold text-gray-300 ">
             National Pest Surveillance System
         </h1>
-        <span class="text-sm text-gray-500 dark:text-gray-400 tracking-wide">
+        <span class="text-sm text-gray-400 tracking-wide">
             National Plant Protection Service
         </span>
     </div>

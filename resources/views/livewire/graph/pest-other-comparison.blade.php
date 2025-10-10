@@ -197,6 +197,8 @@
                             scales: {
                                 y: {
                                     beginAtZero: true,
+                                    min: 0, // 👈 Fixed minimum value
+                                    max: 9,
                                     ticks: {
                                         stepSize: 1,
                                         font: {

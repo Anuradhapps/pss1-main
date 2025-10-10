@@ -112,6 +112,27 @@
         @endif
 
         <div class="subtitle">National Plant Protection Service, Gannoruwa</div>
+        @if (isset($summary) && count($summary) > 0)
+            <h3 style="text-align: center; font-size: 12px; margin-top: 5px;">Summary (Collectors by District)</h3>
+            <table style="margin-bottom: 20px; font-size: 10px;">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">District</th>
+                        <th style="width: 30%;">Collectors with ≥ 4 Entries</th>
+                        <th style="width: 30%;">Collectors with &lt; 4 Entries</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($summary as $row)
+                        <tr>
+                            <td>{{ $row['district'] }}</td>
+                            <td>{{ $row['countGE4'] }}</td>
+                            <td>{{ $row['countLT4'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
 
         <table>
             <thead>
