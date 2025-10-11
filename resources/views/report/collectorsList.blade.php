@@ -71,6 +71,14 @@
             text-transform: uppercase;
         }
 
+        .season-row {
+            background-color: #b8f0b8;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
         .collector-row:nth-child(even) td {
             background-color: #f5f5f5;
         }
@@ -104,36 +112,39 @@
     <div class="report-container">
         <h2>NPSS Data Collectors List</h2>
 
-        @if (isset($region) && $region != null)
-            <div class="region-district">Region: {{ $region }}</div>
-        @endif
-        @if (isset($seasonName) && $seasonName != null)
-            <div class="region-district">Season: {{ $seasonName }}</div>
-        @endif
-
         <div class="subtitle">National Plant Protection Service, Gannoruwa</div>
-        @if (isset($summary) && count($summary) > 0)
-            <h3 style="text-align: center; font-size: 12px; margin-top: 5px;">Summary (Collectors by District)</h3>
-            <table style="margin-bottom: 20px; font-size: 10px;">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">District</th>
-                        <th style="width: 30%;">Collectors with ≥ 4 Entries</th>
-                        <th style="width: 30%;">Collectors with &lt; 4 Entries</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($summary as $row)
-                        <tr>
-                            <td>{{ $row['district'] }}</td>
-                            <td>{{ $row['countGE4'] }}</td>
-                            <td>{{ $row['countLT4'] }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+        {{-- Summary Section --}}
+        @if(isset($summary) && count($summary) > 0)
+        <h3 style="text-align: center; font-size: 12px; margin-top: 5px;">Summary (Collectors by District)</h3>
+        <table style="margin-bottom: 20px; font-size: 10px;">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Season</th>
+                    <th style="width: 30%;">District</th>
+                    <th style="width: 30%;">Total collector count</th>
+                    <th style="width: 20%;">Greater than or equal to 4 Entries</th> {{-- Greater than or equal to --}}
+                    <th style="width: 20%;">Less than 4 Entries</th> {{-- Less than 4 --}}
+                    <th style="width: 20%;">Exactly zero Entries</th> {{-- Exactly zero --}}
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($summary as $row)
+                <tr>
+                    <td>{{ $row['season'] }}</td>
+                    <td>{{ $row['district'] }}</td>
+                    <td>{{ $row['collectorCount'] }}</td>
+                    <td>{{ $row['countGE4'] }}</td>
+                    <td>{{ $row['countLT4'] }}</td>
+                    <td>{{ $row['countZero'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endif
 
+        {{-- Main Table --}}
         <table>
             <thead>
                 <tr>
@@ -146,27 +157,36 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($data as $districtData)
-                    <tr class="district-row">
-                        <td colspan="6">
-                            {{ $districtData['district'] }} &mdash; Collectors: {{ count($districtData['collectors']) }}
-                        </td>
-                    </tr>
+                @forelse($data as $seasonData)
+                {{-- 🌾 Season Header --}}
+                <tr class="season-row">
+                    <td colspan="6">SEASON: {{ $seasonData['season'] }}</td>
+                </tr>
 
-                    @foreach ($districtData['collectors'] as $collector)
-                        <tr class="collector-row">
-                            <td>{{ $collector[0] }}</td>
-                            <td>{{ $collector[2] }}</td>
-                            <td>{{ $collector[3] }}</td>
-                            <td>{{ $collector[5] }}</td>
-                            <td>{{ $collector[7] }}</td>
-                            <td>{{ $collector[6] }}</td>
-                        </tr>
-                    @endforeach
+                {{-- 🏙 Districts --}}
+                @foreach($seasonData['districts'] as $district)
+                <tr class="district-row">
+                    <td colspan="6">
+                        {{ $district['district'] }} — Collectors: {{ count($district['collectors']) }}
+                    </td>
+                </tr>
+
+                {{-- 👥 Collectors --}}
+                @foreach($district['collectors'] as $collector)
+                <tr class="collector-row">
+                    <td>{{ $collector['name'] }}</td>
+                    <td>{{ $collector['ai_range'] }}</td>
+                    <td>{{ $collector['phone'] }}</td>
+                    <td>{{ $collector['email'] }}</td>
+                    <td>{{ $collector['season'] }}</td>
+                    <td>{{ $collector['data_count'] }}</td>
+                </tr>
+                @endforeach
+                @endforeach
                 @empty
-                    <tr>
-                        <td colspan="6" style="text-align: center;">No collector data found.</td>
-                    </tr>
+                <tr>
+                    <td colspan="6" style="text-align:center;">No collector data found.</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
