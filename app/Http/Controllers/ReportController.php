@@ -212,96 +212,230 @@ class ReportController extends Controller
         return $pdf->download("PPS_Memo ({$province->name}) {$startDate->toDateString()} to {$endDate->toDateString()}.pdf");
     }
 
+    // public function collectorsList()
+    // {
+    //     // Eager load related models
+    //     $collectors = Collector::with([
+    //         'user',
+    //         'getAsCenter',
+    //         'getAiRange',
+    //         'commonDataCollect',
+    //         'riceSeason',
+    //         'getDistrict'
+    //     ])
+    //         ->whereHas('user', fn($q) => $q->where('name', '!=', 'npssoldata'))
+    //         ->get()
+    //         ->groupBy(fn($collector) => $collector->riceSeason) // group by rice season
+    //         ->map(
+    //             fn($seasonGroup) =>
+    //             $seasonGroup->groupBy(fn($collector) => $collector->getDistrict->name ?? 'Unknown District')
+    //         );
+
+    //     $result = [];
+    //     $summary = [];
+
+    //     foreach ($collectors as $seasonKey => $districtGroups) {
+    //         $season = json_decode($seasonKey);
+    //         $seasonName = $season->name ?? 'Unknown Season';
+
+    //         $seasonData = [
+    //             'season' => $seasonName,
+    //             'districts' => []
+    //         ];
+
+    //         foreach ($districtGroups as $districtName => $collectorGroup) {
+    //             $countGE4 = 0;
+    //             $countLT4 = 0;
+    //             $countZero = 0; // ✅ Initialize zero count
+
+    //             foreach ($collectorGroup as $collector) {
+    //                 $dataCount = $collector->commonDataCollect->count();
+
+    //                 if ($dataCount === 0) {
+    //                     $countZero++; // ✅ Count zero entries separately
+    //                 } elseif ($dataCount >= 4) {
+    //                     $countGE4++;
+    //                 } else {
+    //                     $countLT4++;
+    //                 }
+    //             }
+
+    //             // ✅ Add zero count to summary
+    //             $summary[] = [
+    //                 'season' => $seasonName,
+    //                 'district' => $districtName,
+    //                 'collectorCount' => $collectorGroup->count(),
+    //                 'countGE4' => $countGE4,
+    //                 'countLT4' => $countLT4,
+    //                 'countZero' => $countZero,
+    //             ];
+
+    //             // ✅ Prepare district data for detailed table
+    //             $districtData = [
+    //                 'district' => $districtName,
+    //                 'collectors' => [],
+    //             ];
+
+    //             foreach ($collectorGroup as $collector) {
+    //                 $districtData['collectors'][] = [
+    //                     'name' => $collector->user->name ?? '',
+    //                     'as_center' => $collector->getAsCenter->name ?? '',
+    //                     'ai_range' => $collector->getAiRange->name ?? '',
+    //                     'phone' => $collector->phone_no ?? '',
+    //                     'email' => $collector->user->email ?? '',
+    //                     'season' => $collector->riceSeason->name ?? '',
+    //                     'data_count' => $collector->commonDataCollect->count() ?? 0,
+    //                 ];
+    //             }
+
+    //             $seasonData['districts'][] = $districtData;
+    //         }
+
+
+    //         $result[] = $seasonData;
+    //     }
+
+    //     // ✅ Generate PDF
+    //     $pdf = Pdf::loadView('report.collectorsList', [
+    //         'data' => $result,
+    //         'summary' => $summary,
+    //     ])->setPaper('a4', 'portrait');
+
+    //     return $pdf->download("collectorsList.pdf");
+    // }
     public function collectorsList()
     {
         // Eager load related models
         $collectors = Collector::with([
             'user',
+            'getProvince',
+            'region',
+            'getDistrict',
             'getAsCenter',
             'getAiRange',
             'commonDataCollect',
             'riceSeason',
-            'getDistrict'
         ])
             ->whereHas('user', fn($q) => $q->where('name', '!=', 'npssoldata'))
             ->get()
-            ->groupBy(fn($collector) => $collector->riceSeason) // group by rice season
+            ->groupBy(fn($collector) => $collector->riceSeason) // Group by season
             ->map(
                 fn($seasonGroup) =>
-                $seasonGroup->groupBy(fn($collector) => $collector->getDistrict->name ?? 'Unknown District')
+                $seasonGroup->groupBy(fn($collector) => $collector->region->name ?? 'Unknown Region') // Group by region
+                    ->map(
+                        fn($regionGroup) =>
+                        $regionGroup->groupBy(fn($collector) => $collector->getDistrict->name ?? 'Unknown District') // Group by district
+                    )
             );
 
         $result = [];
         $summary = [];
 
-        foreach ($collectors as $seasonKey => $districtGroups) {
+        // Define the district mapping for Inter Provincial region
+        $interProvincialMapping = [
+            'Kandy' => ['kandy', 'mathale', 'badulla'],
+            'Hambantota' => ['rathnapura', 'hambantota'],
+            'Anuradhapura' => ['kurunegala', 'anuradhapura', 'puttalam'],
+        ];
+
+        foreach ($collectors as $seasonKey => $regionGroups) {
             $season = json_decode($seasonKey);
             $seasonName = $season->name ?? 'Unknown Season';
 
             $seasonData = [
                 'season' => $seasonName,
-                'districts' => []
+                'regions' => [],
             ];
 
-            foreach ($districtGroups as $districtName => $collectorGroup) {
-                $countGE4 = 0;
-                $countLT4 = 0;
-                $countZero = 0; // ✅ Initialize zero count
+            foreach ($regionGroups as $regionName => $districtGroups) {
+                $regionData = [
+                    'region' => $regionName,
+                    'districts' => [],
+                ];
 
-                foreach ($collectorGroup as $collector) {
-                    $dataCount = $collector->commonDataCollect->count();
+                // Prepare a new array to merge districts for Inter Provincial region
+                $mergedDistricts = [];
 
-                    if ($dataCount === 0) {
-                        $countZero++; // ✅ Count zero entries separately
-                    } elseif ($dataCount >= 4) {
-                        $countGE4++;
-                    } else {
-                        $countLT4++;
+                foreach ($districtGroups as $districtName => $collectorGroup) {
+                    if ($regionName === 'Inter Provincial') {
+                        foreach ($interProvincialMapping as $combinedName => $districts) {
+                            if (in_array(strtolower($districtName), $districts)) {
+                                $districtName = $combinedName;
+                                break;
+                            }
+                        }
                     }
+
+                    // Merge collectors if district already exists
+                    if (!isset($mergedDistricts[$districtName])) {
+                        $mergedDistricts[$districtName] = collect();
+                    }
+                    $mergedDistricts[$districtName] = $mergedDistricts[$districtName]->merge($collectorGroup);
                 }
 
-                // ✅ Add zero count to summary
-                $summary[] = [
-                    'season' => $seasonName,
-                    'district' => $districtName,
-                    'collectorCount' => $collectorGroup->count(),
-                    'countGE4' => $countGE4,
-                    'countLT4' => $countLT4,
-                    'countZero' => $countZero,
-                ];
+                // Now build district data after merging
+                foreach ($mergedDistricts as $districtName => $collectorGroup) {
+                    $countGE4 = 0;
+                    $countLT4 = 0;
+                    $countZero = 0;
 
-                // ✅ Prepare district data for detailed table
-                $districtData = [
-                    'district' => $districtName,
-                    'collectors' => [],
-                ];
+                    foreach ($collectorGroup as $collector) {
+                        $dataCount = $collector->commonDataCollect->count();
 
-                foreach ($collectorGroup as $collector) {
-                    $districtData['collectors'][] = [
-                        'name' => $collector->user->name ?? '',
-                        'as_center' => $collector->getAsCenter->name ?? '',
-                        'ai_range' => $collector->getAiRange->name ?? '',
-                        'phone' => $collector->phone_no ?? '',
-                        'email' => $collector->user->email ?? '',
-                        'season' => $collector->riceSeason->name ?? '',
-                        'data_count' => $collector->commonDataCollect->count() ?? 0,
+                        if ($dataCount === 0) {
+                            $countZero++;
+                        } elseif ($dataCount >= 4) {
+                            $countGE4++;
+                        } else {
+                            $countLT4++;
+                        }
+                    }
+
+                    // Add to summary
+                    $summary[] = [
+                        'season' => $seasonName,
+                        'region' => $regionName,
+                        'district' => $districtName,
+                        'collectorCount' => $collectorGroup->count(),
+                        'countGE4' => $countGE4,
+                        'countLT4' => $countLT4,
+                        'countZero' => $countZero,
                     ];
+
+                    // Prepare district data
+                    $districtData = [
+                        'district' => $districtName,
+                        'collectors' => [],
+                    ];
+
+                    foreach ($collectorGroup as $collector) {
+                        $districtData['collectors'][] = [
+                            'name' => $collector->user->name ?? '',
+                            'as_center' => $collector->getAsCenter->name ?? '',
+                            'ai_range' => $collector->getAiRange->name ?? '',
+                            'phone' => $collector->phone_no ?? '',
+                            'email' => $collector->user->email ?? '',
+                            'season' => $collector->riceSeason->name ?? '',
+                            'data_count' => $collector->commonDataCollect->count() ?? 0,
+                        ];
+                    }
+
+                    $regionData['districts'][] = $districtData;
                 }
 
-                $seasonData['districts'][] = $districtData;
+                $seasonData['regions'][] = $regionData;
             }
-
 
             $result[] = $seasonData;
         }
 
-        // ✅ Generate PDF
+        // Generate PDF
         $pdf = Pdf::loadView('report.collectorsList', [
             'data' => $result,
             'summary' => $summary,
         ])->setPaper('a4', 'portrait');
 
-        return $pdf->download("collectorsList.pdf");
+        return $pdf->download('collectors_list_' . Carbon::now()->format('Y_m_d_His') . '.pdf');
     }
 
 
