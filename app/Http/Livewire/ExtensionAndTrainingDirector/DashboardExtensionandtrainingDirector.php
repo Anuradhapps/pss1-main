@@ -118,29 +118,107 @@ class DashboardExtensionAndTrainingDirector extends Component
         $this->reset(['search', 'selectedDistrict', 'selectedSeason', 'searchNumber', 'selectedSeasonName', 'selectedSeasonUserCount']);
         $this->resetPage();
     }
+    // public function downloadCollectorsList(toPDFService $pdfService)
+    // {
+
+    //     $season = RiceSeason::find($this->selectedSeason);
+    //     if ($season == null) {
+    //         $season = 'All Season';
+    //     } else {
+    //         $season = $season->name;
+    //     }
+
+    //     $result = $pdfService->collectorsList(null, $this->regionId, $this->selectedSeason);
+    //     $region = Region::find($this->regionId);
+
+    //     $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'region' => $region->name, 'seasonName' => $season])
+    //         ->setPaper('a4', 'landscape');
+
+    //     // Stream download response compatible with Livewire
+    //     $regionName = isset($region->name) ? Str::slug($region->name) : 'Region';
+    //     $timestamp = now()->format('Y-m-d_H-i-s'); // e.g., 2025-09-08_10-30-15
+
+    //     return response()->streamDownload(
+    //         fn() => print($pdf->output()),
+    //         "Collectors_List_{$regionName}_{$timestamp}.pdf"
+    //     );
+    // }
+
     public function downloadCollectorsList(toPDFService $pdfService)
     {
-        $season = RiceSeason::find($this->selectedSeason);
-        if ($season == null) {
-            $season = 'All Season';
-        } else {
-            $season = $season->name;
-        }
+        $seasonModel = RiceSeason::find($this->selectedSeason);
+        $seasonName = $seasonModel ? $seasonModel->name : 'All Season';
 
-        $result = $pdfService->collectorsList(null, $this->regionId, $this->selectedSeason);
         $region = Region::find($this->regionId);
-        $pdf = Pdf::loadView('report.collectorsList', ['data' => $result, 'region' => $region->name, 'seasonName' => $season])
-            ->setPaper('a4', 'landscape');
+        $regionName = $region->name ?? 'Unknown Region';
 
-        // Stream download response compatible with Livewire
-        $regionName = isset($region->name) ? Str::slug($region->name) : 'Region';
-        $timestamp = now()->format('Y-m-d_H-i-s'); // e.g., 2025-09-08_10-30-15
+        // Get data from service
+        $rawResult = $pdfService->collectorsList(null, $this->regionId, $this->selectedSeason);
+        // Example structure of $rawResult: district => collectors(array of 8 values)
+
+        // Transform into nested structure
+        $formattedData = [
+            [
+                'season' => $seasonName,
+                'regions' => [
+                    [
+                        'region' => $regionName,
+                        'districts' => collect($rawResult)->map(function ($districtData) {
+                            return [
+                                'district' => $districtData['district'],
+                                'collectors' => collect($districtData['collectors'])->map(function ($collector) {
+                                    return [
+                                        'email' => $collector[0] ?? '-',
+                                        'asc' => $collector[1] ?? '-',
+                                        'ai_range' => $collector[2] ?? '-',
+                                        'phone' => $collector[3] ?? '-',
+                                        'joined_date' => $collector[4] ?? '-',
+                                        'password' => $collector[5] ?? '-',
+                                        'data_count' => $collector[6] ?? 0,
+                                        'season' => $collector[7] ?? '-',
+                                        'name' => isset($collector[0])
+                                            ? ucfirst(explode('@', $collector[0])[0]) // derive simple name
+                                            : '-',
+                                    ];
+                                })->toArray()
+                            ];
+                        })->values()->toArray()
+                    ]
+                ]
+            ]
+        ];
+
+        // Optional: add summary
+        // $summary = collect($formattedData[0]['regions'][0]['districts'])->map(function ($district) {
+        //     $collectors = $district['collectors'];
+        //     return [
+        //         'season' => $formattedData[0]['season'] ?? '-',
+        //         'region' => $formattedData[0]['regions'][0]['region'] ?? '-',
+        //         'district' => $district['district'],
+        //         'collectorCount' => count($collectors),
+        //         'countGE4' => collect($collectors)->where('data_count', '>=', 4)->count(),
+        //         'countLT4' => collect($collectors)->where('data_count', '<', 4)->where('data_count', '>', 0)->count(),
+        //         'countZero' => collect($collectors)->where('data_count', 0)->count(),
+        //     ];
+        // })->toArray();
+
+        // Generate the PDF
+        $pdf = Pdf::loadView('report.collectorsList', [
+            'data' => $formattedData,
+            // 'summary' => $summary,
+            'region' => $regionName,
+            'seasonName' => $seasonName,
+        ])->setPaper('a4', 'portrait');
+
+        $regionSlug = Str::slug($regionName);
+        $timestamp = now()->format('Y-m-d_H-i-s');
 
         return response()->streamDownload(
             fn() => print($pdf->output()),
-            "Collectors_List_{$regionName}_{$timestamp}.pdf"
+            "Collectors_List_{$regionSlug}_{$timestamp}.pdf"
         );
     }
+
     public function viewCollector($collectorId)
     {
         $this->selectedCollector = Collector::with([
