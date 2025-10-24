@@ -66,11 +66,20 @@
                     <!-- Reset button -->
                     <button wire:click="resetFilters"
                         class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white ">Reset</button>
-                    <button wire:click="downloadCollectorsList"
-                        class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
-                        <i class="fas fa-download"></i>
-                        Collector List
-                    </button>
+
+                    <div class="relative group inline-block">
+                        <button wire:click="downloadCollectorsList"
+                            class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
+                            <i class="fas fa-download"></i>
+                            Collector List
+                        </button>
+
+                        <!-- Tooltip -->
+                        <span
+                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max text-xs text-white bg-gray-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
+                            Download collector list <br> for the selected season, <br> or all seasons if none selected
+                        </span>
+                    </div>
 
                 </div>
 

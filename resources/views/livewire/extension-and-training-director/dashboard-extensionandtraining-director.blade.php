@@ -40,7 +40,7 @@
 
     <!-- Quick Stats -->
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
-        <x-dd.stat-box color="green" title="Total Users" :value="$totalUsersCount" class="rounded-none" />
+        <x-dd.stat-box color="green" title="Total Collectors" :value="$totalUsersCount" class="rounded-none" />
         <x-dd.stat-box color="yellow" title="This Season" :value="$seasonUserCount" class="rounded-none" />
 
         @if ($selectedSeason || $selectedDistrict || $searchNumber)
@@ -91,11 +91,22 @@
                 class="rounded-none px-4 py-2 bg-red-700 hover:bg-red-800 text-white shadow transition transform hover:scale-105">
                 Reset
             </button>
-            <button wire:click="downloadCollectorsList"
-                class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
-                <i class="fas fa-download"></i>
-                Collector List
-            </button>
+            <div class="relative group inline-block">
+                <button wire:click="downloadCollectorsList"
+                    class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
+                    <i class="fas fa-download"></i>
+                    Collector List
+                </button>
+
+                <!-- Tooltip -->
+                <span
+                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max text-xs text-white bg-gray-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
+                    Download the collector list according to the selected season. <br> If no season is selected, it will
+                    show
+                    data for all seasons.
+                </span>
+            </div>
+
 
 
 
