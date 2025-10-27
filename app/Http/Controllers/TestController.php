@@ -14,18 +14,38 @@ class TestController extends Controller
 {
 
 
+    public function getCurrentDateTime(PestInfoService $pestInfoService) {}
+
+
     public function index()
     {
+        //create json data name with age and email
+        //add more data as you like
+        //multiple lines
+        $data = [
+            [
+                'name' => 'John Doe',
+                'age' => 30,
+                'email' => 'john.doe@example.com',
+                'address' => '123 Main St, Anytown, USA',
+                'phone' => '555-1234'
+            ],
+            [
+                'name' => 'Jane Smith',
+                'age' => 25,
+                'email' => 'jane.smith@example.com',
+                'address' => '456 Elm St, Othertown, USA',
+                'phone' => '555-5678'
+            ],
+            [
+                'name' => 'Alice Johnson',
+                'age' => 28,
+                'email' => 'alice.johnson@example.com',
+                'address' => '789 Oak St, Sometown, USA',
+                'phone' => '555-9012'
+            ]
+        ];
 
-
-        // Example: Generate a notification
-        Notification::create([
-            'id' => Str::uuid(), // UUID
-            'title' => 'New task assigned to you',
-            'assigned_to_user_id' => '31284867-d0e7-4872-a7a3-569c99c96994', // The user who will receive the notification
-            'assigned_from_user_id' => auth()->id(), // Who created it
-            // 'link' => route('test.t'), // Optional link
-            'viewed' => false,
-        ]);
+        return response()->json($data);
     }
 }

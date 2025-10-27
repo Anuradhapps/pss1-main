@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\CommonDataCollectController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,21 +33,8 @@ Route::post('login', [UserController::class, 'loginUser']);
 
 
 Route::get('/pest-data', function (Request $request) {
-    return response()->json([
-        "labels" => ["2025-03-25", "2025-04-02", "2025-04-09", "2025-04-16", "2025-04-23", "2025-04-29"],
-        "datasets" => [
-            [
-                "label" => "Pest Count 1",
-                "data" => [5, 10, 8, 15, 14, 15]
-            ],
-            [
-                "label" => "Pest Count 2",
-                "data" => [3, 6, 4, 10, 20, 9]
-            ],
-            [
-                "label" => "Pest Count 3",
-                "data" => [12, 7, 3, 8, 25, 1]
-            ]
-        ]
-    ]);
+
+    $user = User::all();
+
+    return response()->json($user);
 });

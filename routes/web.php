@@ -204,7 +204,7 @@ Route::get('/pestricecomparison', function () {
 })->name('pest-rice-variety-comparison');
 
 
-
+// Test Routes
 Route::get('test', function () {
     return view('test');
 })->name('test.t');
