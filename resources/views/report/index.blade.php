@@ -127,7 +127,7 @@
 
                 <!-- Content -->
                 <div x-show="open" x-transition x-cloak class="mt-4 space-y-4">
-                    @php $districts = App\Models\District::all(); @endphp
+                    @php $districts = App\Models\district::all(); @endphp
                     @foreach ($districts as $district)
                         <div
                             class="p-4 bg-gray-800/60 border border-gray-700 rounded-xl shadow-md hover:shadow-lg hover:bg-gray-750 transition-all duration-300">
