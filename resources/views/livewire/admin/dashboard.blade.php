@@ -14,17 +14,18 @@
     <div class="text-base leading-relaxed space-y-3">
         <p class="text-gray-300 font-semibold">Objectives:</p>
 
-        <div class="flex items-start gap-2 text-gray-400">
+        <div class="flex items-start gap-2 text-gray-200">
             <i class="fas fa-star text-yellow-400 mt-1"></i>
-            <p>
-                This system enables the Plant Protection Service to efficiently gather field data via a mobile-friendly
+            <p class="text-gray-200">
+                This system enables the National Plant Protection Service to efficiently gather field data via a
+                mobile-friendly
                 web application focused on pest surveillance.
             </p>
         </div>
 
-        <div class="flex items-start gap-2 text-gray-400">
+        <div class="flex items-start gap-2 text-gray-200">
             <i class="fas fa-star text-yellow-400 mt-1"></i>
-            <p>
+            <p class="text-gray-200">
                 It aims to record pest density and damage intensity weekly throughout the cropping season across
                 selected locations.
             </p>

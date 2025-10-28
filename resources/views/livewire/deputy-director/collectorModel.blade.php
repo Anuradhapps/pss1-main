@@ -49,8 +49,9 @@
                             <li class="bg-gray-700 p-3 flex gap-4 items-start border border-gray-600">
                                 <span class="text-green-400 font-bold">{{ $loop->iteration }}.</span>
                                 <div class="sm:flex gap-2 text-sm">
-                                    <p><span class="text-gray-400">Field Date:</span> {{ $entry->c_date }}</p>
-                                    <p><span class="text-gray-400">Submitted:</span>
+                                    <p class="text-white"><span class="text-gray-400">Field Date:</span>
+                                        {{ $entry->c_date }}</p>
+                                    <p class="text-white"><span class="text-gray-400">Submitted:</span>
                                         {{ \Carbon\Carbon::parse($entry->created_at)->format('Y-m-d H:i') }}</p>
                                 </div>
                             </li>

@@ -1,4 +1,4 @@
-<div class="flex items-center gap-4 bg-white dark:bg-gray-900 px-6 py-4  shadow-md">
+<div class="flex items-center gap-4 bg-gray-900 px-6 py-4  shadow-md">
     <img src="{{ asset('images/LOGO.png') }}" alt="Logo" class="h-20 w-20 object-contain drop-shadow-md" />
 
     <div class="flex flex-col leading-tight">

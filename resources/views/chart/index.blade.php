@@ -103,37 +103,5 @@
         </div>
     </div>
 
-    <!-- Last Week’s Pest Damage Levels by Province -->
-    <div class="bg-gray-900 border border-gray-700 rounded-2xl shadow-lg p-5 m-2">
-        <div x-data="{ open: true }" wire:ignore.self class="m-0">
-            <div @click="open = !open"
-                class="flex items-center justify-between bg-gray-800 text-gray-100 px-3 py-2 rounded-md cursor-pointer select-none transition-all hover:bg-gray-600">
-                <h2 class="text-lg font-semibold text-white">Last Week’s Pest Damage Levels by Province</h2>
-                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transition-transform duration-300" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </div>
 
-            <div x-show="!open" x-transition x-cloak class="mt-4 space-y-4">
-                @php $districts = App\Models\District::all(); @endphp
-                @foreach ($districts as $district)
-                    <div
-                        class="p-4 bg-gray-800 border border-gray-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center mb-3">
-                            <div
-                                class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
-                                <i class="fas fa-bug text-lg"></i>
-                            </div>
-                            <h2 class="text-lg font-semibold text-gray-100">
-                                <span class="text-orange-500 italic">{{ $district->name }}</span> – Pest Density This
-                                Week
-                            </h2>
-                        </div>
-                        <livewire:pest-memo-card :districtId="$district->id" :days="7" :key="'pest-' . $district->id" />
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
 </x-app-layout>

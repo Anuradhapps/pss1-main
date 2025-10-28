@@ -9,13 +9,26 @@
     <!-- Inter Provinces Pest Damage Level (Collapsible) -->
     <div x-data="{ open: true }" wire:ignore.self class="m-0">
         <div @click="open = !open"
-            class="flex items-center justify-between bg-gray-700 text-gray-100 px-2 py-0 rounded-md cursor-pointer select-none">
-            <h2 class="text-lg font-semibold">Inter Provinces Pest Damage Level</h2>
+            class="flex items-center justify-between bg-gray-700 hover:bg-gray-800 text-gray-100 
+           px-3 py-2 rounded-md cursor-pointer select-none transition duration-200 
+           shadow hover:shadow-lg hover:scale-[1.02] space-x-2">
+
+            <div class="flex items-center space-x-2">
+                <h2 class="text-lg font-semibold text-gray-200">
+                    Inter Provinces Pest Damage Level
+                </h2>
+                <p class="text-sm text-gray-400 italic" x-text="open ? '(Click here to show)' : '(Click here to hide)'">
+                </p>
+            </div>
+
             <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transition-transform" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
         </div>
+
+
+
 
         <div x-show="!open" x-transition x-cloak class="mt-3 space-y-3">
             @foreach ($districts as $district)
@@ -143,16 +156,16 @@
                     <tbody class="text-sm text-green-100">
                         @foreach ($filteredCollectors as $collector)
                             <tr
-                                class="border-b border-green-900 hover:bg-green-950 transition duration-200 ease-in-out cursor-pointer">
-                                <td class="px-4 py-2 font-medium whitespace-nowrap">
+                                class="border-b border-green-900 hover:bg-green-950 bg-gray-800 hover:text-white transition duration-200 ease-in-out cursor-pointer">
+                                <td class="px-4 py-2 font-medium whitespace-nowrap text-white">
                                     {{ $collector->user->name ?? 'N/A' }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap">
+                                <td class="px-4 py-2 whitespace-nowrap text-white">
                                     {{ $collector->getAiRange->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
+                                <td class="px-4 py-2 whitespace-nowrap text-white">
                                     {{ $collector->riceSeason->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $collector->phone_no ?? 'N/A' }}
+                                <td class="px-4 py-2 whitespace-nowrap text-white">{{ $collector->phone_no ?? 'N/A' }}
                                 </td>
                                 <td class="px-4 py-2 text-right">
                                     <button wire:click="viewCollector({{ $collector->id }})"

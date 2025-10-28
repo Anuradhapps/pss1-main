@@ -105,19 +105,19 @@
                         @foreach ($filteredCollectors as $collector)
                             <tr class="hover:bg-teal-800 transition-colors duration-150 bg-cyan-900">
 
-                                <td class="px-2 py-1 whitespace-nowrap ">
+                                <td class="px-2 py-1 whitespace-nowrap text-white">
                                     {{ $collector->user->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
+                                <td class="px-2  py-1 whitespace-nowrap text-white">
                                     {{ $collector->getAiRange->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
+                                <td class="px-2  py-1 whitespace-nowrap text-white">
                                     {{ $collector->riceSeason->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
+                                <td class="px-2  py-1 whitespace-nowrap text-white">
                                     {{ $collector->phone_no ?? 'N/A' }}
                                 </td>
-                                <td class="px-2  py-1 whitespace-nowrap ">
+                                <td class="px-2  py-1 whitespace-nowrap text-white">
                                     <!-- View Button -->
                                     <button wire:click="viewCollector({{ $collector->id }})"
                                         class="flex items-center gap-2 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold  transition duration-200 ease-in-out transform hover:scale-105">

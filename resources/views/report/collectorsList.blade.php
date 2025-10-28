@@ -147,7 +147,7 @@
 
         {{-- Main Table --}}
         <table>
-            <thead>
+            {{-- <thead>
                 <tr>
                     <th style="width: 25%;">Name</th>
                     <th style="width: 15%;">AI Range</th>
@@ -155,7 +155,7 @@
                     <th style="width: 20%;">Email</th>
                     <th style="width: 12%;">Season</th>
                     <th style="width: 13%;">Data Count</th>
-                </tr>
+                </tr> --}}
             </thead>
             <tbody>
                 @forelse($data as $seasonData)
@@ -177,6 +177,14 @@
                                     {{ $district['district'] }} — Collectors: {{ count($district['collectors']) }}
                                 </td>
                             </tr>
+                             <tr>
+                    <th style="width: 25%;">Name</th>
+                    <th style="width: 15%;">AI Range</th>
+                    <th style="width: 15%;">Phone</th>
+                    <th style="width: 20%;">Email</th>
+                    <th style="width: 12%;">Season</th>
+                    <th style="width: 13%;">Data Count</th>
+                </tr>
 
                             {{-- 👥 Collectors --}}
                             @foreach ($district['collectors'] as $collector)

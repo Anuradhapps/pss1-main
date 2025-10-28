@@ -61,7 +61,7 @@
                     @foreach ($this->collectors() as $collector)
                         <tr class="hover:bg-gray-800 transition bg-emerald-900">
                             <td class="p-0 ps-2 pe-2 py-1">
-                                <div class="flex justify-between items-center">
+                                <div class="flex justify-between items-center text-white">
                                     <div>
                                         <div class="font-semibold">{{ $collector->name }}</div>
                                         <div class="text-xs text-gray-400 italic">{{ $collector->regionName }} -
@@ -75,9 +75,9 @@
                                 </div>
                             </td>
 
-                            <td class="p-0 ps-2">{{ $collector->dname }}</td>
-                            <td class="p-0 ps-2">{{ $collector->asname }}</td>
-                            <td class="p-0 ps-2">{{ $collector->ainame }}</td>
+                            <td class="p-0 ps-2 text-white">{{ $collector->dname }}</td>
+                            <td class="p-0 ps-2 text-white">{{ $collector->asname }}</td>
+                            <td class="p-0 ps-2 text-white">{{ $collector->ainame }}</td>
 
                             <td class="text-center p-0 ps-2 space-x-1 whitespace-nowrap">
                                 <!-- Collector Edit -->
@@ -131,7 +131,7 @@
 @endphp
 <div class="m-4 flex flex-col items-center justify-center">
     <!-- Card container -->
-    <div class="w-full max-w-6xl bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+    <div class="w-full max-w-6xl bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
         <!-- Header -->
         <div class="p-4 bg-green-600 text-white text-center font-semibold text-lg">
             Collectors Locations

@@ -94,7 +94,61 @@
                 </div>
             </div>
 
+
+
         </div>
+        <!-- Last Week’s Pest Damage Levels by Province -->
+        <div class="bg-gray-900 border border-gray-700  shadow-xl p-5 m-2">
+            <div x-data="{ open: false }" wire:ignore.self class="m-0">
+
+                <!-- Header -->
+                <div @click="open = !open"
+                    class="flex items-center justify-between bg-gray-800 text-gray-100 px-4 py-3 rounded-lg cursor-pointer 
+                   select-none transition-all duration-300 hover:bg-gray-700 hover:shadow-md hover:scale-[1.01] group">
+
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="flex items-center justify-center w-9 h-9 rounded-full bg-green-500/20 text-green-400 group-hover:bg-green-500/30 transition">
+                            <i class="fas fa-chart-bar text-lg"></i>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                            <h2 class="text-lg font-semibold text-white">Last Week’s Pest Damage Levels by Province</h2>
+                            <p class="text-sm text-gray-400 italic"
+                                x-text="open ? '(Click here to hide)' : '(Click here to show)'"></p>
+                        </div>
+                    </div>
+
+                    <svg :class="{ 'rotate-180': open }"
+                        class="w-5 h-5 text-gray-300 group-hover:text-green-400 transition-transform duration-300"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+
+                <!-- Content -->
+                <div x-show="open" x-transition x-cloak class="mt-4 space-y-4">
+                    @php $districts = App\Models\District::all(); @endphp
+                    @foreach ($districts as $district)
+                        <div
+                            class="p-4 bg-gray-800/60 border border-gray-700 rounded-xl shadow-md hover:shadow-lg hover:bg-gray-750 transition-all duration-300">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
+                                    <i class="fas fa-bug text-lg"></i>
+                                </div>
+                                <h2 class="text-lg font-semibold text-gray-100">
+                                    <span class="text-orange-500 italic">{{ $district->name }}</span> – Pest Density
+                                    This
+                                    Week
+                                </h2>
+                            </div>
+                            <livewire:pest-memo-card :districtId="$district->id" :days="7" :key="'pest-' . $district->id" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
     </div>
 
     {{-- JS Export Script --}}

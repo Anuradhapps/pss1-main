@@ -257,7 +257,7 @@ class DeputyDashboard extends Component
         // Group by region
         $regions = [];
         foreach ($rawData as $districtData) {
-            $regionName = $this->regionId ? 'Region ' . Region::find($this->regionId)->name  : 'All Regions';
+            $regionName = $this->regionId ? Region::find($this->regionId)->name  : 'All Regions';
             if (!isset($regions[$regionName])) {
                 $regions[$regionName] = [
                     'region' => $regionName,

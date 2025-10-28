@@ -45,10 +45,10 @@
                         <tbody class="divide-y divide-gray-700 bg-gray-950">
                             @forelse ($programs as $program)
                                 <tr class="hover:bg-gray-800 transition-colors bg-emerald-900">
-                                    <td class="px-6 py-4 font-medium ">{{ $program->program_name }}</td>
-                                    <td class="px-6 py-4 text-blue-300">{{ $program->district }}</td>
+                                    <td class="text-white px-6 py-4 font-medium ">{{ $program->program_name }}</td>
+                                    <td class="text-white px-6 py-4 ">{{ $program->district }}</td>
                                     <td class="px-6 py-4">{{ $program->participants_count }}</td>
-                                    <td class="px-6 py-4 text-gray-400">
+                                    <td class="px-6 py-4 text-white">
                                         {{ \Carbon\Carbon::parse($program->conducted_date)->format('M d, Y') }}
                                     </td>
                                     <td class="px-6 py-4 space-x-2 text-right">
@@ -69,8 +69,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-4 text-center text-gray-400">
-                                        <i class="fa-solid fa-exclamation-circle mr-2"></i> No programs found
+                                    <td colspan="5" class="px-6 py-4 text-center text-black">
+                                        <i class="fa-solid fa-exclamation-circle mr-2 text-black"></i> No programs found
                                     </td>
                                 </tr>
                             @endforelse

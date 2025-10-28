@@ -168,17 +168,14 @@ class DashboardExtensionAndTrainingDirector extends Component
                                 'district' => $districtData['district'],
                                 'collectors' => collect($districtData['collectors'])->map(function ($collector) {
                                     return [
-                                        'email' => $collector[0] ?? '-',
+                                        'name' => $collector[0] ?? '-',
                                         'asc' => $collector[1] ?? '-',
                                         'ai_range' => $collector[2] ?? '-',
                                         'phone' => $collector[3] ?? '-',
                                         'joined_date' => $collector[4] ?? '-',
-                                        'password' => $collector[5] ?? '-',
+                                        'email' => $collector[5] ?? '-',
                                         'data_count' => $collector[6] ?? 0,
                                         'season' => $collector[7] ?? '-',
-                                        'name' => isset($collector[0])
-                                            ? ucfirst(explode('@', $collector[0])[0]) // derive simple name
-                                            : '-',
                                     ];
                                 })->toArray()
                             ];
