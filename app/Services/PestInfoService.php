@@ -198,6 +198,7 @@ class PestInfoService
     public function avarageCalculate($collectors)
     {
 
+
         if ($collectors->count() == 0) {
             return [
                 "pests" => [
@@ -221,6 +222,7 @@ class PestInfoService
         $thripscount = 0;
 
         $otherInfo = [];
+
         foreach ($collectors as $collector) {
 
             foreach ($collector->commonDataCollect as $commonData) {
@@ -421,6 +423,7 @@ class PestInfoService
     public function avaragePestCodeByDistrictAndDuration(?int $districtId = null, ?int $days = null)
     {
         $collectors =  $this->filterCollectorsByDistrictAndDuration($districtId, $days);
+
         return $this->avarageCalculate($collectors);
     }
 }

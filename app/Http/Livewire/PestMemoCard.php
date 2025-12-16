@@ -40,6 +40,7 @@ class PestMemoCard extends Component
 
     public function refreshCard()
     {
+
         // If you want average value:
         $this->average = $this->service->avaragePestCodeByDistrictAndDuration(
             $this->districtId,
