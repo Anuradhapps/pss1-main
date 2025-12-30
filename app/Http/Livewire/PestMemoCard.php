@@ -14,6 +14,7 @@ class PestMemoCard extends Component
     // Data to display
     public $average = null;
 
+
     // Optional: inject via container
     protected PestInfoService $service;
 
@@ -46,9 +47,24 @@ class PestMemoCard extends Component
             $this->districtId,
             $this->days
         );
+        $pestLabels = [
+            'thrips' => 'Thrips',
+            'gallMidge' => 'Gall Midge',
+            'leaffolder' => 'Leaffolder',
+            'yellowStemBorer' => 'Yellow Stem Borer',
+            'bphWbph' => 'BPH / WBPH',
+            'paddyBug' => 'Paddy Bug',
+        ];
+
+        $this->average['pests'] = collect($this->average['pests'])
+            ->mapWithKeys(function ($count, $key) use ($pestLabels) {
+                return [$pestLabels[$key] ?? $key => $count];
+            })
+            ->toArray();
     }
     public function render()
     {
+
         return view('livewire.pest-memo-card');
     }
 }

@@ -1,3 +1,7 @@
+@php
+
+@endphp
+
 <div x-data="{
     pests: {{ json_encode($average['pests'] ?? []) }},
     otherInfo: {{ json_encode($average['OtherInfo'] ?? []) }},
