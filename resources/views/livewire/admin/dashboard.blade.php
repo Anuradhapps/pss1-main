@@ -17,17 +17,17 @@
         <div class="flex items-start gap-2 text-gray-200">
             <i class="fas fa-star text-yellow-400 mt-1"></i>
             <p class="text-gray-200">
-                This system enables the National Plant Protection Service to efficiently gather field data via a
-                mobile-friendly
-                web application focused on pest surveillance.
+                The system provides an understanding of the Plant Protection Service's requirements for creating a
+                new smartphone web app to collect data on pest surveillance purposes.
             </p>
         </div>
 
         <div class="flex items-start gap-2 text-gray-200">
             <i class="fas fa-star text-yellow-400 mt-1"></i>
             <p class="text-gray-200">
-                It aims to record pest density and damage intensity weekly throughout the cropping season across
-                selected locations.
+                The main purpose of the pest surveillance data collection web application is to record the density of
+                target pests and damage intensity in the selected location throughout the cropping season on a
+                regular basis (Weekly).
             </p>
         </div>
     </div>

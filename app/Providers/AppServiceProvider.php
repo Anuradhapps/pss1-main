@@ -18,10 +18,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(): void
-    {
-
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap any application services.
@@ -48,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
             //loop over keys
             foreach ($keys as $key) {
                 //override config setting
+                if ($key === 'app.name') {
+                    continue; // prevent override
+                }
                 config()->set([$key => Cache::get($key)]);
             }
         } else {

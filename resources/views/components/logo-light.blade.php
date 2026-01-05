@@ -3,7 +3,7 @@
 
     <div class="flex flex-col leading-tight">
         <h1 class="text-2xl font-semibold text-gray-300 ">
-            National Pest Surveillance System
+            {{ config('app.name') }}
         </h1>
         <span class="text-sm text-gray-400 tracking-wide">
             National Plant Protection Service
