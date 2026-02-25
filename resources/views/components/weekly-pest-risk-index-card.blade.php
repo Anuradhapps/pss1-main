@@ -1,52 +1,76 @@
 @php
     $cards = [
-        // [
-        //     'title' => 'Weekly Pest Risk Index',
-        //     'icon' => 'fas fa-calendar-week',
-        //     'iconColor' => 'text-green-400',
-        //     'borderColor' => 'border-green-400',
-        //     'route' => route('weekly-pest-risk.index'),
-        // ],
         [
-            'title' => 'Pest & Season Comparison',
-            'icon' => 'fas fa-random',
-            'iconColor' => 'text-pink-400',
-            'borderColor' => 'border-pink-400',
+            'title' => 'Weekly Risk Index',
+            'icon' => 'fas fa-chart-line',
+            'textColor' => 'text-indigo-400',
+            'iconBg' => 'bg-indigo-400/10',
+            'hoverBorder' => 'group-hover:border-indigo-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(99,102,241,0.15)]',
+            'route' => route('weekly-pest-risk.index'),
+        ],
+        [
+            'title' => 'Combined Seasons',
+            'icon' => 'fas fa-layer-group',
+            'textColor' => 'text-teal-400',
+            'iconBg' => 'bg-teal-400/10',
+            'hoverBorder' => 'group-hover:border-teal-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(20,184,166,0.15)]',
+            'route' => route('pest-both-season-combined'),
+        ],
+        [
+            'title' => 'Season Comparison',
+            'icon' => 'fas fa-balance-scale-left',
+            'textColor' => 'text-purple-400',
+            'iconBg' => 'bg-purple-400/10',
+            'hoverBorder' => 'group-hover:border-purple-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]',
             'route' => route('pest-season-comparison'),
         ],
-        // [
-        //     'title' => 'Pest & Temperature Comparison',
-        //     'icon' => 'fas fa-thermometer-half',
-        //     'iconColor' => 'text-yellow-400',
-        //     'borderColor' => 'border-yellow-400',
-        //     'route' => route('pest-temp-comparison'),
-        // ],
         [
-            'title' => 'Pest, Rain & Temperature Comparison',
-            'icon' => 'fas fa-cloud-rain',
-            'iconColor' => 'text-blue-400',
-            'borderColor' => 'border-blue-400',
+            'title' => 'Temp Correlation',
+            'icon' => 'fas fa-temperature-high',
+            'textColor' => 'text-orange-400',
+            'iconBg' => 'bg-orange-400/10',
+            'hoverBorder' => 'group-hover:border-orange-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(249,115,22,0.15)]',
+            'route' => route('pest-temp-comparison'),
+        ],
+        [
+            'title' => 'Weather Matrix',
+            'icon' => 'fas fa-cloud-sun-rain',
+            'textColor' => 'text-sky-400',
+            'iconBg' => 'bg-sky-400/10',
+            'hoverBorder' => 'group-hover:border-sky-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(14,165,233,0.15)]',
             'route' => route('pest-rain-comparison'),
         ],
         [
-            'title' => 'Pest & Rice Variety Comparison',
+            'title' => 'Rice Variety Data',
             'icon' => 'fas fa-seedling',
-            'iconColor' => 'text-emerald-400',
-            'borderColor' => 'border-emerald-400',
+            'textColor' => 'text-emerald-400',
+            'iconBg' => 'bg-emerald-400/10',
+            'hoverBorder' => 'group-hover:border-emerald-500/50',
+            'hoverShadow' => 'group-hover:shadow-[0_0_15px_rgba(16,185,129,0.15)]',
             'route' => route('pest-rice-variety-comparison'),
         ],
     ];
 @endphp
 
-<div class="grid md:grid-cols-3 gap-4 my-4">
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 my-4">
     @foreach ($cards as $card)
         <a href="{{ $card['route'] }}"
-            class="flex flex-col items-center justify-center p-4 bg-gray-900 {{ $card['borderColor'] }} border rounded-xl shadow-md
-                   hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 text-center">
+            class="group flex flex-col items-center justify-center p-4 bg-gray-800 border border-gray-700 rounded-xl 
+                   transition-all duration-300 ease-in-out transform hover:-translate-y-1 {{ $card['hoverBorder'] }} {{ $card['hoverShadow'] }}">
 
-            <!-- Icon & Title -->
-            <h2 class="flex flex-col items-center text-white font-semibold text-sm">
-                <i class="{{ $card['icon'] }} {{ $card['iconColor'] }} text-3xl mb-2"></i>
+            <div
+                class="flex items-center justify-center w-10 h-10 mb-3 rounded-lg {{ $card['iconBg'] }} 
+                        group-hover:scale-110 transition-transform duration-300">
+                <i class="{{ $card['icon'] }} {{ $card['textColor'] }} text-lg"></i>
+            </div>
+
+            <h2
+                class="text-gray-300 font-medium text-xs text-center leading-tight group-hover:text-white transition-colors duration-200">
                 {{ $card['title'] }}
             </h2>
 

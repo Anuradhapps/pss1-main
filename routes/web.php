@@ -202,6 +202,9 @@ Route::get('/pestraincomparison', function () {
 Route::get('/pestricecomparison', function () {
     return view('chart.pest-rice-variety-comparison');
 })->name('pest-rice-variety-comparison');
+Route::get('/pestBothSeasonCombined', function () {
+    return view('chart.pest-both-season-combined');
+})->name('pest-both-season-combined');
 
 
 // Test Routes
