@@ -8,6 +8,13 @@
 
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" href="{{ asset('images/LOGO.ico') }}">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Flatpickr CSS -->
@@ -51,7 +58,7 @@
     </style>
 </head>
 
-<body class="antialiased text-white">
+<body class="font-sans antialiased text-slate-800 bg-surface-light dark:text-slate-100 dark:bg-surface-dark transition-colors duration-300">
 
     <x-loader />
 
@@ -59,7 +66,7 @@
         <div class="flex flex-1 ">
             @auth
                 <!-- Desktop Sidebar -->
-                <aside class="hidden w-auto md:block bg-teal-950">
+                <aside class="hidden w-64 md:flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 shadow-xl z-50">
                     @include('layouts.app.navigation')
                 </aside>
 
@@ -69,7 +76,7 @@
                     x-transition:enter-end="opacity-100 translate-x-0" x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100 translate-x-0"
                     x-transition:leave-end="opacity-0 -translate-x-full"
-                    class="fixed inset-0 z-50 w-64 shadow-xl md:hidden transform bg-gradient-to-r from-teal-900 to-teal-700">
+                    class="fixed inset-0 z-50 w-64 shadow-2xl md:hidden transform bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
                     <div class="flex justify-end p-1">
                         <button @click="sidebarOpen = false"
                             class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out
@@ -91,18 +98,55 @@
             <div id="main" class="flex flex-col w-full">
                 @auth
                     <!-- Topbar -->
-                    <header class="sticky top-0 z-40 flex items-center justify-between px-4 py-2 bg-teal-900 shadow-lg">
-
-
+                    <header class="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
 
                         <!-- Mobile Sidebar Toggle -->
                         <button @click="sidebarOpen = !sidebarOpen"
-                            class="text-white md:hidden hover:text-teal-400 focus:outline-none">
+                            class="text-slate-500 dark:text-slate-400 md:hidden hover:text-primary focus:outline-none transition-colors">
                             <i class="fas fa-bars text-2xl"></i>
                         </button>
 
                         <!-- Topbar right controls -->
                         <div class="flex items-center ml-auto space-x-3">
+                            <!-- Dark Mode Toggle -->
+                            <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg text-sm p-2.5 transition-colors">
+                                <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-lg"></i>
+                                <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-lg"></i>
+                            </button>
+                            <script>
+                                var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+                                var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+                                if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                                    themeToggleLightIcon.classList.remove('hidden');
+                                } else {
+                                    themeToggleDarkIcon.classList.remove('hidden');
+                                }
+
+                                var themeToggleBtn = document.getElementById('theme-toggle');
+                                themeToggleBtn.addEventListener('click', function() {
+                                    themeToggleDarkIcon.classList.toggle('hidden');
+                                    themeToggleLightIcon.classList.toggle('hidden');
+                                    if (localStorage.getItem('color-theme')) {
+                                        if (localStorage.getItem('color-theme') === 'light') {
+                                            document.documentElement.classList.add('dark');
+                                            localStorage.setItem('color-theme', 'dark');
+                                        } else {
+                                            document.documentElement.classList.remove('dark');
+                                            localStorage.setItem('color-theme', 'light');
+                                        }
+                                    } else {
+                                        if (document.documentElement.classList.contains('dark')) {
+                                            document.documentElement.classList.remove('dark');
+                                            localStorage.setItem('color-theme', 'light');
+                                        } else {
+                                            document.documentElement.classList.add('dark');
+                                            localStorage.setItem('color-theme', 'dark');
+                                        }
+                                    }
+                                });
+                            </script>
+
                             <livewire:admin.notifications-menu />
                             {{-- <livewire:admin.help-menu /> --}}
                             <livewire:admin.users.user-menu />
@@ -111,13 +155,13 @@
                 @endauth
 
                 <!-- Slot Content -->
-                <main class="content bg-gray-900">
+                <main class="content p-4 md:p-6 bg-surface-light dark:bg-surface-dark transition-colors duration-300">
                     {{ $slot ?? '' }}
                 </main>
 
                 <!-- Footer -->
-                <footer class="w-full px-4 py-3 text-xs text-center text-gray-300 bg-teal-800 footer">
-                    &copy; {{ date('Y') }} {{ config('app.name') }} —
+                <footer class="w-full px-4 py-4 text-sm text-center text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300 footer">
+                    &copy; {{ date('Y') }} <span class="font-semibold text-primary">{{ config('app.name') }}</span> —
                     {{ __('National Plant Protection Service, Sri Lanka') }}.
                     <br>{{ __('All rights reserved.') }}
                 </footer>

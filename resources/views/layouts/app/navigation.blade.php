@@ -1,13 +1,13 @@
-<div class="min-h-screen max-w-64 w-full  sticky top-0 text-white">
+<div class="min-h-screen w-full sticky top-0 text-slate-800 dark:text-slate-200">
 
     <!-- Logo Section -->
-    <div class="flex items-center border-l-4 border-green-500 justify-center mb-6 space-x-2 px-2 py-1">
-        <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 w-full">
+    <div class="flex items-center border-l-4 border-primary justify-center mb-6 px-4 py-3 bg-slate-50 dark:bg-slate-800/50 transition-colors">
+        <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 w-full group">
             <!-- Icon -->
-            <img src="{{ asset('images/LOGO.png') }}" alt="Logo" class="h-16 w-16 object-contain" />
+            <img src="{{ asset('images/LOGO.png') }}" alt="Logo" class="h-12 w-12 object-contain transition-transform group-hover:scale-105" />
 
             <!-- App Name -->
-            <p class=" text-white font-mono">
+            <p class="text-slate-900 dark:text-white font-bold text-lg tracking-tight transition-colors">
                 {{ config('app.name') }}
             </p>
         </a>

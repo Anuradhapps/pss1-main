@@ -4,16 +4,16 @@
 ])
 
 <a href="{{ route($route) }}"
-    class="flex items-center gap-2 px-4 py-2  transition-all duration-200
+    class="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 group rounded-l-lg mb-1
           {{ url()->current() == route($route)
-              ? 'bg-gradient-to-r from-green-700 to-green-800 text-white'
-              : 'text-gray-300 hover:bg-white hover:text-green-900' }}
+              ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-indigo-400 font-semibold'
+              : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-800 dark:hover:text-slate-200' }}
           ">
 
     @if ($icon)
         <i
-            class="{{ $icon }} w-6 text-lg {{ url()->current() == route($route) ? ' text-white' : 'text-gray-500' }}"></i>
+            class="{{ $icon }} w-5 mr-1 text-base {{ url()->current() == route($route) ? 'text-primary dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors' }}"></i>
     @endif
 
-    <span class="text-sm font-medium">{{ $slot }}</span>
+    <span class="truncate">{{ $slot }}</span>
 </a>

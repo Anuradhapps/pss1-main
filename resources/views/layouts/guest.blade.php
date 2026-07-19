@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -8,14 +8,19 @@
     <link rel="icon" href="{{ asset('images/LOGO.ico') }}" />
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts (Optional, Dark-Friendly Fonts like Inter or JetBrains Mono) -->
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 
     <!-- Vite -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen text-gray-100 bg-gray-900">
+<body class="min-h-screen text-slate-800 bg-surface-light dark:text-slate-100 dark:bg-surface-dark transition-colors duration-300">
 
     <div class="font-sans antialiased">
         {{ $slot }}

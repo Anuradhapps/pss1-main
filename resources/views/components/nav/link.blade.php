@@ -6,18 +6,18 @@
 
 @php
     $isActive = Route::is($route)
-        ? 'bg-gradient-to-r from-green-700 to-green-800 text-white'
-        : 'text-gray-300 hover:bg-white hover:text-green-900';
+        ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-indigo-400 font-semibold border-r-4 border-primary'
+        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200';
 @endphp
 
 <a href="{{ route($route) }}" @click="sidebarOpen = false" @class([
-    'flex items-center w-full px-4 py-2 text-lg sm:text-base font-medium transition-all duration-200',
+    'flex items-center w-full px-4 py-3 text-sm font-medium transition-all duration-200 group rounded-l-lg mb-1',
     $isActive,
     $class, // Merge externally passed classes
 ])>
     @if ($icon)
         <i
-            class="{{ $icon }} w-5 mr-3  {{ url()->current() == route($route) ? ' text-white' : 'text-green-600' }}"></i>
+            class="{{ $icon }} w-5 mr-3 text-lg {{ url()->current() == route($route) ? 'text-primary dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors' }}"></i>
     @endif
     <span class="truncate">{{ $slot }}</span>
 </a>

@@ -1,3 +1,4 @@
+
 @use 'tailwindcss/base';
 @use 'tailwindcss/components';
 @use 'tailwindcss/utilities';
@@ -14,12 +15,14 @@
 @use 'typography';
 @use 'utility';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @layer base {
     [x-cloak] {
         display: none !important;
     }
 }
 
+/* Base styles for autofill in light mode */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -29,11 +32,22 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    background-color: #1f2937 !important; // Tailwind bg-gray-900
-    color: white !important;
-    caret-color: white !important;
-    -webkit-text-fill-color: white !important;
-    -webkit-box-shadow: 0 0 0 1000px #1f2937 inset !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #1f2937 !important;
     transition: background-color 9999s ease-in-out 0s;
-    border-radius: 0 !important;
+}
+
+/* Styles for autofill in dark mode */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill,
+.dark textarea:-webkit-autofill:hover,
+.dark textarea:-webkit-autofill:focus,
+.dark select:-webkit-autofill,
+.dark select:-webkit-autofill:hover,
+.dark select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #0F172A inset !important; /* slate-900 */
+    -webkit-text-fill-color: white !important;
+    caret-color: white !important;
 }
