@@ -1,9 +1,6 @@
-<div class="p-1 space-y-6 text-slate-900 dark:text-white transition-colors duration-300">
-    {{-- Title --}}
-    <label class="text-lg font-semibold text-slate-900 dark:text-white">📌 Location Selection</label>
-
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-slate-900 dark:text-white transition-colors duration-300">
     {{-- Province --}}
-    <div class="p-1">
+    <div>
         <label for="province" class="block mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">Province</label>
         <select wire:model.live="selectedProvince" id="province" name="province"
             class="w-full px-4 py-2 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary focus:outline-none transition-colors duration-200">
@@ -18,7 +15,7 @@
 
     {{-- District --}}
     @if ($districts)
-        <div x-data x-transition.duration.400ms class="p-1">
+        <div x-data x-transition.duration.400ms>
             <label for="district" class="block mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">District</label>
             <select wire:model.live="selectedDistrict" id="district" name="district"
                 class="w-full px-4 py-2 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary focus:outline-none transition-colors duration-200">
@@ -34,7 +31,7 @@
 
     {{-- ASC/Unit --}}
     @if ($asCenters)
-        <div x-data x-transition.duration.400ms class="p-1">
+        <div x-data x-transition.duration.400ms>
             <label for="as_center" class="block mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">ASC/Unit</label>
             <select wire:model.live="selectedAsCenter" id="as_center" name="as_center"
                 class="w-full px-4 py-2 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary focus:outline-none transition-colors duration-200">
@@ -50,7 +47,7 @@
 
     {{-- AI Range --}}
     @if ($aiRanges)
-        <div x-data x-transition.duration.400ms class="p-1">
+        <div x-data x-transition.duration.400ms>
             <label for="ai_range" class="block mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">AI Range</label>
             <select wire:model.live="selectedAiRange" id="ai_range" name="ai_range"
                 class="w-full px-4 py-2 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary focus:outline-none transition-colors duration-200">

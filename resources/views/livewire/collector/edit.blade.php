@@ -1,7 +1,7 @@
 @section('title', 'Edit Collector Info')
 
 <x-app-layout>
-    <div class="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="w-full py-4 px-4 sm:px-6 lg:px-8">
 
         <!-- Header Card -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden">
@@ -34,17 +34,17 @@
         <!-- Form Card -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
             <x-form action="{{ route(has_role('admin') ? 'admin.collector.update' : 'collector.update', $collector->id) }}"
-                method="POST" class="p-6 sm:p-8 md:p-10 space-y-10">
+                method="POST" class="p-5 sm:p-6 space-y-8">
                 @csrf
                 @method('PUT')
 
                 <!-- Contact & Assignment Section -->
                 <div>
-                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3 mb-6 flex items-center gap-2">
+                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <i class="fas fa-address-card text-primary opacity-80"></i> Contact & Assignment
                     </h4>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                         <!-- Phone Number -->
                         <x-form.input name="phone_no" label='Phone Number:' placeholder="Enter contact number">
                             {{ old('phone_no', $collector->phone_no) }}
@@ -74,14 +74,14 @@
 
                 <!-- Geographic Location Section -->
                 <div>
-                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3 mb-6 flex items-center gap-2">
+                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <i class="fas fa-map-marked-alt text-primary opacity-80"></i> Geographic Location
                     </h4>
                     
-                    <div class="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                    <div class="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
                         <livewire:location-select :selectedProvince="$collector->province" :selectedDistrict="$collector->district" :selectedAsCenter="$collector->asc" :selectedAiRange="$collector->ai_range" />
                         
-                        <div class="mt-8">
+                        <div class="mt-4">
                             <x-form.input name="village" label='Village / Local Area:' placeholder="Enter village or street name">
                                 {{ old('village', $collector->village) }}
                             </x-form.input>
@@ -91,21 +91,21 @@
 
                 <!-- GPS Section -->
                 <div>
-                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3 mb-6 flex items-center gap-2">
+                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <i class="fas fa-satellite text-primary opacity-80"></i> GPS Coordinates
                     </h4>
-                    <div class="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                    <div class="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
                         <x-gpsFill :collector="$collector" />
                     </div>
                 </div>
 
                 <!-- Farming Details Section -->
                 <div>
-                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3 mb-6 flex items-center gap-2">
+                    <h4 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 flex items-center gap-2">
                         <i class="fas fa-seedling text-primary opacity-80"></i> Farming Details
                     </h4>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
                         <!-- Rice Variety -->
                         <x-form.input name="rice_variety" label='Rice Variety:' placeholder="e.g. BG 360">
                             {{ old('rice_variety', $collector->rice_variety) }}
@@ -128,9 +128,9 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="pt-8 mt-10 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                <div class="pt-6 mt-8 border-t border-slate-200 dark:border-slate-800 flex justify-end">
                     <button type="submit"
-                        class="w-full sm:w-auto md:min-w-[250px] inline-flex justify-center items-center gap-3 px-8 py-3.5 text-sm font-bold text-white bg-primary hover:bg-emerald-600 rounded-xl shadow-lg hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5">
+                        class="w-full sm:w-auto md:min-w-[250px] inline-flex justify-center items-center gap-3 px-8 py-3 text-sm font-bold text-white bg-primary hover:bg-emerald-600 rounded-xl shadow-lg hover:shadow-primary/30 transition-all transform hover:-translate-y-0.5">
                         <i class="fas fa-save text-base"></i> Update Collector Info
                     </button>
                 </div>

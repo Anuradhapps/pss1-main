@@ -1,54 +1,52 @@
 <div>
-    <div class="max-w-lg p-6 mx-auto bg-gray-800 shadow-md border border-gray-700">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden h-full flex flex-col">
 
         <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-bold text-white flex items-center">
-                <i class="fas fa-user-cog text-emerald-400 mr-2"></i> Account Settings
+        <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fas fa-user-circle text-primary text-xl"></i> Account Settings
             </h2>
-            <div class="flex items-center space-x-1 text-sm text-gray-400 select-none">
-                <span class="font-bold text-emerald-400">*</span>
+            <div class="flex items-center space-x-1 text-xs font-medium text-slate-500 dark:text-slate-400 select-none">
+                <span class="text-primary">*</span>
                 <span>= required</span>
             </div>
         </div>
 
         <!-- Form -->
-        <x-form wire:submit.prevent="update" method="put" class="space-y-5 bg-gray-900 p-4 border border-gray-700">
+        <x-form wire:submit.prevent="update" method="put" class="p-6 space-y-6 flex-1 flex flex-col">
 
-            <!-- Name -->
-            <x-form.input wire:model.defer="name" label='Name *' name="name" required
-                class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500"
-                label-class="text-gray-300" />
+            <div class="space-y-6 flex-1">
+                <!-- Name -->
+                <x-form.input wire:model.defer="name" label='Name *' name="name" required />
 
-            <!-- Email -->
-            <x-form.input wire:model.defer="email" label='Email *' name="email" type="email" required
-                class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500"
-                label-class="text-gray-300" />
+                <!-- Email -->
+                <x-form.input wire:model.defer="email" label='Email *' name="email" type="email" required />
 
-            <!-- Image Upload -->
-            <x-form.input wire:model="image" label='Upload Image' name="image" type="file"
-                class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500 file:mr-4 file:py-1 file:px-3 file:border-0 file:bg-emerald-600 file:text-white file:hover:bg-emerald-700"
-                label-class="text-gray-300" />
+                <!-- Image Upload -->
+                <x-form.input wire:model="image" label='Upload Image' name="image" type="file"
+                    class="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-emerald-600 transition-all cursor-pointer" />
 
-            <!-- Image Preview -->
-            <div>
-                @if ($image)
-                    <p class="mb-2 text-sm text-gray-400">Photo Preview:</p>
-                    <img src="{{ $image->temporaryUrl() }}" alt="Photo Preview"
-                        class="object-cover w-24 h-24 border border-gray-600 shadow" />
-                @elseif(storage_exists($user->image))
-                    <p class="mb-2 text-sm text-gray-400">Current Photo:</p>
-                    <img src="{{ storage_url($user->image) }}" alt="{{ $user->name }}"
-                        class="object-cover w-24 h-24 border border-gray-600 shadow" />
+                <!-- Image Preview -->
+                @if ($image || storage_exists($user->image))
+                    <div class="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/60 inline-block">
+                        @if ($image)
+                            <p class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Photo Preview:</p>
+                            <img src="{{ $image->temporaryUrl() }}" alt="Photo Preview"
+                                class="object-cover w-24 h-24 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600" />
+                        @elseif(storage_exists($user->image))
+                            <p class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Current Photo:</p>
+                            <img src="{{ storage_url($user->image) }}" alt="{{ $user->name }}"
+                                class="object-cover w-24 h-24 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600" />
+                        @endif
+                    </div>
                 @endif
             </div>
 
             <!-- Submit Button -->
-            <div>
-                <x-button
-                    class="w-full py-2 text-white font-semibold bg-emerald-600 hover:bg-emerald-700 border border-emerald-500 shadow-none">
-                    <i class="fas fa-save mr-2"></i> Update Profile
-                </x-button>
+            <div class="pt-6 border-t border-slate-200 dark:border-slate-800 mt-auto">
+                <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-primary hover:bg-emerald-600 rounded-xl shadow-sm hover:shadow-primary/30 transition-all">
+                    <i class="fas fa-save"></i> Update Profile
+                </button>
             </div>
 
             <!-- Error Messages -->

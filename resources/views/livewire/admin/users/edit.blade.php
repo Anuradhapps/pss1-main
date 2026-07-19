@@ -1,26 +1,29 @@
-@section('title', 'Edit User')
+<div class="space-y-6">
+    @section('title', 'Edit User')
 
-<div class="min-h-screen px-4 py-6 space-y-6 text-gray-100 bg-gray-900">
+    <!-- Header Card -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 right-20 w-32 h-32 bg-secondary/5 rounded-full blur-2xl pointer-events-none"></div>
 
-    <!-- Breadcrumb -->
-    <nav class="text-sm text-gray-400 flex items-center space-x-2">
-        <i class="fas fa-users text-emerald-400"></i>
-        <a href="{{ route('admin.users.index') }}" class="text-emerald-400 hover:underline">Users</a>
-        <span class="mx-2 text-gray-500">›</span>
-        <span class="text-white">Edit User</span>
-    </nav>
-
-    <!-- Page Heading -->
-    <div class="flex items-center space-x-3">
-        <i class="fas fa-user-cog text-white text-xl"></i>
-        <h1 class="text-2xl font-bold text-white">Edit User - {{ $user->name }}</h1>
+        <div class="flex items-center gap-4 relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light">
+                <i class="fa-solid fa-user-edit text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Edit User</h1>
+                <nav class="text-sm text-slate-500 dark:text-slate-400 mt-1 flex items-center space-x-2">
+                    <a href="{{ route('admin.users.index') }}" class="hover:text-primary transition-colors">Users</a>
+                    <span class="text-slate-400">›</span>
+                    <span class="text-slate-700 dark:text-slate-300 font-medium">{{ $user->name }}</span>
+                </nav>
+            </div>
+        </div>
     </div>
 
     <!-- Grid Layout -->
-    <div class="">
-
-        <!-- Profile and Password Update -->
-        <div class="grid sm:grid-cols-2 gap-4">
+    <div class="grid lg:grid-cols-2 gap-6">
             <!-- Profile Edit -->
 
 
@@ -71,5 +74,4 @@
             @endif
         </div>
         --}}
-    </div>
 </div>

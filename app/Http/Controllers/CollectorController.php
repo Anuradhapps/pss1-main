@@ -269,7 +269,7 @@ class CollectorController extends Controller
             return redirect(route('collector.index'));
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
-            return redirect()->route('admin.collector.records');
+            return redirect()->route('admin.collector.records')->with('success', 'Collector Updated successfully!');
         }
     }
 
