@@ -161,7 +161,7 @@
                                 <i class="fas fa-user-circle"></i>
                             </a>
 
-                            @if (has_role('collector') && $user->collector()->count() > 0)
+                                @if (has_role('collector') && $user->collector_count > 0)
                                 <a href="{{ route('admin.collectors.view', $user->id) }}" 
                                    class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-white hover:bg-emerald-600 dark:hover:bg-emerald-500 transition-all border border-slate-200 dark:border-slate-700 hover:border-emerald-600 shadow-sm" 
                                    title="View Collector Data">

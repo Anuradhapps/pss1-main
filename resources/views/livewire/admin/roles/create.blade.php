@@ -1,35 +1,31 @@
-<div class="dark">
+<div>
     @if (can('add_role'))
         <x-modal>
             <x-slot name="trigger">
                 <button
-                    class="bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-2 focus:ring-offset-2
-                           text-white font-semibold px-4 py-2 rounded-md shadow-md transition
-                           disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 disabled:cursor-not-allowed disabled:opacity-50"
                     @click="on = true">
-                    + Add Role
+                    <i class="fas fa-plus text-xs"></i>
+                    Add Role
                 </button>
             </x-slot>
 
-            <x-slot name="title" class="text-xl font-semibold text-gray-100 border-b border-gray-700 pb-3">
-                Add Role
-            </x-slot>
+            <x-slot name="title">Add Role</x-slot>
 
-            <x-slot name="content" class="pt-4 pb-6">
-                <x-form.input wire:model="role" label="Role" name="role" required
-                    class="bg-gray-800 text-gray-200 border-gray-700 focus:ring-indigo-500 focus:border-indigo-500">
+            <x-slot name="content">
+                <x-form.input wire:model="role" label="Role" name="role" required>
                     {{ old('role') }}
                 </x-form.input>
             </x-slot>
 
-            <x-slot name="footer" class="flex justify-end space-x-3 pt-4 border-t border-gray-700">
+            <x-slot name="footer" class="flex justify-end gap-3">
                 <button type="button"
-                    class="px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 transition"
+                    class="rounded-xl bg-slate-200 px-4 py-2 font-semibold text-slate-700 transition hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
                     @click="on = false">
                     Cancel
                 </button>
                 <button type="button" wire:click="store"
-                    class="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition">
+                    class="rounded-xl bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-500">
                     Create Role
                 </button>
             </x-slot>

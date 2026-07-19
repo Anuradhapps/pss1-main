@@ -38,10 +38,13 @@ class SeasonSelect extends Component
 
     public function updatedselectedSeason(){
         $this->provinces = Province::all();
-        $this->liveProvinces = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('province')->toArray();
-        $this->liveDistricts = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('district')->toArray();
-        $this->liveAsCenters = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('asc')->toArray();
-        $this->liveAiRanges = Collector::where('rice_season_id' ,$this->selectedSeason)->distinct()->pluck('ai_range')->toArray();
+        $liveCollectors = Collector::where('rice_season_id', $this->selectedSeason)
+            ->get(['province', 'district', 'asc', 'ai_range']);
+
+        $this->liveProvinces = $liveCollectors->pluck('province')->filter()->unique()->values()->all();
+        $this->liveDistricts = $liveCollectors->pluck('district')->filter()->unique()->values()->all();
+        $this->liveAsCenters = $liveCollectors->pluck('asc')->filter()->unique()->values()->all();
+        $this->liveAiRanges = $liveCollectors->pluck('ai_range')->filter()->unique()->values()->all();
 
     }
     public function updatedselectedProvince()

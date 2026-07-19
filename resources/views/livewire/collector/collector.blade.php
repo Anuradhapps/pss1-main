@@ -140,7 +140,7 @@
                                 </div>
                             </div>
 
-                            @php $count = $collector->commonDataCollect->count(); @endphp
+                            @php $count = $collector->common_data_collect_count ?? $collector->commonDataCollect->count(); @endphp
                             <div class="ml-auto flex shrink-0">
                                 <x-ui.badge variant="{{ $count == 0 ? 'danger' : ($count >= 7 ? 'success' : 'warning') }}" class="text-[10px] px-2 py-0.5 shadow-sm">
                                     {{ $count }} Records
@@ -172,7 +172,7 @@
                                 <i class="fas fa-user-cog text-[13px]"></i>
                             </a>
 
-                            @php $hasCommonData = $collector->commonDataCollect->count() > 0; @endphp
+                            @php $hasCommonData = ($collector->common_data_collect_count ?? $collector->commonDataCollect->count()) > 0; @endphp
                             @if($hasCommonData)
                                 <a href="{{ route('chart.ai.show', [$collector->id, 'yes']) }}" 
                                    class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-white hover:bg-info dark:hover:bg-info transition-all border border-slate-200 dark:border-slate-700 hover:border-info shadow-sm" 
@@ -256,10 +256,6 @@
     </div>
 
     <!-- Map Section -->
-    @php
-        $Collectors = \App\Models\Collector::with(['user', 'getAiRange'])->get();
-    @endphp
-    
     <x-ui.card padding="p-0" class="mt-8 border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden rounded-2xl">
         <div class="p-5 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <div class="flex items-center gap-3">
@@ -273,7 +269,7 @@
             </div>
         </div>
         <div class="w-full relative z-0">
-            <livewire:map-view :collectors="$Collectors" height="600px" width="100%" />
+            <livewire:map-view :collectors="\App\Models\Collector::with(['user', 'getAiRange'])->get()" height="600px" width="100%" />
         </div>
     </x-ui.card>
 </div>

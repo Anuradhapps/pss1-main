@@ -76,11 +76,11 @@ class DeputyDashboard extends Component
         $currentSeason = $seasonController->getSeasson()['seasonId'] ?? null;
 
         if ($currentSeason) {
-            $this->seasonUserCount = $this->getSeasonUserCount($currentSeason)->count();
+            $this->seasonUserCount = $this->getSeasonUserCount($currentSeason);
         }
 
         $this->pestChartData = $this->getPestChartData();
-        $this->totalUsersCount = $this->getTotalUsers()->count();
+        $this->totalUsersCount = $this->getTotalUsers();
         $this->recentActivities = $this->getRecentActivities();
         $this->recentPrograms = $this->getRecentPrograms();
     }
@@ -167,7 +167,7 @@ class DeputyDashboard extends Component
         return Collector::where('district', $this->district->id)
             ->where('region_id', $this->regionId)
             ->whereHas('user', fn($q) => $q->where('is_active', 1))
-            ->get();
+            ->count();
     }
 
     public function getSeasonUserCount($season)
@@ -176,7 +176,7 @@ class DeputyDashboard extends Component
             ->where('region_id', $this->regionId)
             ->where('rice_season_id', $season)
             ->whereHas('user', fn($q) => $q->where('is_active', 1))
-            ->get();
+            ->count();
     }
 
     public function getNewReportsProperty()

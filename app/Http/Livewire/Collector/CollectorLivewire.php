@@ -22,7 +22,7 @@ class CollectorLivewire extends Component
 
     public function render()
     {
-        $allDistricts = district::orderBy('name')->get();
+        $allDistricts = district::orderBy('name')->get(['id', 'name']);
         return view('livewire.collector.collector', [
             'allDistricts' => $allDistricts
         ]);
@@ -98,6 +98,7 @@ class CollectorLivewire extends Component
             ->join('as_centers', 'collectors.asc', '=', 'as_centers.id')
             ->join('ai_ranges', 'collectors.ai_range', '=', 'ai_ranges.id')
             ->join('rice_seasons', 'collectors.rice_season_id', '=', 'rice_seasons.id')
+            ->withCount('commonDataCollect')
             ->select('collectors.user_id', 'rice_seasons.name as riceSeasonName', 'regions.name as regionName', 'collectors.phone_no', 'collectors.id', 'collectors.ai_range', 'collectors.village', 'collectors.gps_lati', 'collectors.gps_long', 'collectors.rice_variety', 'collectors.date_establish', 'users.name', 'users.email', 'districts.name as dname', 'as_centers.name as asname', 'ai_ranges.name as ainame')
             ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
         return $collector;

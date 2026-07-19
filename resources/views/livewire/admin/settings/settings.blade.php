@@ -1,37 +1,22 @@
 @section('title', 'System Settings')
 
-<div class="bg-gray-950 h-full">
-    <!-- Page Title -->
-    <div class="mb-4 text-center p-2">
-        <h1 class="text-3xl font-bold text-white"><i class="fas fa-cog text-yellow-400"></i> System Settings
-        </h1>
-        <p class="text-gray-400">Manage system-wide configurations</p>
+<div class="space-y-6">
+    <div class="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900">
+        <div class="flex items-center gap-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
+                <i class="fas fa-cog text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">System Settings</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Manage system-wide configurations</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Settings Cards -->
-    <div class="grid gap-2 md:grid-cols-2 p-2">
-        <!-- Application Settings -->
-        <div class="bg-gray-900 shadow  p-6">
-            <h2 class="text-xl font-semibold text-gray-100">🛠️ Application Settings</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900">
+            <h2 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">Application Settings</h2>
             <livewire:admin.settings.application-settings />
         </div>
 
-        {{-- <!-- Application Logo -->
-        <div class="bg-gray-900 shadow rounded-xl p-6">
-            <h2 class="text-xl font-semibold text-gray-100 mb-4">🖼️ Application Logo</h2>
-            <livewire:admin.settings.application-logo />
-        </div>
-
-        <!-- Login Logo -->
-        <div class="bg-gray-900 shadow rounded-xl p-6">
-            <h2 class="text-xl font-semibold text-gray-100 mb-4">🔒 Login Logo</h2>
-            <livewire:admin.settings.login-logo />
-        </div>
-
-        <!-- Security Settings -->
-        <div class="bg-gray-900 shadow rounded-xl p-6">
-            <h2 class="text-xl font-semibold text-gray-100 mb-4">🛡️ Security Settings</h2>
-            <livewire:admin.settings.security-settings />
-        </div>
-    </div> --}}
     </div>

@@ -41,7 +41,7 @@ class Users extends Base
     {
         abort_if_cannot('view_users');
 
-        $users = User::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+        $users = User::with(['roles'])->withCount('collector')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
 
         if ($this->name) {
             $users->where('name', 'like', '%' . $this->name . '%');

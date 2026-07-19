@@ -16,7 +16,7 @@ class LocationManager extends Component
 
     public function mount()
     {
-        $this->districts = district::all();
+        $this->districts = district::orderBy('name')->get(['id', 'name']);
     }
 
     public function updatedSelectedDistrict()
@@ -39,7 +39,7 @@ class LocationManager extends Component
             $query->where('name', 'like', '%' . $this->searchAsCenter . '%');
         }
 
-        $this->asCenters = $query->get();
+        $this->asCenters = $query->get(['id', 'name', 'district_id']);
     }
 
     public function addAsCenter()
@@ -67,7 +67,7 @@ class LocationManager extends Component
     {
         $this->editingAsCenterId = $id;
         $this->editingAsCenterName = $name;
-        $this->aiRanges = AiRange::where('as_center_id', $id)->get();
+        $this->aiRanges = AiRange::where('as_center_id', $id)->get(['id', 'name', 'as_center_id']);
         $this->editingAiRangeId = null;
         $this->newAiRangeName = '';
     }
@@ -91,13 +91,13 @@ class LocationManager extends Component
             'name' => $this->newAiRangeName,
         ]);
         $this->newAiRangeName = '';
-        $this->aiRanges = AiRange::where('as_center_id', $this->editingAsCenterId)->get();
+        $this->aiRanges = AiRange::where('as_center_id', $this->editingAsCenterId)->get(['id', 'name', 'as_center_id']);
     }
 
     public function deleteAiRange($id)
     {
         AiRange::find($id)?->delete();
-        $this->aiRanges = AiRange::where('as_center_id', $this->editingAsCenterId)->get();
+        $this->aiRanges = AiRange::where('as_center_id', $this->editingAsCenterId)->get(['id', 'name', 'as_center_id']);
     }
 
     public function startEditAiRange($id, $name)

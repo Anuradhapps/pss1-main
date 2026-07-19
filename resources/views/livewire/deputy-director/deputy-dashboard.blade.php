@@ -2,19 +2,19 @@
 
 <div>
     <x-headings.top-heading title="{{ $district->name }} District Dashboard" icon="fas fa-clipboard"
-        class="bg-gradient-to-r from-green-900 to-green-900 shadow-md" />
+        class="bg-gradient-to-r from-emerald-700 to-emerald-900 shadow-md text-white" />
 
 
     <div class="mt-3 space-y-3">
 
-        <div class="m-2 p-2 bg-gray-800/90 rounded-md shadow-lg backdrop-blur-sm border border-gray-700">
+        <div class="m-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm backdrop-blur-sm transition-colors dark:border-slate-800 dark:bg-slate-900">
             <!-- Header -->
             <div class="flex items-center mb-4">
                 <div
-                    class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
+                    class="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
                     <i class="fas fa-bug text-lg"></i>
                 </div>
-                <h2 class="text-lg font-semibold text-gray-100">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">
                     Pest Density in {{ $district->name }} for This Week
                 </h2>
             </div>
@@ -26,30 +26,30 @@
 
 
 
-    <div class="p-2 space-y-2 bg-gray-900 text-white min-h-screen text-sm">
+    <div class="min-h-screen space-y-6 rounded-2xl border border-slate-200 bg-white p-4 text-sm transition-colors dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
             <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
         </div>
 
         <!-- Filter + User Table -->
-        <div class="bg-gray-800 p-2 shadow-md">
-            <div class="flex flex-col  justify-between items-center gap-2">
-                <h2 class="text-xl font-semibold text-white m-0 p-0 w-full"><i
-                        class="fa-solid fa-users text-green-500 me-2"></i>Users
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-col items-center justify-between gap-4">
+                <h2 class="m-0 w-full p-0 text-xl font-semibold text-slate-900 dark:text-white"><i
+                        class="fa-solid fa-users me-2 text-emerald-500"></i>Users
                     in
                     {{ $district->name }} District</h2>
 
                 <div class="flex flex-wrap sm:justify-end gap-3 w-full sm:w-auto">
                     <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name"
-                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400" />
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-primary focus:ring-primary/30 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-[25ch]" />
                     <input type="number" wire:model.debounce.500ms="searchNumber" placeholder="Search by Phone Number"
-                        class="w-full sm:w-[31ch] px-4 py-2 bg-gray-700 border border-gray-600  text-white placeholder-gray-400" />
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 shadow-sm focus:border-primary focus:ring-primary/30 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-[31ch]" />
 
                     <select wire:model="selectedAiRange"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600  text-white">
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-900 shadow-sm focus:border-primary focus:ring-primary/30 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-fit">
                         <option value="">All AI Ranges</option>
                         @foreach ($aiRanges as $ai)
                             <option value="{{ $ai->id }}">{{ $ai->name }}</option>
@@ -57,7 +57,7 @@
                     </select>
 
                     <select wire:model="selectedSeason"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600  text-white">
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 text-slate-900 shadow-sm focus:border-primary focus:ring-primary/30 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-fit">
                         <option value="">All Seasons</option>
                         @foreach ($seasons as $season)
                             <option value="{{ $season->id }}">{{ $season->name }}</option>
@@ -65,18 +65,18 @@
                     </select>
                     <!-- Reset button -->
                     <button wire:click="resetFilters"
-                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white ">Reset</button>
+                        class="rounded-xl bg-rose-600 px-4 py-2 text-white transition hover:bg-rose-500">Reset</button>
 
                     <div class="relative group inline-block">
                         <button wire:click="downloadCollectorsList"
-                            class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
+                            class="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-white shadow transition hover:bg-emerald-500">
                             <i class="fas fa-download"></i>
                             Collector List
                         </button>
 
                         <!-- Tooltip -->
                         <span
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max text-xs text-white bg-gray-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
+                            class="absolute bottom-full left-1/2 mb-2 w-max -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white opacity-0 transition duration-300 group-hover:opacity-100 dark:bg-slate-700">
                             Download collector list <br> for the selected season, <br> or all seasons if none selected
                         </span>
                     </div>
