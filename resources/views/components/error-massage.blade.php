@@ -1,10 +1,10 @@
-{{-- Error Message (Dark Mode) --}}
+{{-- Error Message (Light/Dark Mode) --}}
 @if (session('error'))
     <div id="error-message"
-        class="flex items-center p-4 mb-3 text-red-400 border border-red-700 rounded-lg bg-gray-900 shadow-lg transition-opacity duration-500"
+        class="flex items-start sm:items-center p-4 mb-4 gap-3 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/50 rounded-xl bg-red-50 dark:bg-red-900/20 shadow-sm transition-all duration-500"
         role="alert">
-        <i class="fas fa-exclamation-circle mr-2 text-red-500"></i>
-        <span class="font-medium">{{ session('error') }}</span>
+        <i class="fas fa-exclamation-circle text-red-500 dark:text-red-400 text-lg mt-0.5 sm:mt-0 flex-shrink-0"></i>
+        <div class="font-medium text-sm sm:text-base leading-snug">{{ session('error') }}</div>
     </div>
 @endif
 
@@ -14,9 +14,10 @@
         const errorMessage = document.getElementById('error-message');
         if (errorMessage) {
             setTimeout(() => {
-                errorMessage.style.opacity = '0'; // fade out
-                setTimeout(() => errorMessage.remove(), 500); // remove after fade
-            }, 5000); // 5 seconds
+                errorMessage.style.opacity = '0';
+                errorMessage.style.transform = 'translateY(-10px)';
+                setTimeout(() => errorMessage.remove(), 500);
+            }, 6000); // 6 seconds to give them time to read longer errors
         }
     });
 </script>

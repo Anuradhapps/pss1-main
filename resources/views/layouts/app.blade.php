@@ -62,110 +62,152 @@
 
     <x-loader />
 
-    <div x-data="{ sidebarOpen: false }" x-cloak class="main-container">
-        <div class="flex flex-1 ">
-            @auth
-                <!-- Desktop Sidebar -->
-                <aside class="hidden w-64 md:flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 shadow-xl z-50">
+    <div x-data="{ sidebarOpen: false }" x-cloak class="h-screen bg-background dark:bg-slate-900 flex overflow-hidden font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
+        
+        @auth
+        <!-- Desktop Sidebar (Full Height) -->
+        <aside class="hidden md:flex flex-col w-64 bg-surface dark:bg-card border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-40 flex-shrink-0">
+            <!-- Sidebar Header (Logo) -->
+            <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+                <a href="{{ route('dashboard') }}" class="block w-full">
+                    <x-logo-light class="block dark:hidden"></x-logo-light>
+                    <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                </a>
+            </div>
+            <!-- Navigation -->
+            <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+                @include('layouts.app.navigation')
+            </div>
+        </aside>
+
+        <!-- Mobile Sidebar Backdrop & Drawer -->
+        <div x-show="sidebarOpen" x-cloak class="md:hidden">
+            <!-- Backdrop -->
+            <div x-show="sidebarOpen" 
+                 x-transition:enter="transition-opacity ease-linear duration-300" 
+                 x-transition:enter-start="opacity-0" 
+                 x-transition:enter-end="opacity-100" 
+                 x-transition:leave="transition-opacity ease-linear duration-300" 
+                 x-transition:leave-start="opacity-100" 
+                 x-transition:leave-end="opacity-0" 
+                 @click="sidebarOpen = false"
+                 class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-40"></div>
+
+            <!-- Drawer -->
+            <aside x-show="sidebarOpen" 
+                   x-transition:enter="transition ease-in-out duration-300 transform" 
+                   x-transition:enter-start="-translate-x-full" 
+                   x-transition:enter-end="translate-x-0" 
+                   x-transition:leave="transition ease-in-out duration-300 transform" 
+                   x-transition:leave-start="translate-x-0" 
+                   x-transition:leave-end="-translate-x-full" 
+                   class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 shadow-2xl flex flex-col h-full">
+                
+                <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+                    <a href="{{ route('dashboard') }}" class="block">
+                        <x-logo-light class="block dark:hidden"></x-logo-light>
+                        <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                    </a>
+                    <button @click="sidebarOpen = false" class="text-slate-500 hover:text-red-600 dark:text-slate-400 p-2 -mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
                     @include('layouts.app.navigation')
-                </aside>
+                </div>
+            </aside>
+        </div>
+        @endauth
 
-                <!-- Mobile Sidebar -->
-                <aside x-show="sidebarOpen" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 -translate-x-full"
-                    x-transition:enter-end="opacity-100 translate-x-0" x-transition:leave="transition ease-in duration-300"
-                    x-transition:leave-start="opacity-100 translate-x-0"
-                    x-transition:leave-end="opacity-0 -translate-x-full"
-                    class="fixed inset-0 z-50 w-64 shadow-2xl md:hidden transform bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
-                    <div class="flex justify-end p-1">
-                        <button @click="sidebarOpen = false"
-                            class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out
-               px-3 py-1.5 shadow-md hover:shadow-lg focus:outline-none"
-                            aria-label="Close sidebar">
-                            <i class="fas fa-times text-lg"></i>
-                        </button>
-                    </div>
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            
+            @auth
+            <!-- Top Navbar (Right Side Only) -->
+            <header class="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300 flex-shrink-0">
+                <!-- Left side: Mobile Toggle & Mobile Logo -->
+                <div class="flex items-center">
+                    <button @click="sidebarOpen = !sidebarOpen" class="md:hidden text-slate-500 hover:text-primary dark:text-slate-400 p-2 -ml-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <!-- Optional Mobile Logo in Header if Drawer is closed -->
+                    <a href="{{ route('dashboard') }}" class="md:hidden ml-2 block w-48">
+                        <x-logo-light class="block dark:hidden"></x-logo-light>
+                        <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                    </a>
+                </div>
 
-                    <div class="px-1">
-                        @include('layouts.app.navigation')
-                    </div>
+                <!-- Right side: Controls & Profile -->
+                <div class="flex items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg text-sm p-2 transition-colors">
+                        <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-lg"></i>
+                    </button>
+                    <script>
+                        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+                        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
+                        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                            themeToggleLightIcon.classList.remove('hidden');
+                        } else {
+                            themeToggleDarkIcon.classList.remove('hidden');
+                        }
 
-                </aside>
+                        var themeToggleBtn = document.getElementById('theme-toggle');
+                        themeToggleBtn.addEventListener('click', function() {
+                            themeToggleDarkIcon.classList.toggle('hidden');
+                            themeToggleLightIcon.classList.toggle('hidden');
+                            if (localStorage.getItem('color-theme')) {
+                                if (localStorage.getItem('color-theme') === 'light') {
+                                    document.documentElement.classList.add('dark');
+                                    localStorage.setItem('color-theme', 'dark');
+                                } else {
+                                    document.documentElement.classList.remove('dark');
+                                    localStorage.setItem('color-theme', 'light');
+                                }
+                            } else {
+                                if (document.documentElement.classList.contains('dark')) {
+                                    document.documentElement.classList.remove('dark');
+                                    localStorage.setItem('color-theme', 'light');
+                                } else {
+                                    document.documentElement.classList.add('dark');
+                                    localStorage.setItem('color-theme', 'dark');
+                                }
+                            }
+                        });
+                    </script>
+
+                    <livewire:admin.notifications-menu />
+                    <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2 hidden sm:block"></div>
+                    <livewire:admin.users.user-menu />
+                </div>
+            </header>
             @endauth
 
-            <!-- Main Content Area -->
-            <div id="main" class="flex flex-col w-full">
-                @auth
-                    <!-- Topbar -->
-                    <header class="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
-
-                        <!-- Mobile Sidebar Toggle -->
-                        <button @click="sidebarOpen = !sidebarOpen"
-                            class="text-slate-500 dark:text-slate-400 md:hidden hover:text-primary focus:outline-none transition-colors">
-                            <i class="fas fa-bars text-2xl"></i>
-                        </button>
-
-                        <!-- Topbar right controls -->
-                        <div class="flex items-center ml-auto space-x-3">
-                            <!-- Dark Mode Toggle -->
-                            <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg text-sm p-2.5 transition-colors">
-                                <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-lg"></i>
-                                <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-lg"></i>
-                            </button>
-                            <script>
-                                var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-                                var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-                                if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                                    themeToggleLightIcon.classList.remove('hidden');
-                                } else {
-                                    themeToggleDarkIcon.classList.remove('hidden');
-                                }
-
-                                var themeToggleBtn = document.getElementById('theme-toggle');
-                                themeToggleBtn.addEventListener('click', function() {
-                                    themeToggleDarkIcon.classList.toggle('hidden');
-                                    themeToggleLightIcon.classList.toggle('hidden');
-                                    if (localStorage.getItem('color-theme')) {
-                                        if (localStorage.getItem('color-theme') === 'light') {
-                                            document.documentElement.classList.add('dark');
-                                            localStorage.setItem('color-theme', 'dark');
-                                        } else {
-                                            document.documentElement.classList.remove('dark');
-                                            localStorage.setItem('color-theme', 'light');
-                                        }
-                                    } else {
-                                        if (document.documentElement.classList.contains('dark')) {
-                                            document.documentElement.classList.remove('dark');
-                                            localStorage.setItem('color-theme', 'light');
-                                        } else {
-                                            document.documentElement.classList.add('dark');
-                                            localStorage.setItem('color-theme', 'dark');
-                                        }
-                                    }
-                                });
-                            </script>
-
-                            <livewire:admin.notifications-menu />
-                            {{-- <livewire:admin.help-menu /> --}}
-                            <livewire:admin.users.user-menu />
-                        </div>
-                    </header>
-                @endauth
-
-                <!-- Slot Content -->
-                <main class="content p-4 md:p-6 bg-surface-light dark:bg-surface-dark transition-colors duration-300">
+            <!-- Scrollable Main Content -->
+            <main class="flex-1 overflow-y-auto bg-background dark:bg-[#0F172A] transition-colors duration-300 custom-scrollbar flex flex-col">
+                <!-- Page Content -->
+                <div class="flex-1 w-full max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8 xl:px-12">
                     {{ $slot ?? '' }}
-                </main>
+                </div>
 
                 <!-- Footer -->
-                <footer class="w-full px-4 py-4 text-sm text-center text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300 footer">
-                    &copy; {{ date('Y') }} <span class="font-semibold text-primary">{{ config('app.name') }}</span> —
-                    {{ __('National Plant Protection Service, Sri Lanka') }}.
-                    <br>{{ __('All rights reserved.') }}
+                <footer class="w-full mt-auto py-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors duration-300 flex-shrink-0">
+                    <div class="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400 gap-4">
+                        <div class="text-center sm:text-left leading-relaxed">
+                            &copy; {{ date('Y') }} <span class="font-semibold text-primary dark:text-emerald-400">National Pest Surveillance System</span>. {{ __('All rights reserved.') }}<br>
+                            <span class="text-xs">National Plant Protection Service, Sri Lanka</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                            <a href="#" class="hover:text-primary transition-colors">Terms of Service</a>
+                            <a href="/help" class="hover:text-primary transition-colors">Help Center</a>
+                        </div>
+                    </div>
                 </footer>
-            </div>
+            </main>
         </div>
     </div>
 
@@ -199,6 +241,10 @@
         AOS.init();
     </script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+    <!-- Toast Notification System -->
+    <x-ui.toast />
+    
     @livewireScripts
     @stack('scripts')
 </body>

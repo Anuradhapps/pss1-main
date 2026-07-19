@@ -1,35 +1,31 @@
-<!-- GPS Location Refresh Section (Dark Mode Only) -->
+<!-- GPS Location Refresh Section -->
 <div
-    class="flex flex-col items-start gap-3 p-4 mb-6 text-white bg-gray-900 border-l-4 border-blue-500 shadow-sm sm:flex-row sm:items-center">
+    class="flex flex-col items-start gap-3 p-4 mb-6 text-slate-800 bg-blue-50 dark:text-white dark:bg-slate-800 border-l-4 border-blue-500 rounded-r shadow-sm sm:flex-row sm:items-center transition-colors">
     <button type="button" id="fill-location"
-        class="flex items-center px-5 py-2.5 font-semibold text-white transition duration-300 bg-blue-600  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        class="flex items-center px-5 py-2.5 font-semibold text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
         <i id="refresh-icon" class="mr-2 fas fa-sync-alt"></i>
         <span id="refresh-text">Refresh Location</span>
     </button>
-    <p class="text-sm italic text-blue-300">Click 'Refresh Location' to auto-fill your current GPS coordinates. You may
+    <p class="text-sm italic text-blue-700 dark:text-blue-300">Click 'Refresh Location' to auto-fill your current GPS coordinates. You may
         enter them manually if needed.</p>
 </div>
 
 <!-- Latitude and Longitude Input Fields -->
 @if (isset($collector))
     <div class="flex gap-4 justify-between">
-        <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:"
-            class="mb-4 text-white bg-gray-800 border-gray-600">
+        <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:" class="mb-4">
             {{ old('gps_lati', $collector->gps_lati) }}
         </x-form.input>
-        <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:"
-            class="mb-4 text-white bg-gray-800 border-gray-600">
+        <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:" class="mb-4">
             {{ old('gps_long', $collector->gps_long) }}
         </x-form.input>
     </div>
 @else
     <div class="flex gap-4 justify-between">
-        <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:"
-            class="mb-4 text-white bg-gray-800 border-gray-600">
+        <x-form.input name="gps_lati" id="gps_lati" label="GPS Latitude:" class="mb-4">
             {{ old('gps_lati') }}
         </x-form.input>
-        <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:"
-            class="mb-4 text-white bg-gray-800 border-gray-600">
+        <x-form.input name="gps_long" id="gps_long" label="GPS Longitude:" class="mb-4">
             {{ old('gps_long') }}
         </x-form.input>
     </div>

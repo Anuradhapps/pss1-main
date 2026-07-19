@@ -23,7 +23,7 @@
 
 <div class="w-full">
     @if ($label !== 'none')
-        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-gray-100">
+        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
             {{ $label }}
             @if ($required)
                 <span class="text-red-500">*</span>
@@ -36,11 +36,11 @@
             type="text" value="{{ $slot }}" placeholder="dd-mm-yyyy" {{ $required ? 'required' : '' }}
             {{ $attributes->merge([
                 'class' =>
-                    'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white border border-gray-600  shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out',
+                    'peer block w-full px-4 py-2 text-sm bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none transition duration-200 ease-in-out',
             ]) }} />
 
         @error($name)
-            <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
         @enderror
     </div>
 </div>

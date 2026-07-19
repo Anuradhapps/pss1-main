@@ -1,121 +1,135 @@
-@section('title', 'Users')
+@section('title', 'Users Management')
 
-<div class=" text-white">
-    <x-headings.top-heading title="Users" icon="fas fa-user"
-        class="bg-gradient-to-r from-green-800 to-green-600 shadow-md" />
-
-    <!-- Filter -->
-    <div class="p-2 bg-teal-800">
-        <div x-data="{ isOpen: {{ $openFilter || request('openFilter') ? 'true' : 'false' }} }">
-            <div class="flex flex-wrap items-center gap-3">
-                <button @click="isOpen = !isOpen" class="px-3 py-2 text-sm transition bg-gray-800 hover:bg-orange-600">
-                    <i class="mr-1 fas fa-filter"></i> Advanced Filters
-                </button>
-
-                <button wire:click="resetFilters" @click="isOpen = false"
-                    class="px-3 py-2 text-sm transition bg-red-600 hover:bg-red-800">
-                    <i class="mr-1 fas fa-sync-alt"></i> Reset
-                </button>
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light">
+                <i class="fas fa-users text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">System Users</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Manage administrators, directors, and collectors.</p>
+            </div>
+        </div>
+        
+        <!-- Quick Filters -->
+        <div x-data="{ isOpen: {{ $openFilter || request('openFilter') ? 'true' : 'false' }} }" class="w-full sm:w-auto">
+            <div class="flex items-center gap-3">
+                <x-ui.button variant="outline" @click="isOpen = !isOpen" class="w-full sm:w-auto">
+                    <i class="mr-2 fas fa-filter"></i> Filters
+                </x-ui.button>
+                <x-ui.button variant="ghost" wire:click="resetFilters" @click="isOpen = false">
+                    <i class="mr-2 fas fa-sync-alt"></i> Reset
+                </x-ui.button>
             </div>
 
-            <div class="flex sm:flex-row gap-1 flex-col mt-3" x-show="isOpen" x-transition>
-                <x-form.input type="search" name="name" wire:model="name" label="Name"
-                    placeholder="Search users by name" />
-                <x-form.input type="email" id="email" name="email" label="Email" wire:model="email"
-                    placeholder="Search users by Email" />
-                <x-form.daterange id="joined" name="joined" label="Joined Date Range" wire:model.lazy="joined" />
+            <div x-show="isOpen" x-collapse class="mt-4 absolute sm:static right-0 z-10 w-full sm:w-[400px]">
+                <x-ui.card padding="p-4" class="shadow-xl sm:shadow-none border border-slate-200 dark:border-slate-700">
+                    <div class="space-y-4">
+                        <x-forms.input type="search" name="name" wire:model.live.debounce.300ms="name" label="Name" placeholder="Search users by name" icon="fas fa-search" />
+                        <x-forms.input type="email" id="email" name="email" label="Email" wire:model.live.debounce.300ms="email" placeholder="Search users by Email" icon="fas fa-envelope" />
+                        <!-- Date range component not updated, keep as is for functionality -->
+                        <x-form.daterange id="joined" name="joined" label="Joined Date Range" wire:model.lazy="joined" />
+                    </div>
+                </x-ui.card>
             </div>
         </div>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 p-4">
-        @foreach ($users as $user)
-            <div class="p-3 bg-gray-800 shadow hover:shadow-lg transition duration-300 text-white">
-                <div class="flex items-center gap-3 mb-3">
-                    @php
-                        $firstRole = $user->roles->first();
-                        $iconcolor = 'bg-gray-600';
-                        if ($firstRole) {
-                            switch (strtolower($firstRole->label)) {
-                                case 'collector':
-                                    $iconcolor = 'bg-green-600';
-                                    break;
-                                case 'deputy director':
-                                    $iconcolor = 'bg-orange-600';
-                                    break;
-                                case 'admin':
-                                    $iconcolor = 'bg-red-600';
-                                    break;
-                            }
-                        }
-                    @endphp
+    <!-- Data Table -->
+    @if($users->isEmpty())
+        <x-data.empty-state 
+            icon="fas fa-users-slash" 
+            title="No Users Found" 
+            description="We couldn't find any users matching your search criteria." 
+        />
+    @else
+        <x-data.table>
+            <x-slot name="header">
+                <th scope="col" class="px-6 py-4">User</th>
+                <th scope="col" class="px-6 py-4 hidden sm:table-cell">Role</th>
+                <th scope="col" class="px-6 py-4 hidden md:table-cell">Joined</th>
+                <th scope="col" class="px-6 py-4 text-center">Actions</th>
+            </x-slot>
 
-                    <div class="w-10 h-10 flex items-center justify-center {{ $iconcolor }} rounded-full font-bold"
-                        title="{{ $firstRole->label ?? 'No Role' }}">
-                        {{ strtoupper(substr($user->name, 0, 2)) }}
-                    </div>
+            @foreach ($users as $user)
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            @php
+                                $firstRole = $user->roles->first();
+                                $iconcolor = 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300';
+                                $badgeVariant = 'gray';
+                                
+                                if ($firstRole) {
+                                    switch (strtolower($firstRole->label)) {
+                                        case 'collector':
+                                            $iconcolor = 'bg-success/20 text-success';
+                                            $badgeVariant = 'success';
+                                            break;
+                                        case 'deputy director':
+                                            $iconcolor = 'bg-warning/20 text-warning';
+                                            $badgeVariant = 'warning';
+                                            break;
+                                        case 'admin':
+                                            $iconcolor = 'bg-danger/20 text-danger';
+                                            $badgeVariant = 'danger';
+                                            break;
+                                    }
+                                }
+                            @endphp
 
-                    <div>
-                        <h3 class="text-lg font-semibold m-0 p-0">{{ $user->name }}</h3>
-                        <p class="text-xs m-0 p-0 text-gray-400">{{ $user->email }}</p>
-                    </div>
-                </div>
+                            <div class="w-10 h-10 flex shrink-0 items-center justify-center rounded-xl font-bold {{ $iconcolor }}">
+                                {{ strtoupper(substr($user->name, 0, 2)) }}
+                            </div>
 
-                <p class="mb-2 text-sm">
-                    <span class="font-medium text-gray-300">Joined:</span>
-                    {{ $user->created_at ? date('jS M Y', strtotime($user->created_at)) : '-' }}
-                </p>
+                            <div>
+                                <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ $user->name }}</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $user->email }}</p>
+                            </div>
+                        </div>
+                    </td>
 
-                <div class="flex flex-wrap gap-2">
-                    <a href="{{ route('admin.users.show', $user->id) }}"
-                        class="px-3 py-1 text-xs font-medium bg-blue-600 hover:bg-blue-700 transition">
-                        Profile
-                    </a>
+                    <td class="px-6 py-4 hidden sm:table-cell">
+                        <x-ui.badge variant="{{ $badgeVariant }}">
+                            {{ $firstRole->label ?? 'No Role' }}
+                        </x-ui.badge>
+                    </td>
 
-                    @php $hasCollector = $user->collector(); @endphp
-                    @if (has_role('collector'))
-                        @if ($hasCollector->count() > 0)
-                            <a href="{{ route('admin.collectors.view', $user->id) }}"
-                                class="px-3 py-1 text-xs font-medium bg-green-600 rounded hover:bg-green-700">
-                                View Collectors
+                    <td class="px-6 py-4 hidden md:table-cell text-sm text-slate-600 dark:text-slate-400">
+                        {{ $user->created_at ? $user->created_at->format('jS M Y') : '-' }}
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="{{ route('admin.users.show', $user->id) }}" class="text-slate-400 hover:text-primary transition-colors" title="View Profile">
+                                <i class="fas fa-user-circle text-lg"></i>
                             </a>
-                        @else
-                            <div class="px-3 py-1 text-xs bg-yellow-600 rounded">No Collector Data</div>
-                        @endif
-                    @endif
 
-                    @if (auth()->id() !== $user->id)
-                        <x-modal>
-                            <x-slot name="trigger">
-                                <a href="#" @click="on = true"
-                                    class="px-3 py-1 text-xs font-medium bg-red-600 hover:bg-red-700">
-                                    Delete
+                            @if (has_role('collector') && $user->collector()->count() > 0)
+                                <a href="{{ route('admin.collectors.view', $user->id) }}" class="text-slate-400 hover:text-success transition-colors" title="View Collector Data">
+                                    <i class="fas fa-clipboard-list text-lg"></i>
                                 </a>
-                            </x-slot>
-                            <x-slot name="title">Confirm Delete</x-slot>
-                            <x-slot name="content">
-                                Are you sure you want to delete <b>{{ $user->name }}</b>?
-                            </x-slot>
-                            <x-slot name="footer">
-                                <button @click="on = false"
-                                    class="px-3 py-1 text-xs font-medium border-white border  hover:bg-gray-800">Cancel</button>
-                                <button wire:click="deleteUser('{{ $user->id }}')"
-                                    class="px-3 py-1 text-xs font-medium bg-red-600 hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </x-slot>
-                        </x-modal>
-                    @endif
+                            @endif
+
+                            @if (auth()->id() !== $user->id)
+                                <form wire:submit.prevent="deleteUser('{{ $user->id }}')" class="inline-block">
+                                    <button type="submit" wire:confirm="Are you sure you want to permanently delete {{ $user->name }}?" class="text-slate-400 hover:text-danger transition-colors" title="Delete User">
+                                        <i class="fas fa-trash-alt text-lg"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+            
+            <x-slot name="footer">
+                <div class="w-full">
+                    {{ $users->withQueryString()->links() }}
                 </div>
-            </div>
-        @endforeach
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $users->withQueryString()->links() }}
-    </div>
-
-    <!-- User Cards -->
-
+            </x-slot>
+        </x-data.table>
+    @endif
 </div>

@@ -1,107 +1,111 @@
 <x-app-layout>
     <!-- Page Header -->
     <x-headings.top-heading title="Data Analytics" icon="fas fa-chart-bar"
-        class="bg-gradient-to-r from-green-700 to-green-500 shadow-lg text-white" />
+        class="bg-gradient-to-r from-primary-800 to-primary shadow-lg text-white" />
 
     <!-- Error Message -->
     <x-error-massage />
 
     <!-- Grid Wrapper -->
-    <div class="grid gap-6 m-2 md:grid-cols-2">
+    <div class="grid gap-6 m-4 md:grid-cols-2">
 
         <!-- Seasonal Analytics Card -->
         <div class="space-y-6">
 
             <!-- Seasonal Analytics -->
-            <div class="bg-gray-900 border border-gray-700 rounded-2xl shadow-lg p-5">
-                <div
-                    class="flex items-center justify-between px-4 py-2 mb-4 text-white bg-gradient-to-r from-green-950 to-green-950 rounded-xl shadow">
-                    <div class="flex items-center gap-2 font-semibold text-sm">
-                        <i class="fas fa-calendar-alt"></i> SEASONAL ANALYTICS
+            <x-ui.card padding="p-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        <i class="fas fa-calendar-alt text-lg"></i>
                     </div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Seasonal Analytics</h3>
                 </div>
 
                 @php
                     $CollectorCount = \App\Models\Collector::count();
                 @endphp
-                <div class="flex items-center gap-2 mb-4 text-gray-300">
-                    <i class="fas fa-check-circle text-green-400"></i>
-                    <span class="text-sm font-medium">Registered Collectors:</span>
-                    <span class="ml-1 text-sm font-semibold text-green-400">{{ $CollectorCount }}</span>
+                
+                <div class="flex items-center justify-between p-4 mb-6 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-success text-lg"></i>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Registered Collectors</span>
+                    </div>
+                    <span class="text-lg font-bold text-slate-900 dark:text-white">{{ $CollectorCount }}</span>
                 </div>
 
                 <x-form action="{{ route('chart.show') }}">
                     @csrf
                     @livewire('season-select')
-                    <x-form.submit
-                        class="w-full mt-4 bg-green-800 hover:bg-green-900 text-white font-semibold rounded-lg transition duration-300 shadow">
+                    <x-ui.button variant="primary" type="submit" class="w-full mt-4">
                         <i class="fas fa-chart-line mr-2"></i> Generate Chart
-                    </x-form.submit>
+                    </x-ui.button>
                 </x-form>
-            </div>
+            </x-ui.card>
 
             <!-- Weekly Pest Risk Index -->
-            <div class="bg-gray-900 border border-gray-700 rounded-2xl shadow-lg p-5">
+            <x-ui.card padding="p-6">
                 <x-weekly-pest-risk-index-card />
-            </div>
+            </x-ui.card>
         </div>
 
         <!-- Average Analytics Card -->
-        <div class="bg-gray-900 border border-gray-700 rounded-2xl shadow-lg p-5 space-y-6">
+        <x-ui.card padding="p-6" class="space-y-6">
 
-            <div
-                class="flex items-center px-4 py-2 mb-4 text-white bg-gradient-to-r from-green-950 to-green-950 rounded-xl shadow font-semibold text-sm">
-                <i class="fas fa-chart-pie mr-2"></i> AVERAGE ANALYTICS
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-lg bg-info/10 flex items-center justify-center text-info">
+                    <i class="fas fa-chart-pie text-lg"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Average Analytics</h3>
             </div>
 
             <!-- Nationwide Analytics -->
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-36 text-sm font-semibold text-gray-300 flex items-center gap-2">
-                    <i class="fas fa-globe"></i> Nationwide:
+            <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-semibold">
+                    <i class="fas fa-globe text-primary"></i> Nationwide Overview
                 </div>
                 <a href="{{ route('chart.show.allSeason', ['sort_by' => 'allIsland']) }}"
-                    class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow transition duration-300 transform hover:scale-105">
-                    <i class="fas fa-file-alt"></i> View National Report
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+                    <i class="fas fa-file-alt"></i> National Report
                 </a>
             </div>
 
             <!-- Provincial Data -->
-            <div class="space-y-2">
-                <div class="flex items-center gap-2 text-sm font-semibold text-gray-300 border-b border-gray-700 pb-1">
-                    <i class="fas fa-map-marked-alt"></i> Provincial Data
+            <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                <div class="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+                    <i class="fas fa-map-marked-alt text-slate-400"></i> Provincial Data
                 </div>
-                <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     @foreach ($allProvinces as $province)
                         <a href="{{ route('chart.show.allSeason', ['sort_by' => 'province', 'province' => $province]) }}"
-                            class="flex items-center justify-center gap-1 px-3 py-2 text-xs font-semibold text-center transition rounded-lg
-                                {{ in_array($province, $dataHaveProvinces) ? 'bg-blue-600 hover:bg-blue-700 text-white shadow hover:scale-105' : 'bg-gray-700 text-gray-500 cursor-not-allowed' }}">
-                            <i
-                                class="fas {{ in_array($province, $dataHaveProvinces) ? 'fa-map-marker-alt' : 'fa-map-marker' }}"></i>
-                            {{ $province }}
+                            class="flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-center transition-all duration-200 rounded-lg border
+                                {{ in_array($province, $dataHaveProvinces) 
+                                    ? 'bg-white dark:bg-slate-800 border-primary/30 text-primary dark:text-primary-light hover:bg-primary hover:text-white shadow-sm hover:shadow-md hover:-translate-y-0.5' 
+                                    : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed' }}">
+                            <i class="fas {{ in_array($province, $dataHaveProvinces) ? 'fa-map-marker-alt' : 'fa-map-marker' }}"></i>
+                            <span class="truncate">{{ $province }}</span>
                         </a>
                     @endforeach
                 </div>
             </div>
 
             <!-- District Data -->
-            <div class="space-y-2">
-                <div class="flex items-center gap-2 text-sm font-semibold text-gray-300 border-b border-gray-700 pb-1">
-                    <i class="fas fa-map"></i> District Data
+            <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                <div class="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+                    <i class="fas fa-map text-slate-400"></i> District Data
                 </div>
-                <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                     @foreach ($allDistricts as $district)
                         <a href="{{ route('chart.show.allSeason', ['sort_by' => 'district', 'district' => $district]) }}"
-                            class="flex items-center justify-center gap-1 px-3 py-2 text-sm font-semibold text-center transition rounded-lg
-                                {{ in_array($district, $dataHaveDistricts) ? 'bg-blue-600 hover:bg-blue-700 text-white shadow hover:scale-105' : 'bg-gray-700 text-gray-500 cursor-not-allowed' }}">
-                            <i
-                                class="fas {{ in_array($district, $dataHaveDistricts) ? 'fa-location-dot' : 'fa-location-pin' }}"></i>
-                            {{ $district }}
+                            class="flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-center transition-all duration-200 rounded-lg border
+                                {{ in_array($district, $dataHaveDistricts) 
+                                    ? 'bg-white dark:bg-slate-800 border-primary/30 text-primary dark:text-primary-light hover:bg-primary hover:text-white shadow-sm hover:shadow-md hover:-translate-y-0.5' 
+                                    : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed' }}">
+                            <i class="fas {{ in_array($district, $dataHaveDistricts) ? 'fa-location-dot' : 'fa-location-pin' }}"></i>
+                            <span class="truncate">{{ $district }}</span>
                         </a>
                     @endforeach
                 </div>
             </div>
-        </div>
+        </x-ui.card>
     </div>
-
-
 </x-app-layout>

@@ -11,42 +11,40 @@
 
 @php
     $buttonColors = [
-        'blue' => 'bg-blue-700 hover:bg-blue-900 hover:shadow-lg',
-        'red' => 'bg-red-700 hover:bg-red-900 hover:shadow-lg',
-        'green' => 'bg-green-700 hover:bg-green-900 hover:shadow-lg',
-        'gray' => 'bg-gray-700 hover:bg-gray-900 hover:shadow-lg',
-        'purple' => 'bg-purple-700 hover:bg-purple-900 hover:shadow-lg',
-        // add more colors if you want
+        'blue' => 'bg-primary hover:bg-indigo-700 focus:ring-primary',
+        'red' => 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
+        'green' => 'bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500',
+        'gray' => 'bg-slate-600 hover:bg-slate-700 focus:ring-slate-500',
+        'purple' => 'bg-purple-600 hover:bg-purple-700 focus:ring-purple-500',
     ];
 
     $buttonColorClasses = $buttonColors[$buttonColor] ?? $buttonColors['blue'];
 @endphp
 
-<div class="p-2 {{ $class }}">
-    <div class="flex items-center justify-between gap-3">
+<div class="px-6 py-5 mb-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl transition-colors duration-300 {{ $class }}">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-3">
                 @if ($icon)
-                    <i class="{{ $icon }} text-2xl"></i>
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 text-primary">
+                        <i class="{{ $icon }} text-xl"></i>
+                    </div>
                 @endif
-                <h1 class="text-2xl font-bold text-white">{{ $title }}</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ $title }}</h1>
             </div>
             @if ($subtitle)
-                <p class="text-sm text-gray-300">{{ $subtitle }}</p>
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 sm:ml-13">{{ $subtitle }}</p>
             @endif
         </div>
 
-
         @if ($buttonText)
             <a href="{{ $buttonAction }}"
-                class="inline-flex items-center px-4 py-2 font-semibold text-white {{ $buttonColorClasses }} transition">
+                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-semibold text-white {{ $buttonColorClasses }} rounded-xl shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-all duration-300">
                 @if ($buttonIcon)
-                    <i class="{{ $buttonIcon }} mr-1"></i>
+                    <i class="{{ $buttonIcon }}"></i>
                 @endif
                 {{ $buttonText }}
             </a>
         @endif
     </div>
-
-
 </div>

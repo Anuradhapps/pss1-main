@@ -4,8 +4,7 @@
     <div class="">
         <!-- Header -->
         <x-headings.top-heading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
-            buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
-            class="bg-cyan-700" />
+            buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left" buttonColor="red" />
 
         <!-- Error Messages -->
         <x-error-massage />

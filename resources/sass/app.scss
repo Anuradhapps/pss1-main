@@ -1,4 +1,3 @@
-
 @use 'tailwindcss/base';
 @use 'tailwindcss/components';
 @use 'tailwindcss/utilities';
@@ -14,6 +13,8 @@
 @use 'form';
 @use 'typography';
 @use 'utility';
+
+@import '../css/theme.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @layer base {

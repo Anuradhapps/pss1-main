@@ -9,18 +9,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <script>
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
+        // Force light mode for auth pages as requested
+        document.documentElement.classList.remove('dark');
     </script>
 
     <!-- Vite -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen text-slate-800 bg-surface-light dark:text-slate-100 dark:bg-surface-dark transition-colors duration-300">
+<body class="min-h-screen text-slate-800 bg-background transition-colors duration-300">
 
     <div class="font-sans antialiased">
         {{ $slot }}

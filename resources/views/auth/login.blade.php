@@ -1,80 +1,113 @@
 <x-guest-layout>
     @section('title', 'Login')
 
-    <x-auth-card class="max-w-md mx-auto p-6 sm:p-8 bg-gray-900 text-white rounded-2xl shadow-2xl space-y-6">
-
+    <x-auth-card>
         <!-- Header -->
-        <div class="flex items-center justify-between gap-2">
-            <p class="text-sm text-gray-400">Don't have an account?</p>
-            @if (Route::has('register'))
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Welcome back</h1>
+            <p class="mt-2 text-base text-slate-600 dark:text-slate-400">
+                Please enter your credentials to access the system.
+            </p>
+        </div>
+
+        @if (Route::has('register'))
+            <div class="mb-8 space-y-4">
                 <a href="{{ route('register') }}"
-                    class="px-4 py-2 text-sm font-medium rounded-lg bg-green-600 hover:bg-green-700 transition duration-300 shadow">
-                    New Registration
+                    class="w-full flex justify-center py-3 px-4 border-2 border-emerald-500 rounded-xl shadow-sm text-base font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 dark:focus:ring-offset-slate-900 transition-all duration-300">
+                    New to the system? Register Here
                 </a>
-            @endif
-        </div>
 
-        <!-- Title -->
-        <div class="text-center">
-
-            <h3 class="text-lg font-bold text-gray-400">Log in to your account</h3>
-        </div>
+                <div class="relative py-2">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">Or sign in to your account</span>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!-- Error Messages -->
         @if ($errors->any())
-            <div class="p-4 text-sm text-red-200 bg-red-800 border border-red-500 rounded-md animate-pulse">
-                <ul class="list-disc list-inside space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle text-red-600 dark:text-red-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800 dark:text-red-200">There were errors with your submission</h3>
+                        <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                            <ul class="list-disc pl-5 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
 
         <!-- Form -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-5" novalidate>
+        <form method="POST" action="{{ route('login') }}" class="space-y-6" novalidate>
             @csrf
 
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
                 <div class="relative">
-                    <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
                     <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
                         autocomplete="username"
-                        class="w-full pl-10 pr-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="block w-full pl-10 pr-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition duration-300"
                         placeholder="you@example.com" />
                 </div>
             </div>
 
             <!-- Password -->
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
                 <div class="relative">
-                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
                     <input id="password" name="password" type="password" required autocomplete="current-password"
-                        class="w-full pl-10 pr-10 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="block w-full pl-10 pr-10 py-2.5 text-sm bg-slate-50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition duration-300"
                         placeholder="••••••••" />
                     <button type="button" id="toggle-password"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors focus:outline-none"
                         aria-label="Toggle password visibility">
                         <i class="fas fa-eye" id="toggle-password-icon"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Help -->
-            <div class="text-right text-sm text-gray-400">
-                <a href="{{ route('loginhelp') }}" class="underline hover:text-blue-400">
-                    Need help logging in ❓
-                </a>
+            <!-- Options -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-primary bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded focus:ring-primary">
+                    <label for="remember_me" class="ml-2 block text-sm text-slate-700 dark:text-slate-300">
+                        Remember me
+                    </label>
+                </div>
+
+                <div class="text-sm">
+                    <a href="{{ route('loginhelp') }}" class="font-medium text-primary hover:text-indigo-500 transition-colors">
+                        Need help?
+                    </a>
+                </div>
             </div>
 
             <!-- Submit -->
-            <button type="submit"
-                class="w-full py-3 font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                Login
-            </button>
+            <div class="pt-2">
+                <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-semibold text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-slate-900 transition-all duration-300">
+                    Sign In
+                </button>
+            </div>
         </form>
     </x-auth-card>
 
