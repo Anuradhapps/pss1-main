@@ -15,14 +15,27 @@ class CollectorLivewire extends Component
 
     public $paginate  = '';
     public $query     = '';
+    public $nameSearch = '';
+    public $selectedDistricts = [];
     public $sortField = 'name';
     public $sortAsc   = true;
 
     public function render()
     {
-        return view('livewire.collector.collector');
+        $allDistricts = district::orderBy('name')->get();
+        return view('livewire.collector.collector', [
+            'allDistricts' => $allDistricts
+        ]);
     }
     public function updatedQuery()
+    {
+        $this->resetPage();
+    }
+    public function updatedNameSearch()
+    {
+        $this->resetPage();
+    }
+    public function updatedSelectedDistricts()
     {
         $this->resetPage();
     }
@@ -53,11 +66,21 @@ class CollectorLivewire extends Component
         $query = $this->builder();
 
         if ($this->query) {
-            $query->where('email', 'like', '%' . $this->query . '%')
-                ->orwhere('users.name', 'like', '%' . $this->query . '%')
-                ->orwhere('districts.name', 'like', '%' . $this->query . '%')
-                ->orwhere('as_centers.name', 'like', '%' . $this->query . '%')
-                ->orwhere('ai_ranges.name', 'like', '%' . $this->query . '%');
+            $query->where(function($q) {
+                $q->where('email', 'like', '%' . $this->query . '%')
+                  ->orWhere('users.name', 'like', '%' . $this->query . '%')
+                  ->orWhere('districts.name', 'like', '%' . $this->query . '%')
+                  ->orWhere('as_centers.name', 'like', '%' . $this->query . '%')
+                  ->orWhere('ai_ranges.name', 'like', '%' . $this->query . '%');
+            });
+        }
+
+        if ($this->nameSearch) {
+            $query->where('users.name', 'like', '%' . $this->nameSearch . '%');
+        }
+
+        if (!empty($this->selectedDistricts)) {
+            $query->whereIn('collectors.district', $this->selectedDistricts);
         }
 
         return $query->paginate($this->paginate);
