@@ -5,17 +5,38 @@ namespace App\Http\Livewire\Admin;
 use App\Http\Livewire\Base;
 use Illuminate\Contracts\View\View;
 use App\Models\district;
-
-use function abort_if_cannot;
-use function view;
+use App\Models\CommonDataCollect;
+use Carbon\Carbon;
+use App\Http\Controllers\PestDataCollectController;
 
 class Dashboard extends Base
 {
-    public $test;
     public function render(): View
     {
-        // abort_if_cannot('view_dashboard');
+        // Fetch common data for last 7 days
+        $lastWeekData = CommonDataCollect::with(['collector.getDistrict', 'pestDataCollect'])
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->get();
 
-        return view('livewire.admin.dashboard');
+        // Group by district name
+        $groupedByDistrict = $lastWeekData->groupBy(function($data) {
+            return $data->collector->getDistrict->name ?? 'Unknown District';
+        });
+
+        // Compute pest risk codes for each district
+        $pestController = app(PestDataCollectController::class);
+        $districtSummaries = [];
+        
+        foreach ($groupedByDistrict as $districtName => $commonDatas) {
+            $summary = $pestController->avarageCalculateByCommonData($commonDatas);
+            $districtSummaries[$districtName] = $summary['pests'];
+        }
+
+        // Sort alphabetically by district
+        ksort($districtSummaries);
+
+        return view('livewire.admin.dashboard', [
+            'districtSummaries' => $districtSummaries
+        ]);
     }
 }

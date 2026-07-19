@@ -62,4 +62,89 @@
         <livewire:count-card :cardName="'Pests'" :iconName="'fas fa-bug'" :color="'from-violet-500 to-purple-600'" />
         <livewire:count-card :cardName="'ConductedPrograms'" :iconName="'fas fa-chalkboard-teacher'" :color="'from-cyan-500 to-blue-500'" />
     </div>
+
+    {{-- District Pest Summary (Last 7 Days) --}}
+    <x-ui.card padding="p-0" class="shadow-md overflow-hidden mt-8 border-t-4 border-amber-500" data-aos="fade-up">
+        <div class="p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                    <i class="fas fa-calendar-week"></i>
+                </div>
+                Last 7 Days: Pest Risk Summary by District
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 ml-13">Aggregated average pest risk codes based on recent data uploads.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+            @if(empty($districtSummaries))
+                <div class="p-10 text-center">
+                    <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                        <i class="fas fa-folder-open text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">No Recent Data</h3>
+                    <p class="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">There are no pest data records uploaded in the past 7 days.</p>
+                </div>
+            @else
+                <table class="w-full text-sm text-left border-collapse">
+                    <thead class="border-y border-emerald-100 dark:border-slate-700/80">
+                        <tr class="!bg-gradient-to-r !from-emerald-50 !to-teal-50 dark:!from-slate-800/90 dark:!to-slate-800/90">
+                            <th scope="col" class="px-6 py-5 font-bold !text-slate-900 dark:!text-slate-100 uppercase tracking-wider text-xs align-bottom">
+                                District
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">Thrips</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">S. biformis</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">Gall Midge</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">O. oryzae</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">Leaffolder</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">C. medinalis</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">Stem Borer</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">S. incertulas</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">BPH & WBPH</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">Planthoppers</span>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center align-bottom border-l border-slate-300/50 dark:border-slate-700/50">
+                                <span class="block text-xs font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest mb-1">Paddy Bug</span>
+                                <span class="block text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 italic">L. oratorius</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($districtSummaries as $district => $pests)
+                            <tr class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="px-6 py-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                                    <i class="fas fa-map-marker-alt text-primary/70 mr-2"></i> {{ $district }}
+                                </td>
+                                
+                                @foreach(['thrips', 'gallMidge', 'leaffolder', 'yellowStemBorer', 'bphWbph', 'paddyBug'] as $pestKey)
+                                    @php
+                                        $code = $pests[$pestKey] ?? 0;
+                                        $colorClasses = match(true) {
+                                            $code >= 9 => 'bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-400 ring-red-500/30 font-black',
+                                            $code >= 5 => 'bg-orange-100 text-orange-800 dark:bg-orange-500/20 dark:text-orange-400 ring-orange-500/30 font-bold',
+                                            $code >= 1 => 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-400 ring-amber-500/30 font-bold',
+                                            default    => 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400 ring-slate-300 dark:ring-slate-700 font-semibold'
+                                        };
+                                    @endphp
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm ring-1 ring-inset {{ $colorClasses }}">
+                                            {{ $code }}
+                                        </span>
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </x-ui.card>
 </div>

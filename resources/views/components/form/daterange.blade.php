@@ -24,7 +24,7 @@
 
 <div class="w-full">
     @if ($label !== 'none')
-        <label for="{{ $name }}" class="block mb-1 text-sm font-semibold text-white">
+        <label for="{{ $name }}" class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
             {{ $label }}
             @if ($required)
                 <span class="text-red-500">*</span>
@@ -33,12 +33,13 @@
     @endif
 
     <div class="relative">
+        <i class="far fa-calendar-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm z-10"></i>
         <input x-data x-init="flatpickr($refs.input, {{ json_encode((object) $options) }})" x-ref="input" type="text" id="{{ $name }}"
             name="{{ $name }}" value="{{ old($name, $value ?: $slot) }}" placeholder="Select date range"
             {{ $required ? 'required' : '' }}
             {{ $attributes->merge([
                 'class' =>
-                    'peer block w-full px-4 py-2 text-sm bg-gray-800 text-white border border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out',
+                    'w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors',
             ]) }} />
 
         @error($name)
