@@ -35,8 +35,8 @@
         <!-- Mobile Logo (Visible only on mobile/tablet) -->
         <div class="lg:hidden w-full max-w-md flex justify-center mb-8">
             <a href="/" class="transform transition hover:scale-105">
-                <x-logo-light class="block dark:hidden"></x-logo-light>
-                <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                <x-logo-light class="flex dark:hidden"></x-logo-light>
+                <x-logo-dark class="hidden dark:flex"></x-logo-dark>
             </a>
         </div>
 

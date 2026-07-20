@@ -1,7 +1,7 @@
 <div class="">
 
     <div class="w-full mx-auto">
-        <div class="overflow-hidden bg-slate-500 rounded-lg shadow-sm">
+        <div class="overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm">
 
             <!-- Modern Premium Loading Overlay (Livewire) -->
             <div wire:loading.flex class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300">
@@ -49,23 +49,23 @@
                 <div class="col-md-6">
 
                     <div class="grid grid-cols-4 gap-4">
-                        <div><label for="state" class="text-black col-md-4 col-form-label text-md-right">From
+                        <div><label for="state" class="text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">From
                                 Date</label></div>
                         <div><input type="date" wire:loading.attr="disabled" wire:model.debounce.300ms="fromdate"
-                                wire:model.lazy="fromdate" class="w-full " value=""></div>
-                        <div><label for="state" class="text-black col-md-4 col-form-label text-md-right">To
+                                wire:model.lazy="fromdate" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" value=""></div>
+                        <div><label for="state" class="text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">To
                                 Date</label></div>
                         <div><input type="date" wire:loading.attr="disabled" wire:model.debounce.300ms="todate"
-                                wire:model.lazy="todate" class="w-full border-gray-900 " value=""></div>
+                                wire:model.lazy="todate" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" value=""></div>
                     </div>
 
 
                     <div>
 
-                        <div class ="grid grid-cols-4 p-1 border-gray-900">
-                            <label for="state" class="w-3 text-black col-md-4 col-form-label text-md-right">Select
+                        <div class ="grid grid-cols-4 p-1 border-slate-200 dark:border-slate-700">
+                            <label for="state" class="w-3 text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">Select
                                 Report Type</label>
-                            <select wire:model.lazy="selectedrange" class="w-full text-green-900 border form-control "
+                            <select wire:model.lazy="selectedrange" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm"
                                 wire:loading.attr="disabled">
                                 <option value="1" selected>District wise</option>
                                 <option value="2" selected>ASC wise</option>
@@ -76,10 +76,10 @@
 
                     </div>
 
-                    <div class ="grid grid-cols-4 p-1 border-gray-900">
-                        <label for="state" class="w-3 text-black col-md-4 col-form-label text-md-right">Select
+                    <div class ="grid grid-cols-4 p-1 border-slate-200 dark:border-slate-700">
+                        <label for="state" class="w-3 text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">Select
                             District</label>
-                        <select wire:model.lazy="selecteddistrict" class="w-full text-green-900 border form-control "
+                        <select wire:model.lazy="selecteddistrict" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm"
                             wire:change="clear1()" wire:loading.attr="disabled">
                             <option value="" selected>Select District</option>
                             @foreach ($dis as $item)
@@ -88,10 +88,10 @@
                         </select>
                     </div>
 
-                    <div class ="grid grid-cols-4 p-1 border-gray-900">
-                        <label for="state" class="w-3 text-black col-md-4 col-form-label text-md-right">Select
+                    <div class ="grid grid-cols-4 p-1 border-slate-200 dark:border-slate-700">
+                        <label for="state" class="w-3 text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">Select
                             ASC</label>
-                        <select wire:model.lazy="selectedasc" class="w-full text-green-900 border-gray-900 form-control"
+                        <select wire:model.lazy="selectedasc" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm"
                             wire:change="clear2()" wire:loading.attr="disabled">
                             <option value="" selected>Select ASC</option>
                             @foreach ($asc as $item)
@@ -105,7 +105,7 @@
 
                     <div id="a" class="hidden">
                         <select id="test1" wire:model.lazy="selectedgs"
-                            class="w-full text-green-900 border-gray-900 form-control" wire:change="" onchange=""
+                            class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" wire:change="" onchange=""
                             wire:loading.attr="disabled">
                             <option value="" selected>Select AI Range</option>
                             @foreach ($airange as $item)
@@ -121,118 +121,118 @@
 
 
             @if ($selrange == 3)
-                <table class="w-full divide-y divide-sky-700">
+                <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-800">
 
-                    <thead class="text-gray-200 bg-sky-600">
-                        <tr>
-                            <th scope="col" class="px-6 py-4 text-black whitespace-nowrap">AI Range</th>
-                            <th scope="col" class="px-6 py-4 text-black whitespace-nowrap">ASC</th>
-                            <th scope="col" class="w-4 px-6 py-4 text-black whitespace-nowrap">District</th>
+                    <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 uppercase text-xs font-semibold tracking-wider">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <th scope="col" class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">AI Range</th>
+                            <th scope="col" class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">ASC</th>
+                            <th scope="col" class="w-4 px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">District</th>
 
-                            <th scope="col" class="px-6 py-3 text-black ">Thrips</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Gall Midge</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Leaffolder</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Yellow Stem Borer</th>
-                            <th scope="col" class="px-6 py-3 text-black ">BPH</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Paddy bugs</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Thrips</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Gall Midge</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Leaffolder</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Yellow Stem Borer</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">BPH</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Paddy bugs</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-sky-500">
+                    <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-800">
                         @foreach ($alldata as $item)
-                            <tr>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->district }} </td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->ascenter }} </td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->ai }} </td>
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->district }} </td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->ascenter }} </td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->ai }} </td>
 
                                 @if ($item->reccount != 0)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                         {{ number_format($item->thrips / $item->reccount, 2, '.', ',') }}</td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 25)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 3)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
                                 @if ($item->reccount != 0 && $item->reccount != 0)
                                     @if ($item->bhp / $item->reccount / 50 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 2)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @endif
 
                                 @if ($item->reccount != 0 && $item->reccount != 0)
                                     @if ($item->paddybug / $item->reccount / 10 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 4)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 15)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @endif
 
@@ -244,120 +244,120 @@
 
 
             @if ($selrange == 2)
-                <table class="w-full divide-y divide-sky-700">
+                <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-800">
 
-                    <thead class="text-gray-200 bg-sky-600">
-                        <tr>
-                            <th scope="col" class="px-6 py-4 text-black whitespace-nowrap">ASC</th>
-                            <th scope="col" class="w-4 px-6 py-4 text-black whitespace-nowrap">District</th>
+                    <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 uppercase text-xs font-semibold tracking-wider">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <th scope="col" class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">ASC</th>
+                            <th scope="col" class="w-4 px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">District</th>
 
 
-                            <th scope="col" class="px-6 py-3 text-black ">Thrips</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Gall Midge</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Leaffolder</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Yellow Stem Borer</th>
-                            <th scope="col" class="px-6 py-3 text-black ">BPH</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Paddy bugs</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Thrips</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Gall Midge</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Leaffolder</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Yellow Stem Borer</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">BPH</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Paddy bugs</th>
 
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-sky-500">
+                    <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-800">
                         @foreach ($alldataasc as $item)
-                            <tr>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->ascenter }} </td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->district }} </td>
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->ascenter }} </td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->district }} </td>
 
 
                                 @if ($item->reccount != 0)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                         {{ number_format($item->thrips / $item->reccount, 2, '.', ',') }}-{{ $item->thrips }}-{{ $item->reccount }}
                                     </td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 25)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 3)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap"></td>9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap"></td>9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
                                 @if ($item->reccount != 0)
                                     @if ($item->bhp / $item->reccount / 50 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 2)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif ($item->bhp / $item->reccount / 50 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @endif
 
                                 @if ($item->reccount != 0)
                                     @if ($item->paddybug / $item->reccount / 10 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 4)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 15)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif ($item->paddybug / $item->reccount / 10 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @endif
 
@@ -370,114 +370,114 @@
 
 
             @if ($selrange == 1)
-                <table class="w-full divide-y divide-sky-700">
+                <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-800">
 
-                    <thead class="text-gray-200 bg-sky-600">
-                        <tr>
-                            <th scope="col" class="w-4 px-6 py-4 text-black whitespace-nowrap">District</th>
+                    <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 uppercase text-xs font-semibold tracking-wider">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <th scope="col" class="w-4 px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">District</th>
 
-                            <th scope="col" class="px-6 py-3 text-black ">Thrips</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Gall Midge</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Leaffolder</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Yellow Stem Borer</th>
-                            <th scope="col" class="px-6 py-3 text-black ">BPH</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Paddy bugs</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Thrips</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Gall Midge</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Leaffolder</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Yellow Stem Borer</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">BPH</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Paddy bugs</th>
 
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-sky-500">
+                    <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-800">
                         @foreach ($alldatadis as $item)
-                            <tr>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->district }} </td>
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->district }} </td>
 
                                 @if ($item->reccount != 0)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                         {{ number_format($item->thrips / $item->reccount, 2, '.', ',') }}</td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif(($item->gallmidge / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 25)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 5)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 20)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->leaffolder / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
                                 @if ($item->tillers != 0 && $item->reccount != 0)
                                     @if (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 == 0)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 1)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 3)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 10)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                     @elseif (($item->yellowerstemborer / $item->reccount / ($item->tillers / $item->reccount)) * 100 <= 50)
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                     @else
-                                        <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                        <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                     @endif
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @endif
 
 
                                 @if ($item->bhp / $item->reccount / 50 == 0)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @elseif ($item->bhp / $item->reccount / 50 <= 2)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                 @elseif ($item->bhp / $item->reccount / 50 <= 5)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                 @elseif ($item->bhp / $item->reccount / 50 <= 10)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                 @elseif ($item->bhp / $item->reccount / 50 <= 20)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                 @endif
 
 
                                 @if ($item->paddybug / $item->reccount / 10 == 0)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">0</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">0</td>
                                 @elseif ($item->paddybug / $item->reccount / 10 <= 1)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">1</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">1</td>
                                 @elseif ($item->paddybug / $item->reccount / 10 <= 4)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">3</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">3</td>
                                 @elseif ($item->paddybug / $item->reccount / 10 <= 15)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">5</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">5</td>
                                 @elseif ($item->paddybug / $item->reccount / 10 <= 20)
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">7</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">7</td>
                                 @else
-                                    <td class="px-6 py-4 text-black whitespace-nowrap">9</td>
+                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">9</td>
                                 @endif
 
                             </tr>

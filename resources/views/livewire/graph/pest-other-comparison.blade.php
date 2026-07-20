@@ -1,7 +1,7 @@
 <div class="p-2 min-h-screen space-y-3">
 
     <!-- Title Card -->
-    <div class="bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-white/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
         <!-- Gradient Header -->
         <div
             class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -13,8 +13,8 @@
                 <i class="fas fa-home mr-2"></i> Home
             </a>
         </div>
-        <div class="px-6 py-3 bg-gray-50 border-t">
-            <p class="text-gray-700 text-sm italic tracking-wide">
+        <div class="px-6 py-3 bg-slate-50 dark:bg-slate-950/50 border-t">
+            <p class="text-slate-700 dark:text-slate-300 text-sm italic tracking-wide">
                 Analysis of top 15 rice varieties & their averaged pest distribution in Sri Lanka
             </p>
         </div>
@@ -37,8 +37,8 @@
     @endphp
 
     <!-- Rice Variety Pie Chart -->
-    <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 transition hover:shadow-xl">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Rice Variety Distribution (Top 15)</h2>
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg p-6 border border-slate-100 dark:border-slate-800 transition hover:shadow-xl">
+        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">Rice Variety Distribution (Top 15)</h2>
         <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
 
             <!-- Chart -->
@@ -48,7 +48,7 @@
 
             <!-- Stats Panel -->
             <div
-                class="w-full md:w-1/2 p-5 space-y-5 bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl shadow-inner text-gray-700">
+                class="w-full md:w-1/2 p-5 space-y-5 bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl shadow-inner text-slate-700 dark:text-slate-300">
 
                 <!-- Most common variety -->
                 <div class="flex items-center space-x-3">
@@ -68,7 +68,7 @@
                     <i class="fas fa-map-marked-alt text-yellow-600 text-2xl"></i>
                     <div>
                         <p class="text-lg font-semibold text-yellow-700">Data coverage</p>
-                        <p class="text-gray-600 text-sm">Major agricultural regions of Sri Lanka</p>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Major agricultural regions of Sri Lanka</p>
                     </div>
                 </div>
 
@@ -77,7 +77,7 @@
                     <i class="fas fa-users text-purple-700 text-2xl"></i>
                     <div>
                         <p class="text-lg font-semibold text-purple-700">Total collectors</p>
-                        <p class="text-gray-800 font-bold text-lg">{{ array_sum($collectorsCount) }}</p>
+                        <p class="text-slate-800 dark:text-slate-200 font-bold text-lg">{{ array_sum($collectorsCount) }}</p>
                     </div>
                 </div>
             </div>
@@ -93,9 +93,9 @@
                 $maxPestLabel = $pestNameMap[$maxPestKey] ?? $maxPestKey;
             @endphp
             <div
-                class="bg-white rounded-xl shadow p-4 border border-gray-100 hover:shadow-lg transition-all duration-200">
+                class="bg-white dark:bg-slate-900 rounded-xl shadow p-4 border border-slate-100 dark:border-slate-800 hover:shadow-lg transition-all duration-200">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-sm font-semibold text-gray-800 tracking-wide bg-yellow-300 px-2 rounded-xl">
+                    <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide bg-yellow-300 px-2 rounded-xl">
                         {{ $variety }}</h3>
                     <span
                         class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">{{ $collectorsCount[$variety] }}
@@ -104,7 +104,7 @@
                 <div class="h-44 md:h-48">
                     <canvas id="pestChart-{{ \Illuminate\Support\Str::slug($variety) }}" class="pestChart"></canvas>
                 </div>
-                <p class="text-xs text-gray-500 mt-2">Highest pest: <span
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Highest pest: <span
                         class="font-semibold">{{ $maxPestLabel }}</span> ({{ $maxPestCount }})</p>
             </div>
         @endforeach

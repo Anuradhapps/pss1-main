@@ -1,14 +1,14 @@
 <div class="m-2 relative font-sans">
     
-    <div class="bg-gray-900 rounded-2xl shadow-lg overflow-hidden mb-2">
+    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg overflow-hidden mb-2">
     <div class="bg-gradient-to-r from-pink-600 to-emerald-600 py-2 px-4">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
                         Pest Season Comparison
                     </h1>
                     <div class="flex items-center gap-2">
                         <span
-                            class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-sm font-semibold text-white">
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-slate-50 dark:bg-slate-900/20 text-sm font-semibold text-slate-900 dark:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -18,27 +18,27 @@
                         </span>
 
                         <a href="{{ url('/') }}"
-                            class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors duration-200 text-sm font-semibold text-white">
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 transition-colors duration-200 text-sm font-semibold text-slate-900 dark:text-white">
                             <i class="fas fa-home mr-2"></i> Home
                         </a>
                     </div>
                 </div>
             </div>
    
-        <div class="bg-white px-2 py-2 border-t border-gray-100">
+        <div class="bg-slate-50 dark:bg-slate-900 px-2 py-2 border-t border-slate-100 dark:border-slate-800">
              <x-pest-damage-risk-guide />
         </div>
     </div>
 
-   <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-gray-200 shadow-sm mb-4">
+   <div class="bg-slate-50 dark:bg-slate-900 p-3.5 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-slate-900/50 mb-4">
     <div class="flex flex-col xl:flex-row gap-5 items-start xl:items-end justify-between">
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full xl:flex-1">
             
             <div class="relative">
-                <label for="pestSelect" class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Target Pest</label>
+                <label for="pestSelect" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Target Pest</label>
                 <select wire:model="selectedPest" wire:loading.attr="disabled" id="pestSelect"
-                    class="block w-full py-2 px-3 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-800 font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm hover:bg-white disabled:opacity-50">
+                    class="block w-full py-2 px-3 text-sm border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-950/50 text-slate-800 dark:text-slate-200 font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm dark:shadow-slate-900/50 hover:bg-slate-50 dark:bg-slate-900 disabled:opacity-50">
                     @foreach ($pests as $key => $pest)
                         <option value="{{ $key }}">{{ $pest }}</option>
                     @endforeach
@@ -46,9 +46,9 @@
             </div>
 
             <div class="relative">
-                <label for="districtSelect" class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Region Filter</label>
+                <label for="districtSelect" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Region Filter</label>
                 <select wire:model="districtId" wire:loading.attr="disabled" id="districtSelect"
-                    class="block w-full py-2 px-3 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-800 font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm hover:bg-white disabled:opacity-50">
+                    class="block w-full py-2 px-3 text-sm border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-950/50 text-slate-800 dark:text-slate-200 font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all shadow-sm dark:shadow-slate-900/50 hover:bg-slate-50 dark:bg-slate-900 disabled:opacity-50">
                     <option value="0">National Average (All)</option>
                     @foreach ($districts as $district)
                         <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -57,9 +57,9 @@
             </div>
 
             <div class="relative">
-                <label for="seasonFilter" class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Season Alignment</label>
+                <label for="seasonFilter" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Season Alignment</label>
                 <select wire:model="seasonFilter" wire:loading.attr="disabled" id="seasonFilter"
-                    class="block w-full py-2 px-3 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-800 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all shadow-sm hover:bg-white disabled:opacity-50">
+                    class="block w-full py-2 px-3 text-sm border border-slate-300 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-950/50 text-slate-800 dark:text-slate-200 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all shadow-sm dark:shadow-slate-900/50 hover:bg-slate-50 dark:bg-slate-900 disabled:opacity-50">
                     <option value="all">Compare All (Raw)</option>
                     <option value="yala">Yala Only (Starts March)</option>
                     <option value="maha">Maha Only (Starts October)</option>
@@ -67,26 +67,26 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 w-full xl:w-auto pt-4 xl:pt-0 border-t xl:border-t-0 border-gray-100 xl:mb-0.5">
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 w-full xl:w-auto pt-4 xl:pt-0 border-t xl:border-t-0 border-slate-100 dark:border-slate-800 xl:mb-0.5">
             
-            <div class="flex items-center bg-gray-100 p-1 rounded-lg border border-gray-200 shrink-0">
-                <button wire:click="$set('chartType', 'line')" class="flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-md transition-all {{ $chartType === 'line' ? 'bg-white text-indigo-700 shadow-sm border border-gray-200/50' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-200/50' }}">
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-800 shrink-0">
+                <button wire:click="$set('chartType', 'line')" class="flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-md transition-all {{ $chartType === 'line' ? 'bg-slate-50 dark:bg-slate-900 text-indigo-700 shadow-sm dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-800/50' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:bg-slate-700/50' }}">
                     <i class="fas fa-chart-line mr-1.5"></i> Line
                 </button>
-                <button wire:click="$set('chartType', 'bar')" class="flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-md transition-all {{ $chartType === 'bar' ? 'bg-white text-indigo-700 shadow-sm border border-gray-200/50' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-200/50' }}">
+                <button wire:click="$set('chartType', 'bar')" class="flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-md transition-all {{ $chartType === 'bar' ? 'bg-slate-50 dark:bg-slate-900 text-indigo-700 shadow-sm dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-800/50' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:bg-slate-700/50' }}">
                     <i class="fas fa-chart-bar mr-1.5"></i> Bar
                 </button>
             </div>
 
-            <div class="hidden sm:block w-px h-8 bg-gray-200 shrink-0"></div>
+            <div class="hidden sm:block w-px h-8 bg-slate-200 dark:bg-slate-700 shrink-0"></div>
 
             <label class="flex items-center cursor-pointer group shrink-0">
                 <div class="relative flex items-center">
                     <input type="checkbox" wire:model="showTemperature" class="sr-only">
-                    <div class="block w-9 h-5 bg-gray-200 rounded-full border border-gray-300 transition-colors duration-200 ease-in-out group-hover:bg-gray-300 {{ $showTemperature ? '!bg-orange-500 !border-orange-600' : '' }}"></div>
-                    <div class="absolute left-0.5 top-0.5 bg-white w-4 h-4 rounded-full shadow-sm transition-transform duration-200 ease-in-out {{ $showTemperature ? 'transform translate-x-4' : '' }}"></div>
+                    <div class="block w-9 h-5 bg-slate-200 dark:bg-slate-700 rounded-full border border-slate-300 dark:border-slate-700 transition-colors duration-200 ease-in-out group-hover:bg-slate-300 dark:bg-slate-600 {{ $showTemperature ? '!bg-orange-500 !border-orange-600' : '' }}"></div>
+                    <div class="absolute left-0.5 top-0.5 bg-slate-50 dark:bg-slate-900 w-4 h-4 rounded-full shadow-sm dark:shadow-slate-900/50 transition-transform duration-200 ease-in-out {{ $showTemperature ? 'transform translate-x-4' : '' }}"></div>
                 </div>
-                <span class="ml-2.5 text-xs font-semibold text-gray-600 group-hover:text-gray-900 transition-colors select-none">
+                <span class="ml-2.5 text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:text-white transition-colors select-none">
                     Overlay Temp
                 </span>
             </label>
@@ -96,15 +96,15 @@
     </div>
 </div>
 
-    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm relative min-h-[500px] flex flex-col">
+    <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm dark:shadow-slate-900/50 relative min-h-[500px] flex flex-col">
         
-        <div wire:loading.flex wire:target="fetchChartData" class="absolute inset-0 z-10 bg-white/90 backdrop-blur-sm rounded-2xl flex-col items-center justify-center">
+        <div wire:loading.flex wire:target="fetchChartData" class="absolute inset-0 z-10 bg-slate-50 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl flex-col items-center justify-center">
             <div class="flex items-center gap-2">
                 <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: -0.3s"></div>
                 <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: -0.15s"></div>
                 <div class="w-3 h-3 bg-indigo-600 rounded-full animate-bounce"></div>
             </div>
-            <p class="text-gray-900 font-bold mt-4 tracking-tight">Processing Matrix Data...</p>
+            <p class="text-slate-900 dark:text-white font-bold mt-4 tracking-tight">Processing Matrix Data...</p>
         </div>
 
         <div class="relative flex-grow w-full" wire:ignore>

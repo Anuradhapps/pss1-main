@@ -63,15 +63,15 @@
     <x-loader />
 
     <div x-data="{ sidebarOpen: false }" x-cloak class="h-screen bg-background dark:bg-slate-900 flex overflow-hidden font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300">
-        
+
         @auth
         <!-- Desktop Sidebar (Full Height) -->
         <aside class="hidden md:flex flex-col w-64 bg-surface dark:bg-card border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-40 flex-shrink-0">
             <!-- Sidebar Header (Logo) -->
             <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                 <a href="{{ route('dashboard') }}" class="block w-full">
-                    <x-logo-light class="block dark:hidden"></x-logo-light>
-                    <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                    <x-logo-light class="flex dark:hidden"></x-logo-light>
+                    <x-logo-dark class="hidden dark:flex"></x-logo-dark>
                 </a>
             </div>
             <!-- Navigation -->
@@ -83,30 +83,30 @@
         <!-- Mobile Sidebar Backdrop & Drawer -->
         <div x-show="sidebarOpen" x-cloak class="md:hidden">
             <!-- Backdrop -->
-            <div x-show="sidebarOpen" 
-                 x-transition:enter="transition-opacity ease-linear duration-300" 
-                 x-transition:enter-start="opacity-0" 
-                 x-transition:enter-end="opacity-100" 
-                 x-transition:leave="transition-opacity ease-linear duration-300" 
-                 x-transition:leave-start="opacity-100" 
-                 x-transition:leave-end="opacity-0" 
-                 @click="sidebarOpen = false"
-                 class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-40"></div>
+            <div x-show="sidebarOpen"
+                x-transition:enter="transition-opacity ease-linear duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition-opacity ease-linear duration-300"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="sidebarOpen = false"
+                class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-40"></div>
 
             <!-- Drawer -->
-            <aside x-show="sidebarOpen" 
-                   x-transition:enter="transition ease-in-out duration-300 transform" 
-                   x-transition:enter-start="-translate-x-full" 
-                   x-transition:enter-end="translate-x-0" 
-                   x-transition:leave="transition ease-in-out duration-300 transform" 
-                   x-transition:leave-start="translate-x-0" 
-                   x-transition:leave-end="-translate-x-full" 
-                   class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 shadow-2xl flex flex-col h-full">
-                
+            <aside x-show="sidebarOpen"
+                x-transition:enter="transition ease-in-out duration-300 transform"
+                x-transition:enter-start="-translate-x-full"
+                x-transition:enter-end="translate-x-0"
+                x-transition:leave="transition ease-in-out duration-300 transform"
+                x-transition:leave-start="translate-x-0"
+                x-transition:leave-end="-translate-x-full"
+                class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 shadow-2xl flex flex-col h-full">
+
                 <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                     <a href="{{ route('dashboard') }}" class="block">
-                        <x-logo-light class="block dark:hidden"></x-logo-light>
-                        <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                        <x-logo-light class="flex dark:hidden"></x-logo-light>
+                        <x-logo-dark class="hidden dark:flex"></x-logo-dark>
                     </a>
                     <button @click="sidebarOpen = false" class="text-slate-500 hover:text-red-600 dark:text-slate-400 p-2 -mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none">
                         <i class="fas fa-times text-xl"></i>
@@ -122,7 +122,7 @@
 
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
-            
+
             @auth
             <!-- Top Navbar (Right Side Only) -->
             <header class="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300 flex-shrink-0">
@@ -133,8 +133,8 @@
                     </button>
                     <!-- Optional Mobile Logo in Header if Drawer is closed -->
                     <a href="{{ route('dashboard') }}" class="md:hidden ml-2 block w-48">
-                        <x-logo-light class="block dark:hidden"></x-logo-light>
-                        <x-logo-dark class="hidden dark:block"></x-logo-dark>
+                        <x-logo-light class="flex dark:hidden"></x-logo-light>
+                        <x-logo-dark class="hidden dark:flex"></x-logo-dark>
                     </a>
                 </div>
 
@@ -189,7 +189,7 @@
             <!-- Scrollable Main Content -->
             <main class="flex-1 overflow-y-auto bg-background dark:bg-[#0F172A] transition-colors duration-300 custom-scrollbar flex flex-col">
                 <!-- Page Content -->
-                <div class="flex-1 w-full max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8 xl:px-12">
+                <div class="flex-1 w-full max-w-[1800px] mx-auto p-2 sm:p-2 lg:p-2 xl:px-2">
                     {{ $slot ?? '' }}
                 </div>
 
@@ -241,10 +241,10 @@
         AOS.init();
     </script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
+
     <!-- Toast Notification System -->
     <x-ui.toast />
-    
+
     @livewireScripts
     @stack('scripts')
 </body>

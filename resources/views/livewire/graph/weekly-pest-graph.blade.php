@@ -1,5 +1,5 @@
-<div class="bg-gray-900 p-4 rounded-xl shadow-md">
-    <h2 class="text-white text-lg font-semibold mb-4">Weekly Pest Density Chart</h2>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-slate-900 dark:text-white text-lg font-semibold mb-4">Weekly Pest Density Chart</h2>
 
     <div class="mb-4 flex space-x-4">
         <div class="flex-1">
@@ -74,6 +74,9 @@
                 }
 
                 const data = @json($chartData);
+                const isDark = document.documentElement.classList.contains('dark');
+                const textColor = isDark ? '#94a3b8' : '#475569';
+                const gridColor = isDark ? '#374151' : '#e2e8f0';
                 const labels = data.map(item => item.week);
 
                 const pests = ['thrips', 'gallMidge', 'leaffolder', 'yellowStemBorer', 'bphWbph', 'paddyBug'];
@@ -110,7 +113,7 @@
                             legend: {
                                 position: 'top',
                                 labels: {
-                                    color: '#ffffff',
+                                    color: textColor,
                                     font: {
                                         size: 12
                                     }
@@ -127,7 +130,7 @@
                         scales: {
                             x: {
                                 ticks: {
-                                    color: '#ffffff',
+                                    color: textColor,
                                     maxRotation: 45,
                                     minRotation: 45
                                 },
@@ -138,7 +141,7 @@
                             y: {
                                 beginAtZero: true,
                                 ticks: {
-                                    color: '#ffffff',
+                                    color: textColor,
                                     stepSize: 1
                                 },
                                 grid: {
@@ -147,7 +150,7 @@
                                 title: {
                                     display: true,
                                     text: 'Pest Density Code',
-                                    color: '#ffffff'
+                                    color: textColor
                                 }
                             }
                         }

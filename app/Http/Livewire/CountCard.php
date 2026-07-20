@@ -19,31 +19,48 @@ class CountCard extends Component
     // Triggered when the component is mounted (loaded)
     public function mount()
     {
+        $ttl = 300; // 5 minutes cache
+
         if ($this->cardName == 'Users') {
-            $this->targetCount = User::count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_users', $ttl, function () {
+                return User::count();
+            });
         }
         if ($this->cardName == 'Pests') {
-            $this->targetCount = Pest::count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_pests', $ttl, function () {
+                return Pest::count();
+            });
         }
         if ($this->cardName == 'Collectors') {
-            $this->targetCount = Collector::count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_collectors', $ttl, function () {
+                return Collector::count();
+            });
         }
         if ($this->cardName == 'Districts') {
-            $this->targetCount = Collector::pluck('district')->unique()->count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_districts', $ttl, function () {
+                return Collector::pluck('district')->unique()->count();
+            });
         }
         if ($this->cardName == 'Provinces') {
-            $this->targetCount = Collector::pluck('province')->unique()->count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_provinces', $ttl, function () {
+                return Collector::pluck('province')->unique()->count();
+            });
         }
         if ($this->cardName == 'ASC') {
-            $this->targetCount = Collector::pluck('asc')->unique()->count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_ascs', $ttl, function () {
+                return Collector::pluck('asc')->unique()->count();
+            });
         }
         if ($this->cardName == 'AiRanges') {
-            $this->targetCount = Collector::pluck('ai_range')->unique()->count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_airanges', $ttl, function () {
+                return Collector::pluck('ai_range')->unique()->count();
+            });
         }
         if ($this->cardName == 'ConductedPrograms') {
-            $this->targetCount = ConductedProgram::count();
+            $this->targetCount = \Illuminate\Support\Facades\Cache::remember('countcard_programs', $ttl, function () {
+                return ConductedProgram::count();
+            });
         }
-
 
         $this->userCount = 0;
     }

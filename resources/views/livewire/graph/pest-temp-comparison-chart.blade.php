@@ -1,6 +1,6 @@
 <div class="m-2">
     <!-- Main Title Container -->
-    <div class="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+    <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm dark:shadow-slate-900/50 overflow-hidden">
         <!-- Gradient Header Bar -->
         <div class="bg-gradient-to-r from-pink-600 to-emerald-600 py-2 px-4">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -27,9 +27,9 @@
         </div>
 
         <!-- Description Box -->
-        <div class="px-4 bg-gray-50 border-t border-gray-100">
+        <div class="px-4 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800">
             <div class="prose prose-indigo max-w-none">
-                <p class="text-gray-700 text-sm italic">
+                <p class="text-slate-700 dark:text-slate-300 text-sm italic">
                     Visualize weekly pest severity (0–9 scale) alongside average seasonal temperatures for comparison.
                 </p>
             </div>
@@ -43,15 +43,15 @@
 
     <!-- Header & Filters -->
     <div class="m-3">
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm dark:shadow-slate-900/50 p-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Pest Selector -->
                 <div>
-                    <label for="pestSelect" class="block text-xs font-medium text-gray-600 mb-1">
+                    <label for="pestSelect" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
                         Select Pest
                     </label>
                     <select wire:model="selectedPest" id="pestSelect"
-                        class="w-full rounded-lg border-gray-300 text-gray-800 text-sm p-2.5
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-sm p-2.5
                            focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         @foreach ($pests as $key => $pest)
                             <option value="{{ $key }}">{{ $pest }}</option>
@@ -61,11 +61,11 @@
 
                 <!-- District Selector -->
                 <div>
-                    <label for="districtSelect" class="block text-xs font-medium text-gray-600 mb-1">
+                    <label for="districtSelect" class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
                         Select District
                     </label>
                     <select wire:model="districtId" id="districtSelect"
-                        class="w-full rounded-lg border-gray-300 text-gray-800 text-sm p-2.5
+                        class="w-full rounded-lg border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-sm p-2.5
                            focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         <option value="0">All Districts</option>
                         @foreach ($districts as $district)
@@ -79,7 +79,7 @@
                     <button id="toggleAllTemp"
                         class="w-full px-3 py-2 text-sm font-medium rounded-lg
                            bg-gradient-to-r from-gray-700 to-gray-800 text-white
-                           hover:from-gray-800 hover:to-black shadow-sm transition">
+                           hover:from-gray-800 hover:to-black shadow-sm dark:shadow-slate-900/50 transition">
                         Toggle All Temperature
                     </button>
                 </div>
@@ -90,13 +90,13 @@
 
     <!-- Loading State -->
     @if ($isLoading)
-        <div class="flex flex-col items-center justify-center p-12 bg-gray-50 rounded-xl border border-gray-200">
+        <div class="flex flex-col items-center justify-center p-12 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-800">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
-            <p class="mt-4 text-gray-600 font-medium">Loading pest data...</p>
+            <p class="mt-4 text-slate-600 dark:text-slate-400 font-medium">Loading pest data...</p>
         </div>
     @else
         <!-- Chart Container -->
-        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm overflow-hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
             <div class="relative h-96 w-full">
                 <canvas id="pestComparisonChart"></canvas>
             </div>

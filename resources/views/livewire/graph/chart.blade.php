@@ -1,7 +1,7 @@
-<div class="mx-auto p-2 bg-white">
+<div class="mx-auto p-2 bg-white dark:bg-slate-900">
     <div class="mx-auto">
         <!-- Main Title Container -->
-        <div class="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+        <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm dark:shadow-slate-900/50 overflow-hidden">
             <!-- Gradient Header Bar -->
             <div class="bg-gradient-to-r from-indigo-600 to-emerald-600 py-2 px-4">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -31,9 +31,9 @@
             </div>
 
             <!-- Description Box -->
-            <div class="px-4  bg-gray-50 border-t border-gray-100">
+            <div class="px-4  bg-slate-50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800">
                 <div class="prose prose-indigo max-w-none">
-                    <p class="text-gray-700 text-sm italic">
+                    <p class="text-slate-700 dark:text-slate-300 text-sm italic">
                         Visualized weekly averages of pest damage intensity using a coded risk index (0-9 scale)
                         for field assessment.
                     </p>
@@ -49,10 +49,10 @@
         </div>
     </div>
     <!-- Header & Filters -->
-    <div x-data="{ open: true }" class="bg-white rounded-xl shadow-sm border border-gray-200 my-2">
+    <div x-data="{ open: true }" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm dark:shadow-slate-900/50 border border-slate-200 dark:border-slate-800 my-2">
         <!-- Header -->
         <div class="flex items-center justify-between px-4 border-b mb-2" @click="open = !open">
-            <h2 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+            <h2 class="text-base font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -78,23 +78,23 @@
             <div class="p-4 space-y-4">
                 <!-- District Selector -->
                 <div>
-                    <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="districtSelect" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                         District
                     </label>
                     <select wire:model="districtId" id="districtSelect"
-                        class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 rounded-lg
+                        class="block w-full pl-3 pr-10 py-2 text-base border border-slate-300 dark:border-slate-700 rounded-lg
                            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                           sm:text-sm bg-white text-gray-800 shadow-sm">
+                           sm:text-sm bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 shadow-sm dark:shadow-slate-900/50">
                         <option value="0">All Districts</option>
                         @foreach ($districts as $district)
-                            <option value="{{ $district->id }}">{{ $district->name }}</option>
+                        <option value="{{ $district->id }}">{{ $district->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <!-- Season Selector -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                         Season
                     </label>
                     <div
@@ -104,18 +104,18 @@
                                transition-all duration-200
                                {{ $selectedSeason == '0'
                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow'
-                                   : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300' }}">
+                                   : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700' }}">
                             All
                         </button>
                         @foreach ($seasons as $season)
-                            <button type="button" wire:click="$set('selectedSeason', '{{ $season->id }}')"
-                                class="px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap border
+                        <button type="button" wire:click="$set('selectedSeason', '{{ $season->id }}')"
+                            class="px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap border
                                    transition-all duration-200
                                    {{ $selectedSeason == $season->id
                                        ? 'bg-indigo-600 text-white border-indigo-600 shadow'
-                                       : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300' }}">
-                                {{ $season->name }}
-                            </button>
+                                       : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700' }}">
+                            {{ $season->name }}
+                        </button>
                         @endforeach
                     </div>
                 </div>
@@ -126,9 +126,9 @@
     <!-- Metrics Dashboard - Compact Modern Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
         <!-- Time Period Card -->
-        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-3 shadow-sm border border-indigo-100">
+        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-3 shadow-sm dark:shadow-slate-900/50 border border-indigo-100">
             <div class="flex items-center space-x-3">
-                <div class="p-2 rounded-md bg-white shadow-sm">
+                <div class="p-2 rounded-md bg-white dark:bg-slate-900 shadow-sm dark:shadow-slate-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -137,12 +137,12 @@
                 </div>
                 <div>
                     <p class="text-xs font-medium text-indigo-800 uppercase tracking-wider">Time Period</p>
-                    <p class="text-sm font-semibold text-gray-900">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">
                         @if (count($dates) > 0)
-                            {{ \Carbon\Carbon::parse($dates[0])->format('M d, Y') }} -
-                            {{ \Carbon\Carbon::parse(end($dates))->addDays(7)->format('M d, Y') }}
+                        {{ \Carbon\Carbon::parse($dates[0])->format('M d, Y') }} -
+                        {{ \Carbon\Carbon::parse(end($dates))->addDays(7)->format('M d, Y') }}
                         @else
-                            No data available
+                        No data available
                         @endif
                     </p>
                 </div>
@@ -150,9 +150,9 @@
         </div>
 
         <!-- Data Points Card -->
-        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 shadow-sm border border-green-100">
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-3 shadow-sm dark:shadow-slate-900/50 border border-green-100">
             <div class="flex items-center space-x-3">
-                <div class="p-2 rounded-md bg-white shadow-sm">
+                <div class="p-2 rounded-md bg-white dark:bg-slate-900 shadow-sm dark:shadow-slate-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -161,7 +161,7 @@
                 </div>
                 <div>
                     <p class="text-xs font-medium text-green-800 uppercase tracking-wider">Data Points</p>
-                    <p class="text-sm font-semibold text-gray-900 mt-0.5">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">
                         {{ count($dates) }} {{ \Illuminate\Support\Str::plural('week', count($dates)) }} tracked
                     </p>
                 </div>
@@ -169,9 +169,9 @@
         </div>
 
         <!-- Pests Tracked Card -->
-        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 shadow-sm border border-purple-100">
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-3 shadow-sm dark:shadow-slate-900/50 border border-purple-100">
             <div class="flex items-center space-x-3">
-                <div class="p-2 rounded-md bg-white shadow-sm">
+                <div class="p-2 rounded-md bg-white dark:bg-slate-900 shadow-sm dark:shadow-slate-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -180,7 +180,7 @@
                 </div>
                 <div>
                     <p class="text-xs font-medium text-purple-800 uppercase tracking-wider">Pest Species</p>
-                    <p class="text-sm font-semibold text-gray-900 mt-0.5">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">
                         {{ count($pestData) }} species monitored
                     </p>
                 </div>
@@ -191,34 +191,34 @@
 
     <!-- Loading State with Animation -->
     @if ($isLoading)
-        <div class="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl border border-gray-200">
-            <div class="relative w-12 h-12 mb-4">
-                <div
-                    class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin">
-                </div>
-                <div
-                    class="absolute inset-1 rounded-full border-4 border-indigo-300 border-b-transparent animate-spin animation-delay-150">
-                </div>
+    <div class="flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-200 dark:border-slate-800">
+        <div class="relative w-12 h-12 mb-4">
+            <div
+                class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin">
             </div>
-            <p class="text-gray-600 font-medium">Loading pest monitoring data...</p>
-            <p class="text-sm text-gray-500 mt-1">This may take a moment</p>
+            <div
+                class="absolute inset-1 rounded-full border-4 border-indigo-300 border-b-transparent animate-spin animation-delay-150">
+            </div>
         </div>
+        <p class="text-slate-600 dark:text-slate-400 font-medium">Loading pest monitoring data...</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">This may take a moment</p>
+    </div>
     @endif
 
     <!-- Chart Section with Enhanced UI -->
-    <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm overflow-hidden">
+    <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
         <!-- Chart Canvas with Glass Morphism Effect -->
         <div class="relative h-80 w-full bg-gradient-to-br from-gray-50 to-white rounded-lg overflow-hidden">
             <div class="absolute inset-0 backdrop-blur-sm bg-white/30 z-10 flex items-center justify-center"
                 id="chartOverlay" style="display: none;">
-                <div class="text-center p-6 bg-white/90 rounded-xl shadow-lg border border-gray-200 max-w-xs">
+                <div class="text-center p-6 bg-white/90 dark:bg-slate-900/90 rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 max-w-xs">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-600 mx-auto mb-3"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 class="font-semibold text-gray-900 mb-1">Interactive Chart</h3>
-                    <p class="text-sm text-gray-600">Hover over data points for details. Click legend items to toggle
+                    <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Interactive Chart</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Hover over data points for details. Click legend items to toggle
                         visibility.</p>
                 </div>
             </div>
@@ -227,9 +227,9 @@
 
         <!-- Enhanced Chart Controls -->
         <div class="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div class="flex items-center space-x-2 text-xs text-gray-600">
+            <div class="flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-400">
                 <button type="button" onclick="toggleChartHelp()"
-                    class="p-1.5 rounded-full hover:bg-gray-300 transition" title="Chart Help">
+                    class="p-1.5 rounded-full hover:bg-slate-300 dark:bg-slate-600 transition" title="Chart Help">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-900" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -241,7 +241,7 @@
 
             <div class="flex space-x-2">
                 <button type="button" onclick="resetZoom()"
-                    class="flex items-center space-x-1 px-3 py-1.5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition shadow-sm">
+                    class="flex items-center space-x-1 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-950/50 transition shadow-sm dark:shadow-slate-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -251,7 +251,7 @@
                 </button>
 
                 <button type="button" onclick="exportChart()"
-                    class="flex items-center space-x-1 px-3 py-1.5 bg-indigo-600 border border-indigo-700 rounded-lg text-sm font-medium text-white hover:bg-indigo-700 transition shadow-sm">
+                    class="flex items-center space-x-1 px-3 py-1.5 bg-indigo-600 border border-indigo-700 rounded-lg text-sm font-medium text-white hover:bg-indigo-700 transition shadow-sm dark:shadow-slate-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -267,360 +267,360 @@
 </div>
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-    <script>
-        document.addEventListener('livewire:load', function() {
-            const ctx = document.getElementById('pestChart');
-            let chart = null;
+<script>
+    document.addEventListener('livewire:load', function() {
+        const ctx = document.getElementById('pestChart');
+        let chart = null;
 
-            // Modern color palette with better contrast
-            const colors = [{
-                    bg: 'rgba(79, 70, 229, 0.1)',
-                    border: '#4F46E5',
-                    hover: '#3E36C7'
-                }, // indigo
-                {
-                    bg: 'rgba(220, 38, 38, 0.1)',
-                    border: '#DC2626',
-                    hover: '#C52222'
-                }, // red
-                {
-                    bg: 'rgba(5, 150, 105, 0.1)',
-                    border: '#059669',
-                    hover: '#047857'
-                }, // emerald
-                {
-                    bg: 'rgba(217, 119, 6, 0.1)',
-                    border: '#D97706',
-                    hover: '#B65D04'
-                }, // amber
-                {
-                    bg: 'rgba(124, 58, 237, 0.1)',
-                    border: '#7C3AED',
-                    hover: '#6B28D9'
-                }, // purple
-                {
-                    bg: 'rgba(219, 39, 119, 0.1)',
-                    border: '#DB2777',
-                    hover: '#BE185D'
-                }, // pink
-                {
-                    bg: 'rgba(13, 148, 136, 0.1)',
-                    border: '#0D9488',
-                    hover: '#0F766E'
-                }, // teal
-                {
-                    bg: 'rgba(234, 88, 12, 0.1)',
-                    border: '#EA580C',
-                    hover: '#C2410C'
-                }, // orange
-            ];
+        // Modern color palette with better contrast
+        const colors = [{
+                bg: 'rgba(79, 70, 229, 0.1)',
+                border: '#4F46E5',
+                hover: '#3E36C7'
+            }, // indigo
+            {
+                bg: 'rgba(220, 38, 38, 0.1)',
+                border: '#DC2626',
+                hover: '#C52222'
+            }, // red
+            {
+                bg: 'rgba(5, 150, 105, 0.1)',
+                border: '#059669',
+                hover: '#047857'
+            }, // emerald
+            {
+                bg: 'rgba(217, 119, 6, 0.1)',
+                border: '#D97706',
+                hover: '#B65D04'
+            }, // amber
+            {
+                bg: 'rgba(124, 58, 237, 0.1)',
+                border: '#7C3AED',
+                hover: '#6B28D9'
+            }, // purple
+            {
+                bg: 'rgba(219, 39, 119, 0.1)',
+                border: '#DB2777',
+                hover: '#BE185D'
+            }, // pink
+            {
+                bg: 'rgba(13, 148, 136, 0.1)',
+                border: '#0D9488',
+                hover: '#0F766E'
+            }, // teal
+            {
+                bg: 'rgba(234, 88, 12, 0.1)',
+                border: '#EA580C',
+                hover: '#C2410C'
+            }, // orange
+        ];
 
-            function initChart(dates, pestData) {
-                if (chart) chart.destroy();
+        function initChart(dates, pestData) {
+            if (chart) chart.destroy();
 
-                const datasets = Object.entries(pestData).map(([pest, data], i) => {
-                    const colorIndex = i % colors.length;
-                    const pestName = formatPestName(pest);
+            const datasets = Object.entries(pestData).map(([pest, data], i) => {
+                const colorIndex = i % colors.length;
+                const pestName = formatPestName(pest);
 
-                    return {
-                        label: pestName,
-                        data: data,
-                        backgroundColor: colors[colorIndex].bg,
-                        borderColor: colors[colorIndex].border,
-                        borderWidth: 2.5,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: colors[colorIndex].border,
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        pointHoverBorderWidth: 3,
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: colors[colorIndex].hover,
-                        tension: 0.3,
-                        fill: true, // Add dashes to lines after 4th dataset
-                    };
-                });
+                return {
+                    label: pestName,
+                    data: data,
+                    backgroundColor: colors[colorIndex].bg,
+                    borderColor: colors[colorIndex].border,
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: colors[colorIndex].border,
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointHoverBorderWidth: 3,
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: colors[colorIndex].hover,
+                    tension: 0.3,
+                    fill: true, // Add dashes to lines after 4th dataset
+                };
+            });
 
-                chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: dates.map(d => formatDateLabel(d)),
-                        datasets,
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates.map(d => formatDateLabel(d)),
+                    datasets,
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(17, 24, 39, 0.97)',
+                            titleFont: {
+                                size: 13,
+                                weight: '600',
+                                family: 'Inter'
+                            },
+                            bodyFont: {
+                                size: 13,
+                                family: 'Inter'
+                            },
+                            padding: 12,
+                            cornerRadius: 10,
+                            usePointStyle: true,
+                            boxPadding: 6,
+                            callbacks: {
+                                label: ctx => {
+                                    const label = ctx.dataset.label || '';
+                                    const value = ctx.parsed.y;
+                                    let riskLevel = '';
+
+                                    if (value >= 7) riskLevel = ' (Critical)';
+                                    else if (value >= 5) riskLevel = ' (Threshold)';
+                                    else if (value >= 3) riskLevel = ' (Alert)';
+
+                                    return `${label}: ${value}${riskLevel}`;
+                                },
+                                title: ctx => `Week of ${ctx[0].label}`,
+
+                            },
+                            footerFontStyle: 'normal',
+                            footerMarginTop: 10,
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                font: {
+                                    size: 13,
+                                    family: 'Inter'
+                                },
+                                generateLabels: chart => {
+                                    return chart.data.datasets.map((ds, i) => ({
+                                        text: ds.label,
+                                        fillStyle: ds.borderColor,
+                                        strokeStyle: ds.borderColor,
+                                        hidden: !chart.isDatasetVisible(i),
+                                        index: i,
+                                        fontColor: '#111827',
+                                        lineWidth: 2,
+                                    }));
+                                },
+                            },
+                            onClick: (e, legendItem, legend) => {
+                                const meta = legend.chart.getDatasetMeta(legendItem.index);
+                                meta.hidden = meta.hidden === null ? !legend.chart.data.datasets[
+                                    legendItem.index].hidden : null;
+                                legend.chart.update();
+                            },
+                            onHover: (e, legendItem, legend) => {
+                                e.native.target.style.cursor = 'pointer';
+                            },
+                            onLeave: (e, legendItem, legend) => {
+                                e.native.target.style.cursor = 'default';
+                            },
+                        },
+                        zoom: {
+                            pan: {
+                                enabled: true,
+                                mode: 'xy',
+                                modifierKey: 'shift',
+                            },
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                    modifierKey: 'ctrl',
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'x',
+                                speed: 0.1,
+                            },
+                            limits: {
+                                x: {
+                                    minRange: 5
+                                }
+                            }
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            tooltip: {
-                                mode: 'index',
-                                intersect: false,
-                                backgroundColor: 'rgba(17, 24, 39, 0.97)',
-                                titleFont: {
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false,
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+
+                            max: 10,
+                            grid: {
+                                drawBorder: false,
+                                color: 'rgba(148, 163, 184, 0.1)',
+                                drawTicks: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Inter'
+                                },
+                                padding: 10,
+                                stepSize: 1,
+                                callback: function(value) {
+                                    if (value === 0) return '0 - None';
+                                    if (value === 3) return '3 - Alert';
+                                    if (value === 5) return '5 - Threshold';
+                                    if (value === 7) return '7 - Critical';
+                                    if (value === 9) return '9 - Severe';
+                                    return '';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Pest Risk Level',
+                                font: {
                                     size: 13,
                                     weight: '600',
                                     family: 'Inter'
                                 },
-                                bodyFont: {
-                                    size: 13,
+                                color: '#374151',
+                                padding: {
+                                    top: 0,
+                                    bottom: 15
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
                                     family: 'Inter'
                                 },
-                                padding: 12,
-                                cornerRadius: 10,
-                                usePointStyle: true,
-                                boxPadding: 6,
-                                callbacks: {
-                                    label: ctx => {
-                                        const label = ctx.dataset.label || '';
-                                        const value = ctx.parsed.y;
-                                        let riskLevel = '';
-
-                                        if (value >= 7) riskLevel = ' (Critical)';
-                                        else if (value >= 5) riskLevel = ' (Threshold)';
-                                        else if (value >= 3) riskLevel = ' (Alert)';
-
-                                        return `${label}: ${value}${riskLevel}`;
-                                    },
-                                    title: ctx => `Week of ${ctx[0].label}`,
-
-                                },
-                                footerFontStyle: 'normal',
-                                footerMarginTop: 10,
+                                maxRotation: 45,
+                                minRotation: 0,
+                                padding: 10,
+                                autoSkip: true,
+                                maxTicksLimit: 12
                             },
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    usePointStyle: true,
-                                    pointStyle: 'circle',
-                                    font: {
-                                        size: 13,
-                                        family: 'Inter'
-                                    },
-                                    generateLabels: chart => {
-                                        return chart.data.datasets.map((ds, i) => ({
-                                            text: ds.label,
-                                            fillStyle: ds.borderColor,
-                                            strokeStyle: ds.borderColor,
-                                            hidden: !chart.isDatasetVisible(i),
-                                            index: i,
-                                            fontColor: '#111827',
-                                            lineWidth: 2,
-                                        }));
-                                    },
+                            title: {
+                                display: true,
+                                text: 'Week Starting Date',
+                                font: {
+                                    size: 13,
+                                    weight: '600',
+                                    family: 'Inter'
                                 },
-                                onClick: (e, legendItem, legend) => {
-                                    const meta = legend.chart.getDatasetMeta(legendItem.index);
-                                    meta.hidden = meta.hidden === null ? !legend.chart.data.datasets[
-                                        legendItem.index].hidden : null;
-                                    legend.chart.update();
-                                },
-                                onHover: (e, legendItem, legend) => {
-                                    e.native.target.style.cursor = 'pointer';
-                                },
-                                onLeave: (e, legendItem, legend) => {
-                                    e.native.target.style.cursor = 'default';
-                                },
-                            },
-                            zoom: {
-                                pan: {
-                                    enabled: true,
-                                    mode: 'xy',
-                                    modifierKey: 'shift',
-                                },
-                                zoom: {
-                                    wheel: {
-                                        enabled: true,
-                                        modifierKey: 'ctrl',
-                                    },
-                                    pinch: {
-                                        enabled: true
-                                    },
-                                    mode: 'x',
-                                    speed: 0.1,
-                                },
-                                limits: {
-                                    x: {
-                                        minRange: 5
-                                    }
+                                color: '#374151',
+                                padding: {
+                                    top: 10,
+                                    bottom: 0
                                 }
                             }
+                        }
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 2.5,
+                            tension: 0.3,
                         },
-                        interaction: {
-                            mode: 'nearest',
-                            axis: 'x',
-                            intersect: false,
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-
-                                max: 10,
-                                grid: {
-                                    drawBorder: false,
-                                    color: 'rgba(229, 231, 235, 0.5)',
-                                    drawTicks: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 12,
-                                        family: 'Inter'
-                                    },
-                                    padding: 10,
-                                    stepSize: 1,
-                                    callback: function(value) {
-                                        if (value === 0) return '0 - None';
-                                        if (value === 3) return '3 - Alert';
-                                        if (value === 5) return '5 - Threshold';
-                                        if (value === 7) return '7 - Critical';
-                                        if (value === 9) return '9 - Severe';
-                                        return '';
-                                    }
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Pest Risk Level',
-                                    font: {
-                                        size: 13,
-                                        weight: '600',
-                                        family: 'Inter'
-                                    },
-                                    color: '#374151',
-                                    padding: {
-                                        top: 0,
-                                        bottom: 15
-                                    }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false,
-                                    drawBorder: false,
-                                },
-                                ticks: {
-                                    font: {
-                                        size: 12,
-                                        family: 'Inter'
-                                    },
-                                    maxRotation: 45,
-                                    minRotation: 0,
-                                    padding: 10,
-                                    autoSkip: true,
-                                    maxTicksLimit: 12
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Week Starting Date',
-                                    font: {
-                                        size: 13,
-                                        weight: '600',
-                                        family: 'Inter'
-                                    },
-                                    color: '#374151',
-                                    padding: {
-                                        top: 10,
-                                        bottom: 0
-                                    }
-                                }
-                            }
-                        },
-                        elements: {
-                            line: {
-                                borderWidth: 2.5,
-                                tension: 0.3,
-                            },
-                            point: {
-                                radius: 4,
-                                hoverRadius: 6,
-                                hoverBorderWidth: 3,
-                            }
-                        },
-                        animation: {
-                            duration: 1000,
-                            easing: 'easeOutQuart'
-                        },
-                        onHover: (event, chartElements) => {
-                            if (chartElements.length > 0) {
-                                document.getElementById('chartOverlay').style.display = 'none';
-                            }
-                        },
-                    }
-                });
-
-                // Show help overlay initially
-                setTimeout(() => {
-                    if (chart && !localStorage.getItem('chartHelpShown')) {
-                        document.getElementById('chartOverlay').style.display = 'flex';
-                        localStorage.setItem('chartHelpShown', 'true');
-                    }
-                }, 1500);
-            }
-
-            // Helper functions
-            function formatPestName(pest) {
-                return pest
-                    .replace(/([A-Z])/g, ' $1')
-                    .replace(/^./, s => s.toUpperCase())
-                    .replace('Bph Wbph', 'BPH/WBPH')
-                    .replace('Thrips', 'Thrips ')
-                    .trim();
-            }
-
-            function formatDateLabel(dateStr) {
-                const dt = new Date(dateStr);
-                return dt.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                });
-            }
-
-
-
-            window.toggleChartHelp = function() {
-                const overlay = document.getElementById('chartOverlay');
-                overlay.style.display = overlay.style.display === 'none' ? 'flex' : 'none';
-            };
-
-            window.resetZoom = function() {
-                if (chart) chart.resetZoom();
-            };
-
-            window.exportChart = function() {
-                if (!chart) return;
-
-                // Create a temporary canvas with higher resolution
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = 2000;
-                tempCanvas.height = 1200;
-                const tempCtx = tempCanvas.getContext('2d');
-
-                // White background
-                tempCtx.fillStyle = '#ffffff';
-                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
-                // Draw chart with higher resolution
-                tempCtx.drawImage(chart.canvas, 0, 0, tempCanvas.width, tempCanvas.height);
-
-                // Convert to image and download
-                const link = document.createElement('a');
-                link.download = 'pest-monitoring-chart-' + new Date().toISOString().slice(0, 10) + '.png';
-                link.href = tempCanvas.toDataURL('image/png');
-                link.click();
-            };
-
-            // Initialize chart with initial data
-            initChart(@json($dates), @json($pestData));
-
-            // Listen for Livewire updates
-            window.addEventListener('chartUpdated', e => {
-                initChart(e.detail.dates, e.detail.pestData);
+                        point: {
+                            radius: 4,
+                            hoverRadius: 6,
+                            hoverBorderWidth: 3,
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    },
+                    onHover: (event, chartElements) => {
+                        if (chartElements.length > 0) {
+                            document.getElementById('chartOverlay').style.display = 'none';
+                        }
+                    },
+                }
             });
+
+            // Show help overlay initially
+            setTimeout(() => {
+                if (chart && !localStorage.getItem('chartHelpShown')) {
+                    document.getElementById('chartOverlay').style.display = 'flex';
+                    localStorage.setItem('chartHelpShown', 'true');
+                }
+            }, 1500);
+        }
+
+        // Helper functions
+        function formatPestName(pest) {
+            return pest
+                .replace(/([A-Z])/g, ' $1')
+                .replace(/^./, s => s.toUpperCase())
+                .replace('Bph Wbph', 'BPH/WBPH')
+                .replace('Thrips', 'Thrips ')
+                .trim();
+        }
+
+        function formatDateLabel(dateStr) {
+            const dt = new Date(dateStr);
+            return dt.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+            });
+        }
+
+
+
+        window.toggleChartHelp = function() {
+            const overlay = document.getElementById('chartOverlay');
+            overlay.style.display = overlay.style.display === 'none' ? 'flex' : 'none';
+        };
+
+        window.resetZoom = function() {
+            if (chart) chart.resetZoom();
+        };
+
+        window.exportChart = function() {
+            if (!chart) return;
+
+            // Create a temporary canvas with higher resolution
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 2000;
+            tempCanvas.height = 1200;
+            const tempCtx = tempCanvas.getContext('2d');
+
+            // White background
+            tempCtx.fillStyle = '#ffffff';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Draw chart with higher resolution
+            tempCtx.drawImage(chart.canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Convert to image and download
+            const link = document.createElement('a');
+            link.download = 'pest-monitoring-chart-' + new Date().toISOString().slice(0, 10) + '.png';
+            link.href = tempCanvas.toDataURL('image/png');
+            link.click();
+        };
+
+        // Initialize chart with initial data
+        initChart(@json($dates), @json($pestData));
+
+        // Listen for Livewire updates
+        window.addEventListener('chartUpdated', e => {
+            initChart(e.detail.dates, e.detail.pestData);
         });
-    </script>
+    });
+</script>
 @endpush
 
 <style>
