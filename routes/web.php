@@ -32,9 +32,11 @@ use App\Http\Livewire\{
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
+    PDA\PDADashboard,
     ExtensionAndTrainingDirector\DashboardExtensionAndTrainingDirector,
     LocationManager,
 };
+use App\Http\Livewire\PDA\Pdadash;
 
 /*
 |--------------------------------------------------------------------------
@@ -183,8 +185,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
     Route::get('/', DeputyDashboard::class)->name('deputy.dashboard');
 });
-
-
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:pda'])->prefix('pda')->group(function () {
+    Route::get('/', Pdadash::class)->name('pda.dashboard');
+});
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector'])->prefix('extensionAndTrainingDirector')->group(function () {
     Route::get('/', DashboardExtensionAndTrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });
