@@ -12,7 +12,8 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Intervention\Image\Facades\Image;
 use Livewire\WithFileUploads;
-
+use App\Models\Roles\Role;
+use App\Models\Roles\RoleUser;
 use function add_user_log;
 use function flash;
 use function view;
@@ -26,6 +27,8 @@ class Profile extends Base
     public      $email     = '';
     public      $image     = '';
     protected   $listeners = ['refreshProfile' => 'mount'];
+    public $roles = [];
+    public $role = '';
 
     public function mount(): void
     {
@@ -33,6 +36,10 @@ class Profile extends Base
 
         $this->name  = $this->user->name;
         $this->email = $this->user->email;
+
+        $this->roles = Role::orderBy('name')->get();
+
+        $this->role = optional($this->user->roleUsers)->role_id;
     }
 
     public function render(): View
@@ -46,6 +53,7 @@ class Profile extends Base
             'name'  => 'required|string',
             'image' => 'nullable|image|mimes:png,jpg,gif|max:5120',
             'email' => 'required|email',
+            'role'  => 'required|exists:roles,id',
         ];
     }
 
@@ -68,25 +76,37 @@ class Profile extends Base
         if ($this->image !== '') {
             Storage::disk('public')->delete($this->user->image);
 
-            $token = md5(random_int(1, 10).microtime());
-            $name  = $token.'.jpg';
+            $token = md5(random_int(1, 10) . microtime());
+            $name  = $token . '.jpg';
             $img   = Image::make($this->image)->encode('jpg')->resize(100, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->stream();
 
-            Storage::disk('public')->put('users/'.$name, $img);
+            Storage::disk('public')->put('users/' . $name, $img);
 
-            $this->user->image = 'users/'.$name;
+            $this->user->image = 'users/' . $name;
         }
 
         $this->user->name  = $this->name;
         $this->user->slug  = Str::slug($this->name);
         $this->user->email = $this->email;
         $this->user->save();
+        if ($this->user->roleUsers) {
+
+            $this->user->roleUsers->update([
+                'role_id' => $this->role,
+            ]);
+        } else {
+
+            RoleUser::create([
+                'user_id' => $this->user->id,
+                'role_id' => $this->role,
+            ]);
+        }
 
         add_user_log([
-            'title'        => "updated ".$this->name."'s profile",
+            'title'        => "updated " . $this->name . "'s profile",
             'reference_id' => $this->user->id,
             'link'         => route('admin.users.edit', ['user' => $this->user->id]),
             'section'      => 'Users',

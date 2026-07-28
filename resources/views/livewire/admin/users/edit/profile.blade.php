@@ -24,7 +24,17 @@
             <x-form.input wire:model.defer="email" label='Email *' name="email" type="email" required
                 class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500"
                 label-class="text-gray-300" />
+            <x-form.select wire:model.defer="role" label="Role *" name="role" required
+                class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500"
+                label-class="text-gray-300">
+                <option value="">Select Role</option>
 
+                @foreach ($roles as $roleItem)
+                    <option value="{{ $roleItem->id }}">
+                        {{ $roleItem->name }}
+                    </option>
+                @endforeach
+            </x-form.select>
             <!-- Image Upload -->
             <x-form.input wire:model="image" label='Upload Image' name="image" type="file"
                 class="text-gray-100 bg-gray-800 border border-gray-700 focus:border-emerald-500 focus:ring-emerald-500 file:mr-4 file:py-1 file:px-3 file:border-0 file:bg-emerald-600 file:text-white file:hover:bg-emerald-700"
