@@ -2,10 +2,14 @@
     'label' => '',
     'icon' => '',
     'route' => '',
+    'activeRoutes' => null,
 ])
 
 @php
-    $openState = Route::is($route . '*') ? '{ isOpen: true }' : '{ isOpen: false }';
+    $activeRoutes = $activeRoutes ?: $route . '*';
+    $openState = collect(explode('|', $activeRoutes))->contains(fn($pattern) => Route::is(trim($pattern)))
+        ? '{ isOpen: true }'
+        : '{ isOpen: false }';
 @endphp
 
 <div x-data="{{ $openState }}" class="block w-full">

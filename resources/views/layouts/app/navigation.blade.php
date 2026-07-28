@@ -42,14 +42,15 @@
             <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check">Conducted Programs</x-nav.link>
 
             <!-- Settings Dropdown -->
-            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
+            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs"
+                activeRoutes="admin.settings.*|location.settings">
                 <x-nav.group-item route="admin.settings.audit-trails.index" icon="fas fa-clipboard-list">Audit
                     Trails</x-nav.group-item>
 
                 {{-- <x-nav.group-item route="admin.settings" icon="fas fa-sliders-h">System Settings</x-nav.group-item> --}}
 
 
-                {{-- <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item> --}}
+                <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item>
                 <x-nav.group-item route="location.settings" icon="fas fa-location-dot">
                     Location Settings
                 </x-nav.group-item>

@@ -1,98 +1,108 @@
 @section('title', 'Roles')
 
-<div class="dark bg-gray-950 min-h-screen text-gray-100 p-6 space-y-6 max-w-7xl mx-auto">
+<div class="dark bg-gray-950 min-h-screen text-gray-100 px-4 py-6 space-y-6">
 
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <h1 class="text-3xl font-bold text-white"><i class="fas fa-shield-alt text-indigo-400"></i> Roles
-        </h1>
-        <livewire:admin.roles.create />
+    <div class="text-center">
+        <h1 class="text-3xl font-bold text-white"><i class="fas fa-shield-alt text-indigo-400"></i> Roles</h1>
+        <p class="text-sm text-gray-400 mt-1">Manage roles, permissions, and access levels across the system.</p>
     </div>
 
-    <!-- Info banner -->
-    <div class="bg-indigo-900 text-indigo-200 px-4 py-3  max-w-4xl">
-        By default, only <b>Admin</b> roles have permissions. Additional roles will need permissions assigned by editing
-        below.
-    </div>
+    <div class="space-y-4">
+        <div
+            class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-gray-900 p-4 rounded-2xl border border-gray-800 shadow">
+            <p class="text-sm text-gray-300">
+                By default, only <span class="font-semibold text-white">Admin</span> roles have permissions.
+                Additional roles require permission assignments via editing below.
+            </p>
+            <div>
+                <livewire:admin.roles.create />
+            </div>
+        </div>
 
-    <!-- Search -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl">
-        <div class="md:col-span-2">
-            <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
-                placeholder="🔍 Search Roles" class="bg-gray-900 text-white border-gray-700">
-                {{ old('query', request('query')) }}
-            </x-form.input>
+        <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800 shadow">
+            <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                    <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
+                        placeholder="🔍 Search roles"
+                        class="bg-gray-900 text-white border-gray-700 placeholder:text-gray-500">
+                        {{ old('query', request('query')) }}
+                    </x-form.input>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Roles Table -->
-    <div class="overflow-x-auto bg-gray-900 shadow max-w-4xl">
+    <div class="overflow-x-auto bg-gray-900 shadow mt-4 rounded-2xl border border-gray-800">
         <table class="min-w-full divide-y divide-gray-700 text-sm">
-            <thead class="bg-gray-800 text-gray-300 uppercase tracking-wide">
-                <tr class="">
-                    <th class="px-6 py-3 text-left cursor-pointer select-none hover:text-indigo-400"
-                        wire:click.prevent="sortBy('name')">Name</th>
-                    <th class="px-6 py-3 text-left">Actions</th>
+            <thead class="bg-gray-800 text-gray-300 text-sm uppercase tracking-wide">
+                <tr class="bg-gray-900">
+                    <th class="px-4 py-3 text-left">
+                        <button type="button" wire:click.prevent="sortBy('name')"
+                            class="text-left w-full text-gray-300 hover:text-cyan-300 transition">Name</button>
+                    </th>
+                    <th class="px-4 py-3 text-left">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-800">
+            <tbody class="text-sm divide-y divide-gray-800">
                 @forelse($this->roles() as $role)
-                    <tr class="hover:bg-gray-700 transition">
-                        <td class="px-6 py-4">{{ $role->label }}</td>
-                        <td class="px-6 py-4">
-                            <div class="flex space-x-4 items-center">
-
+                    <tr class="hover:bg-gray-800 bg-gray-700 transition">
+                        <td class="px-4 py-3 text-gray-100">{{ $role->label }}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex flex-wrap items-center gap-3">
                                 <a href="{{ route('admin.settings.roles.edit', ['role' => $role->id]) }}"
-                                    class="text-indigo-400 hover:underline font-medium">Edit</a>
+                                    class="text-cyan-400 hover:text-cyan-200 font-medium transition">
+                                    Edit
+                                </a>
+
                                 @if ($role->label !== 'App' && $role->name !== 'admin')
                                     <x-modal>
                                         <x-slot name="trigger">
                                             <button
-                                                class="text-red-500 hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                                                class="text-red-400 hover:text-red-200 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 rounded transition"
                                                 @click="on = true" aria-haspopup="dialog" aria-expanded="false"
                                                 aria-controls="modal-title">
                                                 Delete
                                             </button>
                                         </x-slot>
 
-                                        <x-slot name="title">Confirm Delete</x-slot>
+                                        <x-slot name="title" class="text-xl font-semibold text-gray-100">
+                                            Confirm Delete
+                                        </x-slot>
 
                                         <x-slot name="content">
-                                            <p class="text-center text-gray-800 dark:text-gray-200">
-                                                Are you sure you want to delete role: <b>{{ $role->name }}</b>?
+                                            <p class="text-center text-gray-300">
+                                                Are you sure you want to delete role:
+                                                <span class="font-semibold text-white">{{ $role->name }}</span>?
                                             </p>
                                         </x-slot>
 
-                                        <x-slot name="footer" class="flex justify-center space-x-4">
+                                        <x-slot name="footer" class="flex flex-wrap justify-center gap-3">
                                             <button type="button"
-                                                class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500"
+                                                class="px-4 py-2 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500 transition"
                                                 @click="on = false">
                                                 Cancel
                                             </button>
                                             <button type="button"
-                                                class="px-4 py-2 rounded bg-red-800 hover:bg-red-500 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600"
+                                                class="px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600 transition"
                                                 wire:click="deleteRole('{{ $role->id }}')" @click="on = false">
                                                 Delete Role
                                             </button>
                                         </x-slot>
                                     </x-modal>
                                 @endif
-
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="2" class="px-6 py-6 text-center text-gray-500">No roles found.</td>
+                        <td colspan="2" class="px-4 py-6 text-center text-gray-500">No roles found.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
 
-    <!-- Pagination -->
-    <div class="max-w-4xl">
+    <div class="mt-6">
         {{ $this->roles()->links('vendor.pagination.tailwind') }}
     </div>
-
 </div>
