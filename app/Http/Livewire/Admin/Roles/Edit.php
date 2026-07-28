@@ -10,6 +10,7 @@ use App\Models\Roles\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 use function add_user_log;
@@ -26,7 +27,11 @@ class Edit extends Base
     protected function rules(): array
     {
         return [
-            'label' => 'required|string|unique:roles,label,' . $this->role->id
+            'label' => [
+                'required',
+                'string',
+                Rule::unique('roles', 'label')->ignore($this->role->id)->whereNull('deleted_at'),
+            ],
         ];
     }
 

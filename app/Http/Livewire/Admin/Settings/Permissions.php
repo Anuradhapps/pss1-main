@@ -9,6 +9,7 @@ use App\Models\Roles\Permission;
 use App\Models\Roles\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\WithPagination;
 
@@ -33,7 +34,11 @@ class Permissions extends Base
     protected function rules(): array
     {
         return [
-            'name' => 'required|string|unique:permissions,name,' . ($this->permissionId ?? 'NULL'),
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('permissions', 'name')->ignore($this->permissionId)->whereNull('deleted_at'),
+            ],
             'label' => 'required|string',
             'module' => 'nullable|string',
             'selectedRoles' => 'array',
