@@ -23,6 +23,7 @@ use App\Http\Livewire\{
     Admin\SentEmails\SentEmails,
     Admin\SentEmails\SentEmailsBody,
     Admin\Settings\Settings,
+    Admin\Settings\Permissions,
     Admin\Roles\Roles,
     Admin\Roles\Edit,
     Admin\Users\Users,
@@ -96,6 +97,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/settings/sent-emails-body/{id}', SentEmailsBody::class)->name('admin.settings.sent-emails.body');
     Route::get('/settings/roles', Roles::class)->name('admin.settings.roles.index');
     Route::get('/settings/roles/{role}/edit', Edit::class)->name('admin.settings.roles.edit');
+    Route::get('/settings/permissions', Permissions::class)->name('admin.settings.permissions.index');
 
     // Users
     Route::get('/users', Users::class)->name('admin.users.index');

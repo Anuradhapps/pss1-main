@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<x-form wire:submit.prevent="update" method="put" class="bg-gray-900 rounded-lg shadow-lg p-6">
+<x-form wire:submit.prevent="update" class="bg-gray-900 rounded-lg shadow-lg p-6">
 
     <div class="mb-6 md:max-w-md">
         @if ($role?->label == 'Admin')
