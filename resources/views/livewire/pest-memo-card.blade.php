@@ -1,89 +1,223 @@
-<div x-data="{
-    pests: {{ json_encode($average['pests'] ?? []) }},
-    otherInfo: {{ json_encode($average['OtherInfo'] ?? []) }},
-    get pestEntries() { return Object.entries(this.pests); },
-    getPestLevel(count) {
-        if (count <= 1) return { level: 'No risk', color: 'green', icon: 'check-circle', bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', badge: 'bg-emerald-100', badgeText: 'text-emerald-700', dot: 'bg-emerald-500', progress: 'bg-emerald-500', darkBg: 'dark:bg-emerald-950/30', darkBorder: 'dark:border-emerald-800', darkText: 'dark:text-emerald-300', darkBadge: 'dark:bg-emerald-900/50' };
-        if (count <= 3) return { level: 'Alert', color: 'yellow', icon: 'exclamation-triangle', bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700', badge: 'bg-amber-100', badgeText: 'text-amber-700', dot: 'bg-amber-500', progress: 'bg-amber-500', darkBg: 'dark:bg-amber-950/30', darkBorder: 'dark:border-amber-800', darkText: 'dark:text-amber-300', darkBadge: 'dark:bg-amber-900/50' };
-        if (count <= 5) return { level: 'Threshold', color: 'orange', icon: 'exclamation-circle', bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700', badge: 'bg-orange-100', badgeText: 'text-orange-700', dot: 'bg-orange-500', progress: 'bg-orange-500', darkBg: 'dark:bg-orange-950/30', darkBorder: 'dark:border-orange-800', darkText: 'dark:text-orange-300', darkBadge: 'dark:bg-orange-900/50' };
-        return { level: 'Critical', color: 'red', icon: 'exclamation-circle', bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', badge: 'bg-rose-100', badgeText: 'text-rose-700', dot: 'bg-rose-500', progress: 'bg-rose-500', darkBg: 'dark:bg-rose-950/30', darkBorder: 'dark:border-rose-800', darkText: 'dark:text-rose-300', darkBadge: 'dark:bg-rose-900/50' };
-    }
-}" class="mx-auto w-full space-y-6 p-4 text-slate-700 transition-colors dark:text-slate-200">
+@php
+    use Illuminate\Support\Str;
+
+    $pests = $average['pests'] ?? [];
+    $otherInfo = $average['OtherInfo'] ?? [];
+
+    // Use closures to avoid "Cannot redeclare function" PHP errors
+    $getPestLevel = function ($count) {
+        if ($count <= 1) {
+            return ['level' => 'No risk', 'color' => 'green', 'icon' => 'check-circle'];
+        }
+        if ($count <= 3) {
+            return ['level' => 'Alert', 'color' => 'yellow', 'icon' => 'exclamation-triangle'];
+        }
+        if ($count <= 5) {
+            return ['level' => 'Threshold', 'color' => 'orange', 'icon' => 'exclamation-circle'];
+        }
+        return ['level' => 'Critical', 'color' => 'red', 'icon' => 'exclamation-circle'];
+    };
+
+    $getColorClasses = function ($color) {
+        $colors = [
+            'green' => [
+                'bg' => 'bg-green-500',
+                'text' => 'text-green-300',
+                'bgLight' => 'bg-green-900/30',
+                'border' => 'border-green-700/40',
+            ],
+            'yellow' => [
+                'bg' => 'bg-yellow-500',
+                'text' => 'text-yellow-300',
+                'bgLight' => 'bg-yellow-900/30',
+                'border' => 'border-yellow-700/40',
+            ],
+            'orange' => [
+                'bg' => 'bg-orange-500',
+                'text' => 'text-orange-300',
+                'bgLight' => 'bg-orange-900/30',
+                'border' => 'border-orange-700/40',
+            ],
+            'red' => [
+                'bg' => 'bg-red-500',
+                'text' => 'text-red-300',
+                'bgLight' => 'bg-red-900/30',
+                'border' => 'border-red-700/40',
+            ],
+        ];
+
+        return $colors[$color] ?? $colors['green'];
+    };
+@endphp
+
+<div class="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
 
     <!-- Pest Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
-        <template x-for="([pest, count], index) in pestEntries" :key="pest">
-            <div class="group relative flex flex-col justify-between rounded-2xl border p-3 sm:p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg cursor-default"
-                :class="[
-                    getPestLevel(count).bg,
-                    getPestLevel(count).border,
-                    getPestLevel(count).darkBg,
-                    getPestLevel(count).darkBorder
-                ]">
+    <!-- UI Pattern: Adaptive layout (1 col on tiny phones, 2 on regular phones, scaling up) -->
+    <div class="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+        @foreach ($pests as $pest => $count)
+            @php
+                $level = $getPestLevel($count);
+                $classes = $getColorClasses($level['color']);
+            @endphp
 
-                <!-- Top Row: Status Dot + Count -->
-                <div class="flex items-center justify-between mb-2 sm:mb-3">
-                    <div class="flex items-center gap-1.5">
-                        <div class="w-2 h-2 rounded-full animate-pulse" :class="getPestLevel(count).dot"></div>
-                        <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-wider"
-                            :class="getPestLevel(count).text + ' ' + getPestLevel(count).darkText"
-                            x-text="getPestLevel(count).level"></span>
+            <div
+                class="{{ $classes['bgLight'] }} {{ $classes['border'] }} p-4 sm:p-5 rounded-xl border flex flex-col justify-between transition-all transform hover:-translate-y-1 hover:shadow-lg duration-300 group">
+
+                <div class="flex justify-between items-start mb-4 gap-3">
+
+                    <div class="flex-1 min-w-0">
+                        <!-- Typography: Bumped up to readable minimums (text-sm/text-base) -->
+                        <h3 class="font-semibold text-gray-100 capitalize text-sm sm:text-base leading-tight truncate">
+                            {{ Str::headline($pest) }}
+                        </h3>
+
+                        <!-- Distinct pill shape for status -->
+                        <span
+                            class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-md bg-gray-900/60 mt-2 {{ $classes['text'] }}">
+                            <i class="fas fa-{{ $level['icon'] }} mr-1.5 text-[10px]" aria-hidden="true"></i>
+                            {{ $level['level'] }}
+                        </span>
                     </div>
-                    <span class="text-lg sm:text-2xl font-bold tabular-nums"
-                        :class="getPestLevel(count).text + ' ' + getPestLevel(count).darkText"
-                        x-text="count"></span>
+
+                    <!-- Visual Hierarchy: Grouped number and icon -->
+                    <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-black leading-none {{ $classes['text'] }}">
+                            {{ $count }}
+                        </span>
+                        <div class="w-7 h-7 rounded-full flex items-center justify-center bg-gray-900/50 shadow-inner">
+                            <div class="w-5 h-5 rounded-full flex items-center justify-center {{ $classes['bg'] }}">
+                                <i class="fas fa-bug text-gray-900 text-[10px]" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Pest Name -->
-                <div class="mb-2 sm:mb-3">
-                    <h3 class="text-xs sm:text-sm font-bold capitalize text-slate-900 dark:text-white leading-tight"
-                        x-text="pest.replace(/_/g,' ')"></h3>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="mt-auto">
-                    <div class="h-1.5 sm:h-2 w-full rounded-full bg-white/60 dark:bg-slate-800/60 overflow-hidden">
-                        <div class="h-full rounded-full transition-all duration-700 ease-out"
-                            :class="getPestLevel(count).progress"
-                            :style="`width: ${Math.min(count * 10, 100)}%`"></div>
+                <!-- Progress Bar: Slightly thicker for mobile visibility -->
+                <div class="w-full bg-gray-900/80 rounded-full h-2 overflow-hidden shadow-inner">
+                    <div class="{{ $classes['bg'] }} h-full rounded-full transition-all duration-1000 ease-out"
+                        style="width: {{ min($count * 10, 100) }}%">
                     </div>
                 </div>
-
-
-
             </div>
-        </template>
+        @endforeach
     </div>
 
-    <!-- Empty State -->
-    <div x-show="pestEntries.length === 0" class="text-center py-12" x-cloak>
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-            <i class="fas fa-leaf text-slate-400 dark:text-slate-600 text-2xl"></i>
-        </div>
-        <p class="text-sm text-slate-500 dark:text-slate-400">No pest data available for this period.</p>
-    </div>
+    <!-- Other Info -->
+    @if (!empty($otherInfo))
+        <div class="mt-10 sm:mt-12">
 
-    <!-- Other Info Section -->
-    <div x-show="otherInfo.length > 0"
-        class="mt-6 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 dark:border-slate-800 dark:bg-slate-900 shadow-sm"
-        x-cloak>
-
-        <div class="flex items-center gap-2 mb-3 sm:mb-4">
-            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                <i class="fas fa-info-circle text-sm"></i>
+            <!-- Header Section -->
+            <div class="flex items-center gap-4 mb-6">
+                <div
+                    class="w-12 h-12 rounded-xl bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-triangle-exclamation text-yellow-400 text-xl" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-white tracking-wide">
+                        Field Alerts
+                    </h2>
+                    <p class="text-sm text-gray-400 mt-0.5">
+                        {{ count($otherInfo) }} record(s) require attention
+                    </p>
+                </div>
             </div>
-            <h2 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Other Information</h2>
-            <span class="ml-auto text-xs text-slate-500 dark:text-slate-400" x-text="otherInfo.length + ' items'"></span>
-        </div>
 
-        <div class="flex flex-wrap gap-2">
-            <template x-for="info in otherInfo" :key="info">
-                <span class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 hover:scale-105 hover:shadow-md cursor-default bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
-                    <i class="fas fa-map-marker-alt text-rose-500 text-xs"></i>
-                    <span x-text="info"></span>
-                </span>
-            </template>
+            <!-- Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+                @foreach ($otherInfo as $info)
+                    <div
+                        class="group rounded-2xl border border-gray-700/60 bg-gradient-to-br from-gray-900 to-gray-800 hover:border-yellow-500/40 hover:shadow-xl hover:shadow-yellow-500/5 transition-all duration-300 overflow-hidden flex flex-col">
+
+                        <!-- Top Accent Bar -->
+                        <div class="h-1 w-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500"></div>
+
+                        <div class="p-5 sm:p-6 flex flex-col flex-1">
+
+                            <!-- Issue (Proximity: kept together at the top) -->
+                            <div class="flex items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-red-500/15 border border-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-circle-exclamation text-red-400 text-sm" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1.5">
+                                        Reported Issue
+                                    </div>
+                                    <div class="text-red-300 text-sm sm:text-base font-medium leading-relaxed">
+                                        {{ $info['otherInfo'] }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Details (Gestalt Law of Enclosure: contained in bubbles) -->
+                            <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-auto">
+
+                                <!-- AI Range -->
+                                <div
+                                    class="flex-1 flex items-center gap-3 p-3 rounded-xl bg-gray-800/40 border border-gray-700/40">
+                                    <div
+                                        class="w-9 h-9 rounded-lg bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-map-marker-alt text-blue-400 text-sm" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div
+                                            class="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wide">
+                                            AI Range
+                                        </div>
+                                        <div class="text-gray-100 text-sm font-medium truncate mt-0.5">
+                                            {{ $info['aiRange'] }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Collector -->
+                                <div
+                                    class="flex-1 flex items-center gap-3 p-3 rounded-xl bg-gray-800/40 border border-gray-700/40">
+                                    <div
+                                        class="w-9 h-9 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-user text-green-400 text-sm" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div
+                                            class="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold tracking-wide">
+                                            Collector
+                                        </div>
+                                        <div class="text-gray-100 text-sm font-medium truncate mt-0.5">
+                                            {{ $info['name'] }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Number (Fitts's Law: Massive touch target for dialing) -->
+                                <a href="tel:{{ $info['phone'] }}"
+                                    class="w-full flex items-center gap-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 active:bg-purple-500/20 hover:bg-purple-500/20 transition-colors mt-1 sm:mt-0">
+                                    <div
+                                        class="w-9 h-9 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-phone text-purple-400 text-sm" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-[10px] sm:text-xs text-purple-400/80 uppercase font-semibold tracking-wide">
+                                            Tap to Call
+                                        </div>
+                                        <div class="text-purple-200 text-sm sm:text-base font-bold mt-0.5">
+                                            {{ $info['phone'] }}
+                                        </div>
+                                    </div>
+                                    <div class="ml-auto pr-2">
+                                        <i class="fas fa-chevron-right text-purple-500/50 text-xs"></i>
+                                    </div>
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
 
 </div>

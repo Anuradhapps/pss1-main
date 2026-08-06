@@ -7,6 +7,7 @@ namespace App\Http\Livewire\Admin\Roles;
 use App\Http\Livewire\Base;
 use App\Models\Roles\Role;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
 use function view;
@@ -46,7 +47,7 @@ class Roles extends Base
         $query = $this->builder();
 
         if ($this->query) {
-            $query->where('name', 'like', '%'.$this->query.'%');
+            $query->where('name', 'like', '%' . $this->query . '%');
         }
 
         return $query->paginate($this->paginate);
@@ -54,7 +55,13 @@ class Roles extends Base
 
     public function deleteRole($id): void
     {
-        $this->builder()->findOrFail($id)->delete();
+        $role = $this->builder()->findOrFail($id);
+
+        DB::transaction(function () use ($role): void {
+            $role->permissions()->detach();
+            DB::table('role_user')->where('role_id', $role->id)->delete();
+            $role->forceDelete();
+        });
 
         $this->dispatchBrowserEvent('close-modal');
     }

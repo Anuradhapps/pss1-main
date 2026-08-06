@@ -9,6 +9,7 @@ use App\Models\Roles\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 use function add_user_log;
@@ -20,13 +21,20 @@ class Create extends Base
 {
     public $role = '';
 
-    protected array $rules = [
-        'role' => 'required|string|unique:roles,label'
-    ];
-
     protected array $messages = [
         'role.required' => 'Role is required'
     ];
+
+    protected function rules(): array
+    {
+        return [
+            'role' => [
+                'required',
+                'string',
+                Rule::unique('roles', 'label')->whereNull('deleted_at'),
+            ],
+        ];
+    }
 
     /**
      * @throws ValidationException
@@ -53,7 +61,7 @@ class Create extends Base
         flash('Role created')->success();
 
         add_user_log([
-            'title'        => 'created role '.$this->role,
+            'title'        => 'created role ' . $this->role,
             'link'         => route('admin.settings.roles.edit', ['role' => $role->id]),
             'reference_id' => $role->id,
             'section'      => 'Roles',

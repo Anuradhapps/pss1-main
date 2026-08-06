@@ -2,15 +2,28 @@
 
 
 
-<div class="space-y-6">
-    <div class="flex flex-wrap items-center justify-between gap-4">
-        <a href="{{ route('admin.settings.roles.index') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">&larr; Roles</a>
-        <div class="text-sm text-slate-500 dark:text-slate-400">
-            <span class="text-rose-500">*</span> required fields
-        </div>
+
+<div class="flex flex-wrap justify-between items-center mb-6">
+    <a href="{{ route('admin.settings.roles.index') }}" class="text-indigo-400 hover:text-indigo-600 transition">
+        &larr; Roles
+    </a>
+    <div class="text-sm text-gray-400">
+        <span class="text-red-600">*</span> required fields
+    </div>
+</div>
+
+<x-form wire:submit.prevent="update" class="bg-gray-900 rounded-lg shadow-lg p-6">
+
+    <div class="mb-6 md:max-w-md">
+        @if ($role?->label == 'Admin')
+            <x-form.input wire:model="label" label="Role" name="label" disabled />
+        @else
+            <x-form.input wire:model="label" label="Role" name="label" required />
+        @endif
     </div>
 
-    <x-form wire:submit.prevent="update" method="put" class="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+    <x-form wire:submit.prevent="update" method="put"
+        class="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
 
         <div class="md:max-w-md">
             @if ($role?->label == 'Admin')
@@ -20,13 +33,18 @@
             @endif
         </div>
 
-        <div class="space-y-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-inner dark:border-slate-800 dark:bg-slate-950/40">
+        <div
+            class="space-y-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-inner dark:border-slate-800 dark:bg-slate-950/40">
             @foreach ($modules as $module)
                 <div class="space-y-3">
-                    <h3 class="border-b border-slate-200 pb-2 text-lg font-semibold text-indigo-600 dark:border-slate-800 dark:text-indigo-400">{{ $module }}</h3>
-                    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+                    <h3
+                        class="border-b border-slate-200 pb-2 text-lg font-semibold text-indigo-600 dark:border-slate-800 dark:text-indigo-400">
+                        {{ $module }}</h3>
+                    <div
+                        class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
                         <table class="min-w-full text-sm text-slate-700 dark:text-slate-300">
-                            <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
+                            <thead
+                                class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
                                 <tr>
                                     <th class="px-4 py-3 text-left">Permission</th>
                                     <th class="px-4 py-3 text-center">Action</th>
@@ -37,7 +55,8 @@
                                     <tr class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
                                         <td class="px-4 py-3">{{ $perm->label }}</td>
                                         <td class="px-4 py-3 text-center">
-                                            <input type="checkbox" wire:model="permission" value="{{ $perm->id }}" class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900" />
+                                            <input type="checkbox" wire:model="permission" value="{{ $perm->id }}"
+                                                class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900" />
                                         </td>
                                     </tr>
                                 @endforeach
@@ -49,8 +68,10 @@
         </div>
 
         <div class="mt-6">
-            <x-form.submit class="w-full rounded-xl bg-indigo-600 px-6 py-3 text-lg font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 md:w-auto">Update Role</x-form.submit>
+            <x-form.submit
+                class="w-full rounded-xl bg-indigo-600 px-6 py-3 text-lg font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 md:w-auto">Update
+                Role</x-form.submit>
         </div>
 
     </x-form>
-</div>
+    </div>
