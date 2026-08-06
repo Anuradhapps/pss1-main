@@ -10,142 +10,176 @@
     $activeDistricts = $selectedDistrict ? [$districts->firstWhere('id', $selectedDistrict)] : $districts;
 @endphp
 
-<div>
-    <x-headings.top-heading title="{{ $province->name }} Province Dashboard" icon="fas fa-clipboard"
-        class="bg-gradient-to-r from-green-900 to-green-900 shadow-md" />
+<div class="min-h-screen bg-slate-950 text-slate-100">
 
-    <div class="mt-3 space-y-3">
-        <div class="m-2 p-2 bg-gray-800/90 rounded-md shadow-lg backdrop-blur-sm border border-gray-700">
+    <x-headings.top-heading title="{{ $province->name }} Province Dashboard" icon="fas fa-clipboard"
+        class="bg-gradient-to-r from-emerald-800 via-emerald-800 to-slate-900 shadow-md" />
+
+    <div class="mx-auto max-w-screen-2xl space-y-8 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+
+        {{-- ============================= PEST DENSITY ============================= --}}
+        <section aria-label="Pest monitoring"
+            class="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-lg sm:p-5">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Pest Monitoring</p>
 
             @foreach ($activeDistricts as $dst)
                 <div class="mb-6 last:mb-0">
                     <!-- Header -->
-                    <div class="flex items-center mb-4">
+                    <div class="mb-4 flex items-center gap-3">
                         <div
-                            class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-400">
                             <i class="fas fa-bug text-lg"></i>
                         </div>
-                        <h2 class="text-lg font-semibold text-gray-100">
-                            Pest Density in {{ $dst->name }} for This Week
-                        </h2>
+                        <div>
+                            <h2 class="text-base font-semibold text-slate-100 sm:text-lg">
+                                Pest Density &middot; {{ $dst->name }}
+                            </h2>
+                            <p class="text-xs text-slate-500">Last 7 days</p>
+                        </div>
                     </div>
 
                     <!-- Nested Livewire Component -->
                     <livewire:pest-memo-card :districtId="$dst->id" :days="7" :key="'pest-' . $dst->id" />
                 </div>
             @endforeach
+        </section>
 
-        </div>
-    </div>
+        {{-- ============================= QUICK STATS ============================= --}}
+        <section aria-labelledby="stats-heading">
+            <p id="stats-heading" class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Overview
+            </p>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
+                <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
+            </div>
+        </section>
 
-    <div class="p-2 space-y-2 bg-gray-900 text-white min-h-screen text-sm">
+        {{-- ============================= FILTERS + USER TABLE ============================= --}}
+        <section aria-labelledby="collectors-heading"
+            class="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-lg sm:p-5">
 
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-            <x-dd.stat-box color="green" title="Total Users Count" :value="$totalUsersCount" />
-            <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
-        </div>
-
-        <!-- Filter + User Table -->
-        <div class="bg-gray-800 p-2 shadow-md">
-            <div class="flex flex-col justify-between items-center gap-4 lg:flex-row">
-                <h2 class="text-xl font-semibold text-white m-0 p-0 w-full lg:w-auto shrink-0">
-                    <i class="fa-solid fa-users text-green-500 me-2"></i>
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+                <h2 id="collectors-heading" class="shrink-0 text-lg font-semibold text-slate-100 sm:text-xl">
+                    <i class="fa-solid fa-users mr-2 text-emerald-500"></i>
                     Users in {{ $displayLocationName }}
                 </h2>
 
-                <div class="flex flex-wrap lg:justify-end gap-3 w-full">
-                    <input type="text" wire:model.debounce.500ms="search" placeholder="Search by name"
-                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
-                    <input type="number" wire:model.debounce.500ms="searchNumber" placeholder="Search by Phone Number"
-                        class="w-full sm:w-[25ch] px-4 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400" />
+                <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:w-auto lg:grid-cols-3 xl:grid-cols-6">
+                    <div>
+                        <label for="search-name" class="mb-1 block text-xs font-medium text-slate-400">Name</label>
+                        <input id="search-name" type="text" wire:model.debounce.500ms="search"
+                            placeholder="Search by name"
+                            class="h-10 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 text-sm text-white placeholder-slate-500 outline-none transition-colors focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                    </div>
 
-                    <!-- New District Filter -->
-                    <select wire:model="selectedDistrict"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
-                        <option value="">All Districts</option>
-                        @foreach ($districts as $dst)
-                            <option value="{{ $dst->id }}">{{ $dst->name }}</option>
-                        @endforeach
-                    </select>
+                    <div>
+                        <label for="search-phone" class="mb-1 block text-xs font-medium text-slate-400">Phone
+                            Number</label>
+                        <input id="search-phone" type="number" wire:model.debounce.500ms="searchNumber"
+                            placeholder="Search by phone"
+                            class="h-10 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 text-sm text-white placeholder-slate-500 outline-none transition-colors focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                    </div>
 
-                    <select wire:model="selectedAiRange"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
-                        <option value="">All AI Ranges</option>
-                        @foreach ($aiRanges as $ai)
-                            <option value="{{ $ai->id }}">{{ $ai->name }}</option>
-                        @endforeach
-                    </select>
+                    <div>
+                        <label for="filter-district"
+                            class="mb-1 block text-xs font-medium text-slate-400">District</label>
+                        <select id="filter-district" wire:model="selectedDistrict"
+                            class="h-10 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 text-sm text-white outline-none transition-colors focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                            <option value="">All Districts</option>
+                            @foreach ($districts as $dst)
+                                <option value="{{ $dst->id }}">{{ $dst->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <select wire:model="selectedSeason"
-                        class="w-full sm:w-fit px-4 py-2 bg-gray-700 border border-gray-600 text-white">
-                        <option value="">All Seasons</option>
-                        @foreach ($seasons as $season)
-                            <option value="{{ $season->id }}">{{ $season->name }}</option>
-                        @endforeach
-                    </select>
+                    <div>
+                        <label for="filter-ai-range" class="mb-1 block text-xs font-medium text-slate-400">AI
+                            Range</label>
+                        <select id="filter-ai-range" wire:model="selectedAiRange"
+                            class="h-10 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 text-sm text-white outline-none transition-colors focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                            <option value="">All AI Ranges</option>
+                            @foreach ($aiRanges as $ai)
+                                <option value="{{ $ai->id }}">{{ $ai->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <!-- Reset button -->
-                    <button wire:click="resetFilters"
-                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white">Reset</button>
+                    <div>
+                        <label for="filter-season" class="mb-1 block text-xs font-medium text-slate-400">Season</label>
+                        <select id="filter-season" wire:model="selectedSeason"
+                            class="h-10 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 text-sm text-white outline-none transition-colors focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                            <option value="">All Seasons</option>
+                            @foreach ($seasons as $season)
+                                <option value="{{ $season->id }}">{{ $season->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <div class="relative group inline-block">
-                        <button wire:click="downloadCollectorsList"
-                            class="flex items-center gap-2 rounded-none px-4 py-2 bg-green-700 hover:bg-green-800 text-white shadow transition transform hover:scale-105">
-                            <i class="fas fa-download"></i>
-                            Collector List
+                    <div class="flex items-end gap-2">
+                        <button wire:click="resetFilters" title="Reset all filters"
+                            class="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-700 px-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-slate-500">
+                            <i class="fas fa-rotate-left text-xs"></i>
+                            <span>Reset</span>
                         </button>
 
-                        <!-- Tooltip -->
-                        <span
-                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max text-xs text-white bg-gray-800 px-2 py-1 rounded opacity-0 z-50 group-hover:opacity-100 transition duration-300 whitespace-nowrap pointer-events-none">
-                            Download collector list <br> for the selected season & location, <br> or all if none
-                            selected
-                        </span>
+                        <div class="group relative flex-1">
+                            <button wire:click="downloadCollectorsList" aria-label="Export collector list"
+                                class="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-2 text-sm font-medium text-white shadow transition-colors hover:bg-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-400">
+                                <i class="fas fa-download text-xs"></i>
+                                <span>Export</span>
+                            </button>
+                            <span
+                                class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden w-52 -translate-x-1/2 rounded-md bg-slate-800 px-3 py-2 text-center text-xs leading-relaxed text-slate-200 opacity-0 shadow-lg transition duration-200 group-hover:opacity-100 lg:block">
+                                Downloads the list for the selected season &amp; location, or all collectors if none are
+                                selected.
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Table for desktop (sm and up) -->
-            <div class="hidden sm:block overflow-x-auto mt-4">
-                <table class="min-w-full text-sm">
-                    <thead class="bg-gray-900 text-gray-200 uppercase text-xs font-semibold tracking-wider">
+            <!-- Table for tablet/desktop (sm and up) -->
+            <div class="mt-5 hidden overflow-x-auto rounded-lg border border-slate-800 sm:block">
+                <table class="min-w-full divide-y divide-slate-800 text-sm">
+                    <thead class="bg-slate-900 text-xs font-semibold uppercase tracking-wider text-slate-400">
                         <tr>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Name</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">District</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">AI Range</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Season</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Phone Number</th>
-                            <th scope="col" class="px-2 py-2 text-left bg-gray-900">Action</th>
+                            <th scope="col" class="px-4 py-3 text-left">Name</th>
+                            <th scope="col" class="px-4 py-3 text-left">District</th>
+                            <th scope="col" class="px-4 py-3 text-left">AI Range</th>
+                            <th scope="col" class="px-4 py-3 text-left">Season</th>
+                            <th scope="col" class="px-4 py-3 text-left">Phone Number</th>
+                            <th scope="col" class="px-4 py-3 text-left">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody class="divide-y divide-slate-800/60">
                         @foreach ($filteredCollectors as $collector)
                             <tr
-                                class="hover:bg-teal-800 transition-colors duration-150 bg-cyan-900 border-b border-gray-700">
-
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
-                                    {{ $collector->user->name ?? 'N/A' }}
+                                class="transition-colors odd:bg-slate-900/40 even:bg-slate-900/10 hover:bg-emerald-500/10">
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-100">
+                                    <div class="flex items-center gap-2.5">
+                                        <span
+                                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-xs font-semibold text-emerald-400">
+                                            {{ strtoupper(substr($collector->user->name ?? 'NA', 0, 1)) }}
+                                        </span>
+                                        {{ $collector->user->name ?? 'N/A' }}
+                                    </div>
                                 </td>
-                                <!-- Added District column to help identify location when viewing 'All Districts' -->
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
+                                <td class="whitespace-nowrap px-4 py-3 text-slate-300">
                                     {{ $districts->firstWhere('id', $collector->district)->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
+                                <td class="whitespace-nowrap px-4 py-3 text-slate-300">
                                     {{ $collector->getAiRange->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
+                                <td class="whitespace-nowrap px-4 py-3 text-slate-300">
                                     {{ $collector->riceSeason->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
+                                <td class="whitespace-nowrap px-4 py-3 text-slate-300">
                                     {{ $collector->phone_no ?? 'N/A' }}
                                 </td>
-                                <td class="px-2 py-2 whitespace-nowrap text-white">
-                                    <!-- View Button -->
+                                <td class="whitespace-nowrap px-4 py-3">
                                     <button wire:click="viewCollector({{ $collector->id }})"
-                                        class="flex items-center gap-2 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-200 ease-in-out transform hover:scale-105">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        class="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -157,16 +191,15 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
+
                 @if ($filteredCollectors->count() === 0)
                     <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 500)"
                         :class="show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'"
-                        class="text-center text-red-400 italic py-4 duration-700 ease-in-out transform transition-transform flex items-center justify-center gap-2"
+                        class="flex items-center justify-center gap-2 py-8 text-center italic text-slate-400 transition-transform duration-700 ease-in-out"
                         role="alert" aria-live="polite">
-                        <!-- Icon: Exclamation Circle -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0 text-red-400"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-slate-500"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -175,117 +208,161 @@
                         <span>No collectors found.</span>
                     </div>
                 @endif
+            </div>
 
-                <div class="mt-2">
-                    {{ $filteredCollectors->links() }}
-                </div>
+            <div class="mt-3 hidden sm:block">
+                {{ $filteredCollectors->links() }}
             </div>
 
             @include('livewire.deputy-director.collectorModel')
 
             <!-- Cards for mobile (below sm) -->
-            <div class="sm:hidden space-y-4 mt-4">
-                @foreach ($filteredCollectors as $collector)
+            <div class="mt-5 space-y-3 sm:hidden">
+                @forelse ($filteredCollectors as $collector)
                     <div
-                        class="bg-gradient-to-r from-teal-900 to-sky-900 shadow-lg p-4 text-white flex flex-col justify-between h-full min-h-[180px] transform transition duration-300 hover:shadow-2xl cursor-pointer">
-
-                        <!-- Card content -->
-                        <div>
-                            <h3 class="font-bold text-xl mb-0 truncate text-white">{{ $collector->user->name }}
-                            </h3>
-                            <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">District :</span>
-                                {{ $districts->firstWhere('id', $collector->district)->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">AI Range :</span>
-                                {{ $collector->getAiRange->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sky-200 mb-1">
-                                <span class="font-semibold">Season :</span>
-                                {{ $collector->riceSeason->name ?? 'N/A' }}
-                            </p>
-                            <p class="text-sky-200">
-                                <span class="font-semibold">Phone :</span> {{ $collector->phone_no ?? 'N/A' }}
-                            </p>
+                        class="rounded-xl border border-slate-800 border-l-4 border-l-emerald-500 bg-slate-900/70 p-4 shadow-md">
+                        <div class="mb-3 flex items-center gap-3">
+                            <span
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-base font-semibold text-emerald-400">
+                                {{ strtoupper(substr($collector->user->name ?? 'NA', 0, 1)) }}
+                            </span>
+                            <div class="min-w-0">
+                                <h3 class="truncate text-base font-semibold text-white">
+                                    {{ $collector->user->name ?? 'N/A' }}</h3>
+                                <p class="truncate text-xs text-slate-400">{{ $collector->phone_no ?? 'N/A' }}</p>
+                            </div>
                         </div>
 
-                        <!-- view Button -->
-                        <div class="flex justify-end mt-2">
-                            <button wire:click="viewCollector({{ $collector->id }})"
-                                class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow-md transition duration-200 ease-in-out transform hover:scale-105">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                View Collector
-                            </button>
-                        </div>
+                        <dl class="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                            <div>
+                                <dt class="text-slate-500">District</dt>
+                                <dd class="text-slate-200">
+                                    {{ $districts->firstWhere('id', $collector->district)->name ?? 'N/A' }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">AI Range</dt>
+                                <dd class="text-slate-200">{{ $collector->getAiRange->name ?? 'N/A' }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Season</dt>
+                                <dd class="text-slate-200">{{ $collector->riceSeason->name ?? 'N/A' }}</dd>
+                            </div>
+                        </dl>
+
+                        <button wire:click="viewCollector({{ $collector->id }})"
+                            class="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-600 text-sm font-semibold text-white transition-colors hover:bg-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            View Collector
+                        </button>
                     </div>
-                @endforeach
+                @empty
+                    <div
+                        class="flex items-center justify-center gap-2 rounded-xl border border-slate-800 bg-slate-900/60 py-8 text-center italic text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 text-slate-500"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
+                        </svg>
+                        <span>No collectors found.</span>
+                    </div>
+                @endforelse
 
-                <div>
+                <div class="pt-1">
                     {{ $filteredCollectors->links() }}
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Charts and Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {{-- ============================= CHARTS AND CARDS ============================= --}}
+        <section aria-labelledby="insights-heading" class="space-y-6">
+            <p id="insights-heading" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Insights
+            </p>
 
-            <x-dd.card title="🏆 Top Collectors" class="bg-gray-800 text-white border border-gray-700">
-                <h2 class="text-lg font-semibold text-green-400 mb-4 flex items-center justify-between">
-                    <div>
-                        By Data Count > 0
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-                        <div class="text-sm text-gray-300 mt-1">
+                <x-dd.card title="🏆 Top Collectors" class="border border-slate-800 bg-slate-900/60 text-white">
+                    <div class="mb-4">
+                        <h2 class="text-base font-semibold text-emerald-400">By Data Count &gt; 0</h2>
+                        <div class="mt-1 text-xs text-slate-400">
                             @if ($filteredCollectorsBy->isNotEmpty())
-                                <span class="font-semibold text-white">
-                                    {{ \App\Models\RiceSeason::find($selectedSeason)->name ?? 'All Seasons' }} |
+                                <span class="font-medium text-slate-200">
+                                    {{ \App\Models\RiceSeason::find($selectedSeason)->name ?? 'All Seasons' }} &middot;
                                     {{ $displayLocationName }}
                                 </span>
                             @else
-                                <span class="font-semibold text-white">No collectors available</span>
+                                <span class="font-medium text-slate-200">No collectors available</span>
                             @endif
                         </div>
                     </div>
-                </h2>
 
-                <ul class="divide-y divide-gray-700 text-sm">
-                    @forelse ($filteredCollectorsBy as $collector)
-                        <li class="py-2 flex justify-between items-center">
-                            <span class="truncate">
-                                {{ $collector->user->name ?? 'Unnamed Collector' }} -
-                                {{ $collector->getAiRange->name ?? 'Unnamed Ai' }}
-                            </span>
-                            <span class="bg-orange-700 text-white px-3 py-1 rounded text-xs font-medium shrink-0 ml-2">
-                                {{ $collector->common_data_collect_count ?? 0 }} entries
-                            </span>
-                        </li>
-                    @empty
-                        <li class="text-red-400 py-2">No data found.</li>
-                    @endforelse
-                </ul>
-            </x-dd.card>
+                    <ul class="divide-y divide-slate-800 text-sm">
+                        @forelse ($filteredCollectorsBy as $collector)
+                            <li class="flex items-center justify-between gap-2 py-2.5">
+                                <div class="flex min-w-0 items-center gap-2.5">
+                                    <span @class([
+                                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold',
+                                        'bg-amber-400/20 text-amber-300' => $loop->iteration === 1,
+                                        'bg-slate-300/20 text-slate-200' => $loop->iteration === 2,
+                                        'bg-orange-700/25 text-orange-400' => $loop->iteration === 3,
+                                        'bg-slate-700/40 text-slate-400' => $loop->iteration > 3,
+                                    ])>
+                                        {{ $loop->iteration }}
+                                    </span>
+                                    <span class="truncate text-slate-200">
+                                        {{ $collector->user->name ?? 'Unnamed Collector' }}
+                                        <span class="text-slate-500">&middot;
+                                            {{ $collector->getAiRange->name ?? 'Unnamed Ai' }}</span>
+                                    </span>
+                                </div>
+                                <span
+                                    class="shrink-0 rounded-full bg-emerald-500/15 px-2.5 py-1 text-xs font-medium text-emerald-400">
+                                    {{ $collector->common_data_collect_count ?? 0 }} entries
+                                </span>
+                            </li>
+                        @empty
+                            <li class="py-3 text-rose-400">No data found.</li>
+                        @endforelse
+                    </ul>
+                </x-dd.card>
 
-            <x-dd.card title="📌 All Collectors in {{ $displayLocationName }}">
-                <livewire:map-view :collectors="$this->collectors" />
-            </x-dd.card>
+                <x-dd.card title="📝 Recent Activities" class="border border-slate-800 bg-slate-900/60 text-white">
+                    <ul class="divide-y divide-slate-800 text-sm">
+                        @forelse ($recentActivities as $activity)
+                            <li class="flex items-start gap-3 py-2.5">
+                                <span
+                                    class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-sky-400">
+                                    <i class="fas fa-clock text-xs"></i>
+                                </span>
+                                <p class="min-w-0 text-slate-300">
+                                    <strong class="text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
+                                    {{ $activity->title }}
+                                    <span
+                                        class="block text-xs text-slate-500">{{ $activity->created_at->diffForHumans() }}</span>
+                                </p>
+                            </li>
+                        @empty
+                            <li class="py-3 text-slate-400">No recent activities found.</li>
+                        @endforelse
+                    </ul>
+                </x-dd.card>
 
-            <x-dd.card title="📝 Recent Activities">
-                <ul class="space-y-2 text-gray-300 text-sm">
-                    @forelse ($recentActivities as $activity)
-                        <li>🕒 <strong class="text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
-                            {{ $activity->title }} – <span
-                                class="text-gray-500">{{ $activity->created_at->diffForHumans() }}</span></li>
-                    @empty
-                        <li>No recent activities found.</li>
-                    @endforelse
-                </ul>
-            </x-dd.card>
-        </div>
+                <div class="lg:col-span-2">
+                    <x-dd.card title="📌 All Collectors in {{ $displayLocationName }}"
+                        class="border border-slate-800 bg-slate-900/60 text-white">
+                        <div class="overflow-hidden rounded-lg">
+                            <livewire:map-view :collectors="$this->collectors" />
+                        </div>
+                    </x-dd.card>
+                </div>
+            </div>
+        </section>
+
     </div>
 </div>
