@@ -9,15 +9,14 @@
     <!-- Inter Provinces Pest Damage Level (Collapsible) -->
     <div x-data="{ open: true }" wire:ignore.self class="m-0">
         <div @click="open = !open"
-            class="flex items-center justify-between bg-slate-100 dark:bg-slate-800 hover:bg-slate-50 dark:bg-slate-800 text-gray-100 
-           px-3 py-2 rounded-md cursor-pointer select-none transition duration-200 
-           shadow hover:shadow-lg hover:scale-[1.02] space-x-2">
+            class="flex items-center justify-between rounded-md bg-slate-100 px-3 py-2 text-slate-700 shadow transition duration-200 cursor-pointer select-none hover:bg-slate-50 hover:shadow-lg hover:scale-[1.02] space-x-2 dark:bg-slate-800 dark:text-slate-100">
 
             <div class="flex items-center space-x-2">
-                <h2 class="text-lg font-semibold text-gray-200">
+                <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">
                     Inter Provinces Pest Damage Level
                 </h2>
-                <p class="text-sm text-gray-400 italic" x-text="open ? '(Click here to show)' : '(Click here to hide)'">
+                <p class="text-sm italic text-slate-500 dark:text-slate-400"
+                    x-text="open ? '(Click here to show)' : '(Click here to hide)'">
                 </p>
             </div>
 
@@ -32,14 +31,15 @@
 
         <div x-show="!open" x-transition x-cloak class="mt-3 space-y-3">
             @foreach ($districts as $district)
-                <div class="m-2 p-2 bg-slate-50 dark:bg-slate-800/90 rounded-md shadow-lg backdrop-blur-sm border border-slate-200 dark:border-slate-700">
+                <div
+                    class="m-2 p-2 bg-slate-50 dark:bg-slate-800/90 rounded-md shadow-lg backdrop-blur-sm border border-slate-200 dark:border-slate-700">
                     <!-- Header -->
                     <div class="flex items-center mb-4">
                         <div
                             class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-400 mr-3">
                             <i class="fas fa-bug text-lg"></i>
                         </div>
-                        <h2 class="text-lg font-semibold text-gray-100">
+                        <h2 class="text-lg font-semibold text-slate-800 dark:text-slate-100">
                             Pest Density in <span class="text-orange-600">{{ $district->name }}</span> for This Week
                         </h2>
                     </div>
@@ -59,11 +59,12 @@
         @if ($selectedSeason || $selectedDistrict || $searchNumber)
             <div
                 class="col-span-2 lg:col-span-1 bg-slate-50 dark:bg-slate-800 p-3 flex items-center justify-between border border-slate-200 dark:border-slate-700">
-                <div class="flex flex-col text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-tight">
+                <div
+                    class="flex flex-col text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-tight">
                     <span class="truncate max-w-[120px] sm:max-w-none">
                         {{ \App\Models\district::find($selectedDistrict)?->name ?? '' }}
                     </span>
-                    <span class="truncate text-gray-400">
+                    <span class="truncate text-slate-500 dark:text-slate-400">
                         {{ $selectedSeasonName }} Collectors
                     </span>
                 </div>
@@ -165,7 +166,8 @@
                                 <td class="px-4 py-2 whitespace-nowrap text-slate-900 dark:text-white">
                                     {{ $collector->riceSeason->name ?? 'N/A' }}
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap text-slate-900 dark:text-white">{{ $collector->phone_no ?? 'N/A' }}
+                                <td class="px-4 py-2 whitespace-nowrap text-slate-900 dark:text-white">
+                                    {{ $collector->phone_no ?? 'N/A' }}
                                 </td>
                                 <td class="px-4 py-2 text-right">
                                     <button wire:click="viewCollector({{ $collector->id }})"
@@ -185,7 +187,7 @@
         <div class="sm:hidden space-y-1 mt-2">
             @foreach ($filteredCollectors as $collector)
                 <div wire:click="viewCollector({{ $collector->id }})"
-                    class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-3 py-2 text-slate-900 dark:text-white text-sm flex items-center justify-between cursor-pointer hover:bg-slate-50 dark:bg-slate-800 transition duration-150 ease-in-out">
+                    class="flex items-center justify-between border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 transition duration-150 ease-in-out cursor-pointer hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
                     <div class="flex-1 min-w-0">
                         <div class="font-semibold truncate">{{ $collector->user->name }}</div>
                         <div class="truncate text-gray-400 text-xs">
@@ -207,7 +209,8 @@
 
     <!-- Dashboard Cards + Charts -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6">
-        <x-dd.card title="🏆 Top Collectors" class="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">
+        <x-dd.card title="🏆 Top Collectors"
+            class="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">
             <h2 class="text-lg font-semibold text-green-400 mb-4 flex items-center justify-between">
                 <div>
                     By Data Count > 0
@@ -231,7 +234,8 @@
                             {{ $collector->user->name ?? 'Unnamed Collector' }} -
                             {{ $collector->getAiRange->name ?? 'Unnamed Ai' }}
                         </span>
-                        <span class="bg-orange-700 text-slate-900 dark:text-white px-3 py-1 rounded text-xs font-medium">
+                        <span
+                            class="bg-orange-700 text-slate-900 dark:text-white px-3 py-1 rounded text-xs font-medium">
                             {{ $collector->common_data_collect_count ?? 0 }} entries
                         </span>
                     </li>
@@ -241,17 +245,21 @@
             </ul>
         </x-dd.card>
 
-        <x-dd.card title="📌 All Collector Locations" class="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">
+        <x-dd.card title="📌 All Collector Locations"
+            class="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">
             <livewire:map-view :collectors="$this->collectors" :key="'map-view'" />
         </x-dd.card>
 
-        <x-dd.card title="📝 Recent Activities" class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+        <x-dd.card title="📝 Recent Activities"
+            class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
             <ul class="space-y-2 text-sm">
                 @forelse ($recentActivities as $activity)
                     <li>
-                        🕒 <strong class="text-slate-900 dark:text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
+                        🕒 <strong
+                            class="text-slate-900 dark:text-white">{{ $activity->user->name ?? 'N/A' }}</strong>
                         {{ $activity->title }} –
-                        <span class="text-gray-500">{{ $activity->created_at->diffForHumans() }}</span>
+                        <span
+                            class="text-slate-500 dark:text-slate-400">{{ $activity->created_at->diffForHumans() }}</span>
                     </li>
                 @empty
                     <li>No recent activities found.</li>

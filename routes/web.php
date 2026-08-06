@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     Auth\LoginController,
@@ -14,7 +15,8 @@ use App\Http\Controllers\{
     ReportController,
     UserController,
     ChartController,
-    TestController
+    TestController,
+    DatabaseBackupController
 };
 use App\Exports\UsersExport;
 use App\Http\Livewire\{
@@ -141,7 +143,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     // Conducted Programs
     Route::get('conducted-programs', ConductedPrograms::class)->name('admin.conducted-programs');
-
+    Route::get('/database', [DatabaseBackupController::class, 'download'])->name('database-backup.download');
 
 
     Route::get('/location-settings', LocationManager::class)->name('location.settings');

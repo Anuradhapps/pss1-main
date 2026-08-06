@@ -17,13 +17,17 @@
         </div>
 
         <!-- Collector Info -->
-        <div class="p-4  text-white bg-emerald-900 ">
+        <div
+            class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-slate-800 shadow-sm dark:border-emerald-800/70 dark:bg-emerald-900/80 dark:text-slate-100">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div><strong>Name:</strong> <span class="text-gray-300">{{ $collector->user->name }}</span></div>
-                <div><strong>E-Mail:</strong> <span class="text-gray-300">{{ $collector->user->email }}</span></div>
-                <div><strong>Phone Number:</strong> <span class="text-gray-300">{{ $collector->phone_no }}</span></div>
-                <div><strong>Season:</strong> <span class="text-gray-300">{{ $collector->riceSeason->name }}</span>
-                </div>
+                <div><strong>Name:</strong> <span
+                        class="text-slate-600 dark:text-slate-300">{{ $collector->user->name }}</span></div>
+                <div><strong>E-Mail:</strong> <span
+                        class="text-slate-600 dark:text-slate-300">{{ $collector->user->email }}</span></div>
+                <div><strong>Phone Number:</strong> <span
+                        class="text-slate-600 dark:text-slate-300">{{ $collector->phone_no }}</span></div>
+                <div><strong>Season:</strong> <span
+                        class="text-slate-600 dark:text-slate-300">{{ $collector->riceSeason->name }}</span></div>
             </div>
         </div>
 

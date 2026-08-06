@@ -1,39 +1,13 @@
-<!-- Form -->
 <x-form wire:submit.prevent="update" method="put" class="space-y-6">
-
-    <!-- Grid Inputs -->
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-
-        <!-- Site Name -->
         <x-form.input wire:model="siteName" name="siteName" label="Site Name" />
-
-        <!-- Enforce 2FA Toggle -->
-        {{-- <fieldset class="col-span-1">
-                    <div class="bg-gray-800 border border-gray-700 rounded-md p-4 space-y-2">
-                        <div class="flex items-start gap-3">
-                            <input wire:model="isForced2Fa" id="isForced2Fa" type="checkbox"
-                                class="mt-1 h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900">
-                            <label for="isForced2Fa" class="cursor-pointer select-none">
-                                <span class="block text-sm font-semibold text-white">Enforce 2FA</span>
-                                <span class="text-sm text-gray-400">
-                                    Require all users to use two-factor authentication.<br>
-                                    Only allow login from pre-approved IP addresses.
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset> --}}
-
     </div>
 
-    <!-- Submit Button -->
     <div>
-        <x-button class="bg-indigo-600 text-white hover:bg-indigo-500">
+        <x-button class="rounded-md bg-indigo-600 px-6 py-2 text-white transition hover:bg-indigo-500">
             Update Application Settings
         </x-button>
     </div>
-
 </x-form>
 
-<!-- Error Messages -->
 @include('errors.messages')

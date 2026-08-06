@@ -1,11 +1,12 @@
-<div class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-md border border-slate-200 dark:border-slate-700">
-    <h2 class="text-slate-900 dark:text-white text-lg font-semibold mb-4">Weekly Pest Density Chart</h2>
+<div
+    class="rounded-xl border border-slate-200 bg-white p-4 shadow-md transition-colors dark:border-slate-700 dark:bg-slate-900">
+    <h2 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">Weekly Pest Density Chart</h2>
 
     <div class="mb-4 flex space-x-4">
         <div class="flex-1">
-            <label class="block text-gray-400 text-sm mb-1">Select Region:</label>
+            <label class="mb-1 block text-sm text-slate-500 dark:text-slate-400">Select Region:</label>
             <select wire:model.debounce.500ms="regionId"
-                class="w-full bg-gray-800 text-white border border-gray-700 rounded-md p-2">
+                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
                 <option value="">All Regions</option>
                 @foreach ($regions as $region)
                     <option value="{{ $region->id }}">{{ $region->name }}</option>
@@ -13,9 +14,9 @@
             </select>
         </div>
         <div class="flex-1">
-            <label class="block text-gray-400 text-sm mb-1">Select Province:</label>
+            <label class="mb-1 block text-sm text-slate-500 dark:text-slate-400">Select Province:</label>
             <select wire:model.debounce.500ms="provinceId"
-                class="w-full bg-gray-800 text-white border border-gray-700 rounded-md p-2"
+                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                 {{ !$regionId ? 'disabled' : '' }}>
                 <option value="">All Provinces</option>
                 @foreach ($provinces as $province)
@@ -24,9 +25,9 @@
             </select>
         </div>
         <div class="flex-1">
-            <label class="block text-gray-400 text-sm mb-1">Select District:</label>
+            <label class="mb-1 block text-sm text-slate-500 dark:text-slate-400">Select District:</label>
             <select wire:model.debounce.500ms="districtId"
-                class="w-full bg-gray-800 text-white border border-gray-700 rounded-md p-2"
+                class="w-full rounded-md border border-slate-300 bg-white p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
                 {{ !$provinceId ? 'disabled' : '' }}>
                 <option value="">All Districts</option>
                 @foreach ($districts as $district)
@@ -37,7 +38,7 @@
     </div>
 
     @if (empty($chartData))
-        <div class="text-gray-400 text-center">
+        <div class="text-center text-slate-500 dark:text-slate-400">
             No data available for the selected period ({{ $startDate }} to {{ $endDate }}) or area.
             @if ($regionId)
                 Region: {{ App\Models\Region::find($regionId)?->name ?? 'Unknown' }}
@@ -50,7 +51,7 @@
             @endif
         </div>
     @else
-        <canvas id="pestChart" class="w-full h-96"></canvas>
+        <canvas id="pestChart" class="h-96 w-full"></canvas>
     @endif
 
     @push('scripts')

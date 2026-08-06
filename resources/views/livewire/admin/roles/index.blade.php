@@ -1,17 +1,21 @@
 @section('title', 'Roles')
 
-<div class="dark bg-gray-950 min-h-screen text-gray-100 px-4 py-6 space-y-6">
+<div
+    class="min-h-screen bg-slate-50 px-4 py-6 text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100 space-y-6">
 
     <div class="text-center">
-        <h1 class="text-3xl font-bold text-white"><i class="fas fa-shield-alt text-indigo-400"></i> Roles</h1>
-        <p class="text-sm text-gray-400 mt-1">Manage roles, permissions, and access levels across the system.</p>
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-white"><i class="fas fa-shield-alt text-indigo-400"></i>
+            Roles</h1>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Manage roles, permissions, and access levels across
+            the system.</p>
     </div>
 
     <div class="space-y-4">
         <div
-            class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-gray-900 p-4 rounded-2xl border border-gray-800 shadow">
-            <p class="text-sm text-gray-300">
-                By default, only <span class="font-semibold text-white">Admin</span> roles have permissions.
+            class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-sm text-slate-600 dark:text-slate-300">
+                By default, only <span class="font-semibold text-slate-900 dark:text-white">Admin</span> roles have
+                permissions.
                 Additional roles require permission assignments via editing below.
             </p>
             <div>
@@ -19,12 +23,12 @@
             </div>
         </div>
 
-        <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800 shadow">
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div class="grid gap-4 md:grid-cols-2">
                 <div>
                     <x-form.input type="search" id="roles" name="query" wire:model="query" label="none"
                         placeholder="🔍 Search roles"
-                        class="bg-gray-900 text-white border-gray-700 placeholder:text-gray-500">
+                        class="border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500">
                         {{ old('query', request('query')) }}
                     </x-form.input>
                 </div>
@@ -32,25 +36,27 @@
         </div>
     </div>
 
-    <div class="overflow-x-auto bg-gray-900 shadow mt-4 rounded-2xl border border-gray-800">
-        <table class="min-w-full divide-y divide-gray-700 text-sm">
-            <thead class="bg-gray-800 text-gray-300 text-sm uppercase tracking-wide">
-                <tr class="bg-gray-900">
+    <div
+        class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
+            <thead
+                class="bg-slate-50 text-sm uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                <tr>
                     <th class="px-4 py-3 text-left">
                         <button type="button" wire:click.prevent="sortBy('name')"
-                            class="text-left w-full text-gray-300 hover:text-cyan-300 transition">Name</button>
+                            class="w-full text-left text-slate-700 transition hover:text-cyan-500 dark:text-slate-300">Name</button>
                     </th>
                     <th class="px-4 py-3 text-left">Actions</th>
                 </tr>
             </thead>
-            <tbody class="text-sm divide-y divide-gray-800">
+            <tbody class="divide-y divide-slate-200 text-sm dark:divide-slate-700">
                 @forelse($this->roles() as $role)
-                    <tr class="hover:bg-gray-800 bg-gray-700 transition">
-                        <td class="px-4 py-3 text-gray-100">{{ $role->label }}</td>
+                    <tr class="bg-white transition hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800">
+                        <td class="px-4 py-3 text-slate-800 dark:text-slate-100">{{ $role->label }}</td>
                         <td class="px-4 py-3">
                             <div class="flex flex-wrap items-center gap-3">
                                 <a href="{{ route('admin.settings.roles.edit', ['role' => $role->id]) }}"
-                                    class="text-cyan-400 hover:text-cyan-200 font-medium transition">
+                                    class="font-medium text-cyan-500 transition hover:text-cyan-400">
                                     Edit
                                 </a>
 
@@ -58,32 +64,34 @@
                                     <x-modal>
                                         <x-slot name="trigger">
                                             <button
-                                                class="text-red-400 hover:text-red-200 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 rounded transition"
+                                                class="rounded font-medium text-red-500 transition hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500"
                                                 @click="on = true" aria-haspopup="dialog" aria-expanded="false"
                                                 aria-controls="modal-title">
                                                 Delete
                                             </button>
                                         </x-slot>
 
-                                        <x-slot name="title" class="text-xl font-semibold text-gray-100">
+                                        <x-slot name="title"
+                                            class="text-xl font-semibold text-slate-900 dark:text-slate-100">
                                             Confirm Delete
                                         </x-slot>
 
                                         <x-slot name="content">
-                                            <p class="text-center text-gray-300">
+                                            <p class="text-center text-slate-700 dark:text-slate-300">
                                                 Are you sure you want to delete role:
-                                                <span class="font-semibold text-white">{{ $role->name }}</span>?
+                                                <span
+                                                    class="font-semibold text-slate-900 dark:text-white">{{ $role->name }}</span>?
                                             </p>
                                         </x-slot>
 
                                         <x-slot name="footer" class="flex flex-wrap justify-center gap-3">
                                             <button type="button"
-                                                class="px-4 py-2 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-500 transition"
+                                                class="rounded bg-slate-100 px-4 py-2 text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                                                 @click="on = false">
                                                 Cancel
                                             </button>
                                             <button type="button"
-                                                class="px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600 transition"
+                                                class="rounded bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600"
                                                 wire:click="deleteRole('{{ $role->id }}')" @click="on = false">
                                                 Delete Role
                                             </button>
@@ -95,7 +103,8 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="2" class="px-4 py-6 text-center text-gray-500">No roles found.</td>
+                        <td colspan="2" class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">No roles
+                            found.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -24,7 +24,8 @@
         </x-slot>
 
         <x-slot name="right">
-            <div class="w-full max-w-md p-6 bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-slate-200 dark:border-gray-700">
+            <div
+                class="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-lg transition-colors dark:border-slate-700 dark:bg-slate-800">
 
                 @if (auth()->user()->two_fa_active == 'Yes' && auth()->user()->two_fa_secret_key != '')
                     <p class="mb-5 text-slate-600 dark:text-gray-300">
@@ -55,11 +56,12 @@
                             class="px-2 py-1 font-mono bg-slate-100 dark:bg-gray-700 rounded text-emerald-600 dark:text-emerald-400">{{ $secretKey }}</span>
                     </p>
 
-                    <x-form wire:submit.prevent="update" method="put" class="p-1 space-y-5 bg-white dark:bg-gray-500 rounded-lg">
+                    <x-form wire:submit.prevent="update" method="put"
+                        class="space-y-5 rounded-lg bg-white p-1 transition-colors dark:bg-slate-800">
 
                         <x-form.input wire:model.defer="code" label="Authentication Code" name="code" required
                             autocomplete="one-time-code"
-                            class="text-slate-900 dark:text-gray-200 bg-white dark:bg-gray-900 border-slate-300 dark:border-gray-700 focus:border-emerald-500 focus:ring-emerald-400"
+                            class="border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-emerald-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                             label-class="text-slate-700 dark:text-gray-300" />
 
                         <x-button

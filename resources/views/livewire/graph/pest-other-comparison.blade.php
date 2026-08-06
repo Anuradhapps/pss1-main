@@ -1,7 +1,8 @@
 <div class="p-2 min-h-screen space-y-3">
 
     <!-- Title Card -->
-    <div class="bg-white/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
+    <div
+        class="bg-white/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
         <!-- Gradient Header -->
         <div
             class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -37,7 +38,8 @@
     @endphp
 
     <!-- Rice Variety Pie Chart -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg p-6 border border-slate-100 dark:border-slate-800 transition hover:shadow-xl">
+    <div
+        class="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg transition hover:shadow-xl dark:border-slate-800 dark:bg-slate-900">
         <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">Rice Variety Distribution (Top 15)</h2>
         <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
 
@@ -68,7 +70,8 @@
                     <i class="fas fa-map-marked-alt text-yellow-600 text-2xl"></i>
                     <div>
                         <p class="text-lg font-semibold text-yellow-700">Data coverage</p>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">Major agricultural regions of Sri Lanka</p>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">Major agricultural regions of Sri Lanka
+                        </p>
                     </div>
                 </div>
 
@@ -77,7 +80,8 @@
                     <i class="fas fa-users text-purple-700 text-2xl"></i>
                     <div>
                         <p class="text-lg font-semibold text-purple-700">Total collectors</p>
-                        <p class="text-slate-800 dark:text-slate-200 font-bold text-lg">{{ array_sum($collectorsCount) }}</p>
+                        <p class="text-slate-800 dark:text-slate-200 font-bold text-lg">
+                            {{ array_sum($collectorsCount) }}</p>
                     </div>
                 </div>
             </div>
@@ -95,7 +99,8 @@
             <div
                 class="bg-white dark:bg-slate-900 rounded-xl shadow p-4 border border-slate-100 dark:border-slate-800 hover:shadow-lg transition-all duration-200">
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide bg-yellow-300 px-2 rounded-xl">
+                    <h3
+                        class="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide bg-yellow-300 px-2 rounded-xl">
                         {{ $variety }}</h3>
                     <span
                         class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">{{ $collectorsCount[$variety] }}
@@ -111,7 +116,8 @@
     </div>
 
     <!-- Footer -->
-    <p class="text-center text-gray-400 text-xs mt-6">Data updated: {{ now()->format('M j, Y') }} | Source: Field
+    <p class="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">Data updated: {{ now()->format('M j, Y') }} |
+        Source: Field
         Research Collection</p>
 
     @push('scripts')
