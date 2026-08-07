@@ -23,32 +23,35 @@
     $getColorClasses = function ($color) {
         $colors = [
             'green' => [
-                'bg' => 'bg-green-500', // solid accent (icon dot / progress bar)
-                'text' => 'text-green-700 dark:text-green-300', // status label text
-                'bgLight' => 'bg-green-50 dark:bg-green-900/30', // card background
-                'border' => 'border-green-200 dark:border-green-700/40', // card border
-                'pill' => 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-300',
+                'bg' => 'bg-emerald-700',
+                'text' => 'text-emerald-900 dark:text-emerald-300',
+                'bgLight' => 'bg-emerald-100 dark:bg-emerald-950/40',
+                'border' => 'border-emerald-400 dark:border-emerald-800',
+                'pill' => 'bg-emerald-200 text-emerald-900 dark:bg-emerald-900/70 dark:text-emerald-200',
             ],
+
             'yellow' => [
-                'bg' => 'bg-yellow-500',
-                'text' => 'text-yellow-800 dark:text-yellow-300',
-                'bgLight' => 'bg-yellow-50 dark:bg-yellow-900/30',
-                'border' => 'border-yellow-200 dark:border-yellow-700/40',
-                'pill' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/60 dark:text-yellow-300',
+                'bg' => 'bg-amber-600',
+                'text' => 'text-amber-900 dark:text-amber-300',
+                'bgLight' => 'bg-amber-100 dark:bg-amber-950/40',
+                'border' => 'border-amber-400 dark:border-amber-800',
+                'pill' => 'bg-amber-200 text-amber-900 dark:bg-amber-900/70 dark:text-amber-200',
             ],
+
             'orange' => [
-                'bg' => 'bg-orange-500',
-                'text' => 'text-orange-800 dark:text-orange-300',
-                'bgLight' => 'bg-orange-50 dark:bg-orange-900/30',
-                'border' => 'border-orange-200 dark:border-orange-700/40',
-                'pill' => 'bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-300',
+                'bg' => 'bg-orange-700',
+                'text' => 'text-orange-900 dark:text-orange-300',
+                'bgLight' => 'bg-orange-100 dark:bg-orange-950/40',
+                'border' => 'border-orange-400 dark:border-orange-800',
+                'pill' => 'bg-orange-200 text-orange-900 dark:bg-orange-900/70 dark:text-orange-200',
             ],
+
             'red' => [
-                'bg' => 'bg-red-500',
-                'text' => 'text-red-700 dark:text-red-300',
-                'bgLight' => 'bg-red-50 dark:bg-red-900/30',
-                'border' => 'border-red-200 dark:border-red-700/40',
-                'pill' => 'bg-red-100 text-red-800 dark:bg-red-900/60 dark:text-red-300',
+                'bg' => 'bg-red-700',
+                'text' => 'text-red-900 dark:text-red-300',
+                'bgLight' => 'bg-red-100 dark:bg-red-950/40',
+                'border' => 'border-red-400 dark:border-red-800',
+                'pill' => 'bg-red-200 text-red-900 dark:bg-red-900/70 dark:text-red-200',
             ],
         ];
 
@@ -56,12 +59,14 @@
     };
 @endphp
 
-<div
-    class="mx-auto w-full max-w-7xl space-y-8 rounded-3xl border border-slate-200 bg-slate-50/80 p-4 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-950/70 sm:p-6 lg:p-8">
+{{-- No outer card/border/shadow here — this component renders inside the
+     district card in the dashboard, which already provides that chrome.
+     Adding our own would double up the border/shadow around it. --}}
+<div class="w-full space-y-3">
 
     <!-- Pest Grid -->
-    <!-- UI Pattern: Adaptive layout (1 col on tiny phones, 2 on regular phones, scaling up) -->
-    <div class="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+    <!-- UI Pattern: 2 cols even on small phones (denser than 1-col stacking), scaling up -->
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-2.5 lg:grid-cols-4">
         @foreach ($pests as $pest => $count)
             @php
                 $level = $getPestLevel($count);
@@ -69,43 +74,38 @@
             @endphp
 
             <div
-                class="{{ $classes['bgLight'] }} {{ $classes['border'] }} group flex flex-col justify-between rounded-xl border p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5">
+                class="{{ $classes['bgLight'] }} {{ $classes['border'] }} group flex flex-col justify-between rounded-lg border p-2.5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
 
-                <div class="flex justify-between items-start mb-4 gap-3">
+                <div class="mb-2 flex items-start justify-between gap-2">
 
-                    <div class="flex-1 min-w-0">
-                        <!-- Typography: Bumped up to readable minimums (text-sm/text-base) -->
+                    <div class="min-w-0 flex-1">
                         <h3
-                            class="truncate text-sm font-semibold capitalize leading-tight text-slate-900 dark:text-slate-100 sm:text-base">
+                            class="truncate text-[11px] font-semibold capitalize leading-tight text-slate-900 dark:text-slate-100 sm:text-xs">
                             {{ Str::headline($pest) }}
                         </h3>
 
-                        <!-- Distinct pill shape for status: dedicated bg/text pair for guaranteed contrast -->
                         <span
-                            class="{{ $classes['pill'] }} mt-2 inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold">
-                            <i class="fas fa-{{ $level['icon'] }} mr-1.5 text-[10px]" aria-hidden="true"></i>
+                            class="{{ $classes['pill'] }} mt-1 inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-semibold">
+                            <i class="fas fa-{{ $level['icon'] }} mr-1 text-[9px]" aria-hidden="true"></i>
                             {{ $level['level'] }}
                         </span>
                     </div>
 
                     <!-- Visual Hierarchy: Grouped number and icon -->
-                    <div class="flex flex-col items-end gap-1 flex-shrink-0">
-                        <span class="text-xl sm:text-2xl font-black leading-none {{ $classes['text'] }}">
+                    <div class="flex flex-shrink-0 flex-col items-end gap-1">
+                        <span class="text-base font-black leading-none {{ $classes['text'] }} sm:text-lg">
                             {{ $count }}
                         </span>
-                        <div
-                            class="flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-inner ring-1 ring-slate-900/5 dark:bg-slate-900/50 dark:ring-white/5">
-                            <div class="w-5 h-5 rounded-full flex items-center justify-center {{ $classes['bg'] }}">
-                                <i class="fas fa-bug text-white text-[10px]" aria-hidden="true"></i>
-                            </div>
+                        <div class="flex h-5 w-5 items-center justify-center rounded-full {{ $classes['bg'] }}">
+                            <i class="fas fa-bug text-[9px] text-white" aria-hidden="true"></i>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Progress Bar: Slightly thicker for mobile visibility -->
-                <div class="h-2 w-full overflow-hidden rounded-full bg-slate-900/10 shadow-inner dark:bg-slate-900/80">
-                    <div class="{{ $classes['bg'] }} h-full rounded-full transition-all duration-1000 ease-out"
+                <!-- Progress Bar -->
+                <div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-900/10 dark:bg-slate-900/80">
+                    <div class="{{ $classes['bg'] }} h-full rounded-full transition-all duration-700 ease-out"
                         style="width: {{ min($count * 10, 100) }}%">
                     </div>
                 </div>
@@ -115,73 +115,69 @@
 
     <!-- Other Info -->
     @if (!empty($otherInfo))
-        <div class="mt-10 sm:mt-12">
+        <div>
 
-            <!-- Header Section -->
-            <div class="flex items-center gap-4 mb-6">
+            <!-- Header -->
+            <div class="mb-2 flex items-center gap-2">
                 <div
-                    class="w-12 h-12 rounded-xl bg-yellow-100 border border-yellow-300 flex items-center justify-center flex-shrink-0 dark:bg-yellow-500/20 dark:border-yellow-500/30">
-                    <i class="fas fa-triangle-exclamation text-yellow-700 dark:text-yellow-400 text-xl"
+                    class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg border border-amber-300 bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/20">
+                    <i class="fas fa-triangle-exclamation text-xs text-amber-700 dark:text-amber-400"
                         aria-hidden="true"></i>
                 </div>
-                <div>
-                    <h2 class="text-lg font-bold tracking-wide text-slate-900 dark:text-white sm:text-xl">
-                        Field Alerts
-                    </h2>
-                    <p class="mt-0.5 text-sm text-slate-600 dark:text-slate-400">
+                <div class="min-w-0">
+
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">
                         {{ count($otherInfo) }} record(s) require attention
                     </p>
                 </div>
             </div>
 
             <!-- Cards -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+            <div class="grid grid-cols-1 gap-2.5 lg:grid-cols-2">
                 @foreach ($otherInfo as $info)
                     <div
-                        class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:border-yellow-400 hover:shadow-xl hover:shadow-yellow-500/10 dark:border-slate-700/60 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 dark:hover:shadow-yellow-500/5">
+                        class="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:border-amber-300 hover:shadow-md dark:border-slate-700/60 dark:bg-slate-900/60">
 
                         <!-- Top Accent Bar -->
-                        <div class="h-1 w-full bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500"></div>
+                        <div class="h-0.5 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500"></div>
 
-                        <div class="p-5 sm:p-6 flex flex-col flex-1">
+                        <div class="flex flex-1 flex-col p-3">
 
-                            <!-- Issue (Proximity: kept together at the top) -->
-                            <div class="flex items-start gap-3 sm:gap-4 mb-5 sm:mb-6">
+                            <!-- Issue -->
+                            <div class="mb-2.5 flex items-start gap-2">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-red-100 border border-red-200 flex items-center justify-center flex-shrink-0 mt-0.5 dark:bg-red-500/15 dark:border-red-500/20">
-                                    <i class="fas fa-circle-exclamation text-red-600 dark:text-red-400 text-sm"
+                                    class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-red-200 bg-red-100 dark:border-red-500/20 dark:bg-red-500/15">
+                                    <i class="fas fa-circle-exclamation text-[11px] text-red-600 dark:text-red-400"
                                         aria-hidden="true"></i>
                                 </div>
-                                <div class="flex-1">
+                                <div class="min-w-0 flex-1">
                                     <div
-                                        class="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                        class="mb-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                         Reported Issue
                                     </div>
-                                    <div
-                                        class="text-sm font-medium leading-relaxed text-red-700 dark:text-red-300 sm:text-base">
+                                    <div class="text-xs font-medium leading-relaxed text-red-700 dark:text-red-300">
                                         {{ $info['otherInfo'] }}
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Details (Gestalt Law of Enclosure: contained in bubbles) -->
-                            <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-auto">
+                            <!-- Details -->
+                            <div class="mt-auto grid grid-cols-1 gap-2 sm:grid-cols-3">
 
                                 <!-- AI Range -->
                                 <div
-                                    class="flex flex-1 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700/40 dark:bg-slate-800/40">
+                                    class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-700/40 dark:bg-slate-800/40">
                                     <div
-                                        class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-500/15">
-                                        <i class="fas fa-map-marker-alt text-sm text-blue-600 dark:text-blue-400"
+                                        class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-blue-100 dark:bg-blue-500/15">
+                                        <i class="fas fa-map-marker-alt text-[11px] text-blue-600 dark:text-blue-400"
                                             aria-hidden="true"></i>
                                     </div>
                                     <div class="min-w-0">
                                         <div
-                                            class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 sm:text-xs">
+                                            class="text-[9px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                                             AI Range
                                         </div>
-                                        <div
-                                            class="mt-0.5 truncate text-sm font-medium text-slate-900 dark:text-slate-100">
+                                        <div class="truncate text-xs font-medium text-slate-900 dark:text-slate-100">
                                             {{ $info['aiRange'] }}
                                         </div>
                                     </div>
@@ -189,46 +185,42 @@
 
                                 <!-- Collector -->
                                 <div
-                                    class="flex flex-1 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700/40 dark:bg-slate-800/40">
+                                    class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-700/40 dark:bg-slate-800/40">
                                     <div
-                                        class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 dark:bg-green-500/15">
-                                        <i class="fas fa-user text-sm text-green-600 dark:text-green-400"
+                                        class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-emerald-100 dark:bg-emerald-500/15">
+                                        <i class="fas fa-user text-[11px] text-emerald-600 dark:text-emerald-400"
                                             aria-hidden="true"></i>
                                     </div>
                                     <div class="min-w-0">
                                         <div
-                                            class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 sm:text-xs">
+                                            class="text-[9px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                                             Collector
                                         </div>
-                                        <div
-                                            class="mt-0.5 truncate text-sm font-medium text-slate-900 dark:text-slate-100">
+                                        <div class="truncate text-xs font-medium text-slate-900 dark:text-slate-100">
                                             {{ $info['name'] }}
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Contact Number (Fitts's Law: Massive touch target for dialing) -->
+                                <!-- Contact Number (Fitts's Law: large touch target for dialing) -->
                                 <a href="tel:{{ $info['phone'] }}"
-                                    class="mt-1 flex w-full items-center gap-3 rounded-xl border border-purple-200 bg-purple-50 p-3 transition-colors hover:bg-purple-100 active:bg-purple-100 dark:border-purple-500/20 dark:bg-purple-500/10 dark:hover:bg-purple-500/20 dark:active:bg-purple-500/20 sm:mt-0">
+                                    class="flex items-center gap-2 rounded-lg border border-purple-200 bg-purple-50 p-2 transition-colors hover:bg-purple-100 active:bg-purple-100 dark:border-purple-500/20 dark:bg-purple-500/10 dark:hover:bg-purple-500/20">
                                     <div
-                                        class="w-9 h-9 rounded-lg bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                                        <i class="fas fa-phone text-purple-600 dark:text-purple-400 text-sm"
+                                        class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-purple-100 dark:bg-purple-500/20">
+                                        <i class="fas fa-phone text-[11px] text-purple-600 dark:text-purple-400"
                                             aria-hidden="true"></i>
                                     </div>
-                                    <div>
+                                    <div class="min-w-0 flex-1">
                                         <div
-                                            class="text-[10px] sm:text-xs text-purple-700/80 dark:text-purple-400/80 uppercase font-semibold tracking-wide">
+                                            class="text-[9px] font-semibold uppercase tracking-wide text-purple-700/80 dark:text-purple-400/80">
                                             Tap to Call
                                         </div>
-                                        <div
-                                            class="text-purple-900 dark:text-purple-200 text-sm sm:text-base font-bold mt-0.5">
+                                        <div class="truncate text-xs font-bold text-purple-900 dark:text-purple-200">
                                             {{ $info['phone'] }}
                                         </div>
                                     </div>
-                                    <div class="ml-auto pr-2">
-                                        <i class="fas fa-chevron-right text-purple-400 dark:text-purple-500/50 text-xs"
-                                            aria-hidden="true"></i>
-                                    </div>
+                                    <i class="fas fa-chevron-right flex-shrink-0 text-[10px] text-purple-400 dark:text-purple-500/50"
+                                        aria-hidden="true"></i>
                                 </a>
 
                             </div>

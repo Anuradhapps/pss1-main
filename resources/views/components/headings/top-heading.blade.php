@@ -21,16 +21,18 @@
     $buttonColorClasses = $buttonColors[$buttonColor] ?? $buttonColors['blue'];
 @endphp
 
-<div class="px-6 py-5 mb-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl transition-colors duration-300 {{ $class }}">
+<div
+    class="px-4 py-3 mb-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl transition-colors duration-300 {{ $class }}">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-3">
                 @if ($icon)
-                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 text-primary">
+                    <div
+                        class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700 text-primary">
                         <i class="{{ $icon }} text-xl"></i>
                     </div>
                 @endif
-                <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{{ $title }}</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-slate-50 dark:text-white">{{ $title }}</h1>
             </div>
             @if ($subtitle)
                 <p class="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 sm:ml-13">{{ $subtitle }}</p>

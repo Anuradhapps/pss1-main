@@ -1,7 +1,7 @@
 <div class="w-full text-slate-700 dark:text-slate-300 flex flex-col gap-6 py-4 select-none">
 
     <!-- Section: Main -->
-    <div class="px-3">
+    <div>
         <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
             Overview
         </div>

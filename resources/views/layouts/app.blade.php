@@ -84,7 +84,7 @@
         @auth
             <!-- Desktop Sidebar (Full Height) -->
             <aside
-                class="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-40 flex-shrink-0">
+                class="hidden md:flex flex-col w-56 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-40 flex-shrink-0">
                 <!-- Sidebar Header (Logo) -->
                 <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                     <a href="{{ route('dashboard') }}" class="block w-full">
@@ -199,7 +199,7 @@
             <main id="main-content" tabindex="-1"
                 class="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-300 custom-scrollbar flex flex-col focus:outline-none">
                 <!-- Page Content -->
-                <div class="flex-1 w-full max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8">
+                <div class="flex-1 w-full max-w-[1800px] mx-auto p-4 sm:p-0 lg:p-1">
                     {{ $slot ?? '' }}
                 </div>
 
