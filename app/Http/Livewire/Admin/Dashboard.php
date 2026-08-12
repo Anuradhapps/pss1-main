@@ -3,40 +3,49 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Http\Livewire\Base;
+use App\Services\PestInfoService;
 use Illuminate\Contracts\View\View;
 use App\Models\district;
 use App\Models\CommonDataCollect;
 use Carbon\Carbon;
-use App\Http\Controllers\PestDataCollectController;
 
 class Dashboard extends Base
 {
+    protected PestInfoService $service;
+
+    public function boot(PestInfoService $service)
+    {
+        $this->service = $service;
+    }
+
     public function render(): View
     {
-        // Fetch common data for last 7 days
-        $lastWeekData = CommonDataCollect::with(['collector.getDistrict', 'pestDataCollect'])
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
-            ->get();
+        $days = 7;
 
-        // Group by district name
-        $groupedByDistrict = $lastWeekData->groupBy(function($data) {
-            return $data->collector->getDistrict->name ?? 'Unknown District';
-        });
+        // Only consider districts that actually had data collected in the window,
+        // same behavior as the original grouping logic.
+        $districts = CommonDataCollect::with('collector.getDistrict')
+            ->where('created_at', '>=', Carbon::now()->subDays($days))
+            ->get()
+            ->pluck('collector.getDistrict')
+            ->filter()
+            ->unique('id');
 
-        // Compute pest risk codes for each district
-        $pestController = app(PestDataCollectController::class);
         $districtSummaries = [];
-        
-        foreach ($groupedByDistrict as $districtName => $commonDatas) {
-            $summary = $pestController->avarageCalculateByCommonData($commonDatas);
-            $districtSummaries[$districtName] = $summary['pests'];
+
+        foreach ($districts as $district) {
+            $average = $this->service->avaragePestCodeByDistrictAndDuration(
+                $district->id,
+                $days
+            );
+
+            $districtSummaries[$district->name] = $average['pests'] ?? [];
         }
 
-        // Sort alphabetically by district
         ksort($districtSummaries);
 
         return view('livewire.admin.dashboard', [
-            'districtSummaries' => $districtSummaries
+            'districtSummaries' => $districtSummaries,
         ]);
     }
 }

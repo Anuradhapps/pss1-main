@@ -117,8 +117,7 @@
                     <div
                         class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                         <a href="{{ route('dashboard') }}" class="block">
-                            <x-logo-light class="flex dark:hidden"></x-logo-light>
-                            <x-logo-dark class="hidden dark:flex"></x-logo-dark>
+                            <x-logo />
                         </a>
                         <button @click="sidebarOpen = false" aria-label="Close menu"
                             class="text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 p-2 -mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
