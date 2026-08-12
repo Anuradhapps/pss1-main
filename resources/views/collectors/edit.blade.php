@@ -9,7 +9,7 @@
 
         <!-- Form -->
         <x-form action="{{ route(has_role('admin') ? 'admin.collector.update' : 'collector.update', $collector->id) }}"
-            method="POST" class="space-y-6 p-2">
+            method="POST" class="space-y-6 p-2 pt-0">
             @csrf
             @method('PUT')
 
