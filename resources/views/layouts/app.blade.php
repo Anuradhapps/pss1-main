@@ -117,7 +117,23 @@
                     <div
                         class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                         <a href="{{ route('dashboard') }}" class="block">
-                            <x-logo />
+                            <div class = 'flex items-center gap-2.5 sm:gap-3 min-w-0'>
+
+                                {{-- Logo --}}
+                                <div class="shrink-0 flex items-center justify-center">
+                                    <img src="{{ asset('images/LOGO.webp') }}" alt="National Pest Surveillance System"
+                                        width="45" height="45" loading="eager" decoding="async"
+                                        class="h-10 w-9 sm:h-10 sm:w-10 object-contain">
+                                </div>
+
+                                {{-- Name --}}
+                                <div class="min-w-0 leading-tight font-bold">
+                                    <span class="block">National Pest</span>
+                                    <span class="block">Surveillance System</span>
+                                </div>
+
+                            </div>
+
                         </a>
                         <button @click="sidebarOpen = false" aria-label="Close menu"
                             class="text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 p-2 -mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">

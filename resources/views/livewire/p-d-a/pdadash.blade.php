@@ -1,12 +1,10 @@
 @section('title', 'DD-Dashboard')
 
 @php
-    // Determine what location name to display based on whether a district is selected
     $displayLocationName = $selectedDistrict
         ? $districts->firstWhere('id', $selectedDistrict)->name . ' District'
         : $province->name . ' Province';
 
-    // Determine which districts to render memo cards for
     $activeDistricts = $selectedDistrict ? [$districts->firstWhere('id', $selectedDistrict)] : $districts;
 @endphp
 
@@ -14,43 +12,31 @@
     class="min-h-screen bg-slate-50 text-slate-800 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
 
     <x-headings.top-heading title="{{ $province->name }} Province Dashboard" icon="fas fa-clipboard"
-        class="bg-gradient-to-r
-           from-emerald-600  to-teal-500
-           dark:from-slate-900 dark:via-emerald-900 dark:to-slate-800
-           dark:text-white
-           border border-emerald-200 dark:border-slate-700
-           shadow-lg rounded-lg" />
+        class="bg-gradient-to-r from-emerald-400 to-teal-200 dark:from-slate-900 dark:via-emerald-900 dark:to-slate-800 dark:text-white border border-emerald-200 dark:border-slate-700 shadow-lg rounded-lg" />
 
-    <div class="mx-auto max-w-screen-2xl space-y-4 ">
+    <div class="mx-auto max-w-screen-2xl space-y-4">
 
         {{-- ============================= PEST DENSITY ============================= --}}
         <section aria-label="Pest monitoring"
-            class=" bg-white/80  transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900/60">
+            class="bg-white/80 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900/60">
             <p class="text-[11px] ps-1 font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Pest Monitoring : <span class="text-[10px] text-slate-500 dark:text-slate-400"> Last 7
-                    days</span>
+                Pest Monitoring : <span class="text-[10px] text-slate-500 dark:text-slate-400">Last 7 days</span>
             </p>
 
             @foreach ($activeDistricts as $dst)
                 <div
                     class="mb-2 rounded-lg border border-slate-200 bg-white/80 p-3 shadow-sm transition-colors duration-300 last:mb-0 dark:border-slate-800 dark:bg-slate-900/60">
-                    <!-- Header -->
                     <div
-                        class="mb-3 flex items-center gap-3 rounded-xl  border border-emerald-200 bg-emerald-100 px-3 py-2.5 dark:border-emerald-900/50 dark:bg-emerald-950/40">
-
+                        class="mb-3 flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-100 px-3 py-2.5 dark:border-emerald-900/50 dark:bg-emerald-950/40">
                         <div
-                            class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-whiteshadow-sm">
+                            class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-sm">
                             <i class="fas fa-bug text-sm"></i>
                         </div>
                         <div>
-                            <h2 class="text-sm font-bold text-emerald-900 dark:text-emerald-100">
-                                {{ $dst->name }}
+                            <h2 class="text-sm font-bold text-emerald-900 dark:text-emerald-100">{{ $dst->name }}
                             </h2>
                         </div>
-
                     </div>
-
-                    <!-- Nested Livewire Component -->
                     <livewire:pest-memo-card :districtId="$dst->id" :days="7" :key="'pest-' . $dst->id" />
                 </div>
             @endforeach
@@ -67,14 +53,12 @@
                 <x-dd.stat-box color="yellow" title="This Season Users" :value="$seasonUserCount" />
             </div>
         </section>
+
         {{-- ============================= FILTERS + USER TABLE ============================= --}}
         <section aria-labelledby="collectors-heading"
             class="rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-xl shadow-slate-200/50 backdrop-blur-md transition-colors duration-300 dark:border-slate-800/80 dark:bg-slate-900/80 dark:shadow-none sm:p-5">
 
-            {{-- Section Header & Responsive Filter Bar --}}
             <div class="flex flex-col gap-4">
-
-                {{-- Title --}}
                 <div class="flex items-center gap-3 shrink-0">
                     <div
                         class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400">
@@ -85,26 +69,18 @@
                             class="truncate text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-base">
                             Users in {{ ucfirst(strtolower($displayLocationName)) }}
                         </h2>
-
                         <span class="hidden text-xs text-slate-400 dark:text-slate-500 sm:inline">
                             • Filter and manage records
                         </span>
                     </div>
                 </div>
 
-                {{-- Filter Bar --}}
                 <div
                     class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white/60 p-3 dark:border-slate-700/60 dark:bg-slate-800/30 lg:flex-row lg:flex-wrap lg:items-end">
-
-                    {{-- Search Inputs --}}
                     <div class="grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-2 lg:min-w-[280px] lg:basis-[280px]">
-
-                        {{-- Name Search --}}
                         <div>
                             <label for="search-name"
-                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                Name
-                            </label>
+                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">Name</label>
                             <div class="relative">
                                 <span
                                     class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
@@ -116,12 +92,9 @@
                             </div>
                         </div>
 
-                        {{-- Phone Search --}}
                         <div>
                             <label for="search-phone"
-                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                Phone
-                            </label>
+                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">Phone</label>
                             <div class="relative">
                                 <span
                                     class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
@@ -134,18 +107,12 @@
                         </div>
                     </div>
 
-                    {{-- Divider (only visible when inline on large screens) --}}
                     <div class="hidden h-9 w-px shrink-0 bg-slate-200 dark:bg-slate-700 lg:block"></div>
 
-                    {{-- Dropdown Filters --}}
                     <div class="grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-3 lg:min-w-[360px] lg:basis-[360px]">
-
-                        {{-- District Filter --}}
                         <div>
                             <label for="filter-district"
-                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                District
-                            </label>
+                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">District</label>
                             <select id="filter-district" wire:model.live="selectedDistrict"
                                 class="h-9 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-2.5 text-xs text-slate-800 outline-none transition duration-150 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/80 dark:bg-slate-800/50 dark:text-slate-100 dark:focus:border-emerald-500 dark:focus:bg-slate-800">
                                 <option value="">All Districts</option>
@@ -155,12 +122,10 @@
                             </select>
                         </div>
 
-                        {{-- AI Range Filter --}}
                         <div>
                             <label for="filter-ai-range"
-                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                AI Range
-                            </label>
+                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">AI
+                                Range</label>
                             <select id="filter-ai-range" wire:model.live="selectedAiRange"
                                 class="h-9 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-2.5 text-xs text-slate-800 outline-none transition duration-150 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/80 dark:bg-slate-800/50 dark:text-slate-100 dark:focus:border-emerald-500 dark:focus:bg-slate-800">
                                 <option value="">All AI Ranges</option>
@@ -170,12 +135,9 @@
                             </select>
                         </div>
 
-                        {{-- Season Filter --}}
                         <div>
                             <label for="filter-season"
-                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                                Season
-                            </label>
+                                class="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300">Season</label>
                             <select id="filter-season" wire:model.live="selectedSeason"
                                 class="h-9 w-full rounded-lg border border-slate-200 bg-slate-50/50 px-2.5 text-xs text-slate-800 outline-none transition duration-150 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/80 dark:bg-slate-800/50 dark:text-slate-100 dark:focus:border-emerald-500 dark:focus:bg-slate-800">
                                 <option value="">All Seasons</option>
@@ -186,10 +148,8 @@
                         </div>
                     </div>
 
-                    {{-- Divider --}}
                     <div class="hidden h-9 w-px shrink-0 bg-slate-200 dark:bg-slate-700 lg:block"></div>
 
-                    {{-- Action Buttons --}}
                     <div class="flex shrink-0 gap-1.5 sm:w-auto">
                         <button wire:click="resetFilters" title="Reset all filters"
                             class="flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400/20 sm:flex-none dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/80 dark:hover:text-white">
@@ -212,11 +172,9 @@
                 </div>
             </div>
 
-            {{-- Desktop Table (Scrollable on small height/width monitors like 1366x720) --}}
+            {{-- Desktop Table --}}
             <div
                 class="relative mt-5 overflow-x-auto rounded-xl border border-slate-200/80 dark:border-slate-800/80 hidden sm:block">
-
-                {{-- Loading Spinner Overlay --}}
                 <div wire:loading.flex
                     wire:target="search, searchNumber, selectedDistrict, selectedAiRange, selectedSeason"
                     class="absolute inset-0 z-10 items-center justify-center bg-white/50 backdrop-blur-[1px] dark:bg-slate-900/50">
@@ -295,180 +253,9 @@
                 @endif
             </div>
 
-            {{-- Desktop Pagination --}}
             <div class="mt-3 hidden sm:block">
                 {{ $filteredCollectors->links() }}
             </div>
-
-            @if ($showModal && $selectedCollector)
-                <div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-950/60 backdrop-blur-sm p-0 sm:p-4"
-                    wire:key="modal-{{ $selectedCollector->id }}">
-
-                    <!-- Modal Panel -->
-                    <div
-                        class="flex flex-col w-full sm:w-auto sm:max-w-2xl max-h-[85dvh] sm:max-h-[90dvh] rounded-t-2xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
-
-                        {{-- Header --}}
-                        <div
-                            class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex-shrink-0">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-md shadow-green-500/30 flex-shrink-0">
-                                    <i class="fas fa-user text-sm"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
-                                        Collector Profile
-                                    </h2>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">
-                                        {{ $selectedCollector->user->name ?? 'N/A' }}
-                                    </p>
-                                </div>
-                            </div>
-                            <button wire:click="closeModal" type="button"
-                                class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex-shrink-0 ml-2">
-                                <i class="fas fa-xmark text-lg"></i>
-                            </button>
-                        </div>
-
-                        {{-- Scrollable Body --}}
-                        <div class="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-5 space-y-5">
-
-                            {{-- Profile Card --}}
-                            <div
-                                class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
-                                <div
-                                    class="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-green-500/30 flex-shrink-0">
-                                    {{ strtoupper(substr($selectedCollector->user->name ?? 'N', 0, 1)) }}
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">
-                                        {{ $selectedCollector->user->name ?? 'N/A' }}</h3>
-                                    <p class="text-sm text-slate-500 dark:text-slate-400">
-                                        {{ $selectedCollector->user->email ?? 'N/A' }}</p>
-                                </div>
-                            </div>
-
-                            {{-- Info Grid --}}
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                                <div
-                                    class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <i class="fas fa-map-marker-alt text-blue-500 text-xs"></i>
-                                        <span
-                                            class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">AI
-                                            Range</span>
-                                    </div>
-                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">
-                                        {{ $selectedCollector->getAiRange->name ?? 'N/A' }}</p>
-                                </div>
-                                <div
-                                    class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <i class="fas fa-seedling text-green-500 text-xs"></i>
-                                        <span
-                                            class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Season</span>
-                                    </div>
-                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">
-                                        {{ $selectedCollector->riceSeason->name ?? 'N/A' }}</p>
-                                </div>
-                                <div
-                                    class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <i class="fas fa-phone text-amber-500 text-xs"></i>
-                                        <span
-                                            class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone</span>
-                                    </div>
-                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">
-                                        {{ $selectedCollector->phone_no ?? 'N/A' }}</p>
-                                </div>
-                                <div
-                                    class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <i class="fas fa-database text-purple-500 text-xs"></i>
-                                        <span
-                                            class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Entries</span>
-                                    </div>
-                                    <p class="text-sm font-semibold text-slate-900 dark:text-white">
-                                        {{ $selectedCollector->commonDataCollect->count() }}</p>
-                                </div>
-                            </div>
-
-                            {{-- Data Collection Timeline --}}
-                            <div>
-                                @if ($selectedCollector->commonDataCollect->isEmpty())
-                                    <div
-                                        class="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0">
-                                            <i class="fas fa-inbox text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-semibold text-amber-800 dark:text-amber-300">No Data
-                                                Submitted</p>
-                                            <p class="text-xs text-amber-600 dark:text-amber-400 mt-0.5">This collector
-                                                has not submitted any data for this season.</p>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <div
-                                            class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400">
-                                            <i class="fas fa-calendar-days text-sm"></i>
-                                        </div>
-                                        <h3
-                                            class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                                            Data Collection Timeline</h3>
-                                        <span
-                                            class="ml-auto inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400">
-                                            {{ $selectedCollector->commonDataCollect->count() }} entries
-                                        </span>
-                                    </div>
-                                    <div class="space-y-3">
-                                        @foreach ($selectedCollector->commonDataCollect as $entry)
-                                            <div
-                                                class="flex items-start gap-3 p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-green-300 dark:hover:border-green-700 transition-all group">
-                                                <div
-                                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-green-500/20 flex-shrink-0">
-                                                    {{ $loop->iteration }}
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <div
-                                                        class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-                                                        <div
-                                                            class="flex items-center gap-1.5 text-sm text-slate-700 dark:text-slate-300">
-                                                            <i class="fas fa-seedling text-green-500 text-xs"></i>
-                                                            <span class="font-medium">Field Date:</span>
-                                                            <span>{{ $entry->c_date }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <p
-                                                        class="text-xs text-slate-400 dark:text-slate-500 mt-1 flex items-center gap-1.5">
-                                                        <i class="fas fa-clock text-[10px]"></i>
-                                                        Submitted
-                                                        {{ \Carbon\Carbon::parse($entry->created_at)->diffForHumans() }}
-                                                        &bull;
-                                                        {{ \Carbon\Carbon::parse($entry->created_at)->format('M d, Y H:i') }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        {{-- Footer --}}
-                        <div
-                            class="flex items-center justify-end px-4 sm:px-6 py-3 sm:py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex-shrink-0">
-                            <button wire:click="closeModal" type="button"
-                                class="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            @endif
 
             {{-- Mobile Cards --}}
             <div class="mt-4 space-y-2.5 sm:hidden">
@@ -626,4 +413,171 @@
         </section>
 
     </div>
+
+    {{-- ============================= COLLECTOR MODAL ============================= --}}
+    {{-- Moved OUTSIDE the filters/collectors <section> (which has backdrop-blur-md) --}}
+    {{-- and outside the overflow-x-auto table wrapper. A `backdrop-filter`/`filter`/  --}}
+    {{-- `transform` on an ancestor creates a new containing block for `position: fixed` --}}
+    {{-- children, which was trapping this modal inside the table's box instead of the  --}}
+    {{-- full viewport. Living here, as a direct child of the outermost div, fixes it.  --}}
+    @if ($showModal && $selectedCollector)
+        <div class="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-slate-950/60 backdrop-blur-sm p-0 sm:p-4"
+            wire:key="modal-{{ $selectedCollector->id }}">
+
+            <div
+                class="flex flex-col w-full sm:w-auto sm:max-w-2xl max-h-[85dvh] sm:max-h-[90dvh] rounded-t-2xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+
+                <div
+                    class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex-shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-md shadow-green-500/30 flex-shrink-0">
+                            <i class="fas fa-user text-sm"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
+                                Collector Profile
+                            </h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                {{ $selectedCollector->user->name ?? 'N/A' }}
+                            </p>
+                        </div>
+                    </div>
+                    <button wire:click="closeModal" type="button"
+                        class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex-shrink-0 ml-2">
+                        <i class="fas fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-5 space-y-5">
+
+                    <div
+                        class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div
+                            class="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-green-500/30 flex-shrink-0">
+                            {{ strtoupper(substr($selectedCollector->user->name ?? 'N', 0, 1)) }}
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">
+                                {{ $selectedCollector->user->name ?? 'N/A' }}</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">
+                                {{ $selectedCollector->user->email ?? 'N/A' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-map-marker-alt text-blue-500 text-xs"></i>
+                                <span
+                                    class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">AI
+                                    Range</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-white">
+                                {{ $selectedCollector->getAiRange->name ?? 'N/A' }}</p>
+                        </div>
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-seedling text-green-500 text-xs"></i>
+                                <span
+                                    class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Season</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-white">
+                                {{ $selectedCollector->riceSeason->name ?? 'N/A' }}</p>
+                        </div>
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-phone text-amber-500 text-xs"></i>
+                                <span
+                                    class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-white">
+                                {{ $selectedCollector->phone_no ?? 'N/A' }}</p>
+                        </div>
+                        <div
+                            class="p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-database text-purple-500 text-xs"></i>
+                                <span
+                                    class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Entries</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-900 dark:text-white">
+                                {{ $selectedCollector->commonDataCollect->count() }}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        @if ($selectedCollector->commonDataCollect->isEmpty())
+                            <div
+                                class="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0">
+                                    <i class="fas fa-inbox text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-amber-800 dark:text-amber-300">No Data
+                                        Submitted</p>
+                                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-0.5">This collector has not
+                                        submitted any data for this season.</p>
+                                </div>
+                            </div>
+                        @else
+                            <div class="flex items-center gap-3 mb-4">
+                                <div
+                                    class="flex items-center justify-center w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400">
+                                    <i class="fas fa-calendar-days text-sm"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                                    Data Collection Timeline</h3>
+                                <span
+                                    class="ml-auto inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400">
+                                    {{ $selectedCollector->commonDataCollect->count() }} entries
+                                </span>
+                            </div>
+                            <div class="space-y-3">
+                                @foreach ($selectedCollector->commonDataCollect as $entry)
+                                    <div
+                                        class="flex items-start gap-3 p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-green-300 dark:hover:border-green-700 transition-all group">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-green-500/20 flex-shrink-0">
+                                            {{ $loop->iteration }}
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
+                                                <div
+                                                    class="flex items-center gap-1.5 text-sm text-slate-700 dark:text-slate-300">
+                                                    <i class="fas fa-seedling text-green-500 text-xs"></i>
+                                                    <span class="font-medium">Field Date:</span>
+                                                    <span>{{ $entry->c_date }}</span>
+                                                </div>
+                                            </div>
+                                            <p
+                                                class="text-xs text-slate-400 dark:text-slate-500 mt-1 flex items-center gap-1.5">
+                                                <i class="fas fa-clock text-[10px]"></i>
+                                                Submitted
+                                                {{ \Carbon\Carbon::parse($entry->created_at)->diffForHumans() }}
+                                                &bull;
+                                                {{ \Carbon\Carbon::parse($entry->created_at)->format('M d, Y H:i') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div
+                    class="flex items-center justify-end px-4 sm:px-6 py-3 sm:py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex-shrink-0">
+                    <button wire:click="closeModal" type="button"
+                        class="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

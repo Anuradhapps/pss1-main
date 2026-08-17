@@ -353,6 +353,7 @@ class PestInfoService
                 if (!empty($commonData->otherinfo)) {
 
                     $aiRange = $this->textService->correctText($collector->getAiRange->name);
+                    $region = $this->textService->correctText($collector->region->name);
                     $otherinfo = $this->textService->correctText($commonData->otherinfo);
 
                     $phone = $collector->phone_no ?? 'N/A';
@@ -360,6 +361,7 @@ class PestInfoService
 
                     $otherInfo[] = [
                         'aiRange' => $aiRange,
+                        'region' => $region,
                         'otherInfo' => $otherinfo,
                         'phone' => $phone,
                         'name' => $userName,

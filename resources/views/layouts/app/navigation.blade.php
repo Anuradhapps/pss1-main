@@ -26,7 +26,7 @@
             @if (has_role('extensionAndTrainingDirector'))
                 <x-nav.link route="extensionAndTrainingDirector.dashboard"
                     icon="fas fa-fw fa-graduation-cap text-slate-400 dark:text-slate-500">
-                    Training Portal
+                    Extension & Training
                 </x-nav.link>
             @endif
         </nav>

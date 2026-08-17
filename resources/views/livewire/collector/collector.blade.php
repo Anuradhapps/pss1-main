@@ -99,7 +99,7 @@
         <x-data.table>
             <x-slot name="header">
                 <th scope="col"
-                    class="px-6 py-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors"
+                    class="px-6 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors"
                     wire:click.prevent="sortBy('name')">
                     <div class="flex items-center gap-2">
                         <span>Collector Details</span>
@@ -107,7 +107,7 @@
                     </div>
                 </th>
                 <th scope="col"
-                    class="px-6 py-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors hidden md:table-cell"
+                    class="px-6 py-1 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors hidden md:table-cell"
                     wire:click.prevent="sortBy('districts.name')">
                     <div class="flex items-center gap-2">
                         <span>District & ASC</span>
@@ -115,30 +115,30 @@
                     </div>
                 </th>
                 <th scope="col"
-                    class="px-6 py-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors hidden lg:table-cell"
+                    class="px-6 py-1 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors hidden lg:table-cell"
                     wire:click.prevent="sortBy('ai_ranges.name')">
                     <div class="flex items-center gap-2">
                         <span>AI Range</span>
                         <i class="fas fa-sort text-slate-400 text-[10px]"></i>
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-4 text-center">Actions</th>
+                <th scope="col" class="px-6 py-1 text-center">Actions</th>
             </x-slot>
 
             @foreach ($this->collectors() as $collector)
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
-                    <td class="px-6 py-4">
+                <tr class="hover:bg-slate-200 dark:hover:bg-slate-800/50 transition-colors group bg-gray-50">
+                    <td class="px-6 py-1">
                         <div class="flex items-center gap-4">
                             <div
-                                class="w-12 h-12 flex shrink-0 items-center justify-center rounded-2xl font-black bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900/50 dark:to-emerald-800/50 dark:text-emerald-400 ring-1 ring-emerald-300 dark:ring-emerald-700 shadow-sm">
+                                class="w-10 h-10 flex shrink-0 items-center justify-center rounded-2xl font-black bg-gradient-to-br from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900/50 dark:to-emerald-800/50 dark:text-emerald-400 ring-1 ring-emerald-300 dark:ring-emerald-700 shadow-sm">
                                 {{ strtoupper(substr($collector->name, 0, 2)) }}
                             </div>
 
                             <div class="flex flex-col">
                                 <h3
-                                    class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                                    class="my-0 py-0 text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
                                     {{ $collector->name }}</h3>
-                                <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                <div class="text-[13px] text-slate-500 dark:text-slate-400 my-0">
                                     {{ $collector->regionName }} &bull; {{ $collector->riceSeasonName }}
                                 </div>
 
@@ -158,25 +158,25 @@
                             <div class="ml-auto flex shrink-0">
                                 <x-ui.badge
                                     variant="{{ $count == 0 ? 'danger' : ($count >= 7 ? 'success' : 'warning') }}"
-                                    class="text-[10px] px-2 py-0.5 shadow-sm">
+                                    class="text-[10px] px-2 py-0 shadow-sm">
                                     {{ $count }} Records
                                 </x-ui.badge>
                             </div>
                         </div>
                     </td>
 
-                    <td class="px-6 py-4 hidden md:table-cell">
+                    <td class="px-6 py-0 hidden md:table-cell">
                         <div class="text-sm font-semibold text-slate-900 dark:text-slate-200">{{ $collector->dname }}
                         </div>
                         <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-0.5">{{ $collector->asname }}
                         </div>
                     </td>
 
-                    <td class="px-6 py-4 hidden lg:table-cell text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <td class="px-6 py-0 hidden lg:table-cell text-sm font-medium text-slate-600 dark:text-slate-300">
                         {{ $collector->ainame }}
                     </td>
 
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-0">
                         <div class="flex items-center justify-center gap-2">
                             <a href="{{ route('admin.collector.edit', $collector->id) }}"
                                 class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-500 hover:text-white hover:bg-primary dark:hover:bg-primary transition-all border border-slate-200 dark:border-slate-700 hover:border-primary shadow-sm"

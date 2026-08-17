@@ -93,18 +93,18 @@
     @else
         <x-data.table>
             <x-slot name="header">
-                <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wide">User Details</th>
-                <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wide hidden md:table-cell">
+                <th scope="col" class="px-6 py-2 font-bold text-xs uppercase tracking-wide">User Details</th>
+                <th scope="col" class="px-6 py-2 font-bold text-xs uppercase tracking-wide hidden md:table-cell">
                     Role</th>
-                <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wide hidden lg:table-cell">
+                <th scope="col" class="px-6 py-2 font-bold text-xs uppercase tracking-wide hidden lg:table-cell">
                     Joined Date</th>
-                <th scope="col" class="px-6 py-3.5 font-bold text-xs uppercase tracking-wide text-center">Actions
+                <th scope="col" class="px-6 py-2 font-bold text-xs uppercase tracking-wide text-center">Actions
                 </th>
             </x-slot>
 
             @foreach ($users as $user)
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
-                    <td class="px-6 py-3.5">
+                <tr class="hover:bg-slate-200 dark:hover:bg-slate-800/50 transition-colors group bg-gray-50">
+                    <td class="px-6 py-0">
                         <div class="flex items-center gap-3.5">
                             @php
                                 $firstRole = $user->roles->first();
@@ -137,16 +137,16 @@
                             @endphp
 
                             <div
-                                class="w-11 h-11 flex shrink-0 items-center justify-center rounded-xl font-bold text-sm bg-gradient-to-br {{ $style['avatar'] }} ring-2 {{ $style['ring'] }} shadow-sm">
+                                class="w-10 h-10 flex shrink-0 items-center justify-center rounded-xl font-bold text-sm bg-gradient-to-br {{ $style['avatar'] }} ring-2 {{ $style['ring'] }} shadow-sm">
                                 {{ strtoupper(substr($user->name, 0, 2)) }}
                             </div>
 
                             <div class="flex flex-col min-w-0">
                                 <h3
-                                    class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">
+                                    class="text-sm font-bold my-0 py-0 text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">
                                     {{ $user->name }}
                                 </h3>
-                                <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                                <p class="text-sm text-slate-500 dark:text-slate-400 my-0 py-0 truncate">
                                     {{ $user->email }}
                                 </p>
 
