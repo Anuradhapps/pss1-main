@@ -3,11 +3,8 @@
 
     <x-auth-card>
         <!-- Header -->
-        <div class="mb-8 text-center">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Welcome back</h1>
-            <p class="mt-2 text-base text-slate-600 dark:text-slate-400">
-                Please enter your credentials to access the system.
-            </p>
+        <div class="sm:mb-5 mb-2 text-center hidden sm:block">
+            <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Welcome Back!</h1>
         </div>
 
         @if (Route::has('register'))
@@ -22,7 +19,8 @@
                         <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-4 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">Or sign in to your account</span>
+                        <span class="px-4 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">Or sign in to
+                            your account</span>
                     </div>
                 </div>
             </div>
@@ -36,7 +34,8 @@
                         <i class="fas fa-exclamation-circle text-red-600 dark:text-red-400"></i>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-sm font-medium text-red-800 dark:text-red-200">There were errors with your submission</h3>
+                        <h3 class="text-sm font-medium text-red-800 dark:text-red-200">There were errors with your
+                            submission</h3>
                         <div class="mt-2 text-sm text-red-700 dark:text-red-300">
                             <ul class="list-disc pl-5 space-y-1">
                                 @foreach ($errors->all() as $error)
@@ -55,7 +54,8 @@
 
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
+                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email
+                    address</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-envelope text-slate-400 group-focus-within:text-primary transition-colors"></i>
@@ -69,7 +69,8 @@
 
             <!-- Password -->
             <div>
-                <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+                <label for="password"
+                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-lock text-slate-400 group-focus-within:text-primary transition-colors"></i>
@@ -88,14 +89,16 @@
             <!-- Options -->
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-primary bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded focus:ring-primary">
+                    <input id="remember_me" name="remember" type="checkbox"
+                        class="h-4 w-4 text-primary bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded focus:ring-primary">
                     <label for="remember_me" class="ml-2 block text-sm text-slate-700 dark:text-slate-300">
                         Remember me
                     </label>
                 </div>
 
                 <div class="text-sm">
-                    <a href="{{ route('loginhelp') }}" class="font-medium text-primary hover:text-indigo-500 transition-colors">
+                    <a href="{{ route('loginhelp') }}"
+                        class="font-medium text-primary hover:text-indigo-500 transition-colors">
                         Need help?
                     </a>
                 </div>
