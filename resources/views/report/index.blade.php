@@ -80,8 +80,10 @@
                             <i class="fas fa-database text-lg"></i>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Full Data Export</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Export comprehensive pest data</p>
+                            <h3 class="my-0 py-0 text-lg font-semibold text-slate-900 dark:text-white">Full Data Export
+                            </h3>
+                            <p class="my-0 py-0 text-sm text-slate-500 dark:text-slate-400">Export comprehensive pest
+                                data</p>
                         </div>
                     </div>
                 </div>
@@ -121,8 +123,8 @@
                             <i class="fas fa-clock text-lg"></i>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Recent Memos</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Last 2 weeks by province</p>
+                            <h3 class="my-0 py-0 text-lg font-semibold text-slate-900 dark:text-white">Recent Memos</h3>
+                            <p class="my-0 py-0 text-sm text-slate-500 dark:text-slate-400">Last 2 weeks by province</p>
                         </div>
                     </div>
                 </div>
@@ -155,8 +157,10 @@
                             <i class="fas fa-file-export text-lg"></i>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Quick Exports</h3>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">One-click downloads for common
+                            <h3 class="my-0 py-0 text-lg font-semibold text-slate-900 dark:text-white">Quick Exports
+                            </h3>
+                            <p class="my-0 py-0 text-sm text-slate-500 dark:text-slate-400">One-click downloads for
+                                common
                                 datasets
                             </p>
                         </div>
