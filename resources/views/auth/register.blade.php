@@ -3,9 +3,9 @@
 
     <x-auth-card>
         <!-- Header -->
-        <div class="mb-8 text-center">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Create an account</h1>
-            <p class="mt-2 text-base text-slate-600 dark:text-slate-400">
+        <div class="mb-4 text-center">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Create an account</h1>
+            <p class="pt-0 text-sm text-slate-600 dark:text-slate-400">
                 Please fill in your details to register for a new account.
             </p>
         </div>
@@ -18,7 +18,8 @@
                         <i class="fas fa-exclamation-circle text-red-600 dark:text-red-400"></i>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-sm font-medium text-red-800 dark:text-red-200">Please fix the following errors</h3>
+                        <h3 class="text-sm font-medium text-red-800 dark:text-red-200">Please fix the following errors
+                        </h3>
                         <div class="mt-2 text-sm text-red-700 dark:text-red-300">
                             <ul class="list-disc pl-5 space-y-1">
                                 @foreach ($errors->all() as $error)
@@ -36,7 +37,8 @@
 
             <!-- Name -->
             <div>
-                <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Full Name</label>
+                <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Full
+                    Name</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-user text-slate-400 group-focus-within:text-primary transition-colors"></i>
@@ -49,7 +51,8 @@
 
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
+                <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email
+                    address</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-envelope text-slate-400 group-focus-within:text-primary transition-colors"></i>
@@ -61,14 +64,17 @@
             </div>
 
             <!-- Password Tips -->
-            <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 flex items-start">
+            <div
+                class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 flex items-start">
                 <i class="fas fa-info-circle mt-0.5 text-blue-600 dark:text-blue-400 mr-2"></i>
-                <p class="text-xs font-medium text-blue-800 dark:text-blue-200">Password must be at least 5 characters long.</p>
+                <p class="text-xs font-medium text-blue-800 dark:text-blue-200">Password must be at least 5 characters
+                    long.</p>
             </div>
 
             <!-- Password -->
             <div>
-                <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+                <label for="password"
+                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-lock text-slate-400 group-focus-within:text-primary transition-colors"></i>
@@ -86,10 +92,12 @@
 
             <!-- Confirm Password -->
             <div>
-                <label for="confirmPassword" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Confirm Password</label>
+                <label for="confirmPassword"
+                    class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Confirm Password</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-shield-alt text-slate-400 group-focus-within:text-primary transition-colors"></i>
+                        <i
+                            class="fas fa-shield-alt text-slate-400 group-focus-within:text-primary transition-colors"></i>
                     </div>
                     <input id="confirmPassword" name="confirmPassword" type="password" required
                         class="block w-full pl-10 pr-10 py-2.5 text-sm bg-slate-50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition duration-300"
@@ -114,7 +122,8 @@
                         <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-4 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">Already have an account?</span>
+                        <span class="px-4 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">Already have an
+                            account?</span>
                     </div>
                 </div>
 

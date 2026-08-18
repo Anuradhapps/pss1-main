@@ -8,13 +8,13 @@
         </div>
 
         @if (Route::has('register'))
-            <div class="mb-8 space-y-4">
+            <div class="mb-5 space-y-4">
                 <a href="{{ route('register') }}"
                     class="w-full flex justify-center py-3 px-4 border-2 border-emerald-500 rounded-xl shadow-sm text-base font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 dark:focus:ring-offset-slate-900 transition-all duration-300">
                     New to the system? Register Here
                 </a>
 
-                <div class="relative py-2">
+                <div class="relative">
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
                     </div>
@@ -49,7 +49,7 @@
         @endif
 
         <!-- Form -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-6" novalidate>
+        <form method="POST" action="{{ route('login') }}" class="space-y-5" novalidate>
             @csrf
 
             <!-- Email -->

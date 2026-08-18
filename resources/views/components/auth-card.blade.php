@@ -49,12 +49,12 @@
             </div>
             {{-- Responsive Brand Header --}}
             <div class="w-full max-w-md mb-6 sm:mb-8 sm:hidden">
-                <a href="/" class="group flex items-center justify-center sm:justify-start gap-3 sm:gap-3.5">
+                <a href="/" class="group flex items-center justify-start gap-5">
 
                     {{-- Logo --}}
                     <div
                         class="shrink-0 flex items-center justify-center
-                   h-12 w-12 sm:h-14 sm:w-14
+                   h-20 w-20
                    rounded-2xl
                    bg-slate-100 dark:bg-slate-800
                    border border-slate-200 dark:border-slate-700
@@ -64,14 +64,14 @@
                    transition-all duration-300">
 
                         <img src="{{ asset('images/LOGO.webp') }}" alt="National Pest Surveillance System"
-                            width="56" height="56" loading="eager" decoding="async"
-                            class="h-9 w-9 sm:h-11 sm:w-11 object-contain">
+                            width="100" height="100" loading="eager" decoding="async"
+                            class="h-20 w-20 object-contain">
                     </div>
 
                     {{-- System Name --}}
                     <div class="min-w-0 text-left">
                         <h1
-                            class="text-sm sm:text-base
+                            class="text-xl
                        font-extrabold
                        tracking-tight
                        leading-tight
