@@ -8,6 +8,7 @@ use App\Models\Collector;
 use App\Models\CommonDataCollect;
 use App\Models\Pest;
 use App\Models\PestDataCollect;
+use App\Services\PestAlertNotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -211,6 +212,7 @@ class PestDataCollectController extends Controller
 
         // Fetch all pests
         $pests = Pest::all();
+        $alertService = app(PestAlertNotificationService::class);
 
         foreach ($pests as $pest) {
             if ($pest->name === 'Thrips') {
@@ -233,6 +235,17 @@ class PestDataCollectController extends Controller
                     'mean' => 0,
                     'code' => $thripsCode,
                 ]);
+
+                if (in_array($thripsCode, [7, 9], true)) {
+                    $alertService->notifyIfHighRisk(
+                        $pest->name,
+                        $thripsCode,
+                        $collector->user_id,
+                        $collector->user?->name ?? 'Unknown collector',
+                        $collector->phone_no ?? 'N/A',
+                        $collector->getDistrict?->name ?? 'Unknown district'
+                    );
+                }
 
                 continue;
             }
@@ -263,6 +276,17 @@ class PestDataCollectController extends Controller
                 'mean' => $mean,
                 'code' => $code,
             ]);
+
+            if (in_array($code, [7, 9], true)) {
+                $alertService->notifyIfHighRisk(
+                    $pest->name,
+                    (int) $code,
+                    $collector->user_id,
+                    $collector->user?->name ?? 'Unknown collector',
+                    $collector->phone_no ?? 'N/A',
+                    $collector->getDistrict?->name ?? 'Unknown district'
+                );
+            }
         }
 
         return redirect()->route('pestdata.view', $id)
@@ -347,6 +371,7 @@ class PestDataCollectController extends Controller
 
         // Fetch all pests
         $pests = Pest::all();
+        $alertService = app(PestAlertNotificationService::class);
 
         foreach ($pests as $pest) {
             if ($pest->name === 'Thrips') {
@@ -368,6 +393,17 @@ class PestDataCollectController extends Controller
                     'mean' => 0,
                     'code' => $thripsCode,
                 ]);
+
+                if (in_array($thripsCode, [7, 9], true)) {
+                    $alertService->notifyIfHighRisk(
+                        $pest->name,
+                        $thripsCode,
+                        $collector->user_id,
+                        $collector->user?->name ?? 'Unknown collector',
+                        $collector->phone_no ?? 'N/A',
+                        $collector->getDistrict?->name ?? 'Unknown district'
+                    );
+                }
                 continue;
             }
 
@@ -396,6 +432,17 @@ class PestDataCollectController extends Controller
                 'mean' => $mean,
                 'code' => $code,
             ]);
+
+            if (in_array($code, [7, 9], true)) {
+                $alertService->notifyIfHighRisk(
+                    $pest->name,
+                    (int) $code,
+                    $collector->user_id,
+                    $collector->user?->name ?? 'Unknown collector',
+                    $collector->phone_no ?? 'N/A',
+                    $collector->getDistrict?->name ?? 'Unknown district'
+                );
+            }
         }
 
         return redirect()->route('pestdata.view', $collectorId)
