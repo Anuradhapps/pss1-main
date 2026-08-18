@@ -1,31 +1,10 @@
 <x-app-layout>
-    <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-
-        <!-- Controls Header -->
-        <div
-            class="flex justify-between items-center bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 mb-4">
-            <a href="{{ url()->previous() }}"
-                class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors font-medium px-2">
-                <i class="fas fa-arrow-left"></i>
-                <span class="hidden sm:inline">Go Back</span>
-            </a>
-
-            <button id="help-theme-toggle" type="button"
-                class="flex items-center gap-2 text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-xl px-4 py-2 transition-colors">
-                <i id="help-theme-toggle-dark-icon" class="hidden fas fa-moon text-indigo-500"></i>
-                <i id="help-theme-toggle-light-icon" class="hidden fas fa-sun text-amber-500"></i>
-                <span class="text-sm font-semibold">Switch Theme</span>
-            </button>
-        </div>
+    <div class="mx-auto  space-y-2">
 
         <!-- Header -->
-        <div class="text-center space-y-3 pb-2">
-            <div
-                class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 dark:bg-primary/20 mb-2">
-                <i class="fas fa-book-open text-2xl text-primary"></i>
-            </div>
+        <div class="text-center space-y-1 mt-4">
             <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                National Pest Surveillance System
+                <i class="fas fa-book-open text-4xl text-primary me-2"></i> National Pest Surveillance System
             </h1>
             <p class="text-lg text-primary dark:text-emerald-400 font-medium tracking-wide">
                 User Manual & Guidance
@@ -47,13 +26,13 @@
         </section>
 
         <!-- Main Steps Header -->
-        <div class="flex items-center gap-4 py-4">
+        <div class="flex items-center gap-2">
             <div class="flex-grow h-px bg-slate-200 dark:bg-slate-800"></div>
             <h2 class="text-2xl font-bold text-slate-900 dark:text-white px-4">Main Steps to Use NPSS</h2>
             <div class="flex-grow h-px bg-slate-200 dark:bg-slate-800"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
             <!-- Step 1 -->
             <div

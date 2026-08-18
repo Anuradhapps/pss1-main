@@ -23,7 +23,7 @@
         @endif
 
         <!-- Filter Toolbar -->
-        <div x-data="{ showFilters: false }" class=" px-2">
+        <div x-data="{ showFilters: false }">
             <div class="flex items-center justify-between">
                 <button @click="showFilters = !showFilters"
                     class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all w-full sm:w-auto group">
@@ -138,10 +138,10 @@
 
 
         <!-- Collector Cards -->
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 p-2">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3 mt-2">
             @foreach ($collectors as $collector)
                 <div
-                    class="flex flex-col p-5 transition-all duration-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm hover:shadow-lg group relative overflow-hidden">
+                    class="flex flex-col p-5 transition-all duration-300  bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm hover:shadow-lg group relative overflow-hidden">
 
                     <!-- Top Ribbon & Actions -->
                     <div class="flex items-center justify-between mb-5 gap-3">

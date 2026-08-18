@@ -1,6 +1,6 @@
 @section('title', 'Dashboard')
 
-<div class="space-y-3">
+<div class="space-y-2 2xl:space-y-4">
     {{-- Header --}}
     <x-headings.basic_heading title="Dashboard" icon="fas fa-house" />
 
@@ -40,7 +40,7 @@
     </div>
 
     {{-- Count Cards Grid --}}
-    <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-2">
+    <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-1 2xl:gap-2">
         <livewire:count-card :cardName="'Users'" :iconName="'fas fa-users'" :color="'from-purple-600 to-indigo-600'" />
         <livewire:count-card :cardName="'Collectors'" :iconName="'fas fa-user-check'" :color="'from-emerald-500 to-teal-500'" />
         <livewire:count-card :cardName="'Provinces'" :iconName="'fas fa-map'" :color="'from-sky-500 to-blue-600'" />
@@ -107,10 +107,12 @@
                     <i class="fas fa-calendar-week text-sm"></i>
                 </div>
                 <div class="min-w-0">
-                    <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight truncate">
+                    <h2
+                        class="my-0 py-0 2xl:my-1 2xl:py-1 text-base font-bold text-slate-900 dark:text-white leading-tight truncate">
                         Pest Risk Summary by District
                     </h2>
-                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-tight">Last 7 days · averaged
+                    <p class="my-0 py-0 2xl:my-1 2xl:py-1 text-xs text-slate-400 dark:text-slate-500 leading-tight">Last
+                        7 days · averaged
                         risk codes</p>
                 </div>
             </div>

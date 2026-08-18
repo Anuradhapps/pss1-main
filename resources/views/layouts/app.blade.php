@@ -230,13 +230,8 @@
                             <span class="text-xs">National Plant Protection Service, Sri Lanka</span>
                         </div>
                         <div class="flex gap-4">
-                            <a href="#"
-                                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Privacy
-                                Policy</a>
-                            <a href="#"
-                                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Terms of
-                                Service</a>
-                            <a href="/help"
+
+                            <a href="{{ route('help') }}"
                                 class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Help
                                 Center</a>
                         </div>
