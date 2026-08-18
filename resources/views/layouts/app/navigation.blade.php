@@ -90,20 +90,20 @@
                     icon="fas fa-fw fa-gears text-slate-400 dark:text-slate-500"
                     activeRoutes="admin.settings.*|location.settings">
 
-                    <x-nav.group-item route="admin.settings.audit-trails.index" icon="fas fa-fw fa-list-check">
+                    <x-nav.group-item route="admin.settings.audit-trails.index" icon="">
                         Audit Trails
                     </x-nav.group-item>
 
-                    <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-fw fa-user-shield">
+                    <x-nav.group-item route="admin.settings.roles.index" icon="">
                         Roles
                     </x-nav.group-item>
 
-                    <x-nav.group-item route="admin.settings.permissions.index" icon="fas fa-fw fa-key">
+                    <x-nav.group-item route="admin.settings.permissions.index" icon="">
                         Permissions
                     </x-nav.group-item>
 
-                    <x-nav.group-item route="location.settings" icon="fas fa-fw fa-location-dot">
-                        Location Settings
+                    <x-nav.group-item route="location.settings" icon="">
+                        Location
                     </x-nav.group-item>
                 </x-nav.group>
             </nav>

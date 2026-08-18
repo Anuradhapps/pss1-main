@@ -88,8 +88,7 @@
                 <!-- Sidebar Header (Logo) -->
                 <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                     <a href="{{ route('dashboard') }}" class="block w-full">
-                        <x-logo-light class="flex dark:hidden"></x-logo-light>
-                        <x-logo-dark class="hidden dark:flex"></x-logo-dark>
+                        <x-logo />
                     </a>
                 </div>
                 <!-- Navigation -->
@@ -117,22 +116,7 @@
                     <div
                         class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
                         <a href="{{ route('dashboard') }}" class="block">
-                            <div class = 'flex items-center gap-2.5 sm:gap-3 min-w-0'>
-
-                                {{-- Logo --}}
-                                <div class="shrink-0 flex items-center justify-center">
-                                    <img src="{{ asset('images/LOGO.webp') }}" alt="National Pest Surveillance System"
-                                        width="45" height="45" loading="eager" decoding="async"
-                                        class="h-10 w-9 sm:h-10 sm:w-10 object-contain">
-                                </div>
-
-                                {{-- Name --}}
-                                <div class="min-w-0 leading-tight font-bold">
-                                    <span class="block">National Pest</span>
-                                    <span class="block">Surveillance System</span>
-                                </div>
-
-                            </div>
+                            <x-logo />
 
                         </a>
                         <button @click="sidebarOpen = false" aria-label="Close menu"
@@ -162,9 +146,8 @@
                             <i class="fas fa-bars text-xl" aria-hidden="true"></i>
                         </button>
                         <!-- Mobile Logo in Header when Drawer is closed -->
-                        <a href="{{ route('dashboard') }}" class="md:hidden ml-2 block w-48">
-                            <x-logo-light class="flex dark:hidden"></x-logo-light>
-                            <x-logo-dark class="hidden dark:flex"></x-logo-dark>
+                        <a href="{{ route('dashboard') }}" class="md:hidden ml-2 block w-36">
+                            <x-logo />
                         </a>
                     </div>
 
@@ -172,36 +155,69 @@
                     <div class="flex items-center gap-2 sm:gap-3">
                         <!-- Theme Toggle -->
                         <button id="theme-toggle" type="button" aria-label="Toggle dark mode"
-                            class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg text-sm p-2 transition-colors">
-                            <i id="theme-toggle-dark-icon" class="hidden fas fa-moon text-lg" aria-hidden="true"></i>
-                            <i id="theme-toggle-light-icon" class="hidden fas fa-sun text-lg" aria-hidden="true"></i>
+                            class="text-slate-500 dark:text-slate-400
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           hover:text-emerald-600 dark:hover:text-emerald-400
+           rounded-lg text-sm p-2 transition-colors">
+
+                            <i id="theme-toggle-icon" class="fas text-lg" aria-hidden="true"></i>
                         </button>
+
                         <script>
                             (function() {
-                                var darkIcon = document.getElementById('theme-toggle-dark-icon');
-                                var lightIcon = document.getElementById('theme-toggle-light-icon');
-                                var toggleBtn = document.getElementById('theme-toggle');
-                                var root = document.documentElement;
 
-                                function syncIcons() {
-                                    var isDark = root.classList.contains('dark');
-                                    // Icon shown = action the button performs next.
-                                    lightIcon.classList.toggle('hidden', !isDark);
-                                    darkIcon.classList.toggle('hidden', isDark);
-                                    toggleBtn.setAttribute('aria-pressed', String(isDark));
+                                const toggleBtn = document.getElementById('theme-toggle');
+                                const toggleIcon = document.getElementById('theme-toggle-icon');
+                                const root = document.documentElement;
+
+                                function syncThemeIcon() {
+
+                                    const isDark = root.classList.contains('dark');
+
+                                    // Remove both icons
+                                    toggleIcon.classList.remove('fa-sun', 'fa-moon');
+
+                                    // Add icon according to current mode
+                                    if (isDark) {
+                                        toggleIcon.classList.add('fa-moon');
+                                    } else {
+                                        toggleIcon.classList.add('fa-sun');
+                                    }
+
+                                    toggleBtn.setAttribute(
+                                        'aria-label',
+                                        isDark ? 'Switch to light mode' : 'Switch to dark mode'
+                                    );
+
+                                    toggleBtn.setAttribute(
+                                        'aria-pressed',
+                                        String(isDark)
+                                    );
                                 }
 
                                 toggleBtn.addEventListener('click', function() {
-                                    var goingDark = !root.classList.contains('dark');
+
+                                    const goingDark = !root.classList.contains('dark');
+
                                     root.classList.toggle('dark', goingDark);
-                                    localStorage.setItem('color-theme', goingDark ? 'dark' : 'light');
-                                    syncIcons();
+
+                                    // Save theme
+                                    localStorage.setItem(
+                                        'color-theme',
+                                        goingDark ? 'dark' : 'light'
+                                    );
+
+                                    // Change icon immediately
+                                    syncThemeIcon();
                                 });
 
-                                syncIcons();
+                                // Set correct icon when page loads
+                                syncThemeIcon();
+
                             })
                             ();
                         </script>
+
 
                         <livewire:admin.notifications-menu />
                         <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1 sm:mx-2 hidden sm:block"></div>
