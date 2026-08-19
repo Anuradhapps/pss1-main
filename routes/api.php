@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\CommonDataCollectController;
+use App\Http\Controllers\Api\allDetailsController;
 use App\Models\User;
 
 /*
@@ -29,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [UserController::class, 'register']);
 Route::post('usercreate', [UserController::class, 'createUser']);
 Route::post('login', [UserController::class, 'loginUser']);
+Route::get('/all-details', [allDetailsController::class, 'index']);
 
 
 

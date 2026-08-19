@@ -80,6 +80,9 @@
                     Analytics
                 </x-nav.link>
 
+                <x-nav.link route="all-details" icon="fas fa-fw fa-sitemap text-slate-400 dark:text-slate-500">
+                    Data In <br> Hierarchy
+                </x-nav.link>
                 <x-nav.link route="admin.conducted-programs"
                     icon="fas fa-fw fa-calendar-check text-slate-400 dark:text-slate-500">
                     Programs

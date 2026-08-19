@@ -16,7 +16,8 @@ use App\Http\Controllers\{
     UserController,
     ChartController,
     TestController,
-    DatabaseBackupController
+    DatabaseBackupController,
+    AllDetailsController,
 };
 use App\Exports\UsersExport;
 use App\Http\Livewire\{
@@ -147,6 +148,8 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
 
     Route::get('/location-settings', LocationManager::class)->name('location.settings');
+
+    Route::get('all-details', [AllDetailsController::class, 'index'])->name('all-details');
 });
 
 /*
