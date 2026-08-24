@@ -1,8 +1,8 @@
-<div class="w-full text-slate-700 dark:text-slate-300 flex flex-col gap-6 py-4 select-none">
+<div class="w-full text-slate-700 dark:text-slate-300 flex flex-col gap-2 select-none">
 
     <!-- Section: Main -->
     <div>
-        <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
+        <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest p-2 px-3">
             Overview
         </div>
 
@@ -34,7 +34,7 @@
 
     <!-- Section: Field Collection (Conditional) -->
     @if (has_role('collector'))
-        <div class="px-3 border-t border-slate-200/60 dark:border-slate-800/80 pt-4">
+        <div class=" border-t border-slate-200/60 dark:border-slate-800/80 pt-4">
             <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
                 Field Operations
             </div>
@@ -57,7 +57,7 @@
 
     <!-- Section: Administration (Conditional) -->
     @if (is_admin())
-        <div class="px-3 border-t border-slate-200/60 dark:border-slate-800/80 pt-4">
+        <div class="border-t border-slate-200/60 dark:border-slate-800/80 pt-2">
             <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
                 Management
             </div>
@@ -81,7 +81,7 @@
                 </x-nav.link>
 
                 <x-nav.link route="all-details" icon="fas fa-fw fa-sitemap text-slate-400 dark:text-slate-500">
-                    Data In <br> Hierarchy
+                    Data In Hierarchy
                 </x-nav.link>
                 <x-nav.link route="admin.conducted-programs"
                     icon="fas fa-fw fa-calendar-check text-slate-400 dark:text-slate-500">

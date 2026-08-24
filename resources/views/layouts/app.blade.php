@@ -92,7 +92,7 @@
                     </a>
                 </div>
                 <!-- Navigation -->
-                <nav aria-label="Primary" class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+                <nav aria-label="Primary" class="flex-1 overflow-y-auto custom-scrollbar">
                     @include('layouts.app.navigation')
                 </nav>
             </aside>
