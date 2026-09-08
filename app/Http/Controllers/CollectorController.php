@@ -66,7 +66,8 @@ class CollectorController extends Controller
             $query->whereDate('created_at', request('created'));
         }
 
-        $collectors = $query->orderByDesc('rice_season_id')->get();
+        $collectors = $query->orderByDesc('created_at')->get();
+
 
         return view('collectors.index', [
             'collectors' => $collectors,

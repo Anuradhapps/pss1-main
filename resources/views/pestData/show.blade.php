@@ -134,8 +134,7 @@
                 <h3 class="text-lg font-bold text-indigo-900 dark:text-indigo-400 flex items-center gap-2 mb-3">
                     <i class="fas fa-clipboard-list"></i> Other Information
                 </h3>
-                <p class="text-indigo-800 dark:text-indigo-300 leading-relaxed whitespace-pre-wrap">
-                    {{ $commonData->otherinfo }}</p>
+                <p class="text-indigo-800 dark:text-indigo-300 whitespace-pre-line">{{ $commonData->otherinfo }}</p>
             </div>
         @endif
     </div>

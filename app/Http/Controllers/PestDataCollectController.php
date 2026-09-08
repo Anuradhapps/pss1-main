@@ -398,10 +398,10 @@ class PestDataCollectController extends Controller
                     $alertService->notifyIfHighRisk(
                         $pest->name,
                         $thripsCode,
-                        $collector->user_id,
-                        $collector->user?->name ?? 'Unknown collector',
-                        $collector->phone_no ?? 'N/A',
-                        $collector->getDistrict?->name ?? 'Unknown district'
+                        $commonDataCollect->user_id,
+                        $commonDataCollect->collector->user->name ?? 'Unknown collector',
+                        $commonDataCollect->collector->phone_no ?? 'N/A',
+                        $commonDataCollect->collector->getDistrict?->name ?? 'Unknown district'
                     );
                 }
                 continue;
@@ -437,10 +437,10 @@ class PestDataCollectController extends Controller
                 $alertService->notifyIfHighRisk(
                     $pest->name,
                     (int) $code,
-                    $collector->user_id,
-                    $collector->user?->name ?? 'Unknown collector',
-                    $collector->phone_no ?? 'N/A',
-                    $collector->getDistrict?->name ?? 'Unknown district'
+                    $commonDataCollect->user_id,
+                    $commonDataCollect->collector->user?->name ?? 'Unknown collector',
+                    $commonDataCollect->collector->phone_no ?? 'N/A',
+                    $commonDataCollect->collector->getDistrict?->name ?? 'Unknown district'
                 );
             }
         }
