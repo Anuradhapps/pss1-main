@@ -1,2 +1,17 @@
+# Local database artifacts
 *.sqlite
 *.sqlite-journal
+*.sql
+*.dump
+*.bak
+*.backup
+*.log
+*.zip
+*.gz
+*.tar
+
+# Local database backup folders
+backups/
+backup/
+*dump*
+*backup*
