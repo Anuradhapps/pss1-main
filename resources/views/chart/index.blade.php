@@ -90,7 +90,7 @@
             {{-- Right Column: Average Analytics --}}
             <div
                 class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-                <div class="p-6 py-2 border-b border-slate-100 dark:border-slate-800">
+                <div class="px-6 pt-2 pb-0 border-b border-slate-100 dark:border-slate-800">
                     <div class="flex items-center gap-3">
                         <div
                             class="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
@@ -131,7 +131,7 @@
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             @foreach ($allProvinces as $province)
                                 <a href="{{ in_array($province, $dataHaveProvinces) ? route('chart.show.allSeason', ['sort_by' => 'province', 'province' => $province]) : '#' }}"
-                                    class="flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-center transition-all duration-200 rounded-xl border
+                                    class="flex items-center justify-center gap-2 px-2 py-2 text-xs font-semibold text-center transition-all duration-200 rounded-xl border
                                         {{ in_array($province, $dataHaveProvinces)
                                             ? 'bg-white dark:bg-slate-800 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 hover:border-green-300 dark:hover:border-green-700 shadow-sm hover:shadow'
                                             : 'bg-slate-50 dark:bg-slate-950/50 border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-70' }}">
@@ -152,7 +152,7 @@
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                             @foreach ($allDistricts as $district)
                                 <a href="{{ in_array($district, $dataHaveDistricts) ? route('chart.show.allSeason', ['sort_by' => 'district', 'district' => $district]) : '#' }}"
-                                    class="flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-center transition-all duration-200 rounded-xl border
+                                    class="flex items-center justify-center gap-2 px-2 py-2 text-xs font-semibold text-center transition-all duration-200 rounded-xl border
                                         {{ in_array($district, $dataHaveDistricts)
                                             ? 'bg-white dark:bg-slate-800 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 hover:border-green-300 dark:hover:border-green-700 shadow-sm hover:shadow'
                                             : 'bg-slate-50 dark:bg-slate-950/50 border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-70' }}">

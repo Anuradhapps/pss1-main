@@ -96,13 +96,13 @@
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Start
                                     Date</label>
                                 <input type="date" name="start_date" required
-                                    class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm">
+                                    class="w-full px-2 py-1 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm">
                             </div>
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">End
                                     Date</label>
                                 <input type="date" name="end_date" required
-                                    class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm">
+                                    class="w-full px-2 py-1 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm">
                             </div>
                         </div>
                         <button type="submit"
@@ -130,13 +130,13 @@
                 </div>
                 <div class="p-6">
                     <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Generated memos for each province:</p>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-2">
                         @foreach ($provinces as $province)
                             @php
                                 $hasData = in_array($province->id, $dataHaveProvinces);
                             @endphp
                             <a href="{{ $hasData ? route('export.last2weeksDataexportToPDF', ['id' => $province->id]) : '#' }}"
-                                class="flex items-center justify-center px-3 py-2.5 text-xs font-semibold transition-all rounded-xl border {{ $hasData
+                                class="flex items-center justify-center px-2 py-2.5 text-xs font-semibold transition-all rounded-xl border {{ $hasData
                                     ? 'text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:shadow'
                                     : 'text-slate-400 dark:text-slate-600 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 cursor-not-allowed opacity-70' }}">
                                 <i
@@ -178,8 +178,7 @@
                                 <div>
                                     <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Collectors Other
                                         Info</p>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Additional collector details
-                                    </p>
+
                                 </div>
                             </div>
                             <div
@@ -199,8 +198,7 @@
                                     <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Collectors
                                         Registry
                                     </p>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Full collector list export
-                                    </p>
+
                                 </div>
                             </div>
                             <div
