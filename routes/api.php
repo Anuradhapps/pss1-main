@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\CommonDataCollectController;
+use App\Http\Controllers\Api\allDetailsController;
 use App\Models\User;
 
 /*
@@ -21,14 +22,25 @@ use App\Models\User;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    abort_unless($request->user()?->tokenCan('user:read'), 403, 'Forbidden.');
+
+    return response()->json([
+        'name' => $request->user()->name,
+        'email' => $request->user()->email,
+    ]);
 });
+
+Route::middleware(['throttle:api-register'])->group(function () {
+    Route::post('register', [UserController::class, 'register']);
+    Route::post('usercreate', [UserController::class, 'register']);
+});
+
+Route::middleware(['throttle:api-login'])->post('login', [UserController::class, 'loginUser']);
+
 // Route::post('updateLocation', [CommonDataCollectController::class, 'updateLocation'])->middleware('auth:sanctum');
 //Route::apiREsource('post',CollectorController::class)->middleware('auth:sanctum');
 // Route::post('store', [DataController::class, 'store'])->middleware('auth:sanctum');
-Route::post('register', [UserController::class, 'register']);
-Route::post('usercreate', [UserController::class, 'createUser']);
-Route::post('login', [UserController::class, 'loginUser']);
+Route::get('/all-details', [allDetailsController::class, 'index']);
 
 
 

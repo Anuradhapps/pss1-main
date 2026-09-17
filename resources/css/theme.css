@@ -1,0 +1,36 @@
+:root {
+    /* NPSS Brand Colors - Light Mode */
+    --primary: #15803D; /* Agriculture Green */
+    --primary-hover: #166534;
+    --primary-light: #DCFCE7;
+    
+    --secondary: #0369A1;
+    --accent: #65A30D;
+    
+    --background: #F8FAFC;
+    --surface: #FFFFFF;
+    --card: #FFFFFF;
+    
+    /* Text Colors */
+    --text-primary: #111827;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    
+    /* Status Colors */
+    --success: #16A34A;
+    --warning: #F59E0B;
+    --danger: #DC2626;
+    --info: #0284C7;
+}
+
+:root.dark {
+    /* NPSS Brand Colors - Dark Mode */
+    --background: #0F172A;
+    --surface: #1E293B;
+    --card: #334155;
+    
+    /* Text Colors */
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1; /* Light slate for readability */
+    --text-muted: #94A3B8;
+}

@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     Auth\LoginController,
@@ -14,7 +15,9 @@ use App\Http\Controllers\{
     ReportController,
     UserController,
     ChartController,
-    TestController
+    TestController,
+    DatabaseBackupController,
+    AllDetailsController,
 };
 use App\Exports\UsersExport;
 use App\Http\Livewire\{
@@ -23,6 +26,7 @@ use App\Http\Livewire\{
     Admin\SentEmails\SentEmails,
     Admin\SentEmails\SentEmailsBody,
     Admin\Settings\Settings,
+    Admin\Settings\Permissions,
     Admin\Roles\Roles,
     Admin\Roles\Edit,
     Admin\Users\Users,
@@ -31,9 +35,11 @@ use App\Http\Livewire\{
     Admin\Programs\ConductedPrograms,
     Collector\CollectorLivewire,
     DeputyDirector\DeputyDashboard,
+    PDA\PDADashboard,
     ExtensionAndTrainingDirector\DashboardExtensionAndTrainingDirector,
     LocationManager,
 };
+use App\Http\Livewire\PDA\Pdadash;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +102,7 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
     Route::get('/settings/sent-emails-body/{id}', SentEmailsBody::class)->name('admin.settings.sent-emails.body');
     Route::get('/settings/roles', Roles::class)->name('admin.settings.roles.index');
     Route::get('/settings/roles/{role}/edit', Edit::class)->name('admin.settings.roles.edit');
+    Route::get('/settings/permissions', Permissions::class)->name('admin.settings.permissions.index');
 
     // Users
     Route::get('/users', Users::class)->name('admin.users.index');
@@ -137,10 +144,12 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:admin
 
     // Conducted Programs
     Route::get('conducted-programs', ConductedPrograms::class)->name('admin.conducted-programs');
-
+    Route::get('/database', [DatabaseBackupController::class, 'download'])->name('database-backup.download');
 
 
     Route::get('/location-settings', LocationManager::class)->name('location.settings');
+
+    Route::get('all-details', [AllDetailsController::class, 'index'])->name('all-details');
 });
 
 /*
@@ -181,8 +190,9 @@ Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:colle
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:deputyDirector'])->prefix('deputy')->group(function () {
     Route::get('/', DeputyDashboard::class)->name('deputy.dashboard');
 });
-
-
+Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:pda'])->prefix('pda')->group(function () {
+    Route::get('/', Pdadash::class)->name('pda.dashboard');
+});
 Route::middleware(['web', 'auth', 'activeUser', 'IpCheckMiddleware', 'role:extensionAndTrainingDirector'])->prefix('extensionAndTrainingDirector')->group(function () {
     Route::get('/', DashboardExtensionAndTrainingDirector::class)->name('extensionAndTrainingDirector.dashboard');
 });

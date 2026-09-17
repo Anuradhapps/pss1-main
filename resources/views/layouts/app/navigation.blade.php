@@ -1,63 +1,116 @@
-<div class="min-h-screen max-w-64 w-full  sticky top-0 text-white">
+<div class="w-full text-slate-700 dark:text-slate-300 flex flex-col gap-2 select-none">
 
-    <!-- Logo Section -->
-    <div class="flex items-center border-l-4 border-green-500 justify-center mb-6 space-x-2 px-2 py-1">
-        <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 w-full">
-            <!-- Icon -->
-            <img src="{{ asset('images/LOGO.png') }}" alt="Logo" class="h-16 w-16 object-contain" />
+    <!-- Section: Main -->
+    <div>
+        <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest p-2 px-3">
+            Overview
+        </div>
 
-            <!-- App Name -->
-            <p class=" text-white font-mono">
-                {{ config('app.name') }}
-            </p>
-        </a>
+        <nav class="space-y-1 text-sm">
+            <x-nav.link route="dashboard" icon="fas fa-fw fa-house text-slate-400 dark:text-slate-500">
+                Dashboard
+            </x-nav.link>
+
+            @if (has_role('deputyDirector'))
+                <x-nav.link route="deputy.dashboard" icon="fas fa-fw fa-chart-pie text-slate-400 dark:text-slate-500">
+                    Deputy Overview
+                </x-nav.link>
+            @endif
+
+            @if (has_role('pda'))
+                <x-nav.link route="pda.dashboard" icon="fas fa-fw fa-clipboard-check text-slate-400 dark:text-slate-500">
+                    PDA Dashboard
+                </x-nav.link>
+            @endif
+
+            @if (has_role('extensionAndTrainingDirector'))
+                <x-nav.link route="extensionAndTrainingDirector.dashboard"
+                    icon="fas fa-fw fa-graduation-cap text-slate-400 dark:text-slate-500">
+                    Extension & Training
+                </x-nav.link>
+            @endif
+        </nav>
     </div>
 
+    <!-- Section: Field Collection (Conditional) -->
+    @if (has_role('collector'))
+        <div class=" border-t border-slate-200/60 dark:border-slate-800/80 pt-4">
+            <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
+                Field Operations
+            </div>
 
-    <!-- Navigation Links -->
-    <nav class="space-y-1 text-sm px-1">
+            <nav class="space-y-1 text-sm">
+                <x-nav.link route="collector.index" icon="fas fa-fw fa-bug text-emerald-500">
+                    <div class="flex flex-col">
+                        <span class="font-medium leading-none">Rice Pest Data</span>
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-normal mt-1">Collector
+                            Portal</span>
+                    </div>
+                </x-nav.link>
 
-        <x-nav.link route="dashboard" icon="fas fa-home">Dashboard</x-nav.link>
+                <x-nav.link route="help" icon="fas fa-fw fa-circle-question text-slate-400 dark:text-slate-500">
+                    Help & Support
+                </x-nav.link>
+            </nav>
+        </div>
+    @endif
 
-        @if (has_role('deputyDirector'))
-            <x-nav.link route="deputy.dashboard" icon="fas fa-clipboard">View Data</x-nav.link>
-        @endif
-        @if (has_role('extensionAndTrainingDirector'))
-            <x-nav.link route="extensionAndTrainingDirector.dashboard" icon="fas fa-clipboard">View Data</x-nav.link>
-        @endif
+    <!-- Section: Administration (Conditional) -->
+    @if (is_admin())
+        <div class="border-t border-slate-200/60 dark:border-slate-800/80 pt-2">
+            <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">
+                Management
+            </div>
 
-        @if (has_role('collector'))
-            <x-nav.link route="collector.index" icon="fas fa-user-tie">
-                <div>Rice Pest</div>
-                <div class="text-xs opacity-70">Data Collector</div>
-            </x-nav.link>
-            <x-nav.link route="help" icon="fas fa-question-circle">Help</x-nav.link>
-        @endif
+            <nav class="space-y-1 text-sm">
+                <x-nav.link route="admin.users.index" icon="fas fa-fw fa-users text-slate-400 dark:text-slate-500">
+                    Users
+                </x-nav.link>
 
-        @if (is_admin())
-            <x-nav.link route="admin.users.index" icon="fas fa-users">Users</x-nav.link>
-            <x-nav.link route="admin.collector.records" icon="fa-solid fa-chalkboard-user">Collectors</x-nav.link>
-            <x-nav.link route="report.index" icon="fas fa-file-alt">Reports</x-nav.link>
-            <x-nav.link route="chart.index" icon="fas fa-chart-bar">Data/Charts</x-nav.link>
-            <x-nav.link route="admin.conducted-programs" icon="fas fa-calendar-check">Conducted Programs</x-nav.link>
+                <x-nav.link route="admin.collector.records"
+                    icon="fas fa-fw fa-clipboard-user text-slate-400 dark:text-slate-500">
+                    Collectors
+                </x-nav.link>
 
-            <!-- Settings Dropdown -->
-            <x-nav.group label="Settings" route="admin.settings" icon="fas fa-cogs">
-                <x-nav.group-item route="admin.settings.audit-trails.index" icon="fas fa-clipboard-list">Audit
-                    Trails</x-nav.group-item>
+                <x-nav.link route="report.index" icon="fas fa-fw fa-file-lines text-slate-400 dark:text-slate-500">
+                    Reports
+                </x-nav.link>
 
-                {{-- <x-nav.group-item route="admin.settings" icon="fas fa-sliders-h">System Settings</x-nav.group-item> --}}
+                <x-nav.link route="chart.index" icon="fas fa-fw fa-chart-column text-slate-400 dark:text-slate-500">
+                    Analytics
+                </x-nav.link>
 
+                <x-nav.link route="all-details" icon="fas fa-fw fa-sitemap text-slate-400 dark:text-slate-500">
+                    Data In Hierarchy
+                </x-nav.link>
+                <x-nav.link route="admin.conducted-programs"
+                    icon="fas fa-fw fa-calendar-check text-slate-400 dark:text-slate-500">
+                    Programs
+                </x-nav.link>
 
-                {{-- <x-nav.group-item route="admin.settings.roles.index" icon="fas fa-user-shield">Roles</x-nav.group-item> --}}
-                <x-nav.group-item route="location.settings" icon="fas fa-location-dot">
-                    Location Settings
-                </x-nav.group-item>
+                <!-- Settings Dropdown -->
+                <x-nav.group label="System Settings" route="admin.settings"
+                    icon="fas fa-fw fa-gears text-slate-400 dark:text-slate-500"
+                    activeRoutes="admin.settings.*|location.settings">
 
-            </x-nav.group>
-        @endif
+                    <x-nav.group-item route="admin.settings.audit-trails.index" icon="">
+                        Audit Trails
+                    </x-nav.group-item>
 
+                    <x-nav.group-item route="admin.settings.roles.index" icon="">
+                        Roles
+                    </x-nav.group-item>
 
+                    <x-nav.group-item route="admin.settings.permissions.index" icon="">
+                        Permissions
+                    </x-nav.group-item>
 
-    </nav>
+                    <x-nav.group-item route="location.settings" icon="">
+                        Location
+                    </x-nav.group-item>
+                </x-nav.group>
+            </nav>
+        </div>
+    @endif
+
 </div>

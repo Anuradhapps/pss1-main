@@ -1,83 +1,75 @@
 .card {
-    @apply bg-white dark:bg-gray-800 dark:text-white shadow rounded-md p-5 my-5;
+    @apply bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 shadow-sm rounded-2xl p-6 my-6 transition-all duration-300;
 
     &.card-green {
-        @apply bg-green-400 text-green-100;
+        @apply bg-emerald-500 text-white border-emerald-600;
     }
 
     &.card-red {
-        @apply bg-red-400 text-red-100;
+        @apply bg-red-500 text-white border-red-600;
     }
 
     &.card-yellow {
-        @apply bg-yellow-400 text-yellow-600;
+        @apply bg-amber-500 text-white border-amber-600;
     }
 
-    &.card-blue {
-        @apply bg-blue-400 text-blue-100;
+    &.card-blue, &.card-indigo {
+        @apply bg-primary text-white border-primary;
     }
 
     &.card-gray {
-        @apply bg-gray-400 text-gray-100;
-    }
-
-    &.card-indigo {
-        @apply bg-indigo-400 text-indigo-100;
+        @apply bg-slate-500 text-white border-slate-600;
     }
 
     &.card-purple {
-        @apply bg-purple-400 text-purple-100;
+        @apply bg-purple-500 text-white border-purple-600;
     }
 }
 
 .card-title {
-    @apply text-3xl font-bold pl-2 pt-2;
+    @apply text-2xl font-bold tracking-tight mb-2;
 }
 
 .card-sub-title {
-    @apply text-sm pl-2 pb-2;
+    @apply text-sm text-slate-500 dark:text-slate-400 mb-4;
 }
 
 .card-demo {
-    @apply card card-indigo my-5 p-5;
+    @apply card card-indigo my-6 p-6;
 }
 
 .card-footer {
-    @apply text-xs p-2 rounded-b-md;
+    @apply text-xs p-4 rounded-b-2xl border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 mt-4;
 
     &.card-footer-gray {
-        @apply bg-gray-600 text-white;
+        @apply bg-slate-600 text-white border-slate-700;
     }
 
     &.card-footer-red {
-        @apply bg-red-600 text-white;
+        @apply bg-red-600 text-white border-red-700;
     }
 
     &.card-footer-yellow {
-        @apply bg-yellow-600 text-white;
+        @apply bg-amber-600 text-white border-amber-700;
     }
 
     &.card-footer-green {
-        @apply bg-green-600 text-white;
+        @apply bg-emerald-600 text-white border-emerald-700;
     }
 
-    &.card-footer-blue {
-        @apply bg-blue-600 text-white;
-    }
-
-    &.card-footer-indigo {
-        @apply bg-indigo-600 text-white;
+    &.card-footer-blue, &.card-footer-indigo {
+        @apply bg-indigo-600 text-white border-indigo-700;
     }
 
     &.card-footer-purple {
-        @apply bg-purple-600 text-white;
+        @apply bg-purple-600 text-white border-purple-700;
     }
 
     &.card-footer-pink {
-        @apply bg-pink-600 text-white;
+        @apply bg-pink-600 text-white border-pink-700;
     }
 }
 
 .central-card {
-    @apply bg-white dark:bg-gray-700 p-10 rounded-lg shadow-lg w-full lg:w-1/2 mx-auto
+    @apply bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 sm:p-10 rounded-2xl shadow-xl w-full lg:w-1/2 mx-auto transition-all duration-300;
 }

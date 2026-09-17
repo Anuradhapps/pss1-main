@@ -6,8 +6,7 @@
     <div>
         <!-- Page Header -->
         <x-headings.top-heading title="My Records" subtitle="" icon="fas fa-folder-open" buttonText="New Collector"
-            buttonAction="{{ route('collector.newCollector') }}" buttonIcon="fas fa-plus" buttonColor="blue"
-            class="bg-green-700" />
+            buttonAction="{{ route('collector.newCollector') }}" buttonIcon="fas fa-plus" buttonColor="blue" />
 
         @if (session('success'))
             <div class="alert-success flex items-start gap-3 p-4 my-3 text-sm font-medium text-white border border-emerald-500 bg-emerald-600  shadow-md"
@@ -23,72 +22,115 @@
             </div>
         @endif
 
-        <!-- Button to Show/Hide Filters -->
-        <div x-data="{ showFilters: false }" class="mb-4">
-            <button @click="showFilters = !showFilters"
-                class="bg-emerald-800 hover:bg-emerald-900 text-white font-semibold px-4 py-2 transition w-full sm:w-auto">
-                <i class="fas fa-filter mr-2"></i> Toggle Filters
-            </button>
-
-            <!-- Filter Form -->
-            <div x-show="showFilters" x-transition class="mt-4 bg-emerald-900 text-white p-4">
-                <form method="GET" action="{{ route('collector.index') }}"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-
-                    <!-- Rice Season -->
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Rice Season</label>
-                        <select name="season"
-                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                            <option value="">All</option>
-                            @foreach ($seasons as $season)
-                                <option value="{{ $season->name }}"
-                                    {{ request('season') == $season->name ? 'selected' : '' }}>
-                                    {{ $season->name }}
-                                </option>
-                            @endforeach
-                        </select>
+        <!-- Filter Toolbar -->
+        <div x-data="{ showFilters: false }">
+            <div class="flex items-center justify-between">
+                <button @click="showFilters = !showFilters"
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all w-full sm:w-auto group">
+                    <div
+                        class="w-6 h-6 rounded bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">
+                        <i class="fas fa-filter text-xs" :class="{ 'text-primary': showFilters }"></i>
                     </div>
+                    <span x-text="showFilters ? 'Hide Filters' : 'Filter Records'"></span>
+                    <i class="fas fa-chevron-down text-xs text-slate-400 ml-1 transition-transform duration-300"
+                        :class="{ 'rotate-180': showFilters }"></i>
+                </button>
+            </div>
 
-                    <!-- District -->
-                    <div>
-                        <label class="block text-sm font-medium mb-1">District</label>
-                        <select name="district"
-                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                            <option value="">All</option>
-                            @foreach ($districts as $district)
-                                <option value="{{ $district->name }}"
-                                    {{ request('district') == $district->name ? 'selected' : '' }}>
-                                    {{ $district->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+            <!-- Expandable Filter Panel -->
+            <div x-show="showFilters" x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+                class="mt-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden"
+                style="display: none;">
 
-                    <!-- Established Date -->
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Established Date</label>
-                        <input type="date" name="established" value="{{ request('established') }}"
-                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
-                    </div>
+                <form method="GET" action="{{ route('collector.index') }}" class="p-5 flex flex-col gap-5">
 
-                    <!-- Created At -->
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Created At</label>
-                        <input type="date" name="created" value="{{ request('created') }}"
-                            class="w-full bg-emerald-800 border border-emerald-600 p-2 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <!-- Rice Season -->
+                        <div class="flex flex-col">
+                            <label
+                                class="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Rice
+                                Season</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-leaf absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <select name="season"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+                                    <option value="">All Seasons</option>
+                                    @foreach ($seasons as $season)
+                                        <option value="{{ $season->name }}"
+                                            {{ request('season') == $season->name ? 'selected' : '' }}>
+                                            {{ $season->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <i
+                                    class="fas fa-chevron-down absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <!-- District -->
+                        <div class="flex flex-col">
+                            <label
+                                class="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">District</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-map-marker-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                                <select name="district"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+                                    <option value="">All Districts</option>
+                                    @foreach ($districts as $district)
+                                        <option value="{{ $district->name }}"
+                                            {{ request('district') == $district->name ? 'selected' : '' }}>
+                                            {{ $district->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <i
+                                    class="fas fa-chevron-down absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <!-- Established Date -->
+                        <div class="flex flex-col">
+                            <label
+                                class="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Established
+                                Date</label>
+                            <div class="relative">
+                                <i
+                                    class="far fa-calendar-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm z-10"></i>
+                                <input type="date" name="established" value="{{ request('established') }}"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors [color-scheme:light] dark:[color-scheme:dark]">
+                            </div>
+                        </div>
+
+                        <!-- Created At -->
+                        <div class="flex flex-col">
+                            <label
+                                class="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Created
+                                At</label>
+                            <div class="relative">
+                                <i
+                                    class="far fa-calendar-plus absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm z-10"></i>
+                                <input type="date" name="created" value="{{ request('created') }}"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors [color-scheme:light] dark:[color-scheme:dark]">
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex flex-col gap-2 justify-end">
-                        <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 transition">
-                            Apply Filters
-                        </button>
+                    <div
+                        class="flex flex-col sm:flex-row gap-3 justify-end items-center pt-5 mt-2 border-t border-slate-100 dark:border-slate-700/50">
                         <a href="{{ route('collector.index') }}"
-                            class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 text-center transition">
-                            Reset
+                            class="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white py-2 px-4 rounded-lg transition-colors focus:outline-none">
+                            <i class="fas fa-undo opacity-70 text-xs"></i> Reset
                         </a>
+                        <button type="submit"
+                            class="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-primary hover:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-sm font-semibold py-2.5 px-6 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                            <i class="fas fa-search text-xs"></i> Apply Filters
+                        </button>
                     </div>
                 </form>
             </div>
@@ -96,80 +138,119 @@
 
 
         <!-- Collector Cards -->
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 p-2">
+        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3 mt-2">
             @foreach ($collectors as $collector)
-                <div class="p-2 transition duration-300 bg-emerald-900">
-                    <div class="flex items-center justify-between mb-2">
-                        <!-- Arrow Tag -->
-                        <span class="inline-flex items-center">
-                            <span
-                                class="inline-flex items-center py-1 pl-3 pr-3 text-sm font-bold text-white rounded-l-full shadow-md bg-emerald-600">
-                                {{ $collectors->count() - $loop->index }}
-                            </span>
-                            <span
-                                class="w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-emerald-600"></span>
-                            <span
-                                class="inline-flex items-center px-3 py-1 text-sm font-semibold tracking-wide text-white rounded-r-full shadow-md bg-emerald-700">
-                                {{ $collector->riceSeason->name }} Season
-                            </span>
+                <div
+                    class="flex flex-col p-5 transition-all duration-300  bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm hover:shadow-lg group relative overflow-hidden">
+
+                    <!-- Top Ribbon & Actions -->
+                    <div class="flex items-center justify-between mb-5 gap-3">
+                        <!-- Number Badge -->
+                        <span
+                            class="flex items-center justify-center w-12 h-10 text-base font-black text-white bg-slate-800 dark:bg-slate-700 rounded-xl shadow-sm flex-shrink-0 border border-slate-700 dark:border-slate-600">
+                            #{{ $collectors->count() - $loop->index }}
                         </span>
 
+                        <!-- High Contrast Season Badge -->
+                        <div
+                            class="flex-1 flex items-center justify-center px-4 py-2 text-sm font-black tracking-wider uppercase text-white bg-gradient-to-r from-emerald-600 to-teal-500 rounded-xl shadow-md border border-emerald-500/50">
+                            <i class="fas fa-seedling mr-2 opacity-90"></i>
+                            {{ $collector->riceSeason->name }} Season
+                        </div>
+
+                        <!-- Admin Delete Action -->
                         @if (Auth::user()->name == 'npssoldata')
                             <form action="{{ route('collector.destroy', $collector->id) }}" method="POST"
-                                onsubmit="return confirmDelete()">
+                                onsubmit="return confirmDelete(event)" class="z-10 flex-shrink-0">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="confirmDelete(event)"
-                                    class="text-red-500 transition duration-150 hover:text-red-700">
-                                    <i class="text-lg fas fa-trash-alt"></i>
+                                <button type="submit"
+                                    class="flex items-center justify-center w-10 h-10 text-slate-400 hover:text-white hover:bg-red-500 dark:hover:bg-red-600 rounded-xl transition-all shadow-sm border border-transparent hover:border-red-600 focus:outline-none">
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
                         @endif
                     </div>
 
-                    <!-- Location Info -->
-                    <p class="mt-1 mb-1 text-sm text-slate-300">
-                        <span class="font-medium text-orange-400">{{ $collector->getDistrict->name }}</span>
-                        <i class="mx-1 text-slate-400 fas fa-chevron-right"></i>
-                        <span class="font-medium text-pink-400">{{ $collector->getAsCenter->name }}</span>
-                        <i class="mx-1 text-slate-400 fas fa-chevron-right"></i>
-                        <span class="font-medium text-yellow-400">{{ $collector->getAiRange->name }}</span>
-                    </p>
+                    <!-- Location Path -->
+                    <div class="mb-4 flex flex-wrap items-center gap-2 text-sm">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
+                            <i class="fas fa-map-marker-alt text-xs opacity-70"></i>
+                            {{ $collector->getDistrict->name }}
+                        </span>
+                        <i class="fas fa-chevron-right text-[10px] text-slate-300 dark:text-slate-600"></i>
+                        <span
+                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
+                            {{ $collector->getAsCenter->name }}
+                        </span>
+                        <i class="fas fa-chevron-right text-[10px] text-slate-300 dark:text-slate-600"></i>
+                        <span
+                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
+                            {{ $collector->getAiRange->name }}
+                        </span>
+                    </div>
 
-                    <!-- Metadata -->
-                    <div class="mb-4 text-xs leading-snug text-slate-100">
-                        <div class="grid grid-cols-[auto,1fr] gap-x-2 gap-y-1">
-                            <div class="font-semibold text-slate-300">Created at:</div>
-                            <div>{{ $collector->created_at }}</div>
-
-                            <div class="font-semibold text-slate-300">Updated at:</div>
-                            <div>{{ $collector->updated_at }}</div>
-
-                            <div class="font-semibold text-slate-300">Rice Variety:</div>
-                            <div>{{ $collector->rice_variety }}</div>
-
-                            <div class="font-semibold text-slate-300">Rice Established Date:</div>
-                            <div>{{ $collector->date_establish }}</div>
-
-                            <div class="font-semibold text-slate-300">Established Method:</div>
-                            <div>{{ $collector->established_method ?? 'N/A' }}</div>
-
-                            <div class="font-semibold text-slate-300">Pest Dataset Count:</div>
-                            <div>{{ $collector->commonDataCollect->count() }}</div>
+                    <!-- Metadata Grid -->
+                    <div
+                        class="flex-1 bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-100 dark:border-slate-700/50 mb-5">
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Created
+                                    At</span>
+                                <span
+                                    class="font-medium text-slate-700 dark:text-slate-200">{{ \Carbon\Carbon::parse($collector->created_at)->format('Y-m-d H:i') }}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Updated
+                                    At</span>
+                                <span
+                                    class="font-medium text-slate-700 dark:text-slate-200">{{ \Carbon\Carbon::parse($collector->updated_at)->format('Y-m-d H:i') }}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Rice
+                                    Variety</span>
+                                <span class="font-medium text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                                    <i class="fas fa-seedling text-emerald-500"></i> {{ $collector->rice_variety }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Established
+                                    Date</span>
+                                <span
+                                    class="font-medium text-slate-700 dark:text-slate-200">{{ $collector->date_establish }}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span
+                                    class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Method</span>
+                                <span
+                                    class="font-medium text-slate-700 dark:text-slate-200">{{ $collector->established_method ?? 'N/A' }}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Pest
+                                    Data Count</span>
+                                <span class="font-bold text-primary flex items-center gap-1.5">
+                                    <i class="fas fa-database text-primary opacity-70"></i>
+                                    {{ $collector->commonDataCollect->count() }}
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-
                     <!-- Action Buttons -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <x-buttons.button-1 color="red" href="{{ route('collector.edit', $collector->id) }}"
-                            icon="fas fa-edit">
-                            Edit Collector
-                            </x-button>
-                            <x-buttons.button-1 color="green" href="{{ route('pestdata.view', $collector->id) }}"
-                                icon="fas fa-bug">
-                                Pest Data
-                                </x-button>
+                    <div
+                        class="grid grid-cols-2 gap-3 mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <a href="{{ route('collector.edit', $collector->id) }}"
+                            class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 hover:text-rose-700 dark:bg-rose-500/10 dark:border-rose-500/20 dark:text-rose-400 dark:hover:bg-rose-500/20 dark:hover:text-rose-300 transition-colors focus:ring-2 focus:ring-rose-500/50 focus:outline-none w-full text-center">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{{ route('pestdata.view', $collector->id) }}"
+                            class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-primary border border-primary rounded-lg hover:bg-emerald-600 dark:hover:bg-emerald-500 shadow-sm transition-all focus:ring-2 focus:ring-primary/50 focus:outline-none w-full text-center">
+                            <i class="fas fa-bug"></i> Pest Data
+                        </a>
                     </div>
                 </div>
             @endforeach

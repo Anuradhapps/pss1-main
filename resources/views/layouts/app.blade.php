@@ -8,14 +8,22 @@
 
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" href="{{ asset('images/LOGO.ico') }}">
+
+    <!-- Set theme before first paint to avoid a flash of the wrong theme -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' ||
+            (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Add inside your HTML head or before the map script -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -48,113 +56,218 @@
         .footer {
             flex-shrink: 0;
         }
+
+        /* Consistent, visible keyboard focus everywhere, in both themes */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid theme('colors.emerald.500');
+            outline-offset: 2px;
+            border-radius: 0.375rem;
+        }
     </style>
 </head>
 
-<body class="antialiased text-white">
+<body
+    class="font-sans antialiased text-slate-700 bg-slate-50 dark:text-slate-200 dark:bg-slate-950 transition-colors duration-300">
 
     <x-loader />
 
-    <div x-data="{ sidebarOpen: false }" x-cloak class="main-container">
-        <div class="flex flex-1 ">
-            @auth
-                <!-- Desktop Sidebar -->
-                <aside class="hidden w-auto md:block bg-teal-950">
-                    @include('layouts.app.navigation')
-                </aside>
+    <!-- Skip link: first focusable element, only visible on keyboard focus -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-emerald-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">
+        Skip to main content
+    </a>
 
-                <!-- Mobile Sidebar -->
-                <aside x-show="sidebarOpen" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 -translate-x-full"
-                    x-transition:enter-end="opacity-100 translate-x-0" x-transition:leave="transition ease-in duration-300"
-                    x-transition:leave-start="opacity-100 translate-x-0"
-                    x-transition:leave-end="opacity-0 -translate-x-full"
-                    class="fixed inset-0 z-50 w-64 shadow-xl md:hidden transform bg-gradient-to-r from-teal-900 to-teal-700">
-                    <div class="flex justify-end p-1">
-                        <button @click="sidebarOpen = false"
-                            class="text-white bg-red-600 hover:bg-red-700 transition duration-200 ease-in-out
-               px-3 py-1.5 shadow-md hover:shadow-lg focus:outline-none"
-                            aria-label="Close sidebar">
-                            <i class="fas fa-times text-lg"></i>
+    <div x-data="{ sidebarOpen: false }" x-cloak
+        class="h-screen bg-slate-50 dark:bg-slate-950 flex overflow-hidden font-sans text-slate-700 dark:text-slate-200 transition-colors duration-300">
+
+        @auth
+            <!-- Desktop Sidebar (Full Height) -->
+            <aside
+                class="hidden md:flex flex-col w-56 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-colors duration-300 z-40 flex-shrink-0">
+                <!-- Sidebar Header (Logo) -->
+                <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+                    <a href="{{ route('dashboard') }}" class="block w-full">
+                        <x-logo />
+                    </a>
+                </div>
+                <!-- Navigation -->
+                <nav aria-label="Primary" class="flex-1 overflow-y-auto custom-scrollbar">
+                    @include('layouts.app.navigation')
+                </nav>
+            </aside>
+
+            <!-- Mobile Sidebar Backdrop & Drawer -->
+            <div x-show="sidebarOpen" x-cloak class="md:hidden">
+                <!-- Backdrop -->
+                <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0" @click="sidebarOpen = false"
+                    class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-40"></div>
+
+                <!-- Drawer -->
+                <aside x-show="sidebarOpen" x-transition:enter="transition ease-in-out duration-300 transform"
+                    x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+                    x-transition:leave="transition ease-in-out duration-300 transform"
+                    x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"
+                    class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 shadow-2xl flex flex-col h-full">
+
+                    <div
+                        class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+                        <a href="{{ route('dashboard') }}" class="block">
+                            <x-logo />
+
+                        </a>
+                        <button @click="sidebarOpen = false" aria-label="Close menu"
+                            class="text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 p-2 -mr-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <i class="fas fa-times text-xl" aria-hidden="true"></i>
                         </button>
                     </div>
 
-                    <div class="px-1">
+                    <nav aria-label="Primary" class="flex-1 overflow-y-auto p-4 custom-scrollbar">
                         @include('layouts.app.navigation')
+                    </nav>
+                </aside>
+            </div>
+        @endauth
+
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+            @auth
+                <!-- Top Navbar (Right Side Only) -->
+                <header
+                    class="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300 flex-shrink-0">
+                    <!-- Left side: Mobile Toggle & Mobile Logo -->
+                    <div class="flex items-center">
+                        <button @click="sidebarOpen = !sidebarOpen" aria-label="Open menu" :aria-expanded="sidebarOpen"
+                            class="md:hidden text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 p-2 -ml-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                        </button>
+                        <!-- Mobile Logo in Header when Drawer is closed -->
+                        <a href="{{ route('dashboard') }}" class="md:hidden ml-2 block w-36">
+                            <x-logo />
+                        </a>
                     </div>
 
+                    <!-- Right side: Controls & Profile -->
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle" type="button" aria-label="Toggle dark mode"
+                            class="text-slate-500 dark:text-slate-400
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           hover:text-emerald-600 dark:hover:text-emerald-400
+           rounded-lg text-sm p-2 transition-colors">
 
-                </aside>
+                            <i id="theme-toggle-icon" class="fas text-lg" aria-hidden="true"></i>
+                        </button>
+
+                        <script>
+                            (function() {
+
+                                const toggleBtn = document.getElementById('theme-toggle');
+                                const toggleIcon = document.getElementById('theme-toggle-icon');
+                                const root = document.documentElement;
+
+                                function syncThemeIcon() {
+
+                                    const isDark = root.classList.contains('dark');
+
+                                    // Remove both icons
+                                    toggleIcon.classList.remove('fa-sun', 'fa-moon');
+
+                                    // Add icon according to current mode
+                                    if (isDark) {
+                                        toggleIcon.classList.add('fa-moon');
+                                    } else {
+                                        toggleIcon.classList.add('fa-sun');
+                                    }
+
+                                    toggleBtn.setAttribute(
+                                        'aria-label',
+                                        isDark ? 'Switch to light mode' : 'Switch to dark mode'
+                                    );
+
+                                    toggleBtn.setAttribute(
+                                        'aria-pressed',
+                                        String(isDark)
+                                    );
+                                }
+
+                                toggleBtn.addEventListener('click', function() {
+
+                                    const goingDark = !root.classList.contains('dark');
+
+                                    root.classList.toggle('dark', goingDark);
+
+                                    // Save theme
+                                    localStorage.setItem(
+                                        'color-theme',
+                                        goingDark ? 'dark' : 'light'
+                                    );
+
+                                    // Change icon immediately
+                                    syncThemeIcon();
+                                });
+
+                                // Set correct icon when page loads
+                                syncThemeIcon();
+
+                            })
+                            ();
+                        </script>
+
+
+                        <livewire:admin.notifications-menu />
+                        <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1 sm:mx-2 hidden sm:block"></div>
+                        <livewire:admin.users.user-menu />
+                    </div>
+                </header>
             @endauth
 
-            <!-- Main Content Area -->
-            <div id="main" class="flex flex-col w-full">
-                @auth
-                    <!-- Topbar -->
-                    <header class="sticky top-0 z-40 flex items-center justify-between px-4 py-2 bg-teal-900 shadow-lg">
-
-
-
-                        <!-- Mobile Sidebar Toggle -->
-                        <button @click="sidebarOpen = !sidebarOpen"
-                            class="text-white md:hidden hover:text-teal-400 focus:outline-none">
-                            <i class="fas fa-bars text-2xl"></i>
-                        </button>
-
-                        <!-- Topbar right controls -->
-                        <div class="flex items-center ml-auto space-x-3">
-                            <livewire:admin.notifications-menu />
-                            {{-- <livewire:admin.help-menu /> --}}
-                            <livewire:admin.users.user-menu />
-                        </div>
-                    </header>
-                @endauth
-
-                <!-- Slot Content -->
-                <main class="content bg-gray-900">
+            <!-- Scrollable Main Content -->
+            <main id="main-content" tabindex="-1"
+                class="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950 transition-colors duration-300 custom-scrollbar flex flex-col focus:outline-none">
+                <!-- Page Content -->
+                <div class="flex-1 w-full max-w-[1800px] mx-auto p-4 sm:p-0 lg:p-1">
                     {{ $slot ?? '' }}
-                </main>
+                </div>
 
                 <!-- Footer -->
-                <footer class="w-full px-4 py-3 text-xs text-center text-gray-300 bg-teal-800 footer">
-                    &copy; {{ date('Y') }} {{ config('app.name') }} —
-                    {{ __('National Plant Protection Service, Sri Lanka') }}.
-                    <br>{{ __('All rights reserved.') }}
+                <footer
+                    class="w-full mt-auto py-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors duration-300 flex-shrink-0">
+                    <div
+                        class="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 dark:text-slate-400 gap-4">
+                        <div class="text-center sm:text-left leading-relaxed">
+                            &copy; {{ date('Y') }}
+                            <span class="font-semibold text-emerald-700 dark:text-emerald-400">National Pest
+                                Surveillance System</span>. {{ __('All rights reserved.') }}<br>
+                            <span class="text-xs">National Plant Protection Service, Sri Lanka</span>
+                        </div>
+                        <div class="flex gap-4">
+
+                            <a href="{{ route('help') }}"
+                                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Help
+                                Center</a>
+                        </div>
+                    </div>
                 </footer>
-            </div>
+            </main>
         </div>
     </div>
 
-    {{-- <script>
-        alert('Download starting...');
-        const loader = document.getElementById('fullScreenLoader');
-        const mapContainer = document.getElementById('map-container');
-        // Listen when page is unloading (show loader, hide map)
-        window.addEventListener('beforeunload', () => {
-            loader.classList.remove('hidden');
-            mapContainer.classList.add('hidden');
-        });
-
-        // When page is loaded
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                loader.classList.add('hidden');
-                mapContainer.classList.remove('hidden');
-
-                // ✅ Only initialize map AFTER it's visible
-                initMap();
-            }, 300);
-        });
-    </script> --}}
-
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Toast Notification System -->
+    <x-ui.toast />
+
     @livewireScripts
     @stack('scripts')
 </body>

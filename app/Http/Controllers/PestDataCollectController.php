@@ -8,6 +8,7 @@ use App\Models\Collector;
 use App\Models\CommonDataCollect;
 use App\Models\Pest;
 use App\Models\PestDataCollect;
+use App\Services\PestAlertNotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,8 +48,22 @@ class PestDataCollectController extends Controller
                 ->latest()
                 ->get();
 
+            $pestCodes = $this->avarageCalculate(collect([$collector]));
+
+            $labels = collect($pestCodes['pests'])->keys()->map(function ($key) {
+                return ucwords(preg_replace('/(?<!^)[A-Z]/', ' $0', $key));
+            })->toArray();
+
+            $data = array_values($pestCodes['pests']);
+
             // Return the pest data index view with the retrieved common data
-            return view('pestData.index', ['CommonData' => $commonData]);
+            return view('pestData.index', [
+                'CommonData' => $commonData,
+                'collectorId' => $collector->id,
+                'collector' => $collector,
+                'pestLabels' => $labels,
+                'pestCode' => $data,
+            ]);
         }
 
         // If no collector exists, redirect based on role with an error message
@@ -197,6 +212,7 @@ class PestDataCollectController extends Controller
 
         // Fetch all pests
         $pests = Pest::all();
+        $alertService = app(PestAlertNotificationService::class);
 
         foreach ($pests as $pest) {
             if ($pest->name === 'Thrips') {
@@ -219,6 +235,17 @@ class PestDataCollectController extends Controller
                     'mean' => 0,
                     'code' => $thripsCode,
                 ]);
+
+                if (in_array($thripsCode, [7, 9], true)) {
+                    $alertService->notifyIfHighRisk(
+                        $pest->name,
+                        $thripsCode,
+                        $collector->user_id,
+                        $collector->user?->name ?? 'Unknown collector',
+                        $collector->phone_no ?? 'N/A',
+                        $collector->getDistrict?->name ?? 'Unknown district'
+                    );
+                }
 
                 continue;
             }
@@ -249,6 +276,17 @@ class PestDataCollectController extends Controller
                 'mean' => $mean,
                 'code' => $code,
             ]);
+
+            if (in_array($code, [7, 9], true)) {
+                $alertService->notifyIfHighRisk(
+                    $pest->name,
+                    (int) $code,
+                    $collector->user_id,
+                    $collector->user?->name ?? 'Unknown collector',
+                    $collector->phone_no ?? 'N/A',
+                    $collector->getDistrict?->name ?? 'Unknown district'
+                );
+            }
         }
 
         return redirect()->route('pestdata.view', $id)
@@ -272,6 +310,143 @@ class PestDataCollectController extends Controller
         $pestsData = PestDataCollect::where('common_data_collectors_id', '=', $Id)->get();
 
         return view('pestData.edit', ['pestsData' => $pestsData, 'commonData' => $commonData, 'pests' => $pests]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $commonDataCollect = CommonDataCollect::findOrFail($id);
+        $collectorId = $commonDataCollect->collector_id;
+
+        $validated = $request->validate([
+            'date_collected' => 'required|date_format:d-m-Y',
+            'growth_s_c' => 'required',
+            'numbrer_r_day' => 'required|numeric',
+            'temperature' => 'required',
+            'Number_Of_Tillers_location_1' => 'required|numeric',
+            'Number_Of_Tillers_location_2' => 'required|numeric',
+            'Number_Of_Tillers_location_3' => 'required|numeric',
+            'Number_Of_Tillers_location_4' => 'required|numeric',
+            'Number_Of_Tillers_location_5' => 'required|numeric',
+            'Number_Of_Tillers_location_6' => 'required|numeric',
+            'Number_Of_Tillers_location_7' => 'required|numeric',
+            'Number_Of_Tillers_location_8' => 'required|numeric',
+            'Number_Of_Tillers_location_9' => 'required|numeric',
+            'Number_Of_Tillers_location_10' => 'required|numeric',
+        ]);
+
+        $commonDataCollect->update([
+            'c_date' => Carbon::createFromFormat('d-m-Y', $validated['date_collected']),
+            'temperature' => $request->input('temperature', 0),
+            'growth_s_c' => $validated['growth_s_c'],
+            'numbrer_r_day' => $validated['numbrer_r_day'],
+            'otherinfo' => $request->input('otherinfo'),
+        ]);
+
+        // Delete existing pest data for this record to replace with new data
+        PestDataCollect::where('common_data_collectors_id', $commonDataCollect->id)->delete();
+
+        // Collect and sum tillers locations
+        $tillerLocations = collect(range(1, 10))
+            ->map(fn($i) => intval($request->input("Number_Of_Tillers_location_{$i}", 0)));
+        $totalTillers = $tillerLocations->sum();
+
+        // Create PestDataCollect record for Number_Of_Tillers
+        PestDataCollect::create([
+            'common_data_collectors_id' => $commonDataCollect->id,
+            'pest_name' => 'Number_Of_Tillers',
+            'location_1' => $tillerLocations[0],
+            'location_2' => $tillerLocations[1],
+            'location_3' => $tillerLocations[2],
+            'location_4' => $tillerLocations[3],
+            'location_5' => $tillerLocations[4],
+            'location_6' => $tillerLocations[5],
+            'location_7' => $tillerLocations[6],
+            'location_8' => $tillerLocations[7],
+            'location_9' => $tillerLocations[8],
+            'location_10' => $tillerLocations[9],
+            'total' => $totalTillers,
+            'mean' => 0,
+            'code' => 0,
+        ]);
+
+        // Fetch all pests
+        $pests = Pest::all();
+        $alertService = app(PestAlertNotificationService::class);
+
+        foreach ($pests as $pest) {
+            if ($pest->name === 'Thrips') {
+                $thripsCode = intval($request->input($pest->id . 'all_location', 0));
+                PestDataCollect::create([
+                    'common_data_collectors_id' => $commonDataCollect->id,
+                    'pest_name' => $pest->name,
+                    'location_1' => 0,
+                    'location_2' => 0,
+                    'location_3' => 0,
+                    'location_4' => 0,
+                    'location_5' => 0,
+                    'location_6' => 0,
+                    'location_7' => 0,
+                    'location_8' => 0,
+                    'location_9' => 0,
+                    'location_10' => 0,
+                    'total' => 0,
+                    'mean' => 0,
+                    'code' => $thripsCode,
+                ]);
+
+                if (in_array($thripsCode, [7, 9], true)) {
+                    $alertService->notifyIfHighRisk(
+                        $pest->name,
+                        $thripsCode,
+                        $commonDataCollect->user_id,
+                        $commonDataCollect->collector->user->name ?? 'Unknown collector',
+                        $commonDataCollect->collector->phone_no ?? 'N/A',
+                        $commonDataCollect->collector->getDistrict?->name ?? 'Unknown district'
+                    );
+                }
+                continue;
+            }
+
+            // Sum pest counts for locations 1 to 10
+            $pestCounts = collect(range(1, 10))
+                ->map(fn($i) => intval($request->input("{$pest->id}_location_{$i}", 0)));
+            $totalPests = $pestCounts->sum();
+
+            // Calculate mean and code based on pest type
+            [$mean, $code] = $this->calculatePestCode($pest->name, $totalTillers, $totalPests);
+
+            PestDataCollect::create([
+                'common_data_collectors_id' => $commonDataCollect->id,
+                'pest_name' => $pest->name,
+                'location_1' => $pestCounts[0],
+                'location_2' => $pestCounts[1],
+                'location_3' => $pestCounts[2],
+                'location_4' => $pestCounts[3],
+                'location_5' => $pestCounts[4],
+                'location_6' => $pestCounts[5],
+                'location_7' => $pestCounts[6],
+                'location_8' => $pestCounts[7],
+                'location_9' => $pestCounts[8],
+                'location_10' => $pestCounts[9],
+                'total' => $totalPests,
+                'mean' => $mean,
+                'code' => $code,
+            ]);
+
+            if (in_array($code, [7, 9], true)) {
+                $alertService->notifyIfHighRisk(
+                    $pest->name,
+                    (int) $code,
+                    $commonDataCollect->user_id,
+                    $commonDataCollect->collector->user?->name ?? 'Unknown collector',
+                    $commonDataCollect->collector->phone_no ?? 'N/A',
+                    $commonDataCollect->collector->getDistrict?->name ?? 'Unknown district'
+                );
+            }
+        }
+
+        return redirect()->route('pestdata.view', $collectorId)
+            ->with('success', 'Pest Data updated successfully.');
     }
     public function destroy($id)
     {

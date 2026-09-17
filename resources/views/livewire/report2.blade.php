@@ -1,24 +1,27 @@
 <div class="">
 
-    <div class="mx-auto max-w-max sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-slate-500">
+    <div class="w-full mx-auto">
+        <div class="overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm">
 
-            <div wire:loading.block class="flex justify-center w-full h-full p-2 text-center bg-black opacity-60"
-                style="position:fixed; top:0; left:0"></div>
-            <div id = "loading_indicator">
-                <div class="text-center">
-                    <div role="status">
-                        <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin fill-green-600"
-                            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                fill="currentColor" />
-                            <path
-                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                fill="currentFill" />
-                        </svg>
-                        <span class="sr-only"></span>
-                    </div>
+            <!-- Modern Premium Loading Overlay (Livewire) -->
+            <div wire:loading.flex class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300">
+                <div class="flex flex-col items-center justify-center bg-white dark:bg-slate-800 px-8 py-6 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 transform transition-all">
+                    <svg class="animate-spin h-10 w-10 text-primary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-slate-800 dark:text-slate-200 font-semibold text-sm tracking-wide">Processing Data...</span>
+                </div>
+            </div>
+
+            <!-- Modern Premium Loading Overlay (JS/PDF) -->
+            <div id="loading_indicator" style="display: none;" class="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300">
+                <div class="flex flex-col items-center justify-center bg-white dark:bg-slate-800 px-8 py-6 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 transform transition-all">
+                    <svg class="animate-spin h-10 w-10 text-primary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-slate-800 dark:text-slate-200 font-semibold text-sm tracking-wide">Generating PDF...</span>
                 </div>
             </div>
 
@@ -36,14 +39,14 @@
                 <div class="col-md-6">
 
                     <div class="grid grid-cols-4 gap-4">
-                        <div><label for="state" class="text-black col-md-4 col-form-label text-md-right">From
+                        <div><label for="state" class="text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">From
                                 Date</label></div>
                         <div><input type="date" wire:loading.attr="disabled" wire:model.debounce.300ms="fromdate"
-                                wire:model.lazy="fromdate" class="w-full " value=""></div>
-                        <div><label for="state" class="text-black col-md-4 col-form-label text-md-right">To
+                                wire:model.lazy="fromdate" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" value=""></div>
+                        <div><label for="state" class="text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">To
                                 Date</label></div>
                         <div><input type="date" wire:loading.attr="disabled" wire:model.debounce.300ms="todate"
-                                wire:model.lazy="todate" class="w-full border-gray-900 " value=""></div>
+                                wire:model.lazy="todate" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" value=""></div>
                     </div>
 
 
@@ -54,10 +57,10 @@
 
                     </div>
 
-                    <div class ="grid grid-cols-4 p-1 border-gray-900">
-                        <label for="state" class="w-3 text-black col-md-4 col-form-label text-md-right">Select
+                    <div class ="grid grid-cols-4 p-1 border-slate-200 dark:border-slate-700">
+                        <label for="state" class="w-3 text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">Select
                             District</label>
-                        <select wire:model.lazy="selecteddistrict" class="w-full text-green-900 border form-control "
+                        <select wire:model.lazy="selecteddistrict" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm"
                             wire:change="clear1()" wire:loading.attr="disabled">
                             <option value="" selected>Select District</option>
                             @foreach ($dis as $item)
@@ -66,10 +69,10 @@
                         </select>
                     </div>
 
-                    <div class ="grid grid-cols-4 p-1 border-gray-900">
-                        <label for="state" class="w-3 text-black col-md-4 col-form-label text-md-right">Select
+                    <div class ="grid grid-cols-4 p-1 border-slate-200 dark:border-slate-700">
+                        <label for="state" class="w-3 text-slate-700 dark:text-slate-300 col-md-4 col-form-label text-md-right">Select
                             ASC</label>
-                        <select wire:model.lazy="selectedasc" class="w-full text-green-900 border-gray-900 form-control"
+                        <select wire:model.lazy="selectedasc" class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm"
                             wire:change="clear2()" wire:loading.attr="disabled">
                             <option value="" selected>Select ASC</option>
                             @foreach ($asc as $item)
@@ -83,7 +86,7 @@
 
                     <div id="a" class="hidden">
                         <select id="test1" wire:model.lazy="selectedgs"
-                            class="w-full text-green-900 border-gray-900 form-control" wire:change="" onchange=""
+                            class="w-full px-4 py-2.5 text-slate-900 dark:text-white bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all outline-none shadow-sm" wire:change="" onchange=""
                             wire:loading.attr="disabled">
                             <option value="" selected>Select AI Range</option>
                             @foreach ($airange as $item)
@@ -99,32 +102,32 @@
 
 
             @if ($selrange == 1)
-                <table class="w-full divide-y divide-sky-700">
+                <table class="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-800">
 
-                    <thead class="text-gray-200 bg-sky-600">
-                        <tr>
+                    <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 uppercase text-xs font-semibold tracking-wider">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
 
-                            <th scope="col" class="w-4 px-6 py-4 text-black whitespace-nowrap">District</th>
-                            <th scope="col" class="px-6 py-4 text-black whitespace-nowrap">ASC</th>
-                            <th scope="col" class="px-6 py-4 text-black whitespace-nowrap">AI Range</th>
+                            <th scope="col" class="w-4 px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">District</th>
+                            <th scope="col" class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">ASC</th>
+                            <th scope="col" class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">AI Range</th>
 
-                            <th scope="col" class="px-6 py-3 text-black ">Temperature</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Rainy Days</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Growth Stage Code</th>
-                            <th scope="col" class="px-6 py-3 text-black ">Other Details</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Temperature</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Rainy Days</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Growth Stage Code</th>
+                            <th scope="col" class="px-4 py-3 text-left text-slate-700 dark:text-slate-300 ">Other Details</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-sky-500">
+                    <tbody class="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-800">
                         @foreach ($alldata as $item)
-                            <tr>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->dname }}</td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->ascname }}</td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->airange }}</td>
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->dname }}</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->ascname }}</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->airange }}</td>
 
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->temperature }} °C</td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->numbrer_r_day }}</td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->growth_s_c }}</td>
-                                <td class="px-6 py-4 text-black whitespace-nowrap">{{ $item->otherdet }}</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->temperature }} °C</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->numbrer_r_day }}</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->growth_s_c }}</td>
+                                <td class="px-4 py-3 text-slate-700 dark:text-slate-300 whitespace-nowrap">{{ $item->otherdet }}</td>
 
 
 

@@ -1,169 +1,277 @@
 <x-app-layout>
-    <div class="p-6 max-w-6xl mx-auto text-white space-y-8">
+    <div class="mx-auto  space-y-2">
 
-        <div class="text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-green-400">📘 National Pest Surveillance System (NPSS)
+        <!-- Header -->
+        <div class="text-center space-y-1 mt-4">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                <i class="fas fa-book-open text-4xl text-primary me-2"></i> National Pest Surveillance System
             </h1>
-            <p class="text-lg mt-2 text-gray-300 italic">User Manual & Guidance </p>
+            <p class="text-lg text-primary dark:text-emerald-400 font-medium tracking-wide">
+                User Manual & Guidance
+            </p>
         </div>
 
-        <section class="space-y-4">
-            <h2 class="text-2xl font-semibold text-yellow-300">📌 Introduction</h2>
-            <p>This manual is designed to help Subject Matter Officers (SMOs) at Agrarian Service Centers use the
-                NPSS for effective rice pest monitoring across Sri Lanka.</p>
-            <p>The NPSS is a web-based platform that is user-friendly, accessible from any internet-connected device,
-                and optimized for pest data collection at the AI Range level.</p>
+        <!-- Introduction -->
+        <section
+            class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+            <div class="flex items-center gap-3 mb-4">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Introduction</h2>
+            </div>
+            <div class="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p>This manual is designed to help Subject Matter Officers (SMOs) at Agrarian Service Centers use the
+                    NPSS for effective rice pest monitoring across Sri Lanka.</p>
+                <p>The NPSS is a web-based platform that is user-friendly, accessible from any internet-connected
+                    device, and optimized for pest data collection at the AI Range level.</p>
+            </div>
         </section>
 
-        <hr class="border-gray-600">
+        <!-- Main Steps Header -->
+        <div class="flex items-center gap-2">
+            <div class="flex-grow h-px bg-slate-200 dark:bg-slate-800"></div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white px-4">Main Steps to Use NPSS</h2>
+            <div class="flex-grow h-px bg-slate-200 dark:bg-slate-800"></div>
+        </div>
 
-        <section class="space-y-4">
-            <h2 class="text-2xl font-semibold text-green-300">🚀 Main Steps to Use NPSS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-4">
-                <h3 class="text-xl font-bold text-yellow-300">1️⃣ Accessing the System</h3>
-                <ul class="list-disc list-inside text-gray-300 space-y-1">
+            <!-- Step 1 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <span
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">1</span>
+                    Accessing the System
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400 mb-6">
                     <li>Open your web browser.</li>
                     <li>Visit: <a href="https://uat.pps.doa.gov.lk"
-                            class="text-blue-400 underline">https://uat.pps.doa.gov.lk</a></li>
+                            class="text-primary hover:underline font-medium">https://uat.pps.doa.gov.lk</a></li>
                     <li>Or scan the QR code below:</li>
                 </ul>
-                <img src="{{ asset('images/qr.jpg') }}" alt="NPSS QR Code"
-                    class="w-40 h-40 object-contain border rounded-md shadow-md mx-auto">
-                <p class="text-center text-sm text-gray-400 mt-1">NPSS QR Code</p>
-            </div>
-            <div class="bg-gray-800 text-white p-4 rounded-md shadow-md mb-6">
-                <h2 class="text-lg font-semibold mb-2">🔐 Account Access</h2>
-                <p class="mb-2">
-                    If you <strong>already have an account</strong>, please
-                    <a href="{{ route('login') }}" class="text-blue-400 underline hover:text-blue-500">log in here</a>.
-                </p>
-                <p>
-                    If you <strong>do not have an account</strong> yet, you need to
-                    <a href="{{ route('register') }}" class="text-blue-400 underline hover:text-blue-500">register for a
-                        new account</a>
-                    before you can log in and use the system.
-                </p>
-            </div>
-
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-gray-800 p-4 rounded-md shadow-md">
-                    <h3 class="text-xl font-bold text-yellow-300">2️⃣ Registering an Account</h3>
-                    <ol class="list-decimal list-inside space-y-2 text-gray-300">
-                        <li>Click <strong>Register</strong>.</li>
-                        <li>Fill required details:
-                            <ul class="list-disc ml-4">
-                                <li>Name</li>
-                                <li>Email (e.g., kamal@gmail.com)</li>
-                                <li>Password (e.g., Kamal@2025)</li>
-                            </ul>
-                        </li>
-                        <li>Click <strong>Submit</strong>. You'll be redirected to the dashboard.</li>
-                    </ol>
-                </div>
-
-                <div class="bg-gray-800 p-4 rounded-md shadow-md">
-                    <h3 class="text-xl font-bold text-yellow-300">3️⃣ Logging In</h3>
-                    <ul class="list-disc list-inside space-y-2 text-gray-300">
-                        <li>Enter your Email and Password.</li>
-                        <li>Click <strong>Login</strong> to access the Dashboard.</li>
-                    </ul>
+                <div
+                    class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <img src="{{ asset('images/qr.jpg') }}" alt="NPSS QR Code"
+                        class="w-32 h-32 object-contain rounded-lg shadow-sm">
+                    <p class="text-xs text-slate-500 mt-3 font-medium">NPSS QR Code</p>
                 </div>
             </div>
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-2">
-                <h3 class="text-xl font-bold text-yellow-300">4️⃣ Navigating the System</h3>
-                <p>Tap the ☰ (three-bar) menu and select <strong>Collector</strong> to start data entry.</p>
+            <!-- Account Access Alert -->
+            <div
+                class="bg-primary/5 dark:bg-primary/10 rounded-2xl shadow-sm border border-primary/20 dark:border-primary/30 p-6 flex flex-col justify-center">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <i class="fas fa-lock text-primary"></i>
+                    Account Access
+                </h3>
+                <div class="space-y-4 text-slate-600 dark:text-slate-400">
+                    <p>If you <strong>already have an account</strong>, please <a href="{{ route('login') }}"
+                            class="text-primary hover:underline font-semibold">log in here</a>.</p>
+                    <p>If you <strong>do not have an account</strong> yet, you need to <a href="{{ route('register') }}"
+                            class="text-primary hover:underline font-semibold">register for a new account</a> before you
+                        can log in and use the system.</p>
+                </div>
             </div>
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">5️⃣ Entering Collector Information</h3>
-                <p>On first login, fill the Collector Info Form:</p>
-                <ul class="list-disc list-inside ml-4 text-gray-300">
+            <!-- Step 2 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <span
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">2</span>
+                    Registering an Account
+                </h3>
+                <ol class="list-decimal list-inside space-y-3 text-slate-600 dark:text-slate-400">
+                    <li>Click <strong>Register</strong>.</li>
+                    <li>Fill in the required details:
+                        <ul class="list-disc ml-6 mt-2 space-y-1 text-sm">
+                            <li>Name</li>
+                            <li>Email (e.g., kamal@gmail.com)</li>
+                            <li>Password (e.g., Kamal@2025)</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>Submit</strong>. You'll be redirected to the dashboard.</li>
+                </ol>
+            </div>
+
+            <!-- Step 3 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <span
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">3</span>
+                    Logging In
+                </h3>
+                <ul class="list-disc list-inside space-y-3 text-slate-600 dark:text-slate-400">
+                    <li>Enter your registered Email and Password.</li>
+                    <li>Click <strong>Login</strong> to access the Dashboard.</li>
+                </ul>
+            </div>
+
+            <!-- Step 4 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <span
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">4</span>
+                    Navigating the System
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400">Tap the ☰ (three-bar) menu and select <strong
+                        class="text-slate-800 dark:text-slate-200">Collector</strong> to start data entry.</p>
+            </div>
+
+            <!-- Step 5 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                    <span
+                        class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">5</span>
+                    Entering Collector Info
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-3">On first login, fill the Collector Info Form:</p>
+                <ul class="list-disc list-inside ml-2 space-y-1 text-sm text-slate-600 dark:text-slate-400">
                     <li>Phone Number</li>
                     <li>Region: Provincial / Interprovincial / Mahaveli</li>
                     <li>Location: Province → District → ASC → AI Range → Village</li>
                     <li>GPS Location (auto/manual)</li>
-                    <li>Rice Variety</li>
-                    <li>Rice Establishment Date</li>
-                </ul>
-                <p>Click <strong>Save</strong> to view your data.</p>
-            </div>
-
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">6️⃣ Managing Collector Data</h3>
-                <ul class="list-disc ml-4 text-gray-300">
-                    <li>Edit your collector information.</li>
-                    <li>Navigate to <strong>Pest Data</strong> to input observations.</li>
+                    <li>Rice Variety & Establishment Date</li>
                 </ul>
             </div>
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">7️⃣ Adding Pest Data</h3>
-                <ul class="list-disc ml-4 text-gray-300">
-                    <li>Data Collecting Date</li>
-                    <li>Growth Stage Code</li>
-                    <li>Temperature</li>
-                    <li>Rainy Days This Week</li>
-                    <li>Tillers SP1–SP10 (mandatory)</li>
-                    <li>Select Pests (if applicable)</li>
-                    <li>Other Info (optional)</li>
-                </ul>
-                <p>Click <strong>Submit</strong> to save your data.</p>
+            <!-- Step 6 & 7 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                        <span
+                            class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">6</span>
+                        Managing Data
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400">
+                        <li>Edit your collector information anytime.</li>
+                        <li>Navigate to <strong class="text-slate-800 dark:text-slate-200">Pest Data</strong> to input
+                            field observations.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-4">
+                        <span
+                            class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white text-sm">7</span>
+                        Adding Pest Data
+                    </h3>
+                    <ul class="list-disc list-inside space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                        <li>Data Collecting Date & Growth Stage Code</li>
+                        <li>Temperature & Rainy Days</li>
+                        <li>Tillers SP1–SP10 (mandatory)</li>
+                        <li>Select Pests (if applicable)</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">8️⃣ Additional Features</h3>
-                <ul class="list-disc ml-4 text-gray-300">
-                    <li>Edit collector data anytime.</li>
-                    <li>View and delete pest records.</li>
-                    <li>Ensure all required fields are filled for accurate reports.</li>
-                </ul>
+            <!-- Mobile Shortcuts -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-shadow md:col-span-2">
+                <h3 class="flex items-center gap-3 text-lg font-bold text-slate-900 dark:text-white mb-6">
+                    <i class="fas fa-mobile-alt text-primary"></i>
+                    Creating a Mobile Shortcut
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                        class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-2">
+                            <i class="fab fa-android"></i> For Android (Chrome)
+                        </h4>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                            <li>Open Chrome and go to <a href="https://uat.pps.doa.gov.lk"
+                                    class="text-primary hover:underline">uat.pps.doa.gov.lk</a></li>
+                            <li>Tap the 3-dot menu (⋮)</li>
+                            <li>Select "Add to Home screen" or "Install App"</li>
+                            <li>Rename (e.g., "NPSS") and tap Add</li>
+                        </ol>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-xl border border-slate-100 dark:border-slate-700">
+                        <h4 class="font-bold text-indigo-600 dark:text-indigo-400 mb-3 flex items-center gap-2">
+                            <i class="fab fa-apple"></i> For iPhone/iPad (Safari)
+                        </h4>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                            <li>Open Safari and go to <a href="https://uat.pps.doa.gov.lk"
+                                    class="text-primary hover:underline">uat.pps.doa.gov.lk</a></li>
+                            <li>Tap the Share icon (box with up arrow)</li>
+                            <li>Select "Add to Home Screen"</li>
+                            <li>Rename and tap Add</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">9️⃣ Support</h3>
-                <p class="text-gray-300">For help, contact the System Administrator at:</p>
-                <p><strong>Department of Agriculture – National Plant Protection Service</strong></p>
+        </div>
+
+        <!-- Footer Credits -->
+        <section
+            class="mt-12 p-8 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 rounded-b-3xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-slate-600 dark:text-slate-400">
+                <div class="space-y-2">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
+                        Prepared By</h3>
+                    <p><strong class="text-slate-800 dark:text-slate-200">Dhammika Sarathchandra</strong><br>Agriculture
+                        Instructor <br>National Plant Protection Service </p>
+                    <p><strong class="text-slate-800 dark:text-slate-200">Darsha Anuradha</strong><br>Lead Developer &
+                        Technical Assistant<br>AFACI Project / National Plant Protection Service</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
+                        Directed By</h3>
+                    <p><strong class="text-slate-800 dark:text-slate-200">Dr. K.M.D.W. Prabath
+                            Nishantha</strong><br>Additional Director, National Plant Protection Service</p>
+                    <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                        <p class="italic text-slate-500">Department of Agriculture<br>National Plant Protection
+                            Service<br>Gannoruwa, Peradeniya – Sri Lanka</p>
+                    </div>
+                </div>
             </div>
-
-            <div class="bg-gray-800 p-4 rounded-md shadow-md space-y-3">
-                <h3 class="text-xl font-bold text-yellow-300">🔟 Creating a Mobile Shortcut</h3>
-                <p class="text-green-300 font-semibold">For Android (Chrome):</p>
-                <ol class="list-decimal ml-6 text-gray-300">
-                    <li>Open Chrome and go to: <a href="https://uat.pps.doa.gov.lk"
-                            class="text-blue-400 underline">uat.pps.doa.gov.lk</a></li>
-                    <li>Tap the 3-dot menu</li>
-                    <li>Select "Add to Home screen" or "Install App"</li>
-                    <li>Rename (e.g., "NPSS") and tap Add</li>
-                </ol>
-
-                <p class="text-green-300 font-semibold mt-4">For iPhone/iPad (Safari):</p>
-                <ol class="list-decimal ml-6 text-gray-300">
-                    <li>Open Safari</li>
-                    <li>Go to: <a href="https://uat.pps.doa.gov.lk"
-                            class="text-blue-400 underline">uat.pps.doa.gov.lk</a></li>
-                    <li>Tap Share → "Add to Home Screen"</li>
-                    <li>Rename and tap Add</li>
-                </ol>
-            </div>
-        </section>
-
-        <hr class="border-gray-600">
-
-        <section class="text-sm text-gray-400 space-y-2">
-            <h3 class="text-lg text-white font-bold">Prepared By:</h3>
-            <p>Dhammika Sarathchandra – Agriculture Instructor</p>
-            <p>Darsha Anuradha – Lead Developer & Technical Assistant, AFACI Project / National Plant
-                Protection Service</p>
-
-            <h3 class="text-lg text-white font-bold">Directed By:</h3>
-            <p>Dr. K.M.D.W. Prabath Nishantha – Additional Director, National Plant Protection Service</p>
-
-            <p class="mt-4 italic">Department of Agriculture, National Plant Protection Service, Gannoruwa, Peradeniya –
-                Sri Lanka</p>
         </section>
 
     </div>
+
+    <!-- Theme Toggle Script specific for Help Page -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var themeToggleDarkIcon = document.getElementById('help-theme-toggle-dark-icon');
+            var themeToggleLightIcon = document.getElementById('help-theme-toggle-light-icon');
+
+            // Initialize correct icon based on current theme
+            if (document.documentElement.classList.contains('dark')) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            var themeToggleBtn = document.getElementById('help-theme-toggle');
+            themeToggleBtn.addEventListener('click', function() {
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                if (localStorage.getItem('color-theme')) {
+                    if (localStorage.getItem('color-theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    }
+                }
+            });
+        });
+    </script>
 </x-app-layout>

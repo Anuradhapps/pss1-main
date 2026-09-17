@@ -1,7 +1,7 @@
 <div class="m-3 space-y-5">
 
     <!-- Title Card -->
-    <div class="bg-white/95 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-white/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
         <!-- Gradient Header -->
         <div
             class="bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -13,8 +13,8 @@
                 <i class="fas fa-home mr-2"></i> Home
             </a>
         </div>
-        <div class="px-6 py-3 bg-gray-50 border-t">
-            <p class="text-gray-700 text-sm italic">
+        <div class="px-6 py-3 bg-slate-50 dark:bg-slate-950/50 border-t">
+            <p class="text-slate-700 dark:text-slate-300 text-sm italic">
                 Compare pest severity (0–9), weekly average temperature, and rainy days across multiple seasons.
             </p>
         </div>
@@ -24,16 +24,16 @@
     </div>
 
     <!-- Filter Panel -->
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-md p-4 space-y-2">
-        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-1">Filters</h2>
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-md p-4 space-y-2">
+        <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide mb-1">Filters</h2>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
             <!-- Pest -->
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Pest</label>
+                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Pest</label>
                 <select wire:model="selectedPest"
-                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                    class="w-full rounded-xl border-slate-300 dark:border-slate-700 text-sm p-2.5 bg-slate-50 dark:bg-slate-950/50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm dark:shadow-slate-900/50 transition">
                     <option value="">-- Choose Pest --</option>
                     @foreach ($pests as $key => $pest)
                         <option value="{{ $key }}">{{ $pest }}</option>
@@ -43,9 +43,9 @@
 
             <!-- District -->
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">District</label>
+                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">District</label>
                 <select wire:model="districtId"
-                    class="w-full rounded-xl border-gray-300 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                    class="w-full rounded-xl border-slate-300 dark:border-slate-700 text-sm p-2.5 bg-slate-50 dark:bg-slate-950/50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm dark:shadow-slate-900/50 transition">
                     <option value="0">All Districts</option>
                     @foreach ($districts as $district)
                         <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -55,13 +55,13 @@
 
             <!-- Seasons -->
             <div class="col-span-2">
-                <label class="block text-xs font-semibold text-gray-600 mb-2">Seasons</label>
+                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">Seasons</label>
                 <div class="flex flex-wrap gap-2">
                     @foreach ($seasons as $season)
                         <label
-                            class="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border border-gray-300 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition font-medium bg-gray-50 text-gray-700">
+                            class="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border border-slate-300 dark:border-slate-700 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition font-medium bg-slate-50 dark:bg-slate-950/50 text-slate-700 dark:text-slate-300">
                             <input type="checkbox" wire:model="selectedSeasons" value="{{ $season->id }}"
-                                class="rounded border-gray-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500">
+                                class="rounded border-slate-300 dark:border-slate-700 text-indigo-600 focus:ring-2 focus:ring-indigo-500">
                             <span>
                                 @php
                                     $shortName = preg_replace_callback(
@@ -81,22 +81,22 @@
         <!-- Reset Buttons -->
         <div class="flex justify-end gap-2 flex-wrap">
             <button wire:click="$set('selectedPest', '')"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
+                class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 rounded-full text-xs font-medium text-slate-600 dark:text-slate-400 shadow-sm dark:shadow-slate-900/50 transition">
                 Reset Pest
             </button>
             <button wire:click="$set('selectedSeasons', [])"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
+                class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 rounded-full text-xs font-medium text-slate-600 dark:text-slate-400 shadow-sm dark:shadow-slate-900/50 transition">
                 Reset Seasons
             </button>
             <button wire:click="$set('districtId', 0)"
-                class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium text-gray-600 shadow-sm transition">
+                class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:bg-slate-700 rounded-full text-xs font-medium text-slate-600 dark:text-slate-400 shadow-sm dark:shadow-slate-900/50 transition">
                 Reset District
             </button>
         </div>
     </div>
 
     <!-- Chart -->
-    <div class="bg-white border rounded-2xl shadow-lg p-5">
+    <div class="bg-white dark:bg-slate-900 border rounded-2xl shadow-lg p-5">
         <div class="relative h-[500px]">
             <canvas id="pestTempRainChart"></canvas>
         </div>

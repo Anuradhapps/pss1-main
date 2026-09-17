@@ -12,8 +12,8 @@
 
     {{-- <x.-form method="POST" action="{{ route('admin.collector.update', $collector) }}"> --}}
     <x-success-massage />
-    <div class="p-6 overflow-x-auto border-b border-gray-200">
-        <table class="table-auto">
+    <div class="overflow-x-auto border-b border-slate-200 p-6 dark:border-slate-700">
+        <table class="table-auto text-slate-700 dark:text-slate-200">
 
             <thead>
                 <tr>
@@ -26,7 +26,7 @@
 
                 @if (!empty($pests) && $pests->count())
                     @foreach ($pests as $pest)
-                        <tr class="bg-gray-800 border-b border-gray-700 ">
+                        <tr class="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70">
 
                             <td class="px-6 py-4"> {{ $pest->id }}</td>
                             <td class="px-6 py-4"> {{ $pest->name }}</td>

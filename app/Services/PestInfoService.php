@@ -288,6 +288,119 @@ class PestInfoService
             "OtherInfo" => $otherInfo
         ];
     }
+
+    public function avarageCalculateByDates($collectors, $dates)
+    {
+        if ($collectors->count() == 0) {
+            return [
+                "pests" => [
+                    "thrips" => 0,
+                    "gallMidge" => 0,
+                    "leaffolder" => 0,
+                    "yellowStemBorer" => 0,
+                    "bphWbph" => 0,
+                    "paddyBug" => 0
+                ]
+            ];
+        }
+
+        // Date range
+        $endDate = Carbon::today();
+        $startDate = Carbon::today()->subDays($dates);
+
+        $noOfTillers = 0;
+        $thrips = 0;
+        $gallMidge = 0;
+        $leaffolder = 0;
+        $yellowStemBorer = 0;
+        $bphWbph = 0;
+        $paddyBug = 0;
+        $thripscount = 0;
+        $otherInfo = [];
+
+        foreach ($collectors as $collector) {
+
+            foreach ($collector->commonDataCollect as $commonData) {
+
+                // Skip records outside the date range
+                if (
+                    empty($commonData->c_date) ||
+                    !Carbon::parse($commonData->c_date)->between($startDate, $endDate)
+                ) {
+                    continue;
+                }
+
+                foreach ($commonData->pestDataCollect as $pestData) {
+
+                    if ($pestData->pest_name == 'Number_Of_Tillers') {
+                        $noOfTillers += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Thrips') {
+                        $thripscount++;
+                        $thrips += $pestData->code;
+                    } elseif ($pestData->pest_name == 'Gall Midge') {
+                        $gallMidge += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Leaffolder') {
+                        $leaffolder += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Yellow Stem Borer') {
+                        $yellowStemBorer += $pestData->total;
+                    } elseif ($pestData->pest_name == 'BPH+WBPH') {
+                        $bphWbph += $pestData->total;
+                    } elseif ($pestData->pest_name == 'Paddy Bug') {
+                        $paddyBug += $pestData->total;
+                    }
+                }
+
+                if (!empty($commonData->otherinfo)) {
+
+                    $aiRange = $this->textService->correctText($collector->getAiRange->name);
+                    $region = $this->textService->correctText($collector->region->name);
+                    $otherinfo = $this->textService->correctText($commonData->otherinfo);
+
+                    $phone = $collector->phone_no ?? 'N/A';
+                    $userName = $collector->user->name ?? 'Unknown';
+
+                    $otherInfo[] = [
+                        'aiRange' => $aiRange,
+                        'region' => $region,
+                        'otherInfo' => $otherinfo,
+                        'phone' => $phone,
+                        'name' => $userName,
+                    ];
+                }
+            }
+        }
+
+        $possibleCodes = [0, 1, 3, 5, 7, 9];
+
+        $thripsC = $thripscount == 0 ? 0 : $thrips / $thripscount;
+        $thripsCode = $this->getNearestCode($thripsC, $possibleCodes);
+
+        $gallMidgeCode = 0;
+        $leaffolderCode = 0;
+        $yellowStemBorerCode = 0;
+        $bphWbphCode = 0;
+        $paddyBugCode = 0;
+
+        if ($noOfTillers != 0) {
+            $gallMidgeCode = $this->getgallMidgeCode($noOfTillers, $gallMidge)['code'];
+            $leaffolderCode = $this->getLeaffolderCode($noOfTillers, $leaffolder)['code'];
+            $yellowStemBorerCode = $this->getYellowStemBorerCode($noOfTillers, $yellowStemBorer)['code'];
+            $bphWbphCode = $this->getBphWbphCode($noOfTillers, $bphWbph)['code'];
+            $paddyBugCode = $this->getPaddyBugCode($noOfTillers, $paddyBug, $collectors->count())['code'];
+        }
+
+        return [
+            "pests" => [
+                "thrips" => $thripsCode,
+                "gallMidge" => $gallMidgeCode,
+                "leaffolder" => $leaffolderCode,
+                "yellowStemBorer" => $yellowStemBorerCode,
+                "bphWbph" => $bphWbphCode,
+                "paddyBug" => $paddyBugCode
+            ],
+            "OtherInfo" => $otherInfo
+        ];
+    }
     public function avarageCalculateByCommonData($commonDatas)
     {
 
@@ -424,6 +537,6 @@ class PestInfoService
     {
         $collectors =  $this->filterCollectorsByDistrictAndDuration($districtId, $days);
 
-        return $this->avarageCalculate($collectors);
+        return $this->avarageCalculateByDates($collectors, $days);
     }
 }

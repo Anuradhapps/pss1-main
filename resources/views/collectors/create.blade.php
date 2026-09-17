@@ -4,14 +4,14 @@
     <div class="">
         <!-- Header -->
         <x-headings.top-heading title="Collector Create" subtitle="{{ $season }} Season" icon="fas fa-wheat-awn"
-            buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left" buttonColor="red"
-            class="bg-cyan-700" />
+            buttonText="Back" buttonAction="{{ route('collector.index') }}" buttonIcon="fas fa-arrow-left"
+            buttonColor="red" />
 
         <!-- Error Messages -->
         <x-error-massage />
 
         <!-- Form -->
-        <x-form action="{{ route('collector.store') }}" method="POST" class="space-y-6 p-2">
+        <x-form action="{{ route('collector.store') }}" method="POST" class="space-y-6 p-2 pt-0">
             @csrf
 
             <!-- Phone Number -->

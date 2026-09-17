@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Collector;
 use App\Models\district;
 use App\Models\Notification;
+use App\Services\PestAlertNotificationService;
 use App\Services\PestInfoService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -17,10 +18,13 @@ class RunEveryFriday extends Command
 
     protected PestInfoService $pestInfoService;
 
-    public function __construct(PestInfoService $pestInfoService)
+    protected PestAlertNotificationService $pestAlertNotificationService;
+
+    public function __construct(PestInfoService $pestInfoService, PestAlertNotificationService $pestAlertNotificationService)
     {
         parent::__construct();
         $this->pestInfoService = $pestInfoService;
+        $this->pestAlertNotificationService = $pestAlertNotificationService;
     }
 
     public function handle()
@@ -36,8 +40,6 @@ class RunEveryFriday extends Command
 
                 if ($code == 5) {
                     $title = "Threshold Alert: {$pestName} detected in your district. Pest control is suggested.";
-                } elseif ($code >= 7 && $code <= 9) {
-                    $title = "Critical Alert: {$pestName} detected in your district. Immediate action required!";
                 }
 
                 if ($title) {
@@ -45,15 +47,23 @@ class RunEveryFriday extends Command
 
                     foreach ($collectors as $collector) {
                         if ($collector->user) {
+                            $collectorName = $collector->user->name ?? 'Unknown collector';
+                            $phoneNumber = $collector->phone_no ?? 'N/A';
+                            $location = $collector->getDistrict->name ?? 'Unknown district';
+
+                            if ($code === 7 || $code === 9) {
+                                continue;
+                            }
+
                             Notification::create([
-                                'title' => $title . ' (' . Carbon::now()->format('Y-m-d H:i:s') . ')',
+                                'title' => $title . ' | Collector: ' . $collectorName . ' | Phone: ' . $phoneNumber . ' | Location: ' . $location . ' (' . Carbon::now()->format('Y-m-d H:i:s') . ')',
                                 'assigned_to_user_id' => $collector->user->id,
                                 'assigned_from_user_id' => 0, // system
                                 'link' => null,
                                 'viewed' => false,
                             ]);
 
-                            $this->info("Notification sent to {$collector->user->name} ({$pestName}, code {$code})");
+                            $this->info("Notification sent to {$collectorName} ({$pestName}, code {$code}) at {$location}, phone {$phoneNumber}");
                         }
                     }
                 }

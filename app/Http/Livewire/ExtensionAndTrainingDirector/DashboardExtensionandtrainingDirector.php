@@ -6,6 +6,7 @@ use App\Http\Controllers\PestDataCollectController;
 use App\Http\Controllers\RiceSeasonController;
 use App\Models\AuditTrail;
 use App\Models\Collector;
+use App\Models\district;
 use App\Models\Region;
 use App\Models\RiceSeason;
 use App\Services\toPDFService;
@@ -60,7 +61,7 @@ class DashboardExtensionAndTrainingDirector extends Component
         $currentSeasonId = $seasonController->getSeasson()['seasonId'] ?? null;
 
         if ($currentSeasonId) {
-            $this->seasonUserCount = $this->getSeasonUserCount($currentSeasonId)->count();
+            $this->seasonUserCount = $this->getSeasonUserCount($currentSeasonId);
         }
 
         $this->recentActivities = $this->getRecentActivities();
@@ -68,21 +69,15 @@ class DashboardExtensionAndTrainingDirector extends Component
 
 
 
-        $this->totalUsersCount = $this->getTotalUsers()->count();
+        $this->totalUsersCount = $this->getTotalUsers();
         $this->updatedSelectedSeason($this->selectedSeason);
     }
 
     public function getDistricts()
     {
-        return Collector::with('getDistrict')
-            ->where('region_id', $this->regionId)
-            ->get()
-            ->map(function ($collector) {
-                return $collector->getDistrict;
-            })
-            ->filter()             // remove nulls
-            ->unique('id')         // filter unique by district ID
-            ->values();            // reset keys
+        $districtIds = Collector::where('region_id', $this->regionId)->distinct()->pluck('district');
+
+        return district::whereIn('id', $districtIds)->orderBy('name')->get();
     }
     public function toggleSortDirection()
     {
@@ -101,7 +96,7 @@ class DashboardExtensionAndTrainingDirector extends Component
     public function updatedSelectedSeason($value)
     {
         $season = RiceSeason::find((int) $value);
-        $this->selectedSeasonName = $season->name ?? null;
+        $this->selectedSeasonName = $season?->name;
     }
 
 
@@ -297,12 +292,12 @@ class DashboardExtensionAndTrainingDirector extends Component
     {
         return Collector::where('rice_season_id', $seasonId)
             ->whereHas('region', fn($q) => $q->where('region_id', $this->regionId))
-            ->get();
+            ->count();
     }
 
     public function getTotalUsers()
     {
-        return Collector::whereHas('region', fn($q) => $q->where('region_id', $this->regionId))->get();
+        return Collector::whereHas('region', fn($q) => $q->where('region_id', $this->regionId))->count();
     }
 
     public function getRecentActivities()

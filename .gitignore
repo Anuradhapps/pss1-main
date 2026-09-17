@@ -1,12 +1,55 @@
+# Dependencies
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+
+# Local environment and secrets
 .env
-.env.backup
-.env.production
+.env.*
+!.env.example
+
+# Database dumps, backups, and archives
+*.sql
+*.dump
+*.bak
+*.backup
+*.gz
+*.zip
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.log
+database/*.sql
+database/*.dump
+database/*.bak
+database/*.backup
+database/*.gz
+database/*.zip
+database/*.tar
+database/*.log
+database/backups/
+backups/
+backup/
+storage/backups/
+storage/logs/*.log
+
+# Sensitive local artifacts
+*.pem
+*.key
+*.p12
+*.crt
+*.csr
+*.jks
+*.keystore
+*.sqlite
+*.sqlite-*
+*.db
+
+# Test and editor artifacts
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

@@ -10,6 +10,7 @@ use App\Models\Roles\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 use function add_user_log;
@@ -26,7 +27,11 @@ class Edit extends Base
     protected function rules(): array
     {
         return [
-            'label' => 'required|string|unique:roles,label,'.$this->role->id
+            'label' => [
+                'required',
+                'string',
+                Rule::unique('roles', 'label')->ignore($this->role->id)->whereNull('deleted_at'),
+            ],
         ];
     }
 
@@ -56,7 +61,8 @@ class Edit extends Base
     public function render(): View
     {
         $modules = Permission::select('module')->distinct()->orderBy('module')->pluck('module');
-        return view('livewire.admin.roles.edit', compact('modules'));
+        return view('livewire.admin.roles.edit', compact('modules'))
+            ->layout('layouts.app');
     }
 
     public function update(): Redirector|RedirectResponse
@@ -76,7 +82,7 @@ class Edit extends Base
         $this->role->save();
 
         add_user_log([
-            'title'        => 'updated role '.$this->label,
+            'title'        => 'updated role ' . $this->label,
             'link'         => route('admin.settings.roles.edit', ['role' => $this->role->id]),
             'reference_id' => $this->role->id,
             'section'      => 'Roles',

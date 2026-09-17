@@ -42,7 +42,7 @@ class AuditTrails extends Base
 
     public function builder()
     {
-        return AuditTrail::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
+        return AuditTrail::with('user')->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
     }
 
     public function sortBy($field): void

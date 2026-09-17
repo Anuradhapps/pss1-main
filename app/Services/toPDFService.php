@@ -10,10 +10,8 @@ class toPDFService
 {
 
 
-    public function collectorsList(?int $district = null, ?int $region = null, ?String $seasonid = null)
+    public function collectorsList(int|array|null $district = null, ?int $region = null, ?string $seasonid = null)
     {
-
-
         // Build query with eager loading
         $query = Collector::with([
             'user',
@@ -30,8 +28,12 @@ class toPDFService
             );
         }
         // Apply filters only if provided
-        if ($district) {
-            $query->where('district', $district);
+        if ($district !== null && $district !== []) {
+            if (is_array($district)) {
+                $query->whereIn('district', $district);
+            } else {
+                $query->where('district', $district);
+            }
         }
         if ($region) {
             $query->where('region_id', $region);

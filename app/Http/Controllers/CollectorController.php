@@ -14,6 +14,7 @@ use App\Models\RiceSeason;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class CollectorController extends Controller
 {
@@ -66,7 +67,8 @@ class CollectorController extends Controller
             $query->whereDate('created_at', request('created'));
         }
 
-        $collectors = $query->orderByDesc('rice_season_id')->get();
+        $collectors = $query->orderByDesc('created_at')->get();
+
 
         return view('collectors.index', [
             'collectors' => $collectors,
@@ -96,17 +98,23 @@ class CollectorController extends Controller
 
     public function adminCollectorView($id)
     {
-        $collectors = Collector::where('user_id', $id)
+        $targetUser = User::findOrFail($id);
+        Gate::authorize('viewUserCollectors', $targetUser);
+
+        $collectors = Collector::where('user_id', $targetUser->id)
             ->orderBy('rice_season_id', 'desc')
             ->get();
-        return view('collectors.admin-index', ['collectors' => $collectors, 'user' => User::find($id)]);
+
+        return view('collectors.admin-index', ['collectors' => $collectors, 'user' => $targetUser]);
     }
+
     public function adminCollectorDestroy($id)
     {
-        Collector::destroy($id);
-        return redirect()->back();
+        $collector = Collector::findOrFail($id);
+        $this->authorize('delete', $collector);
 
-        // return redirect('collector')->with('flash_message', 'collector deleted!');
+        $collector->delete();
+        return redirect()->back();
     }
     public function newCollector()
     {
@@ -187,7 +195,9 @@ class CollectorController extends Controller
      */
     public function show($id)
     {
-        $collector = Collector::find($id);
+        $collector = Collector::findOrFail($id);
+        $this->authorize('view', $collector);
+
         return view('collectors.show')->with('collectors', $collector);
     }
     public function view()
@@ -206,7 +216,9 @@ class CollectorController extends Controller
      */
     public function edit($id)
     {
-        $collector = Collector::find($id);
+        $collector = Collector::findOrFail($id);
+        $this->authorize('view', $collector);
+
         $seasonId = $collector->rice_season_id;
         $season = RiceSeason::find($seasonId)->name;
         $provinces = Province::all();
@@ -229,9 +241,9 @@ class CollectorController extends Controller
      */
     public function update(Request $request, $collectorId)
     {
+        $collector = Collector::findOrFail($collectorId);
+        $this->authorize('update', $collector);
 
-
-        $collector = Collector::findorfail($collectorId);
         $request->validate([
             'phone_no' => 'required',
             'region' => 'required',
@@ -269,7 +281,7 @@ class CollectorController extends Controller
             return redirect(route('collector.index'));
         } elseif (has_role('admin')) {
             $collectors = Collector::all();
-            return redirect()->route('admin.collector.records');
+            return redirect()->route('admin.collector.records')->with('success', 'Collector Updated successfully!');
         }
     }
 
@@ -303,17 +315,20 @@ class CollectorController extends Controller
      */
     public function destroy($id)
     {
-        Collector::destroy($id);
+        $collector = Collector::findOrFail($id);
+        $this->authorize('delete', $collector);
+
+        $collector->delete();
         return redirect(route('admin.collector.records'));
-
-
-        // return redirect('collector')->with('flash_message', 'collector deleted!');
     }
+
     public function collectordestroy($id)
     {
-        Collector::destroy($id);
+        $collector = Collector::findOrFail($id);
+        $this->authorize('delete', $collector);
+
+        $collector->delete();
         return redirect()->back();
-        // return redirect('collector')->with('flash_message', 'collector deleted!');
     }
 
     public function getCollectorCount($seasonId = null, $provinceId = null, $districtId = null, $asCenterId = null, $aiRangeId = null)

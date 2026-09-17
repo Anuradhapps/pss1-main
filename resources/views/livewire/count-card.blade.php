@@ -1,32 +1,42 @@
-<div class="w-full">
-    <div class="flex items-center justify-between p-2 text-white bg-gradient-to-r {{ $color }} "
-        wire:key="{{ $cardName }}">
-
-        <div class="flex items-center space-x-3">
-            <i class="{{ $iconName }} text-xl"></i>
-            <span class="text-sm font-semibold sm:text-base">{{ preg_replace('/(?<!\ )[A-Z]/', ' $0', $cardName) }}
-            </span>
-        </div>
-
-        <span id="cardCount_{{ Str::slug($cardName) }}" class="text-lg font-bold">{{ $userCount }}</span>
+<x-ui.card padding="p-2.5"
+    class="relative group cursor-pointer border-l-2 overflow-hidden
+           {{ str_replace('from-', 'border-', explode(' ', $color)[0]) }}">
+    {{-- Background decoration --}}
+    <div
+        class="absolute right-0 top-0 w-14 h-14
+               bg-gradient-to-br {{ $color }}
+               opacity-10 rounded-bl-full
+               -mr-3 -mt-3
+               transition-transform duration-300
+               group-hover:scale-110">
     </div>
 
-    <script>
-        document.addEventListener('livewire:load', function() {
-            let count = 0;
-            const targetCount = @this.targetCount;
-            const speed = 10; // Slow down a bit for readability
-            const countLabel = document.getElementById('cardCount_{{ Str::slug($cardName) }}');
+    <div class="relative z-10 flex items-center justify-between gap-2" wire:key="{{ $cardName }}">
+        <div class="min-w-0 flex-1">
+            <p
+                class="text-[9px] sm:text-[10px]
+                       font-semibold uppercase tracking-wide
+                       text-slate-500 dark:text-slate-400
+                       truncate">
+                {{ preg_replace('/(?<!\ )[A-Z]/', ' $0', $cardName) }}
+            </p>
 
-            const counter = setInterval(() => {
-                if (count < targetCount) {
-                    count++;
-                    countLabel.textContent = count;
-                    @this.set('userCount', count);
-                } else {
-                    clearInterval(counter);
-                }
-            }, speed);
-        });
-    </script>
-</div>
+            <h3
+                class="mt-1 text-xl sm:text-2xl
+                       font-bold leading-none
+                       text-slate-900 dark:text-white">
+                {{ $userCount }}
+            </h3>
+        </div>
+
+        <div
+            class="shrink-0 w-7 h-7 sm:w-8 sm:h-8
+                   rounded-md flex items-center justify-center
+                   bg-gradient-to-br {{ $color }}
+                   text-white shadow-sm
+                   group-hover:shadow-md
+                   transition-shadow duration-300">
+            <i class="{{ $iconName }} text-xs"></i>
+        </div>
+    </div>
+</x-ui.card>

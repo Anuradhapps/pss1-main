@@ -3,11 +3,11 @@
         wire:key="modal-{{ $selectedCollector->id }}">
 
         <div
-            class="relative w-full max-w-md sm:max-w-2xl mx-2 p-4 sm:p-6 bg-gray-900 text-white border border-gray-700 overflow-y-auto max-h-[90vh] sm:max-h-screen">
+            class="relative w-full max-w-md sm:max-w-2xl mx-2 p-4 sm:p-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 overflow-y-auto max-h-[90vh] sm:max-h-screen">
 
             {{-- Close Button --}}
             <button wire:click="closeModal"
-                class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
+                class="absolute top-2 right-2 text-slate-500 dark:text-slate-400 hover:text-red-500 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -16,20 +16,20 @@
 
             {{-- Header --}}
             <h2
-                class="text-xl sm:text-2xl font-bold text-center text-green-400 mb-4 sm:mb-6 border-b border-gray-700 pb-2 tracking-wide uppercase select-none">
+                class="text-xl sm:text-2xl font-bold text-center text-green-400 mb-4 sm:mb-6 border-b border-slate-200 dark:border-slate-700 pb-2 tracking-wide uppercase select-none">
                 Collector Details
             </h2>
 
             {{-- Collector Info --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm mb-4 sm:mb-6">
-                <div><span class="text-gray-400">Name:</span> {{ $selectedCollector->user->name ?? 'N/A' }}</div>
-                <div><span class="text-gray-400">Email:</span> {{ $selectedCollector->user->email ?? 'N/A' }}</div>
-                <div><span class="text-gray-400">AI Range:</span> {{ $selectedCollector->getAiRange->name ?? 'N/A' }}
+                <div><span class="text-slate-500 dark:text-slate-400">Name:</span> {{ $selectedCollector->user->name ?? 'N/A' }}</div>
+                <div><span class="text-slate-500 dark:text-slate-400">Email:</span> {{ $selectedCollector->user->email ?? 'N/A' }}</div>
+                <div><span class="text-slate-500 dark:text-slate-400">AI Range:</span> {{ $selectedCollector->getAiRange->name ?? 'N/A' }}
                 </div>
-                <div><span class="text-gray-400">Season:</span> {{ $selectedCollector->riceSeason->name ?? 'N/A' }}
+                <div><span class="text-slate-500 dark:text-slate-400">Season:</span> {{ $selectedCollector->riceSeason->name ?? 'N/A' }}
                 </div>
-                <div><span class="text-gray-400">Phone:</span> {{ $selectedCollector->phone_no ?? 'N/A' }}</div>
-                <div><span class="text-gray-400">Total Entries:</span>
+                <div><span class="text-slate-500 dark:text-slate-400">Phone:</span> {{ $selectedCollector->phone_no ?? 'N/A' }}</div>
+                <div><span class="text-slate-500 dark:text-slate-400">Total Entries:</span>
                     {{ $selectedCollector->commonDataCollect->count() }}</div>
             </div>
 
@@ -47,17 +47,17 @@
                     </div>
                 @else
                     <h3
-                        class="text-base sm:text-lg font-semibold text-sky-400 mb-2 sm:mb-3 tracking-wide border-b border-gray-700 pb-1 select-none">
+                        class="text-base sm:text-lg font-semibold text-sky-400 mb-2 sm:mb-3 tracking-wide border-b border-slate-200 dark:border-slate-700 pb-1 select-none">
                         📅 Data Collection Timeline
                     </h3>
                     <ul class="space-y-2">
                         @foreach ($selectedCollector->commonDataCollect as $entry)
-                            <li class="bg-gray-800 border border-gray-700 p-2 flex items-start gap-2 select-none">
+                            <li class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 flex items-start gap-2 select-none">
                                 <span class="text-green-400 font-bold">{{ $loop->iteration }}.</span>
                                 <div class="flex flex-col sm:flex-row justify-between gap-2 w-full">
-                                    <p class="m-0 p-0"><span class="text-gray-400">Field Date:</span>
+                                    <p class="m-0 p-0"><span class="text-slate-500 dark:text-slate-400">Field Date:</span>
                                         {{ $entry->c_date }}</p>
-                                    <p class="m-0 p-0"><span class="text-gray-400">Submitted:</span>
+                                    <p class="m-0 p-0"><span class="text-slate-500 dark:text-slate-400">Submitted:</span>
                                         {{ \Carbon\Carbon::parse($entry->created_at)->format('Y-m-d H:i') }}</p>
                                 </div>
                             </li>

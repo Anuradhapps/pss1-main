@@ -1,11 +1,12 @@
 <x-guest-layout>
     @section('title', 'Reset Password')
 
-    <x-auth-card class="max-w-md p-6 mx-auto text-white bg-gray-900 rounded-lg shadow-xl">
+    <x-auth-card
+        class="mx-auto max-w-md rounded-lg bg-white p-6 text-slate-900 shadow-xl dark:bg-slate-900 dark:text-white">
         <!-- Page Title -->
         <div class="mb-6 text-center">
-            <h1 class="text-2xl font-bold text-white">Reset Password</h1>
-            <p class="mt-1 text-sm text-gray-400">
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Reset Password</h1>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 Enter your email to receive a password reset link.
             </p>
         </div>
@@ -34,20 +35,21 @@
 
             <!-- Email Input -->
             <div>
-                <label for="email" class="block mb-1 text-sm font-medium text-gray-300">Email Address</label>
+                <label for="email" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Email
+                    Address</label>
                 <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus
                     placeholder="you@example.com"
-                    class="w-full px-4 py-2 text-white placeholder-gray-500 bg-gray-800 border border-gray-700  focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full border border-slate-300 bg-white px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500">
             </div>
 
             <!-- Submit Button -->
             <button type="submit"
-                class="w-full px-5 py-3 text-sm font-semibold text-white transition duration-300 bg-blue-600  hover:bg-blue-700 hover:shadow-md">
+                class="w-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:bg-blue-700 hover:shadow-md">
                 Send Reset Email
             </button>
 
             <!-- Back to Login -->
-            <div class="text-sm text-center text-gray-400">
+            <div class="text-center text-sm text-slate-500 dark:text-slate-400">
                 <a href="{{ route('login') }}" class="underline transition duration-200 hover:text-blue-400">
                     Back to Login
                 </a>
