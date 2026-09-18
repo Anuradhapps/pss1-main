@@ -16,11 +16,6 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    protected function recaptchaIsEnabled(): bool
-    {
-        return filled(config('services.recaptcha.site_key')) && filled(config('services.recaptcha.secret_key'));
-    }
-
     public function index(): View
     {
         return view('auth.register');
@@ -31,7 +26,7 @@ class RegisterController extends Controller
         // ---------------------------------------------------------
         // 1. Validate registration data
         // ---------------------------------------------------------
-        $rules = [
+        $request->validate([
             'name'            => 'required',
             'email'           => 'required|email|unique:users,email',
             'password'        => [
@@ -39,53 +34,11 @@ class RegisterController extends Controller
                 Password::min(5),
             ],
             'confirmPassword' => 'required|same:password',
-        ];
-
-        $messages = [
+        ], [
             'password.required'        => 'Password is required',
             'confirmPassword.required' => 'Confirm password is required',
             'confirmPassword.same'     => 'Confirm password and new password must match',
-        ];
-
-        if ($this->recaptchaIsEnabled() && $request->filled('recaptcha_token')) {
-            $rules['recaptcha_token'] = 'string';
-        }
-
-        $request->validate($rules, $messages);
-
-        // ---------------------------------------------------------
-        // 2. Verify Google reCAPTCHA v3
-        // ---------------------------------------------------------
-        if ($this->recaptchaIsEnabled() && $request->filled('recaptcha_token')) {
-            $captchaResponse = Http::asForm()->post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                [
-                    'secret'   => config('services.recaptcha.secret_key'),
-                    'response' => $request->input('recaptcha_token'),
-                    'remoteip' => $request->ip(),
-                ]
-            );
-
-            $captcha = $captchaResponse->json();
-
-            // Check:
-            // - Google request was successful
-            // - CAPTCHA verification succeeded
-            // - Action is "register"
-            // - Score is above configured minimum
-            if (
-                !$captchaResponse->successful() ||
-                !($captcha['success'] ?? false) ||
-                ($captcha['action'] ?? '') !== 'register' ||
-                ($captcha['score'] ?? 0) < config('services.recaptcha.min_score', 0.5)
-            ) {
-                return back()
-                    ->withInput()
-                    ->withErrors([
-                        'recaptcha' => 'Security verification failed. Please try again.',
-                    ]);
-            }
-        }
+        ]);
 
         // ---------------------------------------------------------
         // 3. Create user
