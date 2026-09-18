@@ -50,6 +50,9 @@ test('users cannot register without matching password', function () {
 });
 
 test('users can register', function () {
+    config()->set('services.recaptcha.site_key', null);
+    config()->set('services.recaptcha.secret_key', null);
+
     $password = 'ght73A3!$^DS';
 
     post('register', [
@@ -57,5 +60,22 @@ test('users can register', function () {
         'email'    => faker()->email,
         'password' => $password,
         'confirmPassword' => $password,
-    ])->assertValid();
+    ])->assertRedirect('/dashboard');
+});
+
+test('registration does not fail when reCAPTCHA is not configured', function () {
+    config()->set('services.recaptcha.site_key', null);
+    config()->set('services.recaptcha.secret_key', null);
+
+    $email = 'jane@example.com';
+    $password = 'ght73A3!$^DS';
+
+    post('register', [
+        'name'     => 'Jane Doe',
+        'email'    => $email,
+        'password' => $password,
+        'confirmPassword' => $password,
+    ])->assertRedirect('/dashboard');
+
+    $this->assertDatabaseHas('users', ['email' => $email]);
 });

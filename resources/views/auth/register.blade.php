@@ -34,7 +34,9 @@
 
         <form method="POST" action="{{ route('register') }}" class="space-y-5" novalidate>
             @csrf
-            <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+            @if (config('services.recaptcha.site_key'))
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+            @endif
             <!-- Name -->
             <div>
                 <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Full
@@ -155,17 +157,19 @@
             });
         });
     </script>
-    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    @if (config('services.recaptcha.site_key'))
+        <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute(
-                '{{ config('services.recaptcha.site_key') }}', {
-                    action: 'register'
-                }
-            ).then(function(token) {
-                document.getElementById('recaptcha_token').value = token;
+        <script>
+            grecaptcha.ready(function() {
+                grecaptcha.execute(
+                    '{{ config('services.recaptcha.site_key') }}', {
+                        action: 'register'
+                    }
+                ).then(function(token) {
+                    document.getElementById('recaptcha_token').value = token;
+                });
             });
-        });
-    </script>
+        </script>
+    @endif
 </x-guest-layout>

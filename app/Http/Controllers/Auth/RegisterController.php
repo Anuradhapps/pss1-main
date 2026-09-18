@@ -16,6 +16,11 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
+    protected function recaptchaIsEnabled(): bool
+    {
+        return filled(config('services.recaptcha.site_key')) && filled(config('services.recaptcha.secret_key'));
+    }
+
     public function index(): View
     {
         return view('auth.register');
@@ -26,7 +31,7 @@ class RegisterController extends Controller
         // ---------------------------------------------------------
         // 1. Validate registration data
         // ---------------------------------------------------------
-        $request->validate([
+        $rules = [
             'name'            => 'required',
             'email'           => 'required|email|unique:users,email',
             'password'        => [
@@ -34,44 +39,53 @@ class RegisterController extends Controller
                 Password::min(5),
             ],
             'confirmPassword' => 'required|same:password',
-            'recaptcha_token'  => 'required|string',
-        ], [
+        ];
+
+        $messages = [
             'password.required'        => 'Password is required',
             'confirmPassword.required' => 'Confirm password is required',
             'confirmPassword.same'     => 'Confirm password and new password must match',
-            'recaptcha_token.required' => 'Security verification failed. Please try again.',
-        ]);
+        ];
+
+        if ($this->recaptchaIsEnabled()) {
+            $rules['recaptcha_token'] = 'required|string';
+            $messages['recaptcha_token.required'] = 'Security verification failed. Please try again.';
+        }
+
+        $request->validate($rules, $messages);
 
         // ---------------------------------------------------------
         // 2. Verify Google reCAPTCHA v3
         // ---------------------------------------------------------
-        $captchaResponse = Http::asForm()->post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            [
-                'secret'   => config('services.recaptcha.secret_key'),
-                'response' => $request->input('recaptcha_token'),
-                'remoteip' => $request->ip(),
-            ]
-        );
+        if ($this->recaptchaIsEnabled()) {
+            $captchaResponse = Http::asForm()->post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                [
+                    'secret'   => config('services.recaptcha.secret_key'),
+                    'response' => $request->input('recaptcha_token'),
+                    'remoteip' => $request->ip(),
+                ]
+            );
 
-        $captcha = $captchaResponse->json();
+            $captcha = $captchaResponse->json();
 
-        // Check:
-        // - Google request was successful
-        // - CAPTCHA verification succeeded
-        // - Action is "register"
-        // - Score is above configured minimum
-        if (
-            !$captchaResponse->successful() ||
-            !($captcha['success'] ?? false) ||
-            ($captcha['action'] ?? '') !== 'register' ||
-            ($captcha['score'] ?? 0) < config('services.recaptcha.min_score', 0.5)
-        ) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'recaptcha' => 'Security verification failed. Please try again.',
-                ]);
+            // Check:
+            // - Google request was successful
+            // - CAPTCHA verification succeeded
+            // - Action is "register"
+            // - Score is above configured minimum
+            if (
+                !$captchaResponse->successful() ||
+                !($captcha['success'] ?? false) ||
+                ($captcha['action'] ?? '') !== 'register' ||
+                ($captcha['score'] ?? 0) < config('services.recaptcha.min_score', 0.5)
+            ) {
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'recaptcha' => 'Security verification failed. Please try again.',
+                    ]);
+            }
         }
 
         // ---------------------------------------------------------
