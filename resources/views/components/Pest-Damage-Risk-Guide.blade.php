@@ -6,7 +6,7 @@
                  viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
              </svg>
-             Pest Damage Risk Level Guide
+             Pest Damage Risk Level Guide !
          </h3>
          <span class="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">Click to
              expand</span>
