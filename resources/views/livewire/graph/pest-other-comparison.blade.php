@@ -32,9 +32,14 @@
             'bphwbph' => 'BPH/WBPH',
             'paddyBug' => 'Paddy Bug',
         ];
-        $maxValue = max($values);
-        $maxIndex = array_search($maxValue, $values);
-        $maxLabel = $labels[$maxIndex];
+        if (!empty($values)) {
+            $maxValue = max($values);
+            $maxIndex = array_search($maxValue, $values);
+            $maxLabel = $labels[$maxIndex] ?? 'N/A';
+        } else {
+            $maxValue = 0;
+            $maxLabel = 'No data available';
+        }
     @endphp
 
     <!-- Rice Variety Pie Chart -->
