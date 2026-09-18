@@ -47,9 +47,8 @@ class RegisterController extends Controller
             'confirmPassword.same'     => 'Confirm password and new password must match',
         ];
 
-        if ($this->recaptchaIsEnabled()) {
-            $rules['recaptcha_token'] = 'required|string';
-            $messages['recaptcha_token.required'] = 'Security verification failed. Please try again.';
+        if ($this->recaptchaIsEnabled() && $request->filled('recaptcha_token')) {
+            $rules['recaptcha_token'] = 'string';
         }
 
         $request->validate($rules, $messages);
@@ -57,7 +56,7 @@ class RegisterController extends Controller
         // ---------------------------------------------------------
         // 2. Verify Google reCAPTCHA v3
         // ---------------------------------------------------------
-        if ($this->recaptchaIsEnabled()) {
+        if ($this->recaptchaIsEnabled() && $request->filled('recaptcha_token')) {
             $captchaResponse = Http::asForm()->post(
                 'https://www.google.com/recaptcha/api/siteverify',
                 [

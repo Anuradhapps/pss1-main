@@ -79,3 +79,20 @@ test('registration does not fail when reCAPTCHA is not configured', function () 
 
     $this->assertDatabaseHas('users', ['email' => $email]);
 });
+
+test('registration still works when reCAPTCHA is configured but token is missing', function () {
+    config()->set('services.recaptcha.site_key', 'test-site-key');
+    config()->set('services.recaptcha.secret_key', 'test-secret-key');
+
+    $email = 'no-token@example.com';
+    $password = 'ght73A3!$^DS';
+
+    post('register', [
+        'name'     => 'No Token User',
+        'email'    => $email,
+        'password' => $password,
+        'confirmPassword' => $password,
+    ])->assertRedirect('/dashboard');
+
+    $this->assertDatabaseHas('users', ['email' => $email]);
+});
